@@ -80,7 +80,7 @@ make containers           # build both runnable container images
 
 Browser tests run desktop Chromium and a 360px mobile viewport. Integration tests require `TEST_DATABASE_URL` with a database name ending in `_test`; each test uses rolled-back transactions. They never reset development data. If using your own database server, provision a separate empty `_test` database with PostGIS extension permissions and override the URL. Browser tests read the local demo and do not mutate its graph.
 
-The cloud environment has read-only home caches. Make directs uv/npm caches to `/tmp`. For direct commands set `UV_CACHE_DIR=/tmp/scns-uv-cache` and `npm_config_cache=/tmp/scns-npm-cache` if needed. For container builds in this environment use `DOCKER_CONFIG=/tmp/scns-docker docker compose build api frontend`. Do not copy authentication files or disable TLS verification.
+The cloud environment has read-only home caches. Make directs uv/npm caches to `/tmp`. For direct commands set `UV_CACHE_DIR=/tmp/scns-uv-cache` and `npm_config_cache=/tmp/scns-npm-cache` if needed. For container builds **in this cloud workspace**, use `python scripts/cloud-build.py` in place of `docker compose build api frontend`: it resolves the already-configured proxy for the isolated build and mounts existing CA trust temporarily. No credential values are printed or copied into images, and TLS/lockfile verification stays enabled. On a normal local Docker installation, the standard Compose build command works without this helper.
 
 ## Data and configuration
 

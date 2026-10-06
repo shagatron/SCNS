@@ -1,0 +1,20 @@
+name: checks
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '24'}
+      - uses: astral-sh/setup-uv@v6
+        with: {version: '0.12.19', python-version: '3.12'}
+      - run: make setup demo check build test-unit test-integration
+      - run: cd frontend && npx playwright install --with-deps chromium
+      - run: make test-e2e
+      - run: make generate-api && git diff --exit-code -- docs/architecture/openapi.json data/templates/dataset-v1.schema.json frontend/src/api/generated.ts
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-traces
+          path: frontend/test-results

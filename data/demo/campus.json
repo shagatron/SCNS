@@ -1,0 +1,1362 @@
+{
+  "schema_version": "1.0",
+  "units": "WGS84_degrees_and_metres",
+  "source_rights": "Original synthetic fixture for this project; contains no institutional drawings or personal data.",
+  "provenance": "Invented coordinates near (0,0). Distances measured computationally along synthetic WGS84 polylines; not surveyed real paths.",
+  "campus": {
+    "id": "374cb5d4-c750-557f-9ea3-9a009f42741f",
+    "code": "DEMO",
+    "name": "Demo Campus",
+    "timezone": "Asia/Kolkata",
+    "is_demo": true,
+    "center": {
+      "type": "Point",
+      "coordinates": [
+        0.0017,
+        0.0015
+      ]
+    },
+    "boundary": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -0.00035,
+            -0.0003
+          ],
+          [
+            0.00385,
+            -0.0003
+          ],
+          [
+            0.00385,
+            0.0031
+          ],
+          [
+            -0.00035,
+            0.0031
+          ],
+          [
+            -0.00035,
+            -0.0003
+          ]
+        ]
+      ]
+    }
+  },
+  "frames": [
+    {
+      "id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "code": "outdoor-wgs84",
+      "kind": "outdoor"
+    }
+  ],
+  "buildings": [
+    {
+      "id": "dd93b347-e241-5fa8-9d07-c4f03d201665",
+      "code": "LIB",
+      "name": "Library",
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.0005,
+              0.00185
+            ],
+            [
+              0.0012,
+              0.00185
+            ],
+            [
+              0.0012,
+              0.0024
+            ],
+            [
+              0.0005,
+              0.0024
+            ],
+            [
+              0.0005,
+              0.00185
+            ]
+          ]
+        ]
+      },
+      "visibility": "public"
+    },
+    {
+      "id": "d0992917-7da1-5d1a-88ae-66b3f603cee0",
+      "code": "ACA",
+      "name": "Academic House",
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.00225,
+              0.00185
+            ],
+            [
+              0.0031,
+              0.00185
+            ],
+            [
+              0.0031,
+              0.00245
+            ],
+            [
+              0.00225,
+              0.00245
+            ],
+            [
+              0.00225,
+              0.00185
+            ]
+          ]
+        ]
+      },
+      "visibility": "public"
+    },
+    {
+      "id": "6bc4a790-0290-5916-8ee3-d837d3631e26",
+      "code": "HUB",
+      "name": "Student Hub",
+      "footprint": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.00245,
+              0.00045
+            ],
+            [
+              0.0032,
+              0.00045
+            ],
+            [
+              0.0032,
+              0.0011
+            ],
+            [
+              0.00245,
+              0.0011
+            ],
+            [
+              0.00245,
+              0.00045
+            ]
+          ]
+        ]
+      },
+      "visibility": "public"
+    }
+  ],
+  "places": [
+    {
+      "id": "ba99c0c8-eda8-543c-93ae-ba13d0c237cd",
+      "code": "GATE",
+      "name": "Main Gate",
+      "kind": "entrance",
+      "description": "Invented destination in Demo Campus. Not a real campus location.",
+      "aliases": [
+        "entry",
+        "start"
+      ],
+      "building_id": null,
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.00015,
+          0.0002
+        ]
+      }
+    },
+    {
+      "id": "0e37a41c-bdcf-55c9-8f1f-e839d18a5e85",
+      "code": "LIB",
+      "name": "Library",
+      "kind": "library",
+      "description": "Invented destination in Demo Campus. Not a real campus location.",
+      "aliases": [
+        "reading room",
+        "books"
+      ],
+      "building_id": "dd93b347-e241-5fa8-9d07-c4f03d201665",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0007,
+          0.00185
+        ]
+      }
+    },
+    {
+      "id": "49ee1739-2c72-5444-9d6f-f54bc92abfc7",
+      "code": "ACA",
+      "name": "Academic House",
+      "kind": "building",
+      "description": "Invented destination in Demo Campus. Not a real campus location.",
+      "aliases": [
+        "academic block",
+        "classrooms"
+      ],
+      "building_id": "d0992917-7da1-5d1a-88ae-66b3f603cee0",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0025,
+          0.00185
+        ]
+      }
+    },
+    {
+      "id": "744ce7b1-71fd-57eb-861c-46022ccc8e24",
+      "code": "HUB",
+      "name": "Student Hub",
+      "kind": "building",
+      "description": "Invented destination in Demo Campus. Not a real campus location.",
+      "aliases": [
+        "student centre"
+      ],
+      "building_id": "6bc4a790-0290-5916-8ee3-d837d3631e26",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.00245,
+          0.0008
+        ]
+      }
+    },
+    {
+      "id": "5d6d838b-71bf-594f-9d63-4731466b0fd8",
+      "code": "CAFE",
+      "name": "Courtyard Caf\u00e9",
+      "kind": "cafe",
+      "description": "Invented destination in Demo Campus. Not a real campus location.",
+      "aliases": [
+        "coffee",
+        "food",
+        "cafe"
+      ],
+      "building_id": "6bc4a790-0290-5916-8ee3-d837d3631e26",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.00245,
+          0.0008
+        ]
+      }
+    },
+    {
+      "id": "2077862d-4838-5c3c-8ffd-83b83f4e7a71",
+      "code": "WATER",
+      "name": "Drinking Water",
+      "kind": "water",
+      "description": "Invented destination in Demo Campus. Not a real campus location.",
+      "aliases": [
+        "refill",
+        "fountain"
+      ],
+      "building_id": null,
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0018,
+          0.0008
+        ]
+      }
+    },
+    {
+      "id": "a6055911-9f03-5524-afad-5811a236079b",
+      "code": "WC",
+      "name": "Garden Washrooms",
+      "kind": "washroom",
+      "description": "Invented destination in Demo Campus. Not a real campus location.",
+      "aliases": [
+        "toilet",
+        "restroom"
+      ],
+      "building_id": "6bc4a790-0290-5916-8ee3-d837d3631e26",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.00275,
+          0.00045
+        ]
+      }
+    },
+    {
+      "id": "7714f517-d1db-5791-9723-6f4f804b0ab8",
+      "code": "GARDEN",
+      "name": "Quiet Garden",
+      "kind": "garden",
+      "description": "Synthetic isolated destination: no connected walking path.",
+      "aliases": [
+        "isolated destination"
+      ],
+      "building_id": null,
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0035,
+          0.00275
+        ]
+      }
+    },
+    {
+      "id": "ce9e742b-9096-5861-9bf3-2f320a77bd7b",
+      "code": "EAST",
+      "name": "East Exit",
+      "kind": "entrance",
+      "description": "Invented destination in Demo Campus. Not a real campus location.",
+      "aliases": [
+        "one way exit"
+      ],
+      "building_id": null,
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0035,
+          0.0008
+        ]
+      }
+    },
+    {
+      "id": "76b2a3fb-0291-5573-8fac-f6511a66958c",
+      "code": "HELP",
+      "name": "Future Help Desk",
+      "kind": "help",
+      "description": "Synthetic directory entry; entrance not mapped yet.",
+      "aliases": [
+        "unmapped entrance"
+      ],
+      "building_id": null,
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0004,
+          0.0026
+        ]
+      }
+    },
+    {
+      "id": "0da98770-188c-501b-8bd7-b373280df91c",
+      "code": "STAFF",
+      "name": "Restricted Store",
+      "kind": "building",
+      "description": "Invented destination in Demo Campus. Not a real campus location.",
+      "aliases": [],
+      "building_id": null,
+      "visibility": "restricted",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.00125,
+          0.001
+        ]
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "id": "71e4a791-b309-5283-a21c-812174ad8a8e",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Gate",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.00015,
+          0.0002
+        ]
+      }
+    },
+    {
+      "id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Courtyard",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.001,
+          0.0008
+        ]
+      }
+    },
+    {
+      "id": "032f6600-aeca-5605-8805-dbb4107d2403",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "West",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0006,
+          0.00145
+        ]
+      }
+    },
+    {
+      "id": "d5b24e25-5893-5060-b0f1-a704b475b579",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Library",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0007,
+          0.00185
+        ]
+      }
+    },
+    {
+      "id": "831f0c31-42d6-5411-9028-09e09635879f",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Library East",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0012,
+          0.00205
+        ]
+      }
+    },
+    {
+      "id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Central",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0017,
+          0.00145
+        ]
+      }
+    },
+    {
+      "id": "52e01f93-37fc-50c7-b074-8e27db8bd704",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Academic",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0025,
+          0.00185
+        ]
+      }
+    },
+    {
+      "id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Hub",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.00245,
+          0.0008
+        ]
+      }
+    },
+    {
+      "id": "566c3046-f514-5cfc-9ecd-5aa6ad82e85b",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Water",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0018,
+          0.0008
+        ]
+      }
+    },
+    {
+      "id": "7dd1b2ee-02cb-5034-98cc-679c7eb40975",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Washroom",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.00275,
+          0.00045
+        ]
+      }
+    },
+    {
+      "id": "7eda4377-495d-5445-9263-0bc6969cdb27",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Garden",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0035,
+          0.00275
+        ]
+      }
+    },
+    {
+      "id": "bb4d9c6f-b847-5827-b870-e2af5cda5223",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "Restricted",
+      "visibility": "restricted",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.00125,
+          0.001
+        ]
+      }
+    },
+    {
+      "id": "a0babbce-a480-525a-aa5f-170802b29bf6",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "label": "East Exit",
+      "visibility": "public",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          0.0035,
+          0.0008
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "935e183c-d159-59c9-ac64-8bfb09febf34",
+      "physical_path_id": "7e746a2a-548a-5111-8b7b-7b3ec7369ab5",
+      "from_node_id": "71e4a791-b309-5283-a21c-812174ad8a8e",
+      "to_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.00015,
+            0.0002
+          ],
+          [
+            0.00035,
+            0.00045
+          ],
+          [
+            0.0007,
+            0.00065
+          ],
+          [
+            0.001,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "d351ed39-cdff-5026-89db-f3b4a4f33b3d",
+      "physical_path_id": "7e746a2a-548a-5111-8b7b-7b3ec7369ab5",
+      "from_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "to_node_id": "71e4a791-b309-5283-a21c-812174ad8a8e",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.001,
+            0.0008
+          ],
+          [
+            0.0007,
+            0.00065
+          ],
+          [
+            0.00035,
+            0.00045
+          ],
+          [
+            0.00015,
+            0.0002
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "02dc02d1-ade2-504b-94e7-4bae65448d40",
+      "physical_path_id": "c1f6187b-51da-551e-8dc2-9078ca03f73f",
+      "from_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "to_node_id": "032f6600-aeca-5605-8805-dbb4107d2403",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.001,
+            0.0008
+          ],
+          [
+            0.0007,
+            0.00095
+          ],
+          [
+            0.0006,
+            0.00145
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "231cef1c-b17c-5c08-b40f-6b9a618a613b",
+      "physical_path_id": "c1f6187b-51da-551e-8dc2-9078ca03f73f",
+      "from_node_id": "032f6600-aeca-5605-8805-dbb4107d2403",
+      "to_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0006,
+            0.00145
+          ],
+          [
+            0.0007,
+            0.00095
+          ],
+          [
+            0.001,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "cfb6fc0b-a463-5d8b-ac16-9470cc457157",
+      "physical_path_id": "89d5400c-dda7-5f48-843d-f9d1bc3ede3a",
+      "from_node_id": "032f6600-aeca-5605-8805-dbb4107d2403",
+      "to_node_id": "d5b24e25-5893-5060-b0f1-a704b475b579",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0006,
+            0.00145
+          ],
+          [
+            0.0007,
+            0.00185
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "6b39b54b-33e1-5657-91ff-34dbf837307c",
+      "physical_path_id": "89d5400c-dda7-5f48-843d-f9d1bc3ede3a",
+      "from_node_id": "d5b24e25-5893-5060-b0f1-a704b475b579",
+      "to_node_id": "032f6600-aeca-5605-8805-dbb4107d2403",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0007,
+            0.00185
+          ],
+          [
+            0.0006,
+            0.00145
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "f5c3d76c-7a57-5f16-8d14-c8eba9643c87",
+      "physical_path_id": "e48b87bf-8c0b-5019-8b10-c51dff0697ea",
+      "from_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "to_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "stairs",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.001,
+            0.0008
+          ],
+          [
+            0.0017,
+            0.00145
+          ]
+        ]
+      },
+      "accessibility_status": "not_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "9ed5c148-eea2-55c8-bc48-b021b844e15f",
+      "physical_path_id": "e48b87bf-8c0b-5019-8b10-c51dff0697ea",
+      "from_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "to_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "stairs",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0017,
+            0.00145
+          ],
+          [
+            0.001,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "not_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "d0dea47d-0f9d-523f-be53-4c60b05c8455",
+      "physical_path_id": "b148ca6e-f0cc-54e5-99c2-b7c8ded0d94a",
+      "from_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "to_node_id": "566c3046-f514-5cfc-9ecd-5aa6ad82e85b",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.001,
+            0.0008
+          ],
+          [
+            0.0018,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "bcf18bda-5633-5fcb-8d32-0bc465709dbe",
+      "physical_path_id": "b148ca6e-f0cc-54e5-99c2-b7c8ded0d94a",
+      "from_node_id": "566c3046-f514-5cfc-9ecd-5aa6ad82e85b",
+      "to_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0018,
+            0.0008
+          ],
+          [
+            0.001,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "08e9a061-60ac-511e-b235-db881abb4043",
+      "physical_path_id": "b0c6862a-b246-5de9-8e01-a2e42d72614a",
+      "from_node_id": "566c3046-f514-5cfc-9ecd-5aa6ad82e85b",
+      "to_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "ramp",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0018,
+            0.0008
+          ],
+          [
+            0.00205,
+            0.00105
+          ],
+          [
+            0.002,
+            0.0014
+          ],
+          [
+            0.0017,
+            0.00145
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "6fa7c6a0-c0cc-56c3-aabd-e4cfbf7b1a97",
+      "physical_path_id": "b0c6862a-b246-5de9-8e01-a2e42d72614a",
+      "from_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "to_node_id": "566c3046-f514-5cfc-9ecd-5aa6ad82e85b",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "ramp",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0017,
+            0.00145
+          ],
+          [
+            0.002,
+            0.0014
+          ],
+          [
+            0.00205,
+            0.00105
+          ],
+          [
+            0.0018,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "de2d9d30-423b-5114-820f-8c9406a78f10",
+      "physical_path_id": "650f4b99-c4fa-583d-ae3f-b4b2a125c043",
+      "from_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "to_node_id": "831f0c31-42d6-5411-9028-09e09635879f",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0017,
+            0.00145
+          ],
+          [
+            0.0015,
+            0.0017
+          ],
+          [
+            0.0012,
+            0.00205
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "a8adcc10-8327-5a91-84bd-a5e971f3b656",
+      "physical_path_id": "650f4b99-c4fa-583d-ae3f-b4b2a125c043",
+      "from_node_id": "831f0c31-42d6-5411-9028-09e09635879f",
+      "to_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0012,
+            0.00205
+          ],
+          [
+            0.0015,
+            0.0017
+          ],
+          [
+            0.0017,
+            0.00145
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "3e488267-4fb0-5b0d-888d-973bf1924c00",
+      "physical_path_id": "d04c9900-77c5-55ab-921d-321a41640ece",
+      "from_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "to_node_id": "52e01f93-37fc-50c7-b074-8e27db8bd704",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0017,
+            0.00145
+          ],
+          [
+            0.00215,
+            0.00155
+          ],
+          [
+            0.0025,
+            0.00185
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "a92837f1-0d1e-57e8-bc77-0fc5996165ef",
+      "physical_path_id": "d04c9900-77c5-55ab-921d-321a41640ece",
+      "from_node_id": "52e01f93-37fc-50c7-b074-8e27db8bd704",
+      "to_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0025,
+            0.00185
+          ],
+          [
+            0.00215,
+            0.00155
+          ],
+          [
+            0.0017,
+            0.00145
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "8d730f0b-3762-51a4-b5a6-b29d3a64f757",
+      "physical_path_id": "831e9258-6e77-5027-aee2-5977b8e20cff",
+      "from_node_id": "566c3046-f514-5cfc-9ecd-5aa6ad82e85b",
+      "to_node_id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0018,
+            0.0008
+          ],
+          [
+            0.00245,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "9f9e563d-1dc1-5a58-829a-5195b3705b60",
+      "physical_path_id": "831e9258-6e77-5027-aee2-5977b8e20cff",
+      "from_node_id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "to_node_id": "566c3046-f514-5cfc-9ecd-5aa6ad82e85b",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.00245,
+            0.0008
+          ],
+          [
+            0.0018,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "09516f5b-a1a5-56b2-8de4-27b50d74b1b3",
+      "physical_path_id": "5b1816d9-7ffe-5660-8b9d-18408d548cbd",
+      "from_node_id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "to_node_id": "7dd1b2ee-02cb-5034-98cc-679c7eb40975",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.00245,
+            0.0008
+          ],
+          [
+            0.00235,
+            0.00035
+          ],
+          [
+            0.00275,
+            0.00045
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "9f6cc160-48bc-5072-ad87-9ef85c5a3200",
+      "physical_path_id": "5b1816d9-7ffe-5660-8b9d-18408d548cbd",
+      "from_node_id": "7dd1b2ee-02cb-5034-98cc-679c7eb40975",
+      "to_node_id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.00275,
+            0.00045
+          ],
+          [
+            0.00235,
+            0.00035
+          ],
+          [
+            0.00245,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "ffd0144a-36b7-5f35-ac7d-cc538d664889",
+      "physical_path_id": "0edc98ad-178d-5c11-8b82-8b2486f45abb",
+      "from_node_id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "to_node_id": "52e01f93-37fc-50c7-b074-8e27db8bd704",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.00245,
+            0.0008
+          ],
+          [
+            0.0025,
+            0.00185
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": false,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "c5854bcd-bd7c-5b5d-b33c-9f537fd0d5cb",
+      "physical_path_id": "0edc98ad-178d-5c11-8b82-8b2486f45abb",
+      "from_node_id": "52e01f93-37fc-50c7-b074-8e27db8bd704",
+      "to_node_id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0025,
+            0.00185
+          ],
+          [
+            0.00245,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "public",
+      "is_open": false,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "2588d359-65b5-5e9a-86ba-007b8b070070",
+      "physical_path_id": "b86c07c0-cf5f-540e-8f15-ed7262eb0383",
+      "from_node_id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "to_node_id": "a0babbce-a480-525a-aa5f-170802b29bf6",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.00245,
+            0.0008
+          ],
+          [
+            0.0035,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "unknown",
+      "visibility": "public",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "a3f46195-4c75-5261-8dc3-11b33aa5b502",
+      "physical_path_id": "f03856dc-2074-52b5-a2f2-69db04aa10e0",
+      "from_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "to_node_id": "bb4d9c6f-b847-5827-b870-e2af5cda5223",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.001,
+            0.0008
+          ],
+          [
+            0.00125,
+            0.001
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "restricted",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "791cc80f-e2a6-5488-8755-7744ae418edb",
+      "physical_path_id": "f03856dc-2074-52b5-a2f2-69db04aa10e0",
+      "from_node_id": "bb4d9c6f-b847-5827-b870-e2af5cda5223",
+      "to_node_id": "db419d79-0e1d-57b6-902a-99ddfe5e0e2d",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.00125,
+            0.001
+          ],
+          [
+            0.001,
+            0.0008
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "restricted",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "eb5a9af8-d353-58dd-b21c-42075e93402b",
+      "physical_path_id": "5e6fa9b6-fd00-5a1e-af0d-338a29a46593",
+      "from_node_id": "bb4d9c6f-b847-5827-b870-e2af5cda5223",
+      "to_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.00125,
+            0.001
+          ],
+          [
+            0.0017,
+            0.00145
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "restricted",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    },
+    {
+      "id": "2453bd7f-ba13-55cb-8caf-b547f083288c",
+      "physical_path_id": "5e6fa9b6-fd00-5a1e-af0d-338a29a46593",
+      "from_node_id": "9f816778-2c07-5d3c-a2a0-2644c644ce16",
+      "to_node_id": "bb4d9c6f-b847-5827-b870-e2af5cda5223",
+      "frame_id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "kind": "walkway",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0017,
+            0.00145
+          ],
+          [
+            0.00125,
+            0.001
+          ]
+        ]
+      },
+      "accessibility_status": "verified_step_free",
+      "visibility": "restricted",
+      "is_open": true,
+      "evidence": "Synthetic exercise only; no physical accessibility survey."
+    }
+  ],
+  "anchors": [
+    {
+      "id": "a5c1ba0a-4d1f-56f1-a2cb-c3e5c6fa1bbe",
+      "place_id": "ba99c0c8-eda8-543c-93ae-ba13d0c237cd",
+      "node_id": "71e4a791-b309-5283-a21c-812174ad8a8e",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    },
+    {
+      "id": "e7769546-6dd4-5185-a2f2-8da792128161",
+      "place_id": "0e37a41c-bdcf-55c9-8f1f-e839d18a5e85",
+      "node_id": "d5b24e25-5893-5060-b0f1-a704b475b579",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    },
+    {
+      "id": "154faa31-91b5-5f5d-8da2-f73348ab0116",
+      "place_id": "0e37a41c-bdcf-55c9-8f1f-e839d18a5e85",
+      "node_id": "831f0c31-42d6-5411-9028-09e09635879f",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    },
+    {
+      "id": "b5e1befe-b901-5ffc-b0f9-314edd96661d",
+      "place_id": "49ee1739-2c72-5444-9d6f-f54bc92abfc7",
+      "node_id": "52e01f93-37fc-50c7-b074-8e27db8bd704",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    },
+    {
+      "id": "dc5a6f4f-5caf-5e24-aa5f-4a8f7be75aa0",
+      "place_id": "744ce7b1-71fd-57eb-861c-46022ccc8e24",
+      "node_id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    },
+    {
+      "id": "7b7bb23f-8512-582f-9be1-d551827abb0e",
+      "place_id": "5d6d838b-71bf-594f-9d63-4731466b0fd8",
+      "node_id": "58251fbc-ced9-58e9-ae6e-0c4c5f7d382a",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    },
+    {
+      "id": "1cabb7a7-b2d9-5b84-923d-3e1aff62056f",
+      "place_id": "2077862d-4838-5c3c-8ffd-83b83f4e7a71",
+      "node_id": "566c3046-f514-5cfc-9ecd-5aa6ad82e85b",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    },
+    {
+      "id": "b6cfb213-b385-5b19-a959-0340fb5481c6",
+      "place_id": "a6055911-9f03-5524-afad-5811a236079b",
+      "node_id": "7dd1b2ee-02cb-5034-98cc-679c7eb40975",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    },
+    {
+      "id": "31c5f979-84d4-54ca-baa7-eb15d9d21e37",
+      "place_id": "7714f517-d1db-5791-9723-6f4f804b0ab8",
+      "node_id": "7eda4377-495d-5445-9263-0bc6969cdb27",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    },
+    {
+      "id": "8b4aa6d4-4488-5ed7-ae5a-24f0e251fe8e",
+      "place_id": "ce9e742b-9096-5861-9bf3-2f320a77bd7b",
+      "node_id": "a0babbce-a480-525a-aa5f-170802b29bf6",
+      "accessibility_status": "unknown",
+      "is_open": true
+    },
+    {
+      "id": "c54d0bb5-084f-5c06-9db5-8d27d69bdc35",
+      "place_id": "0da98770-188c-501b-8bd7-b373280df91c",
+      "node_id": "bb4d9c6f-b847-5827-b870-e2af5cda5223",
+      "accessibility_status": "verified_step_free",
+      "is_open": true
+    }
+  ]
+}

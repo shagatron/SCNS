@@ -1,0 +1,6 @@
+{
+  "name": "smart-campus-navigation",
+  "private": true,
+  "workspaces": ["frontend", "tests/e2e"],
+  "engines": {"node": ">=22.12"}
+}

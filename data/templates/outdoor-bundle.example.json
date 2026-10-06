@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "units": "WGS84_degrees_and_metres",
+  "source_rights": "Original synthetic fixture for this project; contains no institutional drawings or personal data.",
+  "provenance": "Empty synthetic outdoor v1 template. For a real campus choose new UUIDs, code, identity, surveyed geometry and rights; do not relabel DEMO.",
+  "campus": {
+    "id": "374cb5d4-c750-557f-9ea3-9a009f42741f",
+    "code": "DEMO",
+    "name": "Demo Campus",
+    "timezone": "Asia/Kolkata",
+    "is_demo": true,
+    "center": {
+      "type": "Point",
+      "coordinates": [
+        0.0017,
+        0.0015
+      ]
+    },
+    "boundary": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -0.00035,
+            -0.0003
+          ],
+          [
+            0.00385,
+            -0.0003
+          ],
+          [
+            0.00385,
+            0.0031
+          ],
+          [
+            -0.00035,
+            0.0031
+          ],
+          [
+            -0.00035,
+            -0.0003
+          ]
+        ]
+      ]
+    }
+  },
+  "frames": [
+    {
+      "id": "659f6b11-59a4-555c-970c-c0001bcc5dbf",
+      "code": "outdoor-wgs84",
+      "kind": "outdoor"
+    }
+  ],
+  "buildings": [],
+  "places": [],
+  "nodes": [],
+  "edges": [],
+  "anchors": []
+}

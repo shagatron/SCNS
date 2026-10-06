@@ -1,0 +1,560 @@
+{
+  "$defs": {
+    "AnchorData": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "place_id": {
+          "format": "uuid",
+          "title": "Place Id",
+          "type": "string"
+        },
+        "node_id": {
+          "format": "uuid",
+          "title": "Node Id",
+          "type": "string"
+        },
+        "accessibility_status": {
+          "default": "unknown",
+          "enum": [
+            "verified_step_free",
+            "not_step_free",
+            "unknown"
+          ],
+          "title": "Accessibility Status",
+          "type": "string"
+        },
+        "is_open": {
+          "default": true,
+          "title": "Is Open",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "place_id",
+        "node_id"
+      ],
+      "title": "AnchorData",
+      "type": "object"
+    },
+    "BuildingData": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "code": {
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "footprint": {
+          "$ref": "#/$defs/Polygon"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "code",
+        "name",
+        "footprint"
+      ],
+      "title": "BuildingData",
+      "type": "object"
+    },
+    "CampusData": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "code": {
+          "maxLength": 32,
+          "minLength": 1,
+          "pattern": "^[A-Z0-9_-]+$",
+          "title": "Code",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "timezone": {
+          "title": "Timezone",
+          "type": "string"
+        },
+        "is_demo": {
+          "title": "Is Demo",
+          "type": "boolean"
+        },
+        "center": {
+          "$ref": "#/$defs/Point"
+        },
+        "boundary": {
+          "$ref": "#/$defs/Polygon"
+        }
+      },
+      "required": [
+        "id",
+        "code",
+        "name",
+        "timezone",
+        "is_demo",
+        "center",
+        "boundary"
+      ],
+      "title": "CampusData",
+      "type": "object"
+    },
+    "EdgeData": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "physical_path_id": {
+          "format": "uuid",
+          "title": "Physical Path Id",
+          "type": "string"
+        },
+        "from_node_id": {
+          "format": "uuid",
+          "title": "From Node Id",
+          "type": "string"
+        },
+        "to_node_id": {
+          "format": "uuid",
+          "title": "To Node Id",
+          "type": "string"
+        },
+        "frame_id": {
+          "format": "uuid",
+          "title": "Frame Id",
+          "type": "string"
+        },
+        "kind": {
+          "default": "walkway",
+          "enum": [
+            "walkway",
+            "ramp",
+            "stairs"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "geometry": {
+          "$ref": "#/$defs/LineString"
+        },
+        "accessibility_status": {
+          "default": "unknown",
+          "enum": [
+            "verified_step_free",
+            "not_step_free",
+            "unknown"
+          ],
+          "title": "Accessibility Status",
+          "type": "string"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "is_open": {
+          "default": true,
+          "title": "Is Open",
+          "type": "boolean"
+        },
+        "evidence": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "physical_path_id",
+        "from_node_id",
+        "to_node_id",
+        "frame_id",
+        "geometry",
+        "evidence"
+      ],
+      "title": "EdgeData",
+      "type": "object"
+    },
+    "FrameData": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "kind": {
+          "const": "outdoor",
+          "default": "outdoor",
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "code"
+      ],
+      "title": "FrameData",
+      "type": "object"
+    },
+    "LineString": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "LineString",
+          "default": "LineString",
+          "title": "Type",
+          "type": "string"
+        },
+        "coordinates": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Coordinates",
+          "type": "array"
+        }
+      },
+      "required": [
+        "coordinates"
+      ],
+      "title": "LineString",
+      "type": "object"
+    },
+    "NodeData": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "frame_id": {
+          "format": "uuid",
+          "title": "Frame Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "point": {
+          "$ref": "#/$defs/Point"
+        }
+      },
+      "required": [
+        "id",
+        "frame_id",
+        "label",
+        "point"
+      ],
+      "title": "NodeData",
+      "type": "object"
+    },
+    "PlaceData": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "entrance",
+            "building",
+            "library",
+            "cafe",
+            "water",
+            "washroom",
+            "garden",
+            "help"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 2000,
+          "title": "Description",
+          "type": "string"
+        },
+        "aliases": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 30,
+          "title": "Aliases",
+          "type": "array"
+        },
+        "building_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Building Id"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "point": {
+          "$ref": "#/$defs/Point"
+        }
+      },
+      "required": [
+        "id",
+        "code",
+        "name",
+        "kind",
+        "description",
+        "point"
+      ],
+      "title": "PlaceData",
+      "type": "object"
+    },
+    "Point": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "Point",
+          "default": "Point",
+          "title": "Type",
+          "type": "string"
+        },
+        "coordinates": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Coordinates",
+          "type": "array"
+        }
+      },
+      "required": [
+        "coordinates"
+      ],
+      "title": "Point",
+      "type": "object"
+    },
+    "Polygon": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "Polygon",
+          "default": "Polygon",
+          "title": "Type",
+          "type": "string"
+        },
+        "coordinates": {
+          "items": {
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "title": "Coordinates",
+          "type": "array"
+        }
+      },
+      "required": [
+        "coordinates"
+      ],
+      "title": "Polygon",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "units": {
+      "const": "WGS84_degrees_and_metres",
+      "title": "Units",
+      "type": "string"
+    },
+    "source_rights": {
+      "minLength": 1,
+      "title": "Source Rights",
+      "type": "string"
+    },
+    "provenance": {
+      "minLength": 1,
+      "title": "Provenance",
+      "type": "string"
+    },
+    "campus": {
+      "$ref": "#/$defs/CampusData"
+    },
+    "frames": {
+      "items": {
+        "$ref": "#/$defs/FrameData"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Frames",
+      "type": "array"
+    },
+    "buildings": {
+      "items": {
+        "$ref": "#/$defs/BuildingData"
+      },
+      "maxItems": 1000,
+      "title": "Buildings",
+      "type": "array"
+    },
+    "places": {
+      "items": {
+        "$ref": "#/$defs/PlaceData"
+      },
+      "maxItems": 10000,
+      "title": "Places",
+      "type": "array"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/$defs/NodeData"
+      },
+      "maxItems": 50000,
+      "title": "Nodes",
+      "type": "array"
+    },
+    "edges": {
+      "items": {
+        "$ref": "#/$defs/EdgeData"
+      },
+      "maxItems": 150000,
+      "title": "Edges",
+      "type": "array"
+    },
+    "anchors": {
+      "items": {
+        "$ref": "#/$defs/AnchorData"
+      },
+      "maxItems": 30000,
+      "title": "Anchors",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "units",
+    "source_rights",
+    "provenance",
+    "campus",
+    "frames",
+    "buildings",
+    "places",
+    "nodes",
+    "edges",
+    "anchors"
+  ],
+  "title": "Dataset",
+  "type": "object"
+}

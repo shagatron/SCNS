@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 from app.cli.dataset import read_bundle, seed_bundle
 from app.core.config import get_settings
-from app.db.session import get_session
+from app.db.session import get_admin_session, get_session
 from app.main import app
 
 
@@ -63,7 +63,12 @@ def seeded(db, bundle):
 
 @pytest.fixture
 def client(db, seeded):
+    def admin_db():
+        with db.begin_nested():
+            yield db
+
     app.dependency_overrides[get_session] = lambda: db
+    app.dependency_overrides[get_admin_session] = admin_db
     with TestClient(app) as client:
         yield client
     app.dependency_overrides.clear()

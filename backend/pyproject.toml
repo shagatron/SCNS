@@ -10,6 +10,7 @@ dependencies = [
   "alembic>=1.15,<2",
   "psycopg[binary]>=3.2,<4",
   "geoalchemy2>=0.17,<1",
+  "argon2-cffi>=25,<26",
 ]
 
 [dependency-groups]

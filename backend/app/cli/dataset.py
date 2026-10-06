@@ -2,7 +2,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-from uuid import uuid4
+from uuid import NAMESPACE_URL, uuid4, uuid5
 
 from geoalchemy2 import Geography
 from pydantic import ValidationError
@@ -23,6 +23,7 @@ from app.models import (
     Release,
     Revision,
 )
+from app.models.admin import PlaceAlias
 from app.schemas.dataset import Dataset
 from app.services.catalog import normalize
 
@@ -123,6 +124,19 @@ def seed_bundle(session: Session, bundle: Dataset) -> Release:
         )
     for a in bundle.anchors:
         session.add(Anchor(**scope, **a.model_dump()))
+    for place in bundle.places:
+        for value in dict.fromkeys(place.aliases):
+            normalized = normalize(value)
+            session.add(
+                PlaceAlias(
+                    **scope,
+                    id=uuid5(NAMESPACE_URL, f"scns-alias:{place.id}:{normalized}"),
+                    place_id=place.id,
+                    value=value,
+                    normalized=normalized,
+                    language="en",
+                )
+            )
     session.flush()
     invalid = session.scalar(
         select(func.count())

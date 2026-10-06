@@ -41,7 +41,8 @@ class Revision(Base):
     campus_id: Mapped[uuid.UUID] = mapped_column(UUID)
     version: Mapped[int] = mapped_column(Integer)
     status: Mapped[str] = mapped_column(String(16), default="draft")
-    checksum: Mapped[str] = mapped_column(String(64))
+    checksum: Mapped[str | None] = mapped_column(String(64))
+    edit_version: Mapped[int] = mapped_column(Integer, server_default="1")
     parent_id: Mapped[uuid.UUID | None] = mapped_column(UUID)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     __table_args__ = (
@@ -52,6 +53,9 @@ class Revision(Base):
             ["campus_id", "parent_id"], ["dataset_revisions.campus_id", "dataset_revisions.id"]
         ),
         CheckConstraint("status IN ('draft', 'review', 'frozen')"),
+        CheckConstraint(
+            "status <> 'frozen' OR checksum IS NOT NULL", name="frozen_checksum_required"
+        ),
     )
 
 

@@ -15,6 +15,11 @@ class Settings(BaseSettings):
     storage_root: str = "../storage"
     graph_node_limit: int = Field(default=50000, gt=0)
     graph_edge_limit: int = Field(default=150000, gt=0)
+    session_cookie_secure: bool = False  # Local HTTP only; deployment remains gated.
+    session_ttl_seconds: int = Field(default=28800, ge=300, le=86400)
+    login_account_limit: int = Field(default=5, ge=1, le=20)
+    login_ip_limit: int = Field(default=30, ge=1, le=100)
+    login_window_seconds: int = Field(default=900, ge=60, le=3600)
 
     @model_validator(mode="after")
     def production_guard(self):

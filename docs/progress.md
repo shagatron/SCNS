@@ -1,5 +1,25 @@
 # Project progress
 
+## Milestone 2A checkpoint — 6 October 2026
+
+Branch `feat/milestone-2-admin` starts at `86e1591`. Authorized scope is now **Milestone 2A only**; Milestones 0/1 remain the baseline. No imports, map graph editor, review/publish workflow, operational closures or deployment are included.
+
+Completed: migration for campus role grants, opaque hashed server sessions, durable login throttles, one-time bootstrap, normalized aliases/departments and append-only audit. Protected API supports draft copies, all five catalog CRUD types, version-conditional writes, role provisioning and campus-scoped reads. Public release pointers and projections are unchanged. Passwords use Argon2id; unsafe requests require allowed Origin and session-bound CSRF token.
+
+Verified so far: 13 new PostGIS admin integration cases pass. The preceding combined run also passed all 13 existing integration cases; two new test assertions were corrected (volatile route metadata and stale fixture identity-map state). Backend Ruff and migration upgrade passed before tests were added. Generated OpenAPI/TypeScript contracts updated.
+
+Unfinished: admin dashboard/forms are being connected, browser admin journeys and concurrent database transactions still need validation, final full lint/build/regression suite and migration roundtrip need running, setup/checklist/security docs need updating. No manual owner test or public deployment performed.
+
+Exact next steps:
+1. Complete `frontend/src/features/admin/` login, dashboard, catalog CRUD, conflict reconciliation, users/roles and audit interface.
+2. Add isolated browser test database/ports and admin desktop/mobile journeys; add real concurrent write regression.
+3. Run `make generate-api check build test-unit test-integration` and `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e`; fix failures. Check migration downgrade/reapply on a disposable test database.
+4. Update setup, security, verification and requirements documents; commit/push final work and open an unmerged PR against the baseline branch if main does not yet contain it.
+
+The backend checkpoint excludes unfinished frontend source files. No secrets, dependencies, databases or browser artifacts are staged.
+
+## Milestones 0/1 history
+
 Checkpoint: 6 October 2026 (Asia/Kolkata). Authorized scope: **Milestones 0 and 1** of `docs/product/master-spec.md`. Later milestones are not part of this delivery.
 
 ## Completed work

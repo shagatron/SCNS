@@ -5,8 +5,9 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
+from app.api.v1.admin import router as admin_router
 from app.api.v1.public import router
 from app.core.config import get_settings
 from app.core.errors import DomainError
@@ -14,13 +15,15 @@ from app.core.errors import DomainError
 app = FastAPI(
     title="Smart Campus Navigation",
     version="0.1.0",
-    description="Milestones 0–1. Synthetic outdoor navigation; public read-only API.",
+    description="Outdoor navigation and Milestone 2A campus-scoped draft administration.",
 )
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_settings().allowed_origins,
-    allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Content-Type", "X-CSRF-Token", "If-Match"],
+    allow_credentials=True,
+    expose_headers=["ETag", "X-Request-ID"],
 )
 
 
@@ -30,7 +33,7 @@ async def request_id(request: Request, call_next):
     response = await call_next(request)
     response.headers["X-Request-ID"] = request.state.request_id
     response.headers["X-Content-Type-Options"] = "nosniff"
-    if request.url.path.endswith("/routes"):
+    if request.url.path.endswith("/routes") or request.url.path.startswith("/api/v1/admin"):
         response.headers["Cache-Control"] = "no-store"
     return response
 
@@ -66,6 +69,21 @@ async def validation_error(request: Request, exc: RequestValidationError):
 
 @app.exception_handler(SQLAlchemyError)
 async def database_error(request: Request, exc: SQLAlchemyError):
+    if request.url.path.startswith("/api/v1/admin"):
+        if isinstance(exc, IntegrityError):
+            return error_response(
+                request,
+                "conflict",
+                "A code or link is duplicated, or another record still references this item. Reconcile references and try again.",
+                409,
+            )
+        if getattr(getattr(exc, "orig", None), "sqlstate", None) in {"40001", "40P01"}:
+            return error_response(
+                request,
+                "conflict",
+                "A concurrent change occurred. Reload the draft and reconcile your changes.",
+                409,
+            )
     logging.getLogger("scns").error(
         "Database failure request_id=%s type=%s", request.state.request_id, type(exc).__name__
     )
@@ -78,3 +96,4 @@ async def database_error(request: Request, exc: SQLAlchemyError):
 
 
 app.include_router(router)
+app.include_router(admin_router)

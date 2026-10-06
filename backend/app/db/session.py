@@ -14,3 +14,12 @@ engine = create_engine(
 def get_session():
     with Session(engine) as session, session.begin():
         yield session
+
+
+def get_admin_session():
+    # Atomic conditional writes/row locks serialize edits without stale snapshots.
+    with (
+        Session(engine.execution_options(isolation_level="READ COMMITTED")) as session,
+        session.begin(),
+    ):
+        yield session

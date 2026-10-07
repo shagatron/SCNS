@@ -1,3 +1,11 @@
+## M2B2 delivery receipt and PR blocker — 7 October 2026
+
+Completion commit **`93b525708f8cc59e537af0d402e54b7b611cd9e4`** is pushed to **`feat/milestone-2-graph-editor`**, which starts at completed imports `4444c68`. Working tree was clean after delivery; no user changes/secrets/dependencies/databases/uploads/build artifacts were included. Source startup and shutdown were verified and the built local Compose stack restored; API, DB, frontend and import worker are running locally. No public deployment/environment publication or merge occurred.
+
+The actual `gh pr create` command targeting `feat/milestone-2-imports` exited 1: `Post "https://api.github.com/graphql": Forbidden`, with no PR URL returned. Git HTTPS pushes work. Complete prepared description: **`docs/reviews/milestone-2b2-pr.md`**. [Compare/open the PR](https://github.com/shagatron/SCNS/compare/feat%2Fmilestone-2-imports...feat%2Fmilestone-2-graph-editor?expand=1). This is a GitHub API access blocker, not a test failure. No credential or permission request is needed to preserve the completed work; owner can open the PR through that browser link.
+
+Remaining next steps: owner manual testing when convenient, open the prepared PR and review without merging as part of this task. Milestone 2C review/publication/rollback, indoor navigation, live closures and deployment require a separate authorized task. Actual automated checks/limits and exact update/start commands remain in `docs/testing/verification.md` and `docs/operations/graph-editor.md`.
+
 ## Milestone 2B2 implementation and verification complete — 7 October 2026
 
 Delivered the visual outdoor draft graph editor from clean verified `4444c68` on `feat/milestone-2-graph-editor`. Existing files/architecture/admin/import documentation were read; no worktree/reset or discarded changes. Unfinished checkpoints `2fa6e93`, `5cd3c62`, `a8062f1` were pushed.

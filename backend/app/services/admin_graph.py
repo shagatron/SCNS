@@ -138,7 +138,9 @@ def inspect_state(db, revision, state):
                 [identity],
             )
         if edge["accessibility_status"] == "verified_step_free" and (
-            edge["kind"] == "stairs" or not edge["evidence"].strip()
+            edge["kind"] == "stairs"
+            or (edge.get("step_count") or 0) > 0
+            or not edge["evidence"].strip()
         ):
             report(
                 "accessibility",
@@ -201,6 +203,10 @@ def inspect_state(db, revision, state):
                 "accessibility_status",
                 "distance_status",
                 "evidence",
+                "width_m",
+                "slope_percent",
+                "step_count",
+                "surface",
             ]
             if (
                 a["from_node_id"] != b["to_node_id"]

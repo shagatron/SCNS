@@ -154,6 +154,10 @@ class Node(RevisionEntity, Base):
 
 class Edge(RevisionEntity, Base):
     __tablename__ = "navigation_edges"
+    width_m: Mapped[float | None] = mapped_column(Float)
+    slope_percent: Mapped[float | None] = mapped_column(Float)
+    step_count: Mapped[int | None] = mapped_column(Integer)
+    surface: Mapped[str | None] = mapped_column(String(120))
     physical_path_id: Mapped[uuid.UUID] = mapped_column(UUID)
     from_node_id: Mapped[uuid.UUID] = mapped_column(UUID)
     to_node_id: Mapped[uuid.UUID] = mapped_column(UUID)
@@ -181,6 +185,18 @@ class Edge(RevisionEntity, Base):
             ["coordinate_frames.dataset_revision_id", "coordinate_frames.id"],
         ),
         CheckConstraint("from_node_id <> to_node_id"),
+        CheckConstraint(
+            "width_m IS NULL OR (width_m > 0 AND width_m < 'Infinity'::float)", name="edge_width"
+        ),
+        CheckConstraint(
+            "slope_percent IS NULL OR (slope_percent >= 0 AND slope_percent < 'Infinity'::float)",
+            name="edge_slope",
+        ),
+        CheckConstraint("step_count IS NULL OR step_count >= 0", name="edge_steps"),
+        CheckConstraint(
+            "accessibility_status <> 'verified_step_free' OR step_count IS NULL OR step_count = 0",
+            name="edge_step_free_steps",
+        ),
         CheckConstraint("distance_m > 0 AND distance_m < 'Infinity'::float"),
         CheckConstraint("distance_status IN ('measured', 'calibrated', 'estimated')"),
         CheckConstraint("kind IN ('walkway', 'ramp', 'stairs')"),

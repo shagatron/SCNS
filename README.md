@@ -99,10 +99,14 @@ Validation performs no database writes. The demo seed command only accepts `DEMO
 
 ## Next milestone and limitations
 
-Milestone **2A** delivers campus-scoped admin authentication, catalog CRUD, audit and optimistic concurrency. The [one-time `bootstrap-admin` command](docs/operations/admin.md) is working. Milestones **2B/2C remain unimplemented**: staged CSV/JSON/GeoJSON imports, outdoor graph editing, validation/review approval, publication/rollback and approved asset projection. Real-data `import-dataset`, `export-release`, and backup/restore commands will be delivered with their relevant milestones.
+Milestone **2A** delivers campus-scoped admin authentication, catalog CRUD, audit and optimistic concurrency. The [one-time `bootstrap-admin` command](docs/operations/admin.md) is working. Milestones **2B1/2B2** deliver staged CSV/JSON/GeoJSON imports, the outdoor draft graph editor, graph diagnostics and draft route tests. **2C remains unimplemented**: review approval, publication/rollback and approved asset projection. Real-data `import-dataset`, `export-release`, and backup/restore commands will be delivered with their relevant milestones.
 
 Indoor navigation/floorplans are Milestone 3; QR, geolocation, live closures, reports and saved-route offline/PWA support are Milestone 4. The present route policy uses static release state at request time and does not evaluate opening schedules. No real campus accessibility, physical path accuracy, load benchmark, screen-reader certification or deployment is claimed. Official maps and ownership/licensing decisions remain external inputs. No code license has been chosen on the owner's behalf; see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Staged draft imports (2B1)
 
 See [the import setup and workflow guide](docs/operations/imports.md) and [executable import-v1 templates](data/templates/import-v1/README.md). `make dev` now starts the private DB-backed import worker with API/frontend; Compose requires `docker compose up -d --wait api frontend import-worker`. Imports never publish and public navigation stays on the existing release.
+
+## Outdoor draft graph editor (2B2)
+
+See [graph update/startup instructions, editing controls, recovery and concurrency](docs/operations/graph-editor.md). Node, paired directed-edge and entrance edits remain private drafts. Width/slope/steps/surface are unknown until provided; geometry changes never automatically certify accessibility. Per-tab recovery autosaves local input, while saving to the server is explicit. Graph validation and Dijkstra test routes do not publish.

@@ -28,3 +28,5 @@ uv run --frozen python -m app.cli.imports validate \
 ```
 
 Floors, rooms, connectors, floorplan/calibration/QR and opening-rule root templates are preparation-only future milestones. This import slice accepts CSV/JSON/GeoJSON outdoor/catalog records, not image/PDF uploads or indoor pixels.
+
+M2B2-compatible optional fields: node `evidence` contains source/last-verification notes; edge `width_m`, `slope_percent`, `step_count`, `surface` default to null/unknown. Omit optional numeric CSV columns for unknown values or use JSON null. Never fill unmeasured dimensions with zero (zero width is invalid); explicit zero steps is a measured assertion, distinct from unknown. See typed schemas and graph operations.

@@ -37,3 +37,7 @@ The full master-spec entities not yet needed—floors/rooms, connectors, source 
 | `audit_events` | Append-only actor, campus/revision/resource, action, before/after JSON, request reference and UTC timestamp; no passwords or session/CSRF tokens |
 
 Migration `9fde71668c52` backfills canonical aliases from existing immutable place JSON without changing public release fields/checksums. Migration `0005_anchor_evidence` adds an empty-default private notes field; it invents no field evidence for old releases. New explicit demo seeds label their synthetic notes. Draft HTTP writes require nonblank notes for affirmative step-free edits; surveyed accuracy remains a human responsibility and later validation/publication gate.
+
+## Outdoor graph editor extensions (2B2)
+
+Node `evidence` is bounded private source/last-verification text, default blank/unverified. Edges add nullable positive finite `width_m`, nonnegative finite `slope_percent`, nonnegative integer `step_count`, and bounded `surface`. NULL means unknown; no optimistic measurement defaults. Verified step-free edges cannot contain positive steps. Graph editor assertions require dated source notes; old imported evidence is reviewed through diagnostics. These fields are draft/private administration data and are excluded from current public projections.

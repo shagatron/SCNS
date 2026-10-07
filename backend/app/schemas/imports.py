@@ -67,6 +67,10 @@ class NodeFields(DTO):
 
 
 class EdgeFields(DTO):
+    width_m: float | None = Field(default=None, gt=0, allow_inf_nan=False)
+    slope_percent: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    step_count: int | None = Field(default=None, ge=0, le=1000000)
+    surface: str | None = Field(default=None, min_length=1, max_length=120)
     frame_id: UUID
     from_node_id: UUID
     to_node_id: UUID

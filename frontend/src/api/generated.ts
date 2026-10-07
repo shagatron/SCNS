@@ -769,6 +769,14 @@ export interface components {
         };
         /** EdgeFields */
         EdgeFields: {
+            /** Width M */
+            width_m?: number | null;
+            /** Slope Percent */
+            slope_percent?: number | null;
+            /** Step Count */
+            step_count?: number | null;
+            /** Surface */
+            surface?: string | null;
             /**
              * Frame Id
              * Format: uuid

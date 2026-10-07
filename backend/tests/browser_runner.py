@@ -30,6 +30,8 @@ def main():
         ALLOWED_ORIGINS='["http://127.0.0.1:5174"]',
         API_PROXY_TARGET="http://127.0.0.1:8001",
         SESSION_COOKIE_SECURE="false",
+        # More authenticated journeys share one test-proxy IP; production default remains 30.
+        LOGIN_IP_LIMIT="100",
     )
     # Application imports must follow the test environment configuration.
     from app.cli.admin import bootstrap

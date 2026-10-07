@@ -85,7 +85,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e
 make generate-api
 ```
 
-`make test-e2e` provisions and **resets only `scns_e2e_test`**, migrates/seeds it, creates random ephemeral browser credentials, and starts isolated API/Vite processes on 8001/5174 plus the bounded import worker with temporary private storage. It never reuses a running developer server. A non-default `E2E_DATABASE_URL` must name a database ending `_e2e_test`; the database must already exist. Credentials are passed only through child-process environment, and admin traces/video/screenshots are disabled. Public journey artifacts remain ignored under `frontend/test-results`.
+`make test-e2e` provisions and **resets only `scns_e2e_test`**, migrates/seeds it, creates random ephemeral browser credentials, and starts isolated API/Vite processes on 8001/5174 plus the bounded import worker with temporary private storage. It never reuses a running developer server. A non-default `E2E_DATABASE_URL` must name a database ending `_e2e_test`; the database must already exist. Credentials are passed only through child-process environment, and admin traces/video/screenshots are disabled. The isolated browser runner sets `LOGIN_IP_LIMIT=100` because the enlarged suite shares one proxy IP; the application default remains 30 and backend throttle protections retain their regression tests. Public journey artifacts remain ignored under `frontend/test-results`.
 
 `make test-migrations` resets only `scns_migration_test`, exercises fresh migration, downgrade to M1 and re-upgrade with frozen demo data, checks alias backfill, active release/checksum preservation, frozen protection and model/schema alignment. `MIGRATION_DATABASE_URL` must end `_migration_test`. Both test commands are destructive to their dedicated test databases; never point them at valuable data. Integration tests use `scns_test` with rollback isolation; the concurrent-write case commits uniquely named temporary records and removes them afterward.
 
@@ -99,4 +99,4 @@ UV_CACHE_DIR=/tmp/scns-uv-cache PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chr
 
 No official maps, field validation, owner manual app test, physical-device/assistive-technology verification or deployment is implied by these synthetic automated checks.
 
-Staged data imports are delivered in 2B1. See [import permissions, formats, worker startup and transactional workflow](imports.md). Graph editing and review/publication remain later work.
+Staged data imports are delivered in 2B1. See [import permissions, formats, worker startup and transactional workflow](imports.md). Outdoor graph editing, diagnostics and draft route tests are delivered in 2B2; see [graph operations](graph-editor.md). Review/publication remains later work.

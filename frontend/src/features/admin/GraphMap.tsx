@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from 'react'
-import { CircleMarker, GeoJSON, MapContainer, Polyline, Tooltip, useMapEvents } from 'react-leaflet'
+import { useEffect, useMemo, useState } from 'react'
+import { CircleMarker, GeoJSON, MapContainer, Polyline, TileLayer, Tooltip, useMapEvents } from 'react-leaflet'
 import type { GeoJsonObject } from 'geojson'
 import { DomEvent } from 'leaflet'
 import { toLeaflet } from '../maps/coordinates'
@@ -18,8 +18,11 @@ function Controls({ graph, click }: { graph: Graph; click: (point: Position) => 
   return <button className="map-fit" onClick={e => { e.stopPropagation(); map.fitBounds(bounds.map(toLeaflet), { padding: [20, 20], animate: false }) }}>Fit draft campus</button>
 }
 export default function GraphMap({ graph, selected, select, click, vertex, route }: { graph: Graph; selected: { layer: Layer; id: string } | null; select: (layer: Layer, id: string) => void; click: (point: Position) => void; vertex: (n: number) => void; route: string[] }) {
+  const [tileFailed, setTileFailed] = useState(false)
+  const tileUrl = import.meta.env.VITE_BASEMAP_URL, attribution = import.meta.env.VITE_BASEMAP_ATTRIBUTION
   const first = graph.campus.boundary.coordinates[0][0]
   return <section aria-label="Visual outdoor draft graph" className="graph-map-panel"><MapContainer className="graph-map" center={toLeaflet(first)} zoom={17} minZoom={12} maxZoom={24} scrollWheelZoom={false}>
+    {tileUrl && attribution && <TileLayer url={tileUrl} attribution={attribution} eventHandlers={{tileerror:()=>setTileFailed(true)}} />}
     <GeoJSON data={graph.campus.boundary as GeoJsonObject} style={{ color: '#728878', weight: 2, fillOpacity: 0.06 }} />
     {Object.entries(graph.edges).map(([id, edge]) => <Polyline key={id} positions={edge.geometry.coordinates.map(p => toLeaflet(p as Position))} pathOptions={{ color: route.includes(id) ? '#803fb4' : selected?.layer === 'edges' && graph.edges[selected.id]?.physical_path_id === edge.physical_path_id ? '#126e58' : edge.is_open ? '#627d8d' : '#a13636', weight: selected?.id === id ? 7 : 4, dashArray: edge.visibility === 'restricted' ? '6 6' : undefined }} eventHandlers={{ click: e => { DomEvent.stopPropagation(e.originalEvent); select('edges', id) } }}><Tooltip>{graph.nodes[edge.from_node_id]?.label} → {graph.nodes[edge.to_node_id]?.label} · {edge.accessibility_status} · {edge.is_open ? 'open in draft' : 'closed in draft'}</Tooltip></Polyline>)}
     {Object.entries(graph.places).map(([id, place]) => <CircleMarker key={id} center={toLeaflet(place.point.coordinates)} radius={3} pathOptions={{ color: '#815126', fillOpacity: 1 }}><Tooltip>{place.name} · Place</Tooltip></CircleMarker>)}
@@ -27,5 +30,5 @@ export default function GraphMap({ graph, selected, select, click, vertex, route
     {Object.entries(graph.nodes).filter(([, node]) => node.point).map(([id, node]) => <CircleMarker key={id} center={toLeaflet(node.point.coordinates as Position)} radius={selected?.id === id ? 8 : 5} pathOptions={{ color: node.visibility === 'restricted' ? '#8d3141' : '#153e35', fillColor: '#fff', fillOpacity: 1, weight: 2 }} eventHandlers={{ click: e => { DomEvent.stopPropagation(e.originalEvent); select('nodes', id) } }}><Tooltip>{node.label} · Node · {node.visibility}</Tooltip></CircleMarker>)}
     {selected?.layer === 'edges' && graph.edges[selected.id]?.geometry.coordinates.map((p, n) => <CircleMarker key={`vertex-${n}`} center={toLeaflet(p as Position)} radius={4} pathOptions={{ color: '#1434aa', fillColor: '#fff', fillOpacity: 1 }} eventHandlers={{ click: e => { DomEvent.stopPropagation(e.originalEvent); vertex(n) } }}><Tooltip>Vertex {n + 1}</Tooltip></CircleMarker>)}
     <Controls graph={graph} click={click} />
-  </MapContainer><p>● Node · brown ring: entrance anchor · line: stored directed path · dashed: restricted · purple: draft test route. Select a feature on the map or in the lists.</p></section>
+  </MapContainer><p>● Node · brown ring: entrance anchor · line: stored directed path · dashed: restricted · purple: draft test route. Select a feature on the map or in the lists.</p>{tileFailed && <p role="status">Approved background tiles are unavailable. Stored graph geometry and coordinate controls remain usable.</p>}</section>
 }

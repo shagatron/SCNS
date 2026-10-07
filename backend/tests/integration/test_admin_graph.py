@@ -524,6 +524,7 @@ def test_map_precision_dated_accessibility_anchor_update_and_near_duplicate_diag
         data["evidence"] = (
             f"Synthetic test source {date.today().isoformat()}; no physical verification."
         )
+        data.update(width_m=1.8, slope_percent=3.4, step_count=0, surface="Synthetic concrete")
     result = save(
         client,
         path,
@@ -532,6 +533,11 @@ def test_map_precision_dated_accessibility_anchor_update_and_near_duplicate_diag
         [{"entity": "edges", "id": e, "data": edge}, {"entity": "edges", "id": r, "data": reverse}],
     )
     assert result.status_code == 200, result.text
+    for edge_id in (e, r):
+        assert result.json()["edges"][edge_id]["width_m"] == 1.8
+        assert result.json()["edges"][edge_id]["slope_percent"] == 3.4
+        assert result.json()["edges"][edge_id]["step_count"] == 0
+        assert result.json()["edges"][edge_id]["surface"] == "Synthetic concrete"
     place = next((i for i, p in state["places"].items() if p["visibility"] == "public"))
     data = {"place_id": place, "node_id": a, "accessibility_status": "unknown"}
     result = save(client, path, headers, 3, [{"entity": "anchors", "id": anchor, "data": data}])
@@ -565,3 +571,24 @@ def test_map_precision_dated_accessibility_anchor_update_and_near_duplicate_diag
     diagnostics = client.get(path + "/validation").json()["diagnostics"]
     assert any(x["code"] == "near_duplicate" and set(x["ids"]) == {a, near} for x in diagnostics)
     assert any(x["code"] == "components_step_free" for x in diagnostics)
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("width_m", 0),
+        ("width_m", -1),
+        ("slope_percent", -1),
+        ("step_count", -1),
+        ("step_count", 1.5),
+        ("surface", ""),
+    ],
+)
+def test_invalid_measurement_does_not_consume_version(client, bundle, identity, field, value):
+    headers, draft, path, state = start(client, bundle, identity)
+    edge_id = next(iter(state["edges"]))
+    data = edge_data(state, edge_id)
+    data[field] = value
+    response = save(client, path, headers, 1, [{"entity": "edges", "id": edge_id, "data": data}])
+    assert response.status_code == 422, response.text
+    assert client.get(path).json() == state

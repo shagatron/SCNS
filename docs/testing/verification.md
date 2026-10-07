@@ -1,5 +1,39 @@
 # Verification evidence
 
+## M2B2 final verification — 7 October 2026
+
+Scope: outdoor draft graph editor from verified M2B1 `4444c68`, existing checkout, no worktree/reset. Pushed unfinished checkpoints: `2fa6e93`, `5cd3c62`, `a8062f1`. Review/publication/rollback, indoor navigation, live closures and deployment remain outside this milestone.
+
+| Executed check | Observed result |
+|---|---|
+| Final `make check` | Ruff lint/format **51 files**, TypeScript and ESLint passed |
+| Final `make build` | Vite production build and Python compilation passed |
+| Final `make test-unit` | **35 Python unit + 19 frontend tests passed**, no skips |
+| Final `make test-integration` | **74 real PostGIS tests passed**, including 50 existing admin/import/public regressions and 24 graph cases; no skips |
+| Final `make test-migrations` | Fresh schema, M1 downgrade/re-upgrade through `0008_outdoor_accessibility`, frozen guard/alias backfill, release/checksum preservation, one-time trusted bootstrap and model alignment passed |
+| Final `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e` | **38 passed**, no skips: 10 graph, 12 admin/session, 6 import and 10 public-navigation journeys across desktop and 360px mobile Chromium |
+| Final `make validate-dataset` | 11-place/13-node/27-edge original synthetic outdoor bundle valid |
+| `make generate-api` + before/after SHA-256 | OpenAPI, generated TypeScript and both dataset/import schemas reproduced byte-for-byte |
+| `python scripts/cloud-build.py` | Both images built with existing proxy/CA trust and frozen dependency verification |
+| Compose migration/startup | API/frontend/import-worker healthy; current migration `0008_outdoor_accessibility`; volumes/uploads/.env preserved |
+| Built nginx/API smoke | PostGIS ready; graph/session/import endpoints 401 anonymously; private paths 404; Main Gate → Library **256.88m / three stored edges** on release `4eb587e6-5607-48ed-a8ca-f5c0d8f1c505` |
+| Built Chromium anonymous admin smoke | Normal login, no alerts/runtime errors, exactly one session check |
+| Built isolated authenticated API smoke | Login/CSRF, atomic node move, stale-version rejection, quality validation, stored Dijkstra draft route, unchanged public release/route and logout revocation passed |
+| Container worker `once` / graph source hash | Durable queue command succeeded; built/source `admin_graph.py` SHA-256 identical (`90fb58d4ee13201d0dee13be2d46ae039d62702c4df014cacf192de12000650a`) |
+| Documented host `make dev` / shutdown | API/PostGIS and frontend ready, stored route succeeded; SIGTERM closed source ports; Compose stack restored |
+| Host `make migrate seed-demo` | Idempotent update/seed passed; existing public release/checksum retained |
+| `git diff --check` / staged-file review | Passed; no secrets, dependencies, databases, upload originals, build outputs or browser artifacts staged |
+
+Graph integration coverage includes four campus-scoped roles, unknown/foreign campus and revision rejection, Origin/CSRF/preconditions, node movement with full incident polylines and recalculated costs, paired directions and physical attributes, node/edge/anchor changes, explicit dependent deletion, forbidden references/visibility, invalid geometry/boundary/accessibility/measurements, late injected rollback of records/version/audit, same-version retry, independent real committed writer competition, precise map coordinates, near-duplicate and crossing diagnostics, deliberate shared-node intersection creation, stored draft Dijkstra and unchanged public search/map/routes. Audit assertions include persisted geometry/length and actor/campus/revision/request identity.
+
+Frontend tests cover geometry-preserving moves, paired split topology, deliberate connection constraints, explicit deletion diffs and independent/same-record reconciliation. Browser tests cover actual pointer node creation/movement and vertex drawing/repositioning, coordinate forms, direction pairs and nullable measurements, split/entrance changes, dependent deletion preview, undo/redo, rejected-save input retention, reload recovery including unfinished coordinate text and selected draft, explicit conflict choices, reviewer/operations controls, graph quality, computed draft route, mobile overflow and axe checks. Legacy admin/import/navigation journeys all passed. Private credentials remain ephemeral and admin traces/screenshots/video disabled.
+
+Final full browser suite used isolated source API/Vite/worker on 8001/5174 and took 1.6 minutes. Built nginx received public/protected/private-path and anonymous browser smoke, not the full authenticated browser suite. Additional authenticated built-image API smoke ran on an internal temporary server against only the disposable `_e2e_test` database, with a random unique test user/draft; unique test records were removed afterward. It created no developer administrator or persistent credential. The isolated smoke uses the same increased test IP budget as the browser runner; production's default remains 30.
+
+Failures during development were resolved before the final passing runs: a stopped database was restarted preserving its volume; mutable test expectation fixtures were corrected; selected-draft recovery and displayed-label filtering were fixed; Vite prebundling avoids first-use map reload; exact stored endpoints avoid rounded-GeoJSON precision failures. A mobile test tap was outside the visible campus boundary; the server correctly rejected it, and the test now targets rendered boundary coordinates. Added login journeys exceeded the default shared-IP test budget; `LOGIN_IP_LIMIT=100` is scoped only to disposable browser/smoke processes. No application security limit/assertion was disabled. A first container readiness assertion confused `status=ok` with `database=ready`; the corrected schema assertion passed.
+
+Unverified: official maps/source rights/field surveys, owner manual testing, physical phones, Safari/Firefox, human screen readers, large-campus performance/process-kill chaos, production TLS/pentest/load/backup restoration and remote GitHub Actions. Recovery is per tab/two hours with 30 undo snapshots; batches cap 500 affected records, layers 15,000 records and findings/spatial warnings have documented caps. Accessibility source notes/dates are administrative assertions; synthetic data does not establish physical verification. No public deployment/environment publication occurred. Final commit/push and PR receipt are recorded in `docs/progress.md`.
+
 ## M2B1 final verification — 7 October 2026 (Asia/Kolkata)
 
 Scope: staged CSV/JSON/GeoJSON draft imports only, based on `9f0e489`, with pushed checkpoints `790bc4a` and `6e54e5f`. No implementation restart. The latest resume preserved all UI/cache-refresh changes before further verification. Milestone 2B2, review/publication and deployment are outside this result.

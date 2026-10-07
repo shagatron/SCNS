@@ -1,3 +1,13 @@
+## M2C unfinished scope checkpoint — 7 October 2026
+
+Authorized by the owner’s pasted request; existing checkout clean at verified `21c65fb`. Branch `feat/milestone-2-publication` starts there; no worktree/reset/discard. Prior 2B2 implementation and verification retained.
+
+Acceptance: authoritative whole-draft validation (catalog/import/geometry/graph/anchors/accessibility), blocking errors versus individually acknowledged warnings, computed standard/step-free expected-route evidence; explicit submit/reject/return/approve states bound to exact version/content; independent campus reviewer; source rights/provenance and reviewed outdoor public derivatives with private originals; reproducible immutable public artifacts; atomic publish and guarded rollback/history; stale-client recovery; transactional CAS/idempotency/audit. Preserve all existing workflows. Floorplan image/PDF processing is M3; live closures/QR/PWA/deployment remain excluded.
+
+Implementation slices: backend lifecycle/migration/permission/transaction tests; responsive review/source/asset/history screens plus public recovery; full regression, migrations and container smoke against disposable databases only. No developer draft/release/account will be published/rolled back for testing. Windows Docker Desktop update instructions will retain volumes and .env.
+
+Unfinished: application implementation and all new verification. Existing 2B2 results remain historical evidence, not 2C verification. Next: implement review records, exact-content validation/projection, lifecycle and transaction guards; then UI and isolated browser journeys; run all checks, document actual results, push and attempt PR targeting `feat/milestone-2-graph-editor` without merging.
+
 ## M2B2 delivery receipt and PR blocker — 7 October 2026
 
 Completion commit **`93b525708f8cc59e537af0d402e54b7b611cd9e4`** is pushed to **`feat/milestone-2-graph-editor`**, which starts at completed imports `4444c68`. Working tree was clean after delivery; no user changes/secrets/dependencies/databases/uploads/build artifacts were included. Source startup and shutdown were verified and the built local Compose stack restored; API, DB, frontend and import worker are running locally. No public deployment/environment publication or merge occurred.

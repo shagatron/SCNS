@@ -1,5 +1,27 @@
 # Verification evidence
 
+## M2A admin session follow-up — 7 October 2026 (Asia/Kolkata)
+
+The inspection issue is fixed on `feat/milestone-2-admin`, based on `bdbc2c4`. A fresh anonymous `/session` 401 now resolves to a stable logged-out query result, without an expiration notice. Previously, the global 401 event cleared/recreated that same observed query and incorrectly displayed “Your session ended”. A known session rejected on recheck or a protected request still ends, cancels pending admin work, and removes private data. Anonymous focus/reconnect events do not initiate new checks. Successful login and deliberate logout reset the notice; cancelled older checks cannot override a newer login. Public query data is retained.
+
+| Executed check | Result |
+|---|---|
+| Original-code regression reproduction | The fresh-visit test failed on the unwanted session-ended alert with the previous UI/API restored; fixed files were restored afterward |
+| `make check` | Ruff/format, TypeScript and ESLint passed on final source |
+| `make build`; final `cd frontend && npm run build` | Vite and Python compilation passed; final lazy admin bundle built |
+| `make test-unit`; final `cd frontend && npm test` | **21 Python unit + 14 Vitest tests passed**, including 7 session lifecycle regressions |
+| `make test-integration` | **28 passed**, including server expiry, revocation, disabled-user, Origin/CSRF and campus-permission checks |
+| `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e` | **22 passed**: 12 admin + 10 original public journeys, desktop and 360px mobile; no failures/skips in final suite |
+| `python scripts/cloud-build.py`; `docker compose up -d --wait api frontend` | Images built and local stack healthy; frontend serves the fix |
+| Headless Chromium against the built nginx app | `/admin` reached network idle, showed normal login with no alert, made exactly one session request, and made no additional request on focus |
+| `git diff --check` | Passed |
+
+The new frontend tests cover fresh anonymous/StrictMode behavior, known-session 401 handling, private-data cleanup while preserving public data, protected-request invalidation, cancellation of a pending older session check, CSRF 403 without logout, renewed login, quiet deliberate logout, and network errors without false expiry claims. Browser regressions use actual server logout outside the UI to revoke an established session, then verify focus recheck, one end notice, re-login and quiet logout. Admin traces remain disabled and passwords/tokens remain ephemeral.
+
+During test development, a non-bubbling synthetic visibility event was sent to `document`, while TanStack Query listens on `window`; the fixture now dispatches at the correct target. A first run also overlapped a source edit and Vite hot reload. The final full run used stable source and passed all 22 journeys. The expected failing old-code reproduction is not counted among passing tests.
+
+Backend authentication, cookies, expiry/revocation, throttles, permissions, CSRF and migrations were unchanged. No migration downgrade/rehearsal was repeated for this frontend-only fix; its prior evidence remains below. Physical-device/manual owner testing and remote Actions remain unverified. Existing GitHub API/PR access limitations are unchanged. No Milestone 2B work or public deployment occurred.
+
 ## Milestone 2A — 7 October 2026 (Asia/Kolkata)
 
 This is the final local automated validation of the admin-only 2A slice, based on M0/M1 commit `86e1591`. Earlier failures were diagnosed and fixed before the results below; no failed/skipped case is counted as passed.

@@ -1,5 +1,17 @@
 # Project progress
 
+## M2A session inspection fix — 7 October 2026 (Asia/Kolkata)
+
+Completed the follow-up on `feat/milestone-2-admin` from `bdbc2c4`. The screenshot branch `docs/app-preview-screenshots` and its historical PNGs are preserved separately. No Milestone 2B work was started.
+
+The fresh-visit loop came from treating the initial session-check 401 as an expired session and clearing the observed query. The session controller now settles that response as normal anonymous state, keeps the session query intact, and limits focus/reconnect checks to established sessions. Only a previously established session rejected by the server triggers the end notice and private admin-data cleanup. Login and intentional logout reset the notice. Cancelled older checks cannot overwrite a new login, and public cache data is retained. Backend authorization, cookie/session expiry/revocation and CSRF controls are unchanged.
+
+Regression evidence: the fresh-visit test failed against the original UI/API implementation and passes with the fix. Final checks passed: Ruff/format, TypeScript, ESLint, Vite/Python build, **21 Python unit, 28 PostGIS integration, 14 frontend and 22 desktop/mobile browser tests**. The browser suite includes actual server revocation/re-login/quiet logout and all ten public-navigation regressions. Images rebuilt and the running local nginx app reached network idle with a normal login, no alert, exactly one initial session check and no extra focus check. See `docs/testing/verification.md` for commands and test limitations.
+
+Delivery target: commit/push this verified fix on `feat/milestone-2-admin`; branch history records the resulting commit. Only frontend lifecycle logic, regression tests and associated documentation are part of the follow-up. No schema change, credential provisioning, paid service or public deployment occurred.
+
+Next steps: review the fix; manually test the existing app when ready; begin M2B only after separate authorization. Earlier PR creation remains blocked by GitHub API `Forbidden`, while Git push is available. No new PR attempt is required for this follow-up.
+
 ## Milestone 2A completion — 7 October 2026 (Asia/Kolkata)
 
 Scope: **Milestone 2A only**, from baseline `86e1591` on `feat/milestone-2-admin`. Milestones 0/1 are preserved. No staged import, graph editor, review/publish/rollback workflow, live closures, paid service or public deployment was implemented.

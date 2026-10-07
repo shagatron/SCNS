@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { ApiError } from '../../api/client'
 import { adminApi, type Dashboard, type Draft, type Session } from './api'
 import { Catalog } from './Catalog'
 import { AuditLog, Users } from './People'
+import { useAdminSession } from './useAdminSession'
 import './admin.css'
 
 export function ErrorMessage({ error }: { error: unknown }) {
@@ -31,30 +32,25 @@ function Login({ onLogin }: { onLogin: (session: Session) => void }) {
 }
 
 export default function AdminApp() {
-  const cache = useQueryClient()
-  const session = useQuery({ queryKey: ['admin', 'session'], queryFn: () => adminApi<Session>('/session'), retry: false, staleTime: 0, refetchOnWindowFocus: true })
+  const { session, ended, establish, signOut } = useAdminSession()
   const [campus, setCampus] = useState('')
   const [error, setError] = useState<unknown>(null)
   const [busy, setBusy] = useState(false)
-  useEffect(() => {
-    const expired = () => { cache.clear(); cache.setQueryData(['admin', 'session'], null); setError(new Error('Your session ended. Sign in to continue.')) }
-    window.addEventListener('admin-session-ended', expired)
-    return () => window.removeEventListener('admin-session-ended', expired)
-  }, [cache])
   const selected = session.data?.grants.find(g => g.campus_id === campus) ?? session.data?.grants[0]
   return <>
     <a className="skip-link" href="#admin-main">Skip to administration</a>
     <header className="admin-header"><a href="/">← Public campus navigation</a><strong>Campus administration</strong>{session.data && <button disabled={busy} onClick={async () => {
+      if (!session.data) return
       setBusy(true); setError(null)
-      try { await adminApi('/logout', { method: 'POST', csrf: session.data.csrf_token }); cache.clear(); cache.setQueryData(['admin', 'session'], null) }
-      catch (e) { setError(e) } finally { setBusy(false) }
+      try { await adminApi('/logout', { method: 'POST', csrf: session.data.csrf_token }); signOut() }
+      catch (e) { if (!(e instanceof ApiError && e.code === 'authentication_required')) setError(e) } finally { setBusy(false) }
     }}>Sign out</button>}</header>
-    <main id="admin-main" className="admin-shell"><ErrorMessage error={error} />
+    <main id="admin-main" className="admin-shell"><ErrorMessage error={error} />{ended && <ErrorMessage error={new Error('Your session ended. Sign in to continue.')} />}
       {session.isPending ? <p role="status">Checking your session…</p> : session.data ? <>
         <div className="admin-intro"><div><p className="eyebrow">DRAFT WORKSPACE</p><h1>Admin dashboard</h1><p>Signed in as {session.data.display_name}. Session expires {new Date(session.data.expires_at).toLocaleString()}.</p></div>
           <label>Assigned campus<select value={selected?.campus_id ?? ''} onChange={e => setCampus(e.target.value)}>{session.data.grants.map(g => <option key={g.campus_id} value={g.campus_id}>{g.campus_name}</option>)}</select></label></div>
         {selected ? <CampusDashboard key={selected.campus_id} campus={selected.campus_id} session={session.data} /> : <p>No campus permission is assigned. Contact your system administrator.</p>}
-      </> : <><ErrorMessage error={session.error instanceof ApiError && session.error.code === 'authentication_required' ? null : session.error} /><Login onLogin={data => { setError(null); cache.setQueryData(['admin', 'session'], data) }} /></>}
+      </> : <><ErrorMessage error={session.error instanceof ApiError && session.error.code === 'authentication_required' ? null : session.error} /><Login onLogin={data => { setError(null); establish(data) }} /></>}
     </main>
   </>
 }

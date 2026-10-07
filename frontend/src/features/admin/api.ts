@@ -28,7 +28,7 @@ export async function adminApi<T>(path: string, options: { method?: string; body
   }
   if (!response.ok) {
     const data = await response.json().catch(() => null)
-    if (response.status === 401 && path !== '/login') window.dispatchEvent(new Event('admin-session-ended'))
+    if (!options.signal?.aborted && response.status === 401 && path !== '/login' && path !== '/session') window.dispatchEvent(new Event('admin-session-ended'))
     throw new ApiError(data?.error?.code ?? 'service_unavailable', data?.error?.message ?? 'Administration is unavailable.', data?.error?.request_id)
   }
   return response.status === 204 ? undefined as T : response.json() as Promise<T>

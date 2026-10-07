@@ -146,3 +146,55 @@ test('system administrator provisions and changes a campus role', async ({ page 
   await expect(page.getByRole('status')).toContainText('Campus role updated')
   await expect(row).toContainText(`${username} · operations`)
 })
+
+test('fresh anonymous admin visit reaches normal login and stops checking the session', async ({ page }) => {
+  let checks = 0
+  page.on('request', request => { if (request.url().endsWith('/api/v1/admin/session')) checks++ })
+  await page.goto('/admin', { waitUntil: 'networkidle' })
+  await expect(page.getByRole('heading', { name: 'Admin sign in', exact: true })).toBeVisible()
+  await expect(page.getByRole('alert')).toHaveCount(0)
+  expect(checks).toBeLessThanOrEqual(2) // React StrictMode may cancel/restart one initial fetch.
+  const settled = checks
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' })
+    window.dispatchEvent(new Event('visibilitychange'))
+    Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'visible' })
+    window.dispatchEvent(new Event('visibilitychange'))
+    Reflect.deleteProperty(document, 'visibilityState')
+  })
+  await page.waitForLoadState('networkidle')
+  expect(checks).toBe(settled)
+})
+
+test('revocation of an established session returns to login once, while deliberate logout is quiet', async ({ page }) => {
+  await login(page, 'operations')
+  // Revoke on the server outside the UI's sign-out handler, as another tab could.
+  // Test credentials/session tokens are ephemeral and tracing is disabled above.
+  const current = await page.request.get('/api/v1/admin/session')
+  const csrf = (await current.json()).csrf_token
+  const revoked = await page.request.post('/api/v1/admin/logout', { headers: { Origin: 'http://127.0.0.1:5174', 'X-CSRF-Token': csrf } })
+  expect(revoked.status()).toBe(204)
+  let rechecks = 0
+  page.on('request', request => { if (request.url().endsWith('/api/v1/admin/session')) rechecks++ })
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' })
+    window.dispatchEvent(new Event('visibilitychange'))
+    Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'visible' })
+    window.dispatchEvent(new Event('visibilitychange'))
+    Reflect.deleteProperty(document, 'visibilityState')
+  })
+  await expect(page.getByRole('heading', { name: 'Admin sign in', exact: true })).toBeVisible()
+  await expect(page.getByRole('alert')).toHaveText('Your session ended. Sign in to continue.')
+  await page.waitForLoadState('networkidle')
+  expect(rechecks).toBe(1)
+  await page.getByLabel('Username', { exact: true }).fill('browser-operations')
+  await page.getByLabel('Password', { exact: true }).fill(process.env.SCNS_E2E_PASSWORD!)
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Admin dashboard' })).toBeVisible()
+  await expect(page.getByRole('alert')).toHaveCount(0)
+  await page.getByRole('button', { name: 'Sign out', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Admin sign in', exact: true })).toBeVisible()
+  await expect(page.getByRole('alert')).toHaveCount(0)
+  await page.waitForLoadState('networkidle')
+  expect(rechecks).toBe(1)
+})

@@ -195,6 +195,7 @@ class Anchor(RevisionEntity, Base):
     place_id: Mapped[uuid.UUID] = mapped_column(UUID)
     node_id: Mapped[uuid.UUID] = mapped_column(UUID)
     accessibility_status: Mapped[str] = mapped_column(String(32))
+    accessibility_evidence: Mapped[str] = mapped_column(Text, server_default="")
     is_open: Mapped[bool] = mapped_column(Boolean, default=True)
     __table_args__ = (
         revision_fk(),

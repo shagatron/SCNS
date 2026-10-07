@@ -5,7 +5,7 @@ export npm_config_cache ?= /tmp/scns-npm-cache
 export TEST_DATABASE_URL ?= postgresql+psycopg://scns:scns_local@localhost:54329/scns_test
 DATASET ?= ../data/demo/campus.json
 
-.PHONY: setup db migrate seed-demo dev api web test test-unit test-integration test-e2e check build containers generate-api validate-dataset test-db demo
+.PHONY: setup db migrate seed-demo dev api web test test-unit test-integration test-e2e test-migrations check build containers generate-api validate-dataset test-db demo
 setup:
 	cd backend && $(UV) sync --frozen
 	npm ci
@@ -41,10 +41,13 @@ test-db: db
 test-integration: test-db
 	cd backend && $(UV) run --frozen pytest -q tests/integration
 
-test-e2e:
-	cd frontend && npm run test:e2e
+test-e2e: test-db
+	cd backend && $(UV) run --frozen python -m tests.browser_runner
 
-test: test-unit test-integration test-e2e
+test-migrations: test-db
+	cd backend && $(UV) run --frozen python -m tests.migration_runner
+
+test: test-unit test-integration test-migrations test-e2e
 
 check:
 	cd backend && $(UV) run --frozen ruff check app migrations tests

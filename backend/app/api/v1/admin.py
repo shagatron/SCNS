@@ -160,6 +160,7 @@ def catalog(
     response: Response,
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0, le=10000),
+    resource_id: UUID | None = Query(None),
 ):
     authorize(db, request, campus_id, "draft_read")
     # Hold a shared revision lock so rows and their version form one coherent read.
@@ -171,6 +172,8 @@ def catalog(
     revision = get_draft(db, campus_id, revision_id)
     model = MODELS[entity]
     query = select(model).where(model.dataset_revision_id == revision.id)
+    if resource_id:
+        query = query.where(model.id == resource_id)
     rows = db.scalars(query.order_by(model.id).limit(limit).offset(offset)).all()
     response.headers["ETag"] = f'"{revision.edit_version}"'
     return CatalogPage(

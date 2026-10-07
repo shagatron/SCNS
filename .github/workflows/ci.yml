@@ -9,7 +9,7 @@ jobs:
         with: {node-version: '24'}
       - uses: astral-sh/setup-uv@v6
         with: {version: '0.12.19', python-version: '3.12'}
-      - run: make setup demo check build test-unit test-integration
+      - run: make setup demo check build test-unit test-integration test-migrations
       - run: cd frontend && npx playwright install --with-deps chromium
       - run: make test-e2e
       - run: make generate-api && git diff --exit-code -- docs/architecture/openapi.json data/templates/dataset-v1.schema.json frontend/src/api/generated.ts

@@ -1,22 +1,47 @@
 # Project progress
 
-## Milestone 2A checkpoint — 6 October 2026
+## Milestone 2A completion — 7 October 2026 (Asia/Kolkata)
 
-Branch `feat/milestone-2-admin` starts at `86e1591`. Authorized scope is now **Milestone 2A only**; Milestones 0/1 remain the baseline. No imports, map graph editor, review/publish workflow, operational closures or deployment are included.
+Scope: **Milestone 2A only**, from baseline `86e1591` on `feat/milestone-2-admin`. Milestones 0/1 are preserved. No staged import, graph editor, review/publish/rollback workflow, live closures, paid service or public deployment was implemented.
 
-Completed: migration for campus role grants, opaque hashed server sessions, durable login throttles, one-time bootstrap, normalized aliases/departments and append-only audit. Protected API supports draft copies, all five catalog CRUD types, version-conditional writes, role provisioning and campus-scoped reads. Public release pointers and projections are unchanged. Passwords use Argon2id; unsafe requests require allowed Origin and session-bound CSRF token.
+### Completed work
 
-Verified so far: 13 new PostGIS admin integration cases pass. The preceding combined run also passed all 13 existing integration cases; two new test assertions were corrected (volatile route metadata and stale fixture identity-map state). Backend Ruff and migration upgrade passed before tests were added. Generated OpenAPI/TypeScript contracts updated.
+- Confirmed backend checkpoint `59413e85129de49e6708dbc041eb5343e8e3c490` was already pushed to GitHub. Preserved and completed the unfinished frontend files; did not restart or recreate the branch/implementation.
+- Secure local admin login/logout: Argon2id, random opaque server sessions stored as hashes, expiry/revocation/rotation, durable account/IP throttles, Origin/CSRF enforcement, no-store responses and one-time trusted-host bootstrap without a default password.
+- Campus-scoped editor, reviewer/publisher, operations and system-administrator grants; dashboard, user provisioning/role changes and last-admin protection. Server authorization and revision/campus isolation remain authoritative.
+- Responsive admin interface for buildings, places, departments/place links, aliases and anchors. Read-only node selection, meaningful anchor labels and required evidence notes for affirmative step-free anchor edits.
+- Draft cloning without public pointer changes, revision-wide optimistic edits, conflict input preservation/comparison/reconciliation, transactional audits and append-only administrative records. Public search, map and stored-graph Dijkstra routes remain on the published release.
+- Isolated browser and migration databases, random ephemeral browser credentials and disabled admin traces. Added real concurrent-transaction, permission, evidence and CLI bootstrap tests. Updated setup/configuration, architecture, data dictionary and checklist.
 
-Unfinished: admin dashboard/forms are being connected, browser admin journeys and concurrent database transactions still need validation, final full lint/build/regression suite and migration roundtrip need running, setup/checklist/security docs need updating. No manual owner test or public deployment performed.
+### Verified results
 
-Exact next steps:
-1. Complete `frontend/src/features/admin/` login, dashboard, catalog CRUD, conflict reconciliation, users/roles and audit interface.
-2. Add isolated browser test database/ports and admin desktop/mobile journeys; add real concurrent write regression.
-3. Run `make generate-api check build test-unit test-integration` and `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e`; fix failures. Check migration downgrade/reapply on a disposable test database.
-4. Update setup, security, verification and requirements documents; commit/push final work and open an unmerged PR against the baseline branch if main does not yet contain it.
+Ruff/format, TypeScript, ESLint, Vite/Python builds passed. **21 Python unit + 28 PostGIS integration + 7 Vitest + 18 desktop/mobile browser tests passed**, including the original 10 public-navigation browser regressions. No final suite failures or skips. Fresh/downgrade/re-upgrade migrations through `0005_anchor_evidence`, frozen alias backfill/protection, public release preservation, schema alignment and actual one-time CLI replay passed. Contracts reproduce byte-for-byte; dataset validation passed.
 
-The backend checkpoint excludes unfinished frontend source files. No secrets, dependencies, databases or browser artifacts are staged.
+Both images rebuilt successfully. The local Compose stack was migrated/restarted and passed readiness, admin bundle/protected endpoint and private-file smoke checks. Public Main Gate → Library remains 256.88m over three stored edges on the original development release. No administrator was bootstrapped in the developer database: the owner supplies that account/password when ready. See `docs/testing/verification.md` for exact commands, test coverage, warnings and limits.
+
+### Delivery and unfinished work
+
+The backend checkpoint is on GitHub. Remaining source, tests and documentation are ready for the completion commit/push on the same branch. Secrets, dependencies, database files and generated build/browser artifacts are excluded; lockfiles and generated API contracts are retained.
+
+**PR creation blocked:** both read-only REST/GraphQL probes and the actual `gh pr create` attempt returned `Forbidden` from `api.github.com`. No PR URL was returned, no merge occurred, and no alternative GitHub connector is available. Git HTTPS push remains supported. The ready description is `docs/reviews/milestone-2a-pr.md`. The PR should target `feat/milestones-0-1`, because GitHub `main` still points at the original initial commit and does not yet contain `86e1591`.
+
+Owner manual app testing is deferred as requested. Physical-phone/assistive-tech verification, official maps/surveys, production security/load/recovery and remote GitHub Actions inspection remain unverified. M2B/2C remain explicitly unimplemented.
+
+### Exact next steps
+
+1. Complete the final commit/push of this verified source and documentation on `feat/milestone-2-admin`.
+2. When GitHub API access is restored, open the unmerged PR:
+
+   ```bash
+   gh pr create --repo shagatron/SCNS --base feat/milestones-0-1 \
+     --head feat/milestone-2-admin \
+     --title "Milestone 2A: scoped admin sessions and private draft catalog" \
+     --body-file docs/reviews/milestone-2a-pr.md
+   ```
+
+3. For later manual testing, use the rebuilt local Compose stack, or stop Compose `api`/`frontend` and run `make setup demo dev`. Follow `docs/operations/admin.md` to bootstrap a chosen admin password and visit `/admin`. No account/default password was silently provisioned.
+4. Reproduce checks with `make check build test-unit test-integration test-migrations` and `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e`. Browser and migration databases are disposable; developer data is preserved.
+5. Begin M2B only after separate authorization. Prepare official maps, licensing and survey evidence independently using the existing templates.
 
 ## Milestones 0/1 history
 

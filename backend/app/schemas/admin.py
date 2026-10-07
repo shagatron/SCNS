@@ -112,6 +112,7 @@ class AliasFields(DTO):
 
 
 class AnchorFields(DTO):
+    accessibility_evidence: str = Field(default="", max_length=2000)
     place_id: UUID
     node_id: UUID
     accessibility_status: Accessibility = "unknown"

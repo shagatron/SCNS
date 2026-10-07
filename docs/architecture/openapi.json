@@ -1155,6 +1155,23 @@
               "default": 0,
               "title": "Offset"
             }
+          },
+          {
+            "name": "resource_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Resource Id"
+            }
           }
         ],
         "responses": {
@@ -2431,6 +2448,12 @@
       },
       "AnchorFields": {
         "properties": {
+          "accessibility_evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Accessibility Evidence",
+            "default": ""
+          },
           "place_id": {
             "type": "string",
             "format": "uuid",

@@ -408,3 +408,30 @@ def test_user_management_last_admin_and_cross_campus_user(client, db, bundle, id
         == 200
     )
     assert client.get(path).status_code == 403
+
+
+def test_verified_anchor_edit_requires_evidence(client, bundle, identity):
+    headers = sign_in(client, identity)
+    draft = make_draft(client, bundle, headers)
+    path = catalog_path(bundle, draft, "anchors")
+    item = client.get(path).json()["items"][0]
+    item["item"]["data"]["accessibility_status"] = "verified_step_free"
+    item["item"]["data"]["accessibility_evidence"] = ""
+    response = client.put(path + "/" + item["id"], json=item["item"], headers=version(headers, 1))
+    assert response.status_code == 422
+    assert "evidence" in response.json()["error"]["message"]
+    item["item"]["data"]["accessibility_evidence"] = (
+        "Synthetic test inspection 2026-10-07; no physical survey."
+    )
+    assert (
+        client.put(
+            path + "/" + item["id"], json=item["item"], headers=version(headers, 1)
+        ).status_code
+        == 200
+    )
+    assert (
+        client.get(path, params={"resource_id": item["id"]}).json()["items"][0]["item"]["data"][
+            "accessibility_evidence"
+        ]
+        == item["item"]["data"]["accessibility_evidence"]
+    )

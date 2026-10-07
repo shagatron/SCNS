@@ -1,8 +1,8 @@
 # Smart Campus Navigation
 
-A working outdoor navigation demo built with React, TypeScript, Vite, Tailwind, TanStack Query, Leaflet, FastAPI, SQLAlchemy, Alembic, PostgreSQL and PostGIS. Milestones 0 and 1 of the [master specification](docs/product/master-spec.md) are implemented. See the [requirements checklist](docs/product/requirements-checklist.md) and [verification report](docs/testing/verification.md) for scope and evidence.
+A working outdoor navigation demo built with React, TypeScript, Vite, Tailwind, TanStack Query, Leaflet, FastAPI, SQLAlchemy, Alembic, PostgreSQL and PostGIS. Milestones 0, 1 and the authorized admin-only slice 2A of the [master specification](docs/product/master-spec.md) are implemented. See the [requirements checklist](docs/product/requirements-checklist.md) and [verification report](docs/testing/verification.md) for scope and evidence.
 
-**Demo Campus is wholly synthetic.** Its coordinates near (0°, 0°), buildings, paths, access conditions and accessibility evidence are invented. It is not the owner's campus and must not be used for real navigation. No paid services, API keys, public deployment, account or external map tiles are required.
+**Demo Campus is wholly synthetic.** Its coordinates near (0°, 0°), buildings, paths, access conditions and accessibility evidence are invented. It is not the owner's campus and must not be used for real navigation. Public navigation requires no account, paid services, API keys or external map tiles. Administrator accounts are explicitly provisioned; there is no public deployment.
 
 ## What works
 
@@ -11,6 +11,7 @@ A working outdoor navigation demo built with React, TypeScript, Vite, Tailwind, 
 - Heap-based Dijkstra over **stored directed graph edges**, selecting the cheapest eligible combination of entrance anchors. PostGIS measures the complete path polylines; baseline walking ETA uses a configurable 1.4 m/s speed.
 - Honest handling of one-way paths, closed/restricted edges, isolated destinations, unmapped entrances, same-place arrival and unknown step-free accessibility. The step-free example tests synthetic eligibility only.
 - Database-backed draft/release separation, frozen rows protected by triggers, atomic active-release selection, release IDs on responses and stale-release errors.
+- Campus-scoped admin login, one-time bootstrap, dashboard, private draft catalog CRUD, optimistic concurrency and append-only audit at `/admin`. See [admin setup and workflow](docs/operations/admin.md).
 - Private incoming-data directories, CSV/GeoJSON preparation templates, an executable versioned JSON validator and explicit idempotent demo seeding.
 
 The supplied repository contained no C code. `legacy/c-prototype/` records that fact and is reserved for the original prototype if supplied.
@@ -57,7 +58,7 @@ docker compose run --rm --no-deps api python -m app.cli.dataset seed-demo ../dat
 docker compose up -d --wait api frontend
 ```
 
-Stop host `make dev` processes first because Compose uses the same ports. Compose binds ports to loopback and uses **local development credentials only**. Production mode intentionally refuses startup until the deployment milestone is completed. No worker is included because M0/M1 have no background ingestion jobs.
+Stop host `make dev` processes first because Compose uses the same ports. Compose binds ports to loopback and uses **local development credentials only**. Production mode intentionally refuses startup until the deployment milestone is completed. No worker is included because this slice has no background ingestion jobs.
 
 ## Test and build
 
@@ -66,10 +67,11 @@ make check                # Ruff lint/format, TypeScript, ESLint
 make build                # frontend production build + Python compilation
 make test-unit            # Python algorithms/data/coordinates + Vitest components
 make test-integration     # provision scns_test, migrate it, run real PostGIS/API tests
+make test-migrations      # reset dedicated scns_migration_test; rehearse fresh/upgrade migrations
 
 # One-time standard browser installation:
 cd frontend && npx playwright install --with-deps chromium && cd ..
-make test-e2e             # seeds must already exist via make demo; starts API/web if absent
+make test-e2e             # reset dedicated scns_e2e_test; seed and start isolated API/web
 
 # This cloud workspace already has Chromium; use this instead of downloading:
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e
@@ -78,7 +80,7 @@ make generate-api         # regenerate OpenAPI, JSON schema, checked-in TypeScri
 make containers           # build both runnable container images
 ```
 
-Browser tests run desktop Chromium and a 360px mobile viewport. Integration tests require `TEST_DATABASE_URL` with a database name ending in `_test`; each test uses rolled-back transactions. They never reset development data. If using your own database server, provision a separate empty `_test` database with PostGIS extension permissions and override the URL. Browser tests read the local demo and do not mutate its graph.
+Browser tests run desktop Chromium and a 360px mobile viewport. Integration tests require `TEST_DATABASE_URL` with a database name ending in `_test`; each test uses rolled-back transactions. They never reset development data. If using your own database server, provision a separate empty `_test` database with PostGIS extension permissions and override the URL. Browser tests reset a dedicated database named `scns_e2e_test`, generate ephemeral administrator credentials and run separate API/web servers on ports 8001/5174. They never reuse developer services. Admin browser traces, video and screenshots are disabled to avoid retaining authentication data. See [the test isolation details](docs/operations/admin.md#repeatable-verification).
 
 The cloud environment has read-only home caches. Make directs uv/npm caches to `/tmp`. For direct commands set `UV_CACHE_DIR=/tmp/scns-uv-cache` and `npm_config_cache=/tmp/scns-npm-cache` if needed. For container builds **in this cloud workspace**, use `python scripts/cloud-build.py` in place of `docker compose build api frontend`: it resolves the already-configured proxy for the isolated build and mounts existing CA trust temporarily. No credential values are printed or copied into images, and TLS/lockfile verification stays enabled. On a normal local Docker installation, the standard Compose build command works without this helper.
 
@@ -97,6 +99,6 @@ Validation performs no database writes. The demo seed command only accepts `DEMO
 
 ## Next milestone and limitations
 
-Milestone 2 adds campus-scoped admin authentication, CRUD, CSV/JSON/GeoJSON staged imports, outdoor editing, validation/review approval, audit, optimistic concurrency and publication/rollback tools. `bootstrap-admin`, `import-dataset` for real data, `export-release`, and backup/restore commands will be delivered with their relevant milestones; no placeholder command claims success today.
+Milestone **2A** delivers campus-scoped admin authentication, catalog CRUD, audit and optimistic concurrency. The [one-time `bootstrap-admin` command](docs/operations/admin.md) is working. Milestones **2B/2C remain unimplemented**: staged CSV/JSON/GeoJSON imports, outdoor graph editing, validation/review approval, publication/rollback and approved asset projection. Real-data `import-dataset`, `export-release`, and backup/restore commands will be delivered with their relevant milestones.
 
 Indoor navigation/floorplans are Milestone 3; QR, geolocation, live closures, reports and saved-route offline/PWA support are Milestone 4. The present route policy uses static release state at request time and does not evaluate opening schedules. No real campus accessibility, physical path accuracy, load benchmark, screen-reader certification or deployment is claimed. Official maps and ownership/licensing decisions remain external inputs. No code license has been chosen on the owner's behalf; see [CONTRIBUTING.md](CONTRIBUTING.md).

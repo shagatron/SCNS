@@ -1,4 +1,37 @@
-# M0/M1 verification evidence
+# Verification evidence
+
+## Milestone 2A — 7 October 2026 (Asia/Kolkata)
+
+This is the final local automated validation of the admin-only 2A slice, based on M0/M1 commit `86e1591`. Earlier failures were diagnosed and fixed before the results below; no failed/skipped case is counted as passed.
+
+| Executed check | Observed result |
+|---|---|
+| `make check` | Ruff lint/format, TypeScript and ESLint passed |
+| `make build` | Vite production build and Python compilation passed |
+| `make test-unit` | **21 Python + 7 Vitest tests passed** |
+| `make test-integration` | **28 real PostGIS tests passed**: 13 public/core regressions, 14 admin cases, 1 real concurrent-transaction case |
+| `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e` | **18 passed**: 8 admin + 10 public journeys, split across desktop and 360×800 mobile Chromium; no skipped cases |
+| `make test-migrations` | Fresh schema, downgrade to M1/re-upgrade through `0005_anchor_evidence`, canonical alias backfill, frozen protection, preserved active release/checksum and Alembic model alignment passed |
+| Actual `bootstrap-admin --password-stdin` CLI on disposable migration database | First invocation succeeded, second rejected as already consumed; random credential was not printed |
+| `make generate-api` with before/after SHA-256 comparison | OpenAPI, TypeScript and dataset schema reproduced byte-for-byte |
+| `make validate-dataset` | 11 places, 13 nodes, 27 edges valid |
+| `python scripts/cloud-build.py` | API and frontend images built; TLS/dependency verification remained enabled |
+| Compose migration, startup and built nginx/API smoke | Healthy; admin lazy bundle served, admin session returned 401/no-store, private paths returned 404; public Main Gate → Library remained **256.88m / 3 edges** on release `4eb587e6-5607-48ed-a8ca-f5c0d8f1c505` |
+| `git diff --check` and tracked/unignored file review | Passed; no local secret files, dependency trees, databases, build outputs or browser artifacts staged |
+
+The permission tests cover all four campus roles, live revocation, foreign-campus/revision rejection, first-admin consumption, last-admin protection, durable account throttles, CSRF/Origin, hashed sessions, rotation/logout, expiry/disabled accounts and credential-free audit. CRUD tests cover all five entity types, same-revision references, visibility checks, delete/duplicate rollback, expected audit counts and unchanged public search/map/route results. Two simultaneous READ COMMITTED transactions using the same draft version produce exactly one commit and one 409 conflict. Affirmative step-free anchor edits require private evidence notes.
+
+Browser tests use a reset `scns_e2e_test` database and isolated ports 8001/5174; they generate ephemeral credentials and never reuse the developer app. The admin journeys cover all five creation forms, place updates/deletion ordering, audit display, session logout, role-specific controls, user provisioning/role changes, preserved conflict input and explicit latest-version reconciliation. The admin state and public route state pass axe WCAG A/AA checks on both viewports. Admin traces/video/screenshots are disabled. The final full browser run took 55.5 seconds.
+
+Initial browser failures were selector ambiguity in nested labels and identical anchor labels. Selectors now use accessible control roles, anchors show associated place names, and mutation buttons wait for current catalog data. The initial backend test compared volatile route IDs/timestamps and encountered a shared test-session identity-map cache; comparison now excludes only those volatile fields and draft reads refresh model state. These failures did not require suppressing assertions or weakening permission checks.
+
+Current compressed build sizes: main JavaScript 103.61kB, lazy admin JavaScript 7.44kB and admin CSS 0.84kB, lazy map JavaScript 45.76kB. Admin code is not part of the public initial load. No large-campus throughput or production latency claim is made.
+
+**Blocked/not verified:** GitHub REST and GraphQL requests returned `Forbidden`; `gh pr create` failed before returning any PR URL. Git HTTPS read/push is available, but opening the PR and observing remote Actions require GitHub API access or owner action. A ready PR body is in `docs/reviews/milestone-2a-pr.md`. Owner manual app testing, physical phones, Safari/Firefox, human screen readers, security penetration/load testing, SSO, production TLS/proxy configuration, backup/recovery and official campus field validation were not performed. No M2B/2C implementation or public deployment occurred. The built stack received smoke checks; the 18 full browser journeys ran against the isolated source API/Vite stack.
+
+Upstream warnings remain non-failing: Starlette recommends moving its TestClient from `httpx` to `httpx2`; uv warns that the build helper’s `UV_NATIVE_TLS` spelling is deprecated; Playwright workers report conflicting color environment settings. No warning was suppressed to obtain a pass.
+
+## Historical M0/M1 evidence
 
 Run date: 6 October 2026 (Asia/Kolkata). This records executed checks on the synthetic dataset, not field verification. The original checkpoint is `007d87a` on `feat/milestones-0-1`; latest follow-up changes were retested as described below.
 

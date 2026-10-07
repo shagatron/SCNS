@@ -183,6 +183,7 @@ def record(db: Session, entity: str, row) -> CatalogRecord:
             place_id=row.place_id,
             node_id=row.node_id,
             accessibility_status=row.accessibility_status,
+            accessibility_evidence=row.accessibility_evidence,
             is_open=row.is_open,
         )
     return CatalogRecord(id=row.id, item={"entity": entity, "data": data})
@@ -277,6 +278,14 @@ def write_record(db: Session, revision: Revision, payload: CatalogWrite, resourc
             if not values["normalized"]:
                 raise DomainError("invalid_input", "Alias must contain searchable text.")
         else:
+            if (
+                data.accessibility_status == "verified_step_free"
+                and not data.accessibility_evidence.strip()
+            ):
+                raise DomainError(
+                    "invalid_input",
+                    "Step-free verification requires evidence notes, including source and verification date.",
+                )
             node = referenced(db, Node, revision.id, data.node_id)
             if place.visibility == "public" and node.visibility != "public":
                 raise DomainError(

@@ -123,10 +123,22 @@ def seed_bundle(session: Session, bundle: Dataset) -> Release:
             )
         )
     for a in bundle.anchors:
-        session.add(Anchor(**scope, **a.model_dump()))
+        session.add(
+            Anchor(
+                **scope,
+                **a.model_dump(),
+                accessibility_evidence="Synthetic demo fixture; no real-world field verification."
+                if a.accessibility_status == "verified_step_free"
+                else "",
+            )
+        )
     for place in bundle.places:
-        for value in dict.fromkeys(place.aliases):
+        seen_aliases = set()
+        for value in place.aliases:
             normalized = normalize(value)
+            if normalized in seen_aliases:
+                continue
+            seen_aliases.add(normalized)
             session.add(
                 PlaceAlias(
                     **scope,

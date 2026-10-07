@@ -361,6 +361,11 @@ export interface components {
         /** AnchorFields */
         AnchorFields: {
             /**
+             * Accessibility Evidence
+             * @default
+             */
+            accessibility_evidence: string;
+            /**
              * Place Id
              * Format: uuid
              */
@@ -1934,6 +1939,7 @@ export interface operations {
             query?: {
                 limit?: number;
                 offset?: number;
+                resource_id?: string | null;
             };
             header?: never;
             path: {

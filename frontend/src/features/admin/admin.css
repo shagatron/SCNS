@@ -1,0 +1,26 @@
+.admin-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px max(4vw, 18px); border-bottom: 1px solid #dce3d8; background: #fffefa; flex-wrap: wrap; }
+.admin-header a { display: inline-flex; min-height: 44px; align-items: center; text-decoration: underline; }
+.admin-shell { max-width: 1200px; padding-bottom: 56px; }
+.admin-shell small { display: block; margin-top: 6px; font-weight: 400; line-height: 1.5; }
+.admin-intro { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; }
+.admin-intro > label { min-width: 260px; flex: 1; max-width: 400px; }
+.admin-card { border: 1px solid #dce3d8; background: #fffefa; border-radius: 14px; padding: 24px; margin-bottom: 20px; }
+.admin-login { max-width: 480px; margin: 24px auto; }
+.admin-login label { margin: 18px 0; }
+.admin-notice { background: #f0ecd9; border: 1px solid #e2dbc1; border-radius: 10px; padding: 18px; margin: 18px 0; }
+.admin-notice p { margin: 8px 0; }
+.admin-tabs, .admin-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 16px 0; }
+.admin-tabs button[aria-pressed=true] { background: #1b4d3e; color: white; }
+.admin-actions label { min-width: 200px; flex: 1; }
+.admin-id, .admin-shell pre { overflow-wrap: anywhere; word-break: break-word; }
+.admin-shell pre { white-space: pre-wrap; font: 12px/1.6 ui-monospace, monospace; background: #edf0e7; border-radius: 8px; padding: 14px; max-height: 360px; overflow: auto; }
+.admin-records { list-style: none; padding: 0; margin: 18px 0; }
+.admin-records > li { display: flex; justify-content: space-between; align-items: start; gap: 18px; border-top: 1px solid #dce3d8; padding: 18px 0; }
+.admin-records > li > div:first-child { min-width: 0; flex: 1; }
+.admin-records p { margin-bottom: 6px; }
+.admin-editor { margin-top: 22px; }
+.admin-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; margin: 18px 0; }
+.admin-wide { grid-column: 1 / -1; }
+.admin-shell textarea { display: block; width: 100%; border: 1px solid #c8d1c8; padding: 12px; border-radius: 9px; background: white; color: #213b34; font: inherit; font-weight: 400; resize: vertical; }
+.admin-success { background: #e7eee5; padding: 14px; border-radius: 9px; }
+@media(max-width: 600px) { .admin-card { padding: 18px; }.admin-records > li { display: block; }.admin-form-grid { grid-template-columns: 1fr; }.admin-actions > button { flex: 1; }.admin-intro > label { min-width: 0; max-width: none; flex-basis: 100%; }.admin-header strong { order: -1; flex-basis: 100%; } }

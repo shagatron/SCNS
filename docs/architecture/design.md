@@ -1,14 +1,14 @@
-# Architecture decisions — M0/M1
+# Architecture decisions — M0/M1 and M2A
 
 ## Scope
 
-The user authorized Milestones 0 and 1 only. The numbered milestones govern sequencing; the master document's broader suggested prompt to continue later milestones is not additional authorization. M0/M1 deliver an executable outdoor vertical slice. Full demo rooms/floors, QR, admin, uploads, operational closures and offline features are explicitly assigned to their later milestones in the requirements checklist.
+The user authorized Milestones 0/1 and subsequently the admin-only Milestone 2A slice. The numbered milestones govern sequencing; the master document's broader suggested prompt to continue later milestones is not additional authorization. M0/M1 deliver an executable outdoor vertical slice. Full demo rooms/floors, QR, uploads, operational closures and offline features are explicitly assigned to their later milestones in the requirements checklist.
 
 Use the existing checkout. Cloud tasks are isolated already; do not create Git worktrees unless the owner requests one. There were no existing project instructions or C files; the initial commit held only a six-byte README.
 
 ## Runtime and boundaries
 
-React/TypeScript + Vite + Tailwind; TanStack Query for server state; Zod for route form input; Leaflet for outdoor rendering. FastAPI/Pydantic exposes `/api/v1`, with SQLAlchemy sessions and Alembic migrations. PostgreSQL/PostGIS is the canonical data store. npm workspaces share one locked JavaScript dependency tree across frontend and browser tests. Python uses a committed uv lockfile. There is no Redis, separate graph database, paid API, account requirement or tile dependency.
+React/TypeScript + Vite + Tailwind; TanStack Query for server state; Zod for route form input; Leaflet for outdoor rendering. FastAPI/Pydantic exposes `/api/v1`, with SQLAlchemy sessions and Alembic migrations. PostgreSQL/PostGIS is the canonical data store. npm workspaces share one locked JavaScript dependency tree across frontend and browser tests. Python uses a committed uv lockfile. There is no Redis, separate graph database, paid API, public account requirement or tile dependency.
 
 The public API has only reads and a route computation POST. It exposes no editor, uploader or filesystem server. The private `data/raw` and `storage` trees are ignored by Git and excluded from containers. Future source assets must pass authorization and derivative review before public delivery.
 
@@ -18,9 +18,9 @@ Campus-owned catalog/graph rows use `(dataset_revision_id, logical UUID)` keys; 
 
 Dataset revisions have `draft`, `review`, `frozen` states, checksum, parent, version and timestamps. Database triggers reject mutation/deletion of frozen rows and unfreezing frozen revisions. A release must reference a matching frozen revision. The public audience has one active pointer per campus. Changing a synthetic bundle inserts a new revision and moves that pointer in one transaction; failed seeding rolls back every inserted row. The idempotency hash covers the validated full input bundle. **The checksum is an input revision checksum, not a claimed checksummed public downloadable artifact.** Artifact generation and review approval arrive in M2.
 
-Requests use PostgreSQL REPEATABLE READ transactions and read the active pointer once. All subsequent catalog/graph reads are restricted to that revision. No process-local graph cache risks mixing releases. Future caching must key campus/release/audience and a separately versioned closure overlay. `closure_overlay_version=0` means no live overlay is implemented; static closed edges are part of the release.
+Public requests use PostgreSQL REPEATABLE READ transactions and read the active pointer once. All subsequent catalog/graph reads are restricted to that revision. No process-local graph cache risks mixing releases. Future caching must key campus/release/audience and a separately versioned closure overlay. `closure_overlay_version=0` means no live overlay is implemented; static closed edges are part of the release.
 
-Public projections are explicit server-side visibility filters applied consistently to search, detail, map and routing, including endpoint-node visibility. Restricted and nonexistent place IDs return the same safe 404. Public responses exclude private evidence, source paths and draft records. M2 will add authorization, reviewed artifact projections and audit controls rather than exposing draft tables through this public API.
+Public projections are explicit server-side visibility filters applied consistently to search, detail, map and routing, including endpoint-node visibility. Restricted and nonexistent place IDs return the same safe 404. Public responses exclude private evidence, source paths and draft records. M2A adds a separate protected admin API. Reviewed artifact projections and publication remain M2B/2C; draft tables are never exposed through the public API.
 
 ## Coordinates
 
@@ -43,3 +43,13 @@ Desktop uses a side planner; mobile stacks labelled controls above the map. Rout
 ## Publication/deployment
 
 Local Compose binds to loopback. Production startup is explicitly gated. Only the owner may choose the eventual code license, permitted institutional map audience, service owner, hosting and paid providers. No public deployment was performed. M2 review/publication, M3 map calibration, M4 operational freshness and M5 pilot/backup/restore evidence remain prerequisites to real campus service.
+
+## M2A identity and draft administration
+
+`/admin` lazily loads the admin React interface; `/api/v1/admin` holds the protected API. Identity/permissions are separate from public route calculation. Argon2id local passwords, hashed opaque database sessions, HttpOnly/SameSite cookies, expiry/revocation, exact Origin checks, session-bound CSRF, durable account/IP throttles and no-store responses provide the local session boundary. One-time trusted-host bootstrap supplies the initial campus administrator without a default password. Roles are live database grants, scoped to the requested campus, including system administrators. See [admin operation/security details](../operations/admin.md).
+
+Administrative transactions use READ COMMITTED. A write conditionally increments the revision-wide `edit_version` with `If-Match`; losing writers return 409. Catalog reads hold a shared revision lock so their rows and version are coherent. Writes, reference changes, version changes and audit are one transaction. Draft creation is serialized per campus with the same advisory lock as demo seeding. It copies the current release, preserving graph topology/stable IDs, without changing the active pointer. Draft checksums become NULL; frozen revisions still require their checksum. No API can freeze, review, publish or roll back a revision in 2A.
+
+Departments and place links are revision scoped. Canonical normalized alias rows synchronize a legacy JSON/search-text projection inside the draft. Anchors include private evidence notes, required when editing a verified step-free anchor; no evidence is fabricated for old frozen rows. All cross-entity references use the same revision/campus. Deleting referenced places/buildings fails instead of silently cascading. Audit and bootstrap records reject database UPDATE/DELETE. These controls do not claim tamper resistance against a database superuser.
+
+The UI captures an edit version when opening a form, preserves unsaved input on conflicts, displays the latest record and requires explicit reconciliation. It has manual save, no autosave or browser-persisted draft recovery; full map-editor recovery belongs to later editing work. The browser suite uses a disposable database and separate API/frontend ports, ephemeral credentials and disabled admin traces. Migration rehearsal uses another disposable database and tests backfill against already frozen M1 data.

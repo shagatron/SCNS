@@ -26,6 +26,9 @@ from app.services.imports import (
 
 
 def once():
+    from app.services.floorplans import once as floorplan_once
+
+    floorplan_work = floorplan_once(engine)
     with Session(engine.execution_options(isolation_level="READ COMMITTED")) as db, db.begin():
         job = db.scalar(
             select(ImportJob)
@@ -41,7 +44,7 @@ def once():
             .limit(1)
         )
         if not job:
-            return False
+            return floorplan_work
         if job.attempts >= 3:
             transition(job, "failed")
             job.failure = "Worker recovery exhausted three attempts. Inspect the file and resubmit a corrected batch."
@@ -90,7 +93,7 @@ def main():
             try:
                 result = subprocess.run(
                     [sys.executable, "-m", "app.cli.imports", "once"],
-                    timeout=get_settings().import_parse_seconds + 30,
+                    timeout=get_settings().import_parse_seconds + 60,
                     check=False,
                 )
                 if result.returncode:

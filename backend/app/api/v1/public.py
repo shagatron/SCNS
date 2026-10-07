@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from app.core.errors import DomainError
 from app.db.session import get_session
 from app.models import ActiveRelease, Building, Campus, Edge, Node, Place, Release
+from app.models.floorplans import MapLayer
 from app.models.publication import ReleaseArtifact
 from app.schemas.api import (
     CampusOut,
@@ -258,3 +259,34 @@ def department_directory(campus_id: UUID, db: DB, expected_release_id: UUID | No
         "release_id": str(release.id),
         "departments": list(artifact.content["departments"].values()) if artifact else [],
     }
+
+
+@router.get(
+    "/campuses/{campus_id}/releases/{release_id}/floorplans/{layer_id}/{sha256}.png",
+    response_class=Response,
+)
+def approved_floorplan(campus_id: UUID, release_id: UUID, layer_id: UUID, sha256: str, db: DB):
+    import hashlib
+
+    artifact = db.get(ReleaseArtifact, release_id)
+    release = db.get(Release, release_id)
+    descriptor = (
+        artifact.content.get("floorplans", {}).get(str(layer_id))
+        if artifact and artifact.campus_id == campus_id
+        else None
+    )
+    if (
+        not descriptor
+        or descriptor["checksum"] != sha256
+        or not release
+        or release.campus_id != campus_id
+    ):
+        raise DomainError("location_not_found", "Approved public floorplan not found.", 404)
+    layer = db.get(MapLayer, (release.dataset_revision_id, layer_id))
+    if not layer or layer.campus_id != campus_id or hashlib.sha256(layer.png).hexdigest() != sha256:
+        raise DomainError("location_not_found", "Approved public floorplan not found.", 404)
+    return Response(
+        layer.png,
+        media_type="image/png",
+        headers={"Cache-Control": "public, max-age=31536000, immutable", "ETag": f'"{sha256}"'},
+    )

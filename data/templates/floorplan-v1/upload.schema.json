@@ -1,0 +1,115 @@
+{
+  "$defs": {
+    "Redaction": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        },
+        "width": {
+          "exclusiveMinimum": 0,
+          "maximum": 10000,
+          "title": "Width",
+          "type": "number"
+        },
+        "height": {
+          "exclusiveMinimum": 0,
+          "maximum": 10000,
+          "title": "Height",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "title": "Redaction",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "floor_id": {
+      "format": "uuid",
+      "title": "Floor Id",
+      "type": "string"
+    },
+    "key": {
+      "maxLength": 80,
+      "minLength": 8,
+      "title": "Key",
+      "type": "string"
+    },
+    "filename": {
+      "maxLength": 160,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_. -]+$",
+      "title": "Filename",
+      "type": "string"
+    },
+    "title": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "rights": {
+      "enum": [
+        "synthetic",
+        "authorized",
+        "restricted"
+      ],
+      "title": "Rights",
+      "type": "string"
+    },
+    "provenance": {
+      "maxLength": 4000,
+      "minLength": 10,
+      "title": "Provenance",
+      "type": "string"
+    },
+    "attribution": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Attribution",
+      "type": "string"
+    },
+    "page": {
+      "default": 1,
+      "maximum": 30,
+      "minimum": 1,
+      "title": "Page",
+      "type": "integer"
+    },
+    "redactions": {
+      "items": {
+        "$ref": "#/$defs/Redaction"
+      },
+      "maxItems": 20,
+      "title": "Redactions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "floor_id",
+    "key",
+    "filename",
+    "title",
+    "rights",
+    "provenance",
+    "attribution"
+  ],
+  "title": "UploadInput",
+  "type": "object"
+}

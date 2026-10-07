@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { ApiError } from '../../api/client'
 import { adminApi, type Dashboard, type Draft, type Session } from './api'
 import { Publication, ReleaseHistory } from './Publication'
+import { Floorplans } from './Floorplans'
 import { Imports } from './Imports'
 import { GraphEditor } from './GraphEditor'
 import { readAdminView, writeAdminView } from './adminView'
@@ -82,6 +83,7 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
     </section>
     <div className="admin-tabs" aria-label="Administration sections">
       {allowed('draft_read') && <button aria-pressed={tab === 'catalog'} onClick={() => selectTab('catalog')}>Draft catalog</button>}
+      {allowed('draft_read') && <button aria-pressed={tab === 'floors'} onClick={() => selectTab('floors')}>Floors and floorplans</button>}
       {allowed('draft_read') && <button aria-pressed={tab === 'graph'} onClick={() => selectTab('graph')}>Outdoor graph</button>}
       {allowed('import_read') && <button aria-pressed={tab === 'imports'} onClick={() => selectTab('imports')}>Data imports</button>}
       {allowed('draft_read') && <button aria-pressed={tab === 'review'} onClick={() => selectTab('review')}>Review and releases</button>}
@@ -90,7 +92,7 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
     </div>
     {tab === 'audit' && allowed('audit_read') && <AuditLog path={path} />}
     {tab === 'users' && allowed('user_admin') && <Users path={path} csrf={session.csrf_token} />}
-    {['catalog', 'imports', 'graph', 'review'].includes(tab) && allowed('draft_read') && <>
+    {['catalog', 'imports', 'graph', 'review', 'floors'].includes(tab) && allowed('draft_read') && <>
       <section className="admin-card"><h2>Draft catalog</h2><p>A new draft copies the current public release, including its stored navigation graph. Catalog edits stay within the selected draft.</p>
         <div className="admin-actions"><label>Selected draft<select value={selected?.id ?? ''} onChange={e => selectDraft(e.target.value)}><option value="" disabled>No draft selected</option>{data.drafts.map(d => <option key={d.id} value={d.id}>Draft {d.version} · {d.status} · {new Date(d.created_at).toLocaleString()}</option>)}</select></label>
           {allowed('draft_create') && <button disabled={busy} onClick={async () => { setBusy(true); setError(null); try {
@@ -99,6 +101,7 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
         </div><ErrorMessage error={error} />{data.drafts_total > 100 && <p>Showing the latest 100 drafts of {data.drafts_total}.</p>}
       </section>
       {selected && tab !== 'review' && selected.status !== 'draft' && <p role="status">This revision is locked for review. Open Review and releases to inspect it or return it to draft.</p>}
+      {selected && tab === 'floors' && <Floorplans key={selected.id} path={`${path}/drafts/${selected.id}`} session={session} permissions={data.permissions} />}
       {selected && tab === 'review' && <Publication key={selected.id} path={`${path}/drafts/${selected.id}`} campusPath={path} session={session} permissions={data.permissions} />}
       {selected?.status === 'draft' && tab === 'graph' && <GraphEditor key={selected.id} path={`${path}/drafts/${selected.id}`} csrf={session.csrf_token} editable={allowed('catalog_edit')} userId={session.user_id} />}
       {selected?.status === 'draft' && tab === 'imports' && <Imports key={selected.id} path={path} draftId={selected.id} csrf={session.csrf_token} editable={allowed('import_write')} campus={data} />}

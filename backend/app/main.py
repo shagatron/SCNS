@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from app.api.v1.admin import router as admin_router
+from app.api.v1.floorplans import router as floorplans_router
 from app.api.v1.graph import router as graph_router
 from app.api.v1.imports import router as imports_router
 from app.api.v1.public import router
@@ -30,6 +31,7 @@ app.add_middleware(
         "If-Match",
         "Idempotency-Key",
         "X-Import-Options",
+        "X-Floorplan-Metadata",
     ],
     allow_credentials=True,
     expose_headers=["ETag", "X-Request-ID"],
@@ -110,3 +112,4 @@ app.include_router(imports_router)
 app.include_router(graph_router)
 
 app.include_router(publication_router)
+app.include_router(floorplans_router)

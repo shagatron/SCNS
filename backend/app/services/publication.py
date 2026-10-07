@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import math
 from uuid import UUID, uuid4
 
 from geoalchemy2 import Geography
@@ -22,6 +23,7 @@ from app.models import (
     Revision,
 )
 from app.models.admin import AuditEvent, Department, DepartmentPlace, PlaceAlias, User
+from app.models.floorplans import Floor, MapLayer
 from app.models.imports import ImportBinding, ImportJob
 from app.models.publication import (
     ReleaseAction,
@@ -40,7 +42,7 @@ from app.services.admin_graph import route_test, validate_graph
 from app.services.catalog import normalize
 from app.services.imports import final_graph_guard, strict_json
 
-VALIDATOR = "outdoor-publication-v1"
+VALIDATOR = "floorplan-publication-v2"
 TABLES = {
     "frames": Frame,
     "buildings": Building,
@@ -53,6 +55,8 @@ TABLES = {
     "aliases": PlaceAlias,
     "bindings": ImportBinding,
     "sources": SourceAsset,
+    "floors": Floor,
+    "floorplan_layers": MapLayer,
 }
 
 
@@ -109,7 +113,7 @@ def snapshot(db, revision):
         for row in rows:
             item = {}
             for col in model.__table__.columns:
-                if col.name in {"dataset_revision_id", "campus_id", "original"}:
+                if col.name in {"dataset_revision_id", "campus_id", "original", "png"}:
                     continue
                 value = getattr(row, col.name)
                 if col.name in {"point", "footprint", "geometry"}:
@@ -215,8 +219,79 @@ def public_projection(full):
             "geojson": s["derivative"],
         }
         for i, s in full["sources"].items()
-        if s["approved_by"] and s["rights"] != "restricted" and s["derivative"] is not None
+        if s["approved_by"]
+        and s["rights"] != "restricted"
+        and s["derivative"] is not None
+        and s["derivative"].get("type") == "FeatureCollection"
     }
+    result["floors"] = {}
+    result["floorplans"] = {}
+    for identity, floor in full["floors"].items():
+        if (
+            floor["visibility"] != "public"
+            or floor["building_id"] not in result["buildings"]
+            or not floor["layer_id"]
+        ):
+            continue
+        layer = full["floorplan_layers"].get(floor["layer_id"])
+        source = full["sources"].get(layer["source_id"]) if layer else None
+        if not source or not source["approved_by"] or source["rights"] == "restricted":
+            continue
+        frame = full["frames"].get(floor["frame_id"])
+        if (
+            not frame
+            or frame["kind"] != "indoor"
+            or layer["floor_id"] != identity
+            or layer["frame_id"] != floor["frame_id"]
+        ):
+            continue
+        value = frame["calibration"]
+        result["floors"][identity] = {
+            **fields(
+                floor,
+                (
+                    "id",
+                    "building_id",
+                    "code",
+                    "label",
+                    "ordering",
+                    "elevation_m",
+                    "frame_id",
+                    "layer_id",
+                ),
+            ),
+            "navigation_mode": "display_only",
+            "metric_navigation": False,
+        }
+        result["frames"][floor["frame_id"]] = {
+            **fields(frame, ("id", "code", "kind", "width_px", "height_px", "metres_per_pixel")),
+            "origin": "top_left",
+            "axes": "x_right_y_down",
+            "units": "pixels",
+            "calibration_status": "calibrated"
+            if value and value.get("reviewer")
+            else "uncalibrated",
+            "uncertainty_m": value["uncertainty_m"] if value and value.get("reviewer") else None,
+        }
+        result["floorplans"][layer["id"]] = {
+            **fields(
+                layer,
+                (
+                    "id",
+                    "floor_id",
+                    "frame_id",
+                    "page",
+                    "width_px",
+                    "height_px",
+                    "display_width_px",
+                    "display_height_px",
+                    "checksum",
+                ),
+            ),
+            "title": source["title"],
+            "attribution": source["attribution"],
+            "media_type": "image/png",
+        }
     result["attributions"] = sorted(
         {
             s["attribution"]
@@ -415,11 +490,14 @@ def validate(db, revision, payload, actor, request_id):
             sum(f["code"] == code for f in findings) >= 100
             for code in ("near_duplicate", "unmapped_intersection")
         )
-        or any(f["kind"] != "outdoor" for f in full["frames"].values())
+        or any(
+            full["frames"].get(n["frame_id"], {}).get("kind") != "outdoor"
+            for n in full["nodes"].values()
+        )
     ):
         report(
             "validation_budget",
-            "Reduce the dataset to complete diagnostics; only outdoor publication is supported in 2C.",
+            "Reduce the dataset to complete diagnostics; only outdoor routing is supported; indoor graph nodes remain a later slice.",
         )
     try:
         final_graph_guard(db, revision)
@@ -524,6 +602,167 @@ def validate(db, revision, payload, actor, request_id):
                 "Review the exact sanitized derivative and approve it, or remove it from this draft.",
                 "sources",
                 [identity],
+            )
+    from app.schemas.floorplans import CalibrationInput, FloorInput
+    from app.services.floorplans import calibration as validate_calibration
+
+    for identity, floor in full["floors"].items():
+        try:
+            FloorInput.model_validate(
+                {
+                    key: floor[key]
+                    for key in (
+                        "id",
+                        "building_id",
+                        "code",
+                        "label",
+                        "ordering",
+                        "elevation_m",
+                        "visibility",
+                    )
+                }
+            )
+        except ValueError:
+            report("floor_fields", "Repair floor metadata.", "floors", [identity])
+        layer = full["floorplan_layers"].get(floor["layer_id"]) if floor["layer_id"] else None
+        frame = full["frames"].get(floor["frame_id"]) if floor["frame_id"] else None
+        visible = (
+            floor["visibility"] == "public"
+            and floor["building_id"] in public_projection(full)["buildings"]
+        )
+        if (
+            floor["visibility"] == "public"
+            and full["buildings"].get(floor["building_id"], {}).get("visibility") != "public"
+        ):
+            report(
+                "floor_visibility",
+                "A public floor cannot expose a restricted building.",
+                "floors",
+                [identity],
+            )
+        if not layer:
+            if visible:
+                report(
+                    "floor_plan_missing",
+                    "Apply an approved plan or restrict this unfinished floor before publication.",
+                    "floors",
+                    [identity],
+                )
+            continue
+        source = full["sources"].get(layer["source_id"])
+        stored_layer = db.get(MapLayer, (revision.id, UUID(layer["id"])))
+        if (
+            not frame
+            or frame["kind"] != "indoor"
+            or layer["floor_id"] != identity
+            or layer["frame_id"] != floor["frame_id"]
+            or (frame["width_px"], frame["height_px"]) != (layer["width_px"], layer["height_px"])
+            or hashlib.sha256(stored_layer.png).hexdigest() != layer["checksum"]
+        ):
+            report(
+                "floor_plan_integrity",
+                "Selected plan/frame/PNG checksum disagrees; reprocess and explicitly replace it.",
+                "floors",
+                [identity],
+            )
+            continue
+        if not source or source["derivative"] != {
+            key: value
+            for key, value in {
+                "kind": "floorplan",
+                "layer_id": layer["id"],
+                "checksum": layer["checksum"],
+                "width_px": layer["width_px"],
+                "height_px": layer["height_px"],
+                "display_width_px": layer["display_width_px"],
+                "display_height_px": layer["display_height_px"],
+                "page": layer["page"],
+            }.items()
+        }:
+            report(
+                "floor_derivative",
+                "Reprocess/approve the exact selected sanitized display derivative.",
+                "floors",
+                [identity],
+            )
+        if visible and (
+            not source or source["rights"] == "restricted" or not source["approved_by"]
+        ):
+            report(
+                "floor_asset_approval",
+                "Public plans require permitted rights and independent sanitized derivative approval; restrict this floor otherwise.",
+                "floors",
+                [identity],
+            )
+        value = frame["calibration"]
+        if value:
+            try:
+                checked = validate_calibration(
+                    CalibrationInput.model_validate(
+                        {
+                            key: value[key]
+                            for key in (
+                                "method",
+                                "primary",
+                                "checks",
+                                "measured_on",
+                                "evidence",
+                                "uncertainty_m",
+                                "plan_quality",
+                            )
+                        }
+                    ),
+                    frame["width_px"],
+                    frame["height_px"],
+                    UUID(value["measured_by"]),
+                    full["campus"]["is_demo"],
+                )
+                if value.get("layer_checksum") != layer["checksum"] or not math.isclose(
+                    checked["metres_per_pixel"], frame["metres_per_pixel"], rel_tol=1e-12
+                ):
+                    raise ValueError("Stale calibration")
+            except (ValueError, KeyError, DomainError):
+                report(
+                    "floor_calibration",
+                    "Repair/recalibrate inconsistent or stale measurement evidence.",
+                    "floors",
+                    [identity],
+                )
+            reviewer = db.get(User, UUID(value["reviewer"])) if value.get("reviewer") else None
+            if visible and (
+                not reviewer
+                or not reviewer.active
+                or str(reviewer.id) == value["measured_by"]
+                or "source_approve" not in permissions(db, reviewer.id, revision.campus_id)
+            ):
+                report(
+                    "calibration_review",
+                    "Independent live calibration reviewer must approve these exact measurements.",
+                    "floors",
+                    [identity],
+                )
+        elif frame["metres_per_pixel"] is not None:
+            report(
+                "floor_calibration",
+                "Metric scale has no measurements; clear/recalibrate it.",
+                "floors",
+                [identity],
+            )
+        elif visible:
+            report(
+                "uncalibrated_floor",
+                "Plan is display-only: no indoor metric distance/ETA. Acknowledge and supply verified calibration before later metric routing.",
+                "floors",
+                [identity],
+                "warning",
+            )
+        if visible:
+            report(
+                "indoor_display_only",
+                "3A contains no rooms, corridors or indoor routes; this approved floor is display-only even when calibrated.",
+                "floors",
+                [identity],
+                "warning",
             )
     for job in db.scalars(
         select(ImportJob)
@@ -703,6 +942,16 @@ def independent(db, submission, actor):
             (AuditEvent.action == "draft.create")
             | AuditEvent.action.like("catalog.%")
             | AuditEvent.action.like("graph.%")
+            | AuditEvent.action.in_(
+                [
+                    "floor.create",
+                    "floor.update",
+                    "floor.delete",
+                    "floor.calibrate",
+                    "floorplan.upload",
+                    "floorplan.apply",
+                ]
+            )
             | (AuditEvent.action == "import.apply")
             | (AuditEvent.action == "source.register")
             | (AuditEvent.action == "source.remove"),

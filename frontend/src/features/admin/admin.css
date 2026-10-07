@@ -64,3 +64,16 @@
 .publication-workspace summary { cursor: pointer; font-weight: 600; overflow-wrap: anywhere; }
 .publication-workspace label { margin: .75rem 0; }
 .publication-workspace article, .publication-workspace p { overflow-wrap: anywhere; }
+
+.floorplan-workspace { min-width: 0; }
+.floorplan-workspace p, .floorplan-workspace a { overflow-wrap: anywhere; }
+.floorplan-workspace label { margin: .5rem 0; }
+.floorplan-preview { min-width: 0; margin: 1rem 0; }
+.floorplan-map { height: 420px; width: 100%; background: #e7ecea; isolation: isolate; z-index: 0; }
+.floorplan-mask { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; align-items: end; margin: .75rem 0; }
+.floorplan-mask button { grid-column: 1 / -1; justify-self: start; }
+.floorplan-jobs { list-style: none; padding: 0; }
+.floorplan-jobs li { padding: .5rem 0; overflow-wrap: anywhere; }
+.floorplan-jobs small { display: block; }
+.floorplan-workspace pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 300px; overflow: auto; }
+@media (max-width: 760px) { .floorplan-map { height: 320px; } .floorplan-mask { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

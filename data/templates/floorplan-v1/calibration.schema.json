@@ -1,0 +1,107 @@
+{
+  "$defs": {
+    "Measurement": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "$ref": "#/$defs/Pixel"
+        },
+        "end": {
+          "$ref": "#/$defs/Pixel"
+        },
+        "distance_m": {
+          "maximum": 10000,
+          "minimum": 0.1,
+          "title": "Distance M",
+          "type": "number"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "distance_m"
+      ],
+      "title": "Measurement",
+      "type": "object"
+    },
+    "Pixel": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Pixel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "method": {
+      "const": "uniform_scale",
+      "default": "uniform_scale",
+      "title": "Method",
+      "type": "string"
+    },
+    "primary": {
+      "$ref": "#/$defs/Measurement"
+    },
+    "checks": {
+      "items": {
+        "$ref": "#/$defs/Measurement"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Checks",
+      "type": "array"
+    },
+    "measured_on": {
+      "format": "date",
+      "title": "Measured On",
+      "type": "string"
+    },
+    "evidence": {
+      "maxLength": 4000,
+      "minLength": 10,
+      "title": "Evidence",
+      "type": "string"
+    },
+    "uncertainty_m": {
+      "maximum": 5,
+      "minimum": 0,
+      "title": "Uncertainty M",
+      "type": "number"
+    },
+    "plan_quality": {
+      "default": "uniform",
+      "enum": [
+        "uniform",
+        "distorted"
+      ],
+      "title": "Plan Quality",
+      "type": "string"
+    }
+  },
+  "required": [
+    "primary",
+    "checks",
+    "measured_on",
+    "evidence",
+    "uncertainty_m"
+  ],
+  "title": "CalibrationInput",
+  "type": "object"
+}

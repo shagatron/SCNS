@@ -18,6 +18,7 @@ from app.models import (
     Revision,
 )
 from app.models.admin import Department, DepartmentPlace, PlaceAlias
+from app.models.floorplans import Floor, MapLayer
 from app.models.imports import ImportBinding
 from app.models.publication import SourceAsset
 from app.schemas.admin import CatalogRecord, CatalogWrite, DraftOut
@@ -91,6 +92,14 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
                 "Cloning these originals exceeds the campus 100MiB source quota. Retain releases and use a smaller source dataset.",
                 413,
             )
+        from app.services.floorplans import quota
+
+        copying_png = db.scalar(
+            select(func.coalesce(func.sum(func.octet_length(MapLayer.png)), 0)).where(
+                MapLayer.dataset_revision_id == parent
+            )
+        )
+        quota(db, campus_id, copying + copying_png)
         for model in (
             Frame,
             Building,
@@ -103,6 +112,8 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
             DepartmentPlace,
             ImportBinding,
             SourceAsset,
+            Floor,
+            MapLayer,
         ):
             table = model.__table__
             db.execute(
@@ -110,12 +121,22 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
                     [c.name for c in table.columns],
                     select(
                         *[
-                            literal(revision.id) if c.name == "dataset_revision_id" else c
+                            literal(revision.id)
+                            if c.name == "dataset_revision_id"
+                            else literal(None)
+                            if model is Floor and c.name == "layer_id"
+                            else c
                             for c in table.columns
                         ]
                     ).where(table.c.dataset_revision_id == parent),
                 )
             )
+        db.execute(
+            text(
+                "UPDATE floors f SET layer_id = p.layer_id FROM floors p WHERE f.dataset_revision_id = :new AND p.dataset_revision_id = :parent AND f.id = p.id"
+            ),
+            {"new": revision.id, "parent": parent},
+        )
     audit(
         db,
         "draft.create",

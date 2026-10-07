@@ -1,0 +1,73 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Id"
+    },
+    "building_id": {
+      "format": "uuid",
+      "title": "Building Id",
+      "type": "string"
+    },
+    "code": {
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_.-]+$",
+      "title": "Code",
+      "type": "string"
+    },
+    "label": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Label",
+      "type": "string"
+    },
+    "ordering": {
+      "maximum": 1000,
+      "minimum": -100,
+      "title": "Ordering",
+      "type": "number"
+    },
+    "elevation_m": {
+      "anyOf": [
+        {
+          "maximum": 10000,
+          "minimum": -500,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Elevation M"
+    },
+    "visibility": {
+      "default": "public",
+      "enum": [
+        "public",
+        "restricted"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "required": [
+    "building_id",
+    "code",
+    "label",
+    "ordering"
+  ],
+  "title": "FloorInput",
+  "type": "object"
+}

@@ -3,6 +3,7 @@ from pathlib import Path
 
 from app.main import app
 from app.schemas.dataset import Dataset
+from app.schemas.floorplans import CalibrationInput, FloorInput, UploadInput
 from app.schemas.imports import ImportBundle
 from app.schemas.publication import SourceInput
 
@@ -19,3 +20,12 @@ root = Path(__file__).resolve().parents[3]
 (root / "data/templates/publication-v1/source.schema.json").write_text(
     json.dumps(SourceInput.model_json_schema(), indent=2) + "\n"
 )
+
+for name, model in [
+    ("floor", FloorInput),
+    ("upload", UploadInput),
+    ("calibration", CalibrationInput),
+]:
+    (root / f"data/templates/floorplan-v1/{name}.schema.json").write_text(
+        json.dumps(model.model_json_schema(), indent=2) + "\n"
+    )

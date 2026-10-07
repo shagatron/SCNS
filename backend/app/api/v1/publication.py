@@ -9,6 +9,7 @@ from starlette.concurrency import run_in_threadpool
 from app.api.v1.admin import DB, Version
 from app.core.errors import DomainError
 from app.models import ActiveRelease, Release, Revision
+from app.models.floorplans import MapLayer
 from app.models.publication import ReleaseArtifact, ReviewSubmission, SourceAsset
 from app.schemas.publication import (
     DecisionInput,
@@ -95,6 +96,16 @@ def remove_source(
     source = db.get(SourceAsset, (revision.id, source_id))
     if not source or revision.status != "draft":
         raise DomainError("conflict", "Source must belong to an editable draft.", 409)
+    if db.scalar(
+        select(MapLayer.id)
+        .where(MapLayer.dataset_revision_id == revision.id, MapLayer.source_id == source.id)
+        .limit(1)
+    ):
+        raise DomainError(
+            "conflict",
+            "Source is referenced by a floor plan; use explicit floor dependency removal instead.",
+            409,
+        )
     db.delete(source)
     revision.edit_version += 1
     revision.checksum = None
@@ -147,6 +158,20 @@ def approve_source(
             "The source uploader cannot approve its own rights/derivative.",
             403,
         )
+    if source.derivative and source.derivative.get("kind") == "floorplan":
+        from hashlib import sha256
+
+        layer = db.get(MapLayer, (revision.id, UUID(source.derivative["layer_id"])))
+        if (
+            not layer
+            or layer.source_id != source.id
+            or sha256(layer.png).hexdigest() != source.derivative["checksum"]
+        ):
+            raise DomainError(
+                "conflict",
+                "Selected sanitized floor derivative failed integrity checks; reprocess it.",
+                409,
+            )
     if source.approved_by:
         raise DomainError("conflict", "Source is already approved.", 409)
     source.approved_by = actor.id

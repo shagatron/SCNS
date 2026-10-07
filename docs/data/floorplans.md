@@ -1,6 +1,6 @@
 # Floorplan v1 data and coordinate contract
 
-3A adds floors and display/calibration layers, not indoor navigation topology. The master specification remains the source of truth. These contracts implement its first indoor slice; unfinished room/corridor/entrance tracing, connectors and indoor routes remain 3B/3C.
+3A adds floors and display/calibration layers, not indoor navigation topology. The master specification remains the source of truth. These contracts implement its first indoor slice; 3B now adds [same-floor room/corridor tracing](indoor-editor.md); connectors and indoor routes remain 3C.
 
 ## Identity, ownership and storage
 

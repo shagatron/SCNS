@@ -1,6 +1,6 @@
 # Floors and private floorplans — Milestone 3A
 
-3A delivers draft floor management, private PDF/image processing, floor-local preview and evidence-bound uniform calibration. It extends independent source/release review; it does not add rooms, corridors, indoor edges, entrance tracing, connectors, indoor routes, QR, location or deployment. Demo Campus and the checked-in drawings are invented software fixtures, never real MUJ data. Full two-floor navigation acceptance remains 3B/3C.
+3A delivers draft floor management, private PDF/image processing, floor-local preview and evidence-bound uniform calibration. It extends independent source/release review; it does not add rooms, corridors, indoor edges, entrance tracing, connectors, indoor routes, QR, location or deployment. Demo Campus and the checked-in drawings are invented software fixtures, never real MUJ data. 3B now adds the separate [indoor visual editor](indoor-editor.md); full two-floor navigation acceptance remains 3C.
 
 ## Update an existing Windows installation without losing data
 

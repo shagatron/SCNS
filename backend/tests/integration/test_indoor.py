@@ -107,7 +107,7 @@ def test_full_local_topology_canonical_links_metric_audit_and_public_isolation(
     assert place.point is None and place.aliases == ["Synthetic quiet study"]
     events = db.scalars(select(AuditEvent).where(AuditEvent.action == "indoor.patch")).all()
     assert len(events) == 1 and events[0].actor_id == identity[0].id
-    assert events[0].after["floor_id"] == floor
+    assert events[0].after["floor_id"] == floor and events[0].after["layer_id"] == layer
     public = client.get(f"/api/v1/campuses/{bundle.campus.id}/directory").json()
     assert room_id not in json.dumps(public)
     assert client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"] == old
@@ -164,7 +164,18 @@ def test_indoor_roles_campus_isolation_and_csrf(
 
 @pytest.mark.parametrize(
     "failure",
-    ["bounds", "pair", "door", "endpoint", "loop", "duplicate", "evidence", "floor", "layer"],
+    [
+        "bounds",
+        "pair",
+        "door",
+        "endpoint",
+        "loop",
+        "duplicate",
+        "evidence",
+        "floor",
+        "layer",
+        "department",
+    ],
 )
 def test_invalid_atomic_patches_no_partial_write_or_audit(
     client, db, bundle, identity, reviewer, failure
@@ -194,6 +205,8 @@ def test_invalid_atomic_patches_no_partial_write_or_audit(
         edges[0]["data"]["to_node_id"] = str(uuid4())
     elif failure == "layer":
         payload["layer_id"] = str(uuid4())
+    elif failure == "department":
+        rooms[0]["data"]["department_ids"] = [str(uuid4())]
     v = current(client, path)
     r = save(client, path, floor, h, payload)
     assert r.status_code in (409, 422), r.text
@@ -523,3 +536,95 @@ def test_replacement_and_foreign_floor_identity_guards(client, db, bundle, ident
     # Same identity cannot be implicitly moved even when frame coordinates happen to match.
     assert client.get(path + f"/floors/{floor}/indoor").json()["nodes"] == old["nodes"]
     assert client.get(path + f"/floors/{otherid}/indoor").json()["rooms"] == {}
+
+
+def test_stored_frame_source_mismatch_is_actionable_and_department_links_are_canonical(
+    client, db, bundle, identity, reviewer
+):
+    from app.models.admin import DepartmentPlace
+    from tests.integration.test_admin import catalog_path
+
+    draft, path, floor, layer, h = prepared(client, db, bundle, identity, reviewer)
+    department = client.post(
+        catalog_path(bundle, draft, "departments"),
+        json={
+            "entity": "departments",
+            "data": {
+                "code": "INDOOR",
+                "name": "Synthetic indoor support",
+                "description": "Public test department",
+                "place_ids": [],
+            },
+        },
+        headers=version(h, current(client, path)),
+    )
+    assert department.status_code == 201, department.text
+    payload = fixture_payload(layer)
+    room = next(
+        c for c in payload["changes"] if c["entity"] == "rooms" and c["data"]["code"] == "101"
+    )
+    room["data"]["department_ids"] = [department.json()["id"]]
+    r = save(client, path, floor, h, payload)
+    assert r.status_code == 200, r.text
+    assert db.scalar(
+        select(DepartmentPlace).where(
+            DepartmentPlace.dataset_revision_id == UUID(draft["id"]),
+            DepartmentPlace.place_id == UUID(room["id"]),
+        )
+    ).department_id == UUID(department.json()["id"])
+    with db.begin_nested():
+        db.execute(text("SET LOCAL session_replication_role=replica"))
+        db.execute(
+            text("UPDATE indoor_nodes SET frame_id=:bad WHERE dataset_revision_id=:revision"),
+            {"bad": str(bundle.frames[0].id), "revision": draft["id"]},
+        )
+        db.execute(text("SET LOCAL session_replication_role=origin"))
+        db.expire_all()
+        val = client.get(path + f"/floors/{floor}/indoor/validation").json()
+        assert val["errors"] > 0
+        assert any(
+            d["code"] == "indoor_frame_source" and d["entity"] == "nodes"
+            for d in val["diagnostics"]
+        )
+
+
+def test_dense_pair_validation_budget_blocks_incomplete_apply_atomically(
+    client, db, bundle, identity, reviewer
+):
+    _, path, floor, layer, h = prepared(client, db, bundle, identity, reviewer)
+    changes = []
+    # 50 disjoint parallel polylines with overlapping envelopes: 1,225 potential
+    # pairs, but no crossings that could otherwise stop at the warning cap.
+    for i in range(50):
+        a, b = uuid4(), uuid4()
+        for id, x, y in [(a, 100, 100 + i), (b, 400, 200 + i)]:
+            changes.append(
+                {
+                    "entity": "nodes",
+                    "id": str(id),
+                    "data": {
+                        "kind": "corridor",
+                        "label": f"Synthetic parallel {i}",
+                        "x_px": x,
+                        "y_px": y,
+                    },
+                }
+            )
+        changes.append(
+            {
+                "entity": "edges",
+                "id": str(uuid4()),
+                "data": {
+                    "physical_path_id": str(uuid4()),
+                    "from_node_id": str(a),
+                    "to_node_id": str(b),
+                    "polyline": [[100, 100 + i], [400, 200 + i]],
+                },
+            }
+        )
+    v = current(client, path)
+    r = save(client, path, floor, h, {"layer_id": layer, "changes": changes})
+    assert r.status_code == 422 and "indoor_spatial_budget" in r.text, r.text
+    assert current(client, path) == v
+    assert db.scalar(select(func.count()).select_from(IndoorNode)) == 0
+    assert db.scalar(select(func.count()).select_from(IndoorEdge)) == 0

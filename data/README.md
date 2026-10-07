@@ -50,3 +50,7 @@ Geometry must accompany scalar edge rows: `edge-geometries.geojson` is an empty 
 Executable 2B1 staged CSV/JSON/GeoJSON examples are in [`templates/import-v1/`](templates/import-v1/README.md). Root floor/calibration CSV templates remain preparation-only; executable manual 3A floor/upload/calibration JSON is in [`templates/floorplan-v1/`](templates/floorplan-v1/README.md). Connectors/QR remain future preparation. See [private draft import rules and startup](../docs/operations/imports.md).
 
 M3A fixture PNG/JPEG/two-page PDF: [`demo/floorplans/`](demo/floorplans/README.md), explicitly synthetic 600×400 drawings with independent known 200px/10m lines. Real originals remain ignored/private and require their own rights/measurement evidence. Floorplans use protected database BYTEA rather than the text-import filesystem; no original is a public static asset. [Complete workflow/limits](../docs/operations/floorplans.md) and [coordinate/release contract](../docs/data/floorplans.md).
+
+## Same-floor indoor tracing (3B)
+
+Use the authenticated Indoor floor editor on an approved selected plan, with exact reference dimensions. [Invented indoor fixture](demo/indoor/synthetic-ground.json) and [strict pixel patch schema/example](templates/indoor-v1/README.md) cover rooms, canonical catalog/aliases/departments, explicit doors and same-floor paths. No automatic apply/publication or survey inference. See [data contract](../docs/data/indoor-editor.md); 3C transitions/connectors/indoor routes remain unavailable.

@@ -139,6 +139,10 @@ def rows(db, revision, floor):
 def output(db, revision, floor):
     frame = db.get(Frame, (revision.id, floor.frame_id)) if floor.frame_id else None
     campus = db.get(Campus, revision.campus_id)
+    selected_layer = db.get(MapLayer, (revision.id, floor.layer_id)) if floor.layer_id else None
+    source = (
+        db.get(SourceAsset, (revision.id, selected_layer.source_id)) if selected_layer else None
+    )
     ready, error = True, None
     try:
         prerequisite(db, revision, floor)
@@ -160,6 +164,8 @@ def output(db, revision, floor):
         "floor": {
             "id": str(floor.id),
             "label": floor.label,
+            "source_id": str(source.id) if source else None,
+            "source_title": source.title if source else None,
             "building_id": str(floor.building_id),
             "frame_id": str(floor.frame_id) if frame else None,
             "width_px": frame.width_px if frame else None,
@@ -507,21 +513,46 @@ def inspect(db, revision, floor, state, *, mode=None):
                         "warning",
                     )
     representatives = [items[0] for items in groups.values()]
-    crossings = 0
+    boxes = {}
+    for identity, e in representatives:
+        xs, ys = zip(*e["polyline"], strict=False)
+        boxes[identity] = (min(xs), min(ys), max(xs), max(ys))
+    crossings, detailed = 0, 0
+    budget = False
     for i, (a_id, a) in enumerate(representatives):
         for b_id, b in representatives[i + 1 :]:
-            # Shared endpoints deliberately connect. Other intersections remain separate.
+            ax, ay, az, aw = boxes[a_id]
+            bx, by, bz, bw = boxes[b_id]
+            if az < bx or bz < ax or aw < by or bw < ay:
+                continue
+            detailed += 1
+            if detailed > 1000:
+                report(
+                    "indoor_spatial_budget",
+                    "Dense overlapping paths exceed the 1,000 detailed-pair validation budget. Reduce/subdivide tracing so all intersections can be inspected before applying/reviewing.",
+                    "edges",
+                    [a_id, b_id],
+                )
+                budget = True
+                break
             common = {a["from_node_id"], a["to_node_id"]} & {b["from_node_id"], b["to_node_id"]}
+            intersection = func.ST_Intersection(shape(a["polyline"]), shape(b["polyline"]))
+            # Remove only the deliberately shared endpoint points, not other crossings.
             if common:
-                continue
-            ax, ay = zip(*a["polyline"], strict=False)
-            bx, by = zip(*b["polyline"], strict=False)
-            if max(ax) < min(bx) or max(bx) < min(ax) or max(ay) < min(by) or max(by) < min(ay):
-                continue
-            if db.scalar(select(func.ST_Intersects(shape(a["polyline"]), shape(b["polyline"])))):
+                shared = func.ST_GeomFromText(
+                    "MULTIPOINT("
+                    + ",".join(
+                        f"({state['nodes'][n]['x_px']} {state['nodes'][n]['y_px']})"
+                        for n in sorted(common)
+                    )
+                    + ")",
+                    0,
+                )
+                intersection = func.ST_Difference(intersection, shared)
+            if not db.scalar(select(func.ST_IsEmpty(intersection))):
                 report(
                     "indoor_unmapped_intersection",
-                    "These paths intersect in reference pixels without a shared topology node. Deliberately split both at one existing junction, or acknowledge the physical separation; crossing alone creates no connection.",
+                    "These paths overlap/intersect away from a deliberately shared topology endpoint. Split both at one explicit junction, or acknowledge the physical separation; crossing alone creates no connection.",
                     "edges",
                     [a_id, b_id],
                     "warning",
@@ -529,7 +560,7 @@ def inspect(db, revision, floor, state, *, mode=None):
                 crossings += 1
                 if crossings >= 100:
                     break
-        if crossings >= 100:
+        if crossings >= 100 or budget:
             break
     # Bound quadratic geometry diagnostics; reaching the cap blocks whole-draft completeness.
     nodes = list(state["nodes"].items())
@@ -636,7 +667,13 @@ def proposal(db, revision, floor, payload):
         if d["severity"] == "error"
     ]
     if problems:
-        raise DomainError("invalid_input", f"{problems[0]['code']}: {problems[0]['message']}", 422)
+        first = problems[0]
+        identities = ", ".join(first["ids"][:2])
+        raise DomainError(
+            "invalid_input",
+            f"{first['code']} · {first['entity']} ({identities}): {first['message']}",
+            422,
+        )
     return frame, layer, before, combined
 
 
@@ -771,6 +808,9 @@ def apply_patch(db, revision, floor, payload, actor, request_id):
         before=before,
         after={
             "floor_id": str(floor.id),
+            "layer_id": str(layer.id),
+            "frame_id": str(frame.id),
+            "source_id": str(layer.source_id),
             "mode": payload.mode,
             "changes": payload.model_dump(mode="json")["changes"],
         },

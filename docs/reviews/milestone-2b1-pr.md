@@ -20,4 +20,4 @@ Supported now: outdoor frames, buildings, places, nodes, edges, departments/plac
 
 Full authenticated browser journeys ran on isolated source API/Vite/worker; built nginx received smoke checks. Official campus/field evidence, owner manual testing, non-Chromium/physical-device/assistive-tech verification, process-kill chaos/large-campus load, production security/backup recovery and remote Actions were not verified. No developer administrator/password was provisioned. No public deployment, merge or 2B2 work is included.
 
-See `docs/operations/imports.md` for exact startup/templates/upsert/retention commands and `docs/testing/verification.md` for evidence and limitations. Base: `feat/milestone-2-admin` at `9f0e489`; checkpoints: `790bc4a`, explicitly unfinished `6e54e5f`.
+See `docs/operations/imports.md` for exact startup/templates/upsert/retention commands and `docs/testing/verification.md` for evidence and limitations.

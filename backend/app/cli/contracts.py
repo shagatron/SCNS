@@ -16,4 +16,6 @@ root = Path(__file__).resolve().parents[3]
     json.dumps(ImportBundle.model_json_schema(), indent=2) + "\n"
 )
 
-(root / "data/templates/publication-v1/source.schema.json").write_text(json.dumps(SourceInput.model_json_schema(), indent=2) + "\n")
+(root / "data/templates/publication-v1/source.schema.json").write_text(
+    json.dumps(SourceInput.model_json_schema(), indent=2) + "\n"
+)

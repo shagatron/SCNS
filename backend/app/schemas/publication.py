@@ -1,9 +1,19 @@
 from typing import Literal
 from uuid import UUID
 
-from pydantic import Field
+from pydantic import Field, ValidationInfo, field_validator
 
 from app.schemas.api import DTO
+
+
+class ReviewText(DTO):
+    @field_validator("notes", "reason", check_fields=False)
+    @classmethod
+    def nonblank_reason(cls, value):
+        value = value.strip()
+        if len(value) < 10:
+            raise ValueError("Provide a substantive reason of at least ten characters")
+        return value
 
 
 class SourceInput(DTO):
@@ -14,8 +24,16 @@ class SourceInput(DTO):
     original: dict | None = None
     display_overlay: bool = False
 
+    @field_validator("title", "provenance", "attribution")
+    @classmethod
+    def meaningful_source_text(cls, value, info: ValidationInfo):
+        value = value.strip()
+        if len(value) < (10 if info.field_name == "provenance" else 1):
+            raise ValueError("Source text must not be blank; provenance needs ten characters")
+        return value
 
-class RouteExpectation(DTO):
+
+class RouteExpectation(ReviewText):
     source: UUID
     target: UUID
     profile: Literal["shortest", "step_free"]
@@ -33,7 +51,7 @@ class SubmitInput(DTO):
     acknowledgements: dict[str, str] = Field(default_factory=dict, max_length=1000)
 
 
-class DecisionInput(DTO):
+class DecisionInput(ReviewText):
     decision: Literal["approve", "reject", "withdraw"]
     notes: str = Field(min_length=10, max_length=4000)
     acknowledgements: dict[str, str] = Field(default_factory=dict, max_length=1000)
@@ -45,7 +63,7 @@ class PublishInput(DTO):
     key: str = Field(min_length=8, max_length=80)
 
 
-class RollbackInput(DTO):
+class RollbackInput(ReviewText):
     target_release_id: UUID
     expected_release_id: UUID
     key: str = Field(min_length=8, max_length=80)

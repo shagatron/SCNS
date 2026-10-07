@@ -3,7 +3,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from threading import Barrier
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import pytest
 from geoalchemy2 import Geography
@@ -45,6 +45,7 @@ from app.schemas.publication import (
     DecisionInput,
     PublishInput,
     RollbackInput,
+    RouteExpectation,
     SubmitInput,
     ValidateInput,
 )
@@ -390,3 +391,250 @@ def test_committed_rollback_race_and_failed_write(committed_review):
             )
             == 1
         )
+
+
+def test_committed_submit_edit_race_invalidates_prior_approval(committed_review):
+    engine, campus, rid, sid, version, editor, reviewer, old = committed_review
+    with Session(engine) as db, db.begin():
+        revision = service.locked_revision(db, campus, rid, f'"{version}"')
+        service.decision(
+            db,
+            revision,
+            db.get(ReviewSubmission, sid),
+            DecisionInput(
+                decision="withdraw", notes="Return approved fixture to draft for a competing edit"
+            ),
+            db.get(User, editor),
+            "race-return",
+        )
+        run = db.get(ValidationRun, db.get(ReviewSubmission, sid).validation_id)
+        route_fields = set(RouteExpectation.model_fields)
+        payload = ValidateInput.model_validate(
+            {"routes": [{k: v for k, v in e.items() if k in route_fields} for e in run.evidence]}
+        )
+        fresh = service.validate(db, revision, payload, db.get(User, editor), "race-revalidate")
+        version, run_id, reasons = revision.edit_version, fresh.id, ack({"report": fresh.report})
+    barrier = Barrier(2, timeout=15)
+
+    def compete(index):
+        try:
+            with Session(engine) as db, db.begin():
+                barrier.wait()
+                if index == 0:
+                    revision = service.locked_revision(db, campus, rid, f'"{version}"')
+                    service.submit(
+                        db,
+                        revision,
+                        SubmitInput(validation_id=run_id, acknowledgements=reasons),
+                        db.get(User, editor),
+                        "race-submit",
+                    )
+                    result = "submitted"
+                else:
+                    revision = db.get(Revision, rid)
+                    claim_version(db, revision, f'"{version}"')
+                    node = db.scalar(select(Node).where(Node.dataset_revision_id == rid))
+                    node.label = "Synthetic concurrent edited node"
+                    service.audit(
+                        db,
+                        "graph.node.update",
+                        "race-edit",
+                        actor_id=editor,
+                        campus_id=campus,
+                        revision_id=rid,
+                        resource_id=node.id,
+                        after={"label": node.label},
+                    )
+                    result = "edited"
+            return result
+        except DomainError as error:
+            assert error.status == 409
+            return "conflict"
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = sorted(pool.map(compete, [0, 1]))
+    assert results in (["conflict", "submitted"], ["conflict", "edited"])
+    with Session(engine) as db:
+        revision = db.get(Revision, rid)
+        assert revision.edit_version == version + 1 and revision.status in {"draft", "review"}
+        assert db.get(ReviewSubmission, sid).status == "withdrawn"
+        assert db.get(ActiveRelease, (campus, "public")).release_id == old
+
+
+def test_committed_publish_rollback_compete_for_same_active_pointer(committed_review):
+    engine, campus, rid, sid, version, editor, reviewer, old = committed_review
+    with Session(engine) as db, db.begin():
+        revision = service.locked_revision(db, campus, rid, f'"{version}"')
+        current = service.publish(
+            db,
+            revision,
+            db.get(ReviewSubmission, sid),
+            PublishInput(
+                submission_id=sid, expected_release_id=old, key="initial-publish-cross-race"
+            ),
+            db.get(User, reviewer),
+            "cross-race",
+        )
+        newer = create_draft(db, campus, editor, "cross-race")
+        revision = db.get(Revision, newer.id)
+        prior = db.get(ValidationRun, db.get(ReviewSubmission, sid).validation_id)
+        payload = ValidateInput.model_validate(
+            {
+                "routes": [
+                    {k: v for k, v in e.items() if k in RouteExpectation.model_fields}
+                    for e in prior.evidence
+                ]
+            }
+        )
+        run = service.validate(db, revision, payload, db.get(User, editor), "cross-race")
+        reasons = ack({"report": run.report})
+        submitted = service.submit(
+            db,
+            revision,
+            SubmitInput(validation_id=run.id, acknowledgements=reasons),
+            db.get(User, editor),
+            "cross-race",
+        )
+        service.decision(
+            db,
+            revision,
+            submitted,
+            DecisionInput(
+                decision="approve",
+                notes="Independent second fixture review before active-pointer race",
+                acknowledgements=reasons,
+            ),
+            db.get(User, reviewer),
+            "cross-race",
+        )
+        new_rid, new_sid, new_version = revision.id, submitted.id, revision.edit_version
+    barrier = Barrier(2, timeout=15)
+
+    def compete(index):
+        try:
+            with Session(engine) as db, db.begin():
+                barrier.wait()
+                service.campus_lock(db, campus)
+                if index == 0:
+                    revision = service.locked_revision(db, campus, new_rid, f'"{new_version}"')
+                    service.publish(
+                        db,
+                        revision,
+                        db.get(ReviewSubmission, new_sid),
+                        PublishInput(
+                            submission_id=new_sid,
+                            expected_release_id=current["release_id"],
+                            key="cross-race-publish",
+                        ),
+                        db.get(User, reviewer),
+                        "cross-race",
+                    )
+                    result = "published"
+                else:
+                    service.rollback(
+                        db,
+                        campus,
+                        RollbackInput(
+                            target_release_id=old,
+                            expected_release_id=current["release_id"],
+                            key="cross-race-rollback",
+                            reason="Return to earlier immutable synthetic fixture",
+                        ),
+                        db.get(User, reviewer),
+                        "cross-race",
+                    )
+                    result = "rolled"
+            return result
+        except DomainError as error:
+            assert error.status == 409
+            return "conflict"
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = sorted(pool.map(compete, [0, 1]))
+    assert results in (["conflict", "published"], ["conflict", "rolled"])
+    with Session(engine) as db:
+        revision = db.get(Revision, new_rid)
+        assert revision.status == ("frozen" if "published" in results else "review")
+        assert db.get(ActiveRelease, (campus, "public")).release_id != UUID(current["release_id"])
+
+
+def test_rollback_orders_publications_not_draft_creation_versions(committed_review):
+    engine, campus, older_draft, old_sid, old_version, editor, reviewer, old_release = (
+        committed_review
+    )
+    with Session(engine) as db, db.begin():
+        later_draft = create_draft(db, campus, editor, "out-of-order-fixture")
+        revision = db.get(Revision, later_draft.id)
+        prior = db.get(ValidationRun, db.get(ReviewSubmission, old_sid).validation_id)
+        payload = ValidateInput.model_validate(
+            {
+                "routes": [
+                    {k: v for k, v in e.items() if k in RouteExpectation.model_fields}
+                    for e in prior.evidence
+                ]
+            }
+        )
+        run = service.validate(db, revision, payload, db.get(User, editor), "out-of-order-fixture")
+        reasons = ack({"report": run.report})
+        submitted = service.submit(
+            db,
+            revision,
+            SubmitInput(validation_id=run.id, acknowledgements=reasons),
+            db.get(User, editor),
+            "out-of-order-fixture",
+        )
+        service.decision(
+            db,
+            revision,
+            submitted,
+            DecisionInput(
+                decision="approve",
+                notes="Independent review of later-created synthetic draft",
+                acknowledgements=reasons,
+            ),
+            db.get(User, reviewer),
+            "out-of-order-fixture",
+        )
+        first = service.publish(
+            db,
+            revision,
+            submitted,
+            PublishInput(
+                submission_id=submitted.id,
+                expected_release_id=old_release,
+                key="publish-later-draft-first",
+            ),
+            db.get(User, reviewer),
+            "out-of-order-fixture",
+        )
+        earlier = db.get(Revision, older_draft)
+        second = service.publish(
+            db,
+            earlier,
+            db.get(ReviewSubmission, old_sid),
+            PublishInput(
+                submission_id=old_sid,
+                expected_release_id=first["release_id"],
+                key="publish-earlier-draft-later",
+            ),
+            db.get(User, reviewer),
+            "out-of-order-fixture",
+        )
+        assert earlier.version < revision.version
+        assert (
+            db.get(Release, second["release_id"]).publication_order
+            > db.get(Release, first["release_id"]).publication_order
+        )
+        restored = service.rollback(
+            db,
+            campus,
+            RollbackInput(
+                target_release_id=first["release_id"],
+                expected_release_id=second["release_id"],
+                key="rollback-publication-order",
+                reason="Earlier publication remains eligible despite higher draft version",
+            ),
+            db.get(User, reviewer),
+            "out-of-order-fixture",
+        )
+        assert restored["release_id"] == first["release_id"]

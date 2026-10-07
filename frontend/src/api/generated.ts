@@ -1434,6 +1434,11 @@ export interface components {
              * @default 0
              */
             closure_overlay_version: number;
+            /**
+             * Publication Order
+             * @default 0
+             */
+            publication_order: number;
             /** Artifact Checksum */
             artifact_checksum?: string | null;
             /** Artifact Url */

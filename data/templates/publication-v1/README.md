@@ -1,0 +1,9 @@
+# Publication source registration v1
+
+`source.json` is a clearly synthetic example matching generated `source.schema.json`. Register via protected `POST /api/v1/admin/campuses/{campus}/drafts/{revision}/sources`, `Content-Type: application/json`, authenticated cookie, Origin, X-CSRF-Token and quoted revision `If-Match`. At most 5MiB total request; no arbitrary URL/file-path fetching.
+
+Metadata-only registration uses `original: null`, `display_overlay: false`. UI can attach `.json`/`.geojson` as the private original. Rights values: `synthetic` only for demo campuses, `authorized` (owner assertion of intended public rights), `restricted` (no public derivative). Record substantive provenance and required attribution; a different authorized reviewer must inspect/approve. Real institutional source rights and survey evidence must be supplied by the owner; do not relabel this example.
+
+Outdoor derivatives use WGS84 `[longitude, latitude]`, plain label up to 160 characters, Point/LineString/Polygon geometry, explicit `properties.public=true` on intended public features. Other features/properties are excluded. Reviewers inspect sanitized derivative and original before approval. Maximum 500 features, 500 positions per line/ring, 10 polygon rings; valid public shapes must be inside the destination campus boundary. Image/PDF conversion is M3. Original-only notes/geometry remain private and never enter a public artifact.
+
+The example coordinates are invented near zero for Demo Campus. Adapt permitted data to your actual campus boundary; include no real source data in Git. Workflow, quotas, approval, canonical public checksums and Windows update instructions: [publication operations](../../../docs/operations/publication.md).

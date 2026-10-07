@@ -38,6 +38,7 @@ def main():
     from app.cli.dataset import read_bundle, seed_bundle
     from app.models.admin import RoleAssignment, User
     from app.services.admin_auth import HASHER
+    from tests.publication_fixtures import create_fixture
 
     config = Config(str(root / "backend/alembic.ini"))
     command.downgrade(config, "base")
@@ -46,15 +47,22 @@ def main():
     engine = create_engine(url)
     with Session(engine) as db, db.begin():
         bundle = read_bundle(root / "data/demo/campus.json")
-        seed_bundle(db, bundle)
-        bootstrap(db, "browser-owner", "Browser owner", password, bundle.campus.id)
+        release = seed_bundle(db, bundle)
+        fixture_campuses = [
+            create_fixture(db, release.dataset_revision_id, bundle, viewport)
+            for viewport in ("desktop", "mobile")
+        ]
+        owner = bootstrap(db, "browser-owner", "Browser owner", password, bundle.campus.id)
+        for campus_id in fixture_campuses:
+            db.add(RoleAssignment(user_id=owner.id, campus_id=campus_id, role="system_admin"))
         for role in ["editor", "reviewer_publisher", "operations"]:
             user = User(
                 username=f"browser-{role}", display_name=role, password_hash=HASHER.hash(password)
             )
             db.add(user)
             db.flush()
-            db.add(RoleAssignment(user_id=user.id, campus_id=bundle.campus.id, role=role))
+            for campus_id in [bundle.campus.id, *fixture_campuses]:
+                db.add(RoleAssignment(user_id=user.id, campus_id=campus_id, role=role))
     engine.dispose()
     # Ephemeral credentials only in child environment, never argv, files, traces or output.
     env = {**os.environ, "SCNS_E2E_PASSWORD": password}

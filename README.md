@@ -110,3 +110,5 @@ See [the import setup and workflow guide](docs/operations/imports.md) and [execu
 ## Outdoor draft graph editor (2B2)
 
 See [graph update/startup instructions, editing controls, recovery and concurrency](docs/operations/graph-editor.md). Node, paired directed-edge and entrance edits remain private drafts. Width/slope/steps/surface are unknown until provided; geometry changes never automatically certify accessibility. Per-tab recovery autosaves local input, while saving to the server is explicit. Graph validation and Dijkstra test routes do not publish.
+
+Milestone 2C adds exact-version validation/review, independent approval, immutable public artifacts, atomic publication and audited rollback. [Workflow and Windows Docker Desktop update commands](docs/operations/publication.md) preserve existing installation data; no deployment is authorized. Source/projection templates: [publication-v1](data/templates/publication-v1/README.md).

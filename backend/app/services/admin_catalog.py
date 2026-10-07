@@ -75,6 +75,22 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
     db.add(revision)
     db.flush()
     if parent:
+        used = db.scalar(
+            select(func.coalesce(func.sum(func.octet_length(SourceAsset.original)), 0)).where(
+                SourceAsset.campus_id == campus_id
+            )
+        )
+        copying = db.scalar(
+            select(func.coalesce(func.sum(func.octet_length(SourceAsset.original)), 0)).where(
+                SourceAsset.dataset_revision_id == parent
+            )
+        )
+        if used + copying > 100 * 1024 * 1024:
+            raise DomainError(
+                "storage_limit",
+                "Cloning these originals exceeds the campus 100MiB source quota. Retain releases and use a smaller source dataset.",
+                413,
+            )
         for model in (
             Frame,
             Building,

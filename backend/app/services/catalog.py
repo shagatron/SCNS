@@ -47,6 +47,7 @@ def active_release(session: Session, campus_id: UUID) -> ReleaseOut:
         checksum=release.checksum,
         published_at=release.published_at,
         version=version,
+        publication_order=release.publication_order,
         artifact_checksum=artifact.checksum if artifact else None,
         artifact_url=f"/api/v1/campuses/{campus_id}/artifacts/{release.id}/{artifact.checksum}.json"
         if artifact

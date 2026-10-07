@@ -5,11 +5,13 @@ from datetime import datetime
 
 from geoalchemy2 import Geometry
 from sqlalchemy import (
+    BigInteger,
     Boolean,
     CheckConstraint,
     DateTime,
     Float,
     ForeignKeyConstraint,
+    Identity,
     Integer,
     String,
     Text,
@@ -232,6 +234,7 @@ class Anchor(RevisionEntity, Base):
 
 class Release(Base):
     __tablename__ = "releases"
+    publication_order: Mapped[int] = mapped_column(BigInteger, Identity(), unique=True)
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True)
     campus_id: Mapped[uuid.UUID] = mapped_column(UUID)
     dataset_revision_id: Mapped[uuid.UUID] = mapped_column(UUID, unique=True)

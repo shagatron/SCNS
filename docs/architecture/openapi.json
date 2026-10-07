@@ -5711,6 +5711,11 @@
             "title": "Closure Overlay Version",
             "default": 0
           },
+          "publication_order": {
+            "type": "integer",
+            "title": "Publication Order",
+            "default": 0
+          },
           "artifact_checksum": {
             "anyOf": [
               {

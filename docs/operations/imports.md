@@ -81,3 +81,7 @@ Browser tests run API/frontend/worker on a disposable `_e2e_test` database, rand
 ## Compatibility with graph editing
 
 The same draft-wide version serializes catalog, import and graph batches. A graph save makes an older import preview stale; refresh and revalidate before applying. Imports remain stable-ID, explicit-upsert draft writes and never publish. Nodes may include `evidence` source/last-verification notes. Edges may include nullable `width_m`, `slope_percent`, `step_count`, `surface`; omitted/null means unknown. JSON bundles use null; omit optional numeric CSV cells/columns when unknown. Upsert replaces complete typed fields, so review defaulted unknown fields before replacing surveyed records. Positive step count conflicts with verified step-free status at the database boundary. See [graph operations](graph-editor.md) for additional dated-evidence requirements on renewed editor assertions.
+
+## M2C update
+
+Exact-content validation, independent review, public artifacts, atomic publication and explicit rollback are available on `feat/milestone-2-publication`. Draft workflows remain private; submitted revisions lock edits and must be returned to draft before changes. Follow [publication operations and data-retaining Windows Docker Desktop updates](publication.md). Existing volumes, .env, accounts and public seed release IDs remain intact.

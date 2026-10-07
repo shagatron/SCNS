@@ -4,6 +4,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Request, Response
 from sqlalchemy import select
+from starlette.concurrency import run_in_threadpool
 
 from app.api.v1.admin import DB, Version
 from app.core.errors import DomainError
@@ -47,9 +48,7 @@ def review(campus_id: UUID, revision_id: UUID, request: Request, db: DB):
 async def register_source(
     campus_id: UUID, revision_id: UUID, request: Request, db: DB, if_match: Version = None
 ):
-    actor = authorize(db, request, campus_id, "catalog_edit")
-    service.campus_lock(db, campus_id)
-    revision = service.locked_revision(db, campus_id, revision_id, if_match)
+    actor = await run_in_threadpool(authorize, db, request, campus_id, "catalog_edit")
     # Bound before decoding, unlike generic JSON request binding. Originals stay private BYTEA.
     raw = bytearray()
     async for chunk in request.stream():
@@ -63,7 +62,13 @@ async def register_source(
             "invalid_input",
             "Use the documented publication source JSON/GeoJSON registration template.",
         ) from None
-    return service.add_source(db, revision, payload, actor, request.state.request_id)
+
+    def save():
+        service.campus_lock(db, campus_id)
+        revision = service.locked_revision(db, campus_id, revision_id, if_match)
+        return service.add_source(db, revision, payload, actor, request.state.request_id)
+
+    return await run_in_threadpool(save)
 
 
 @router.delete("/drafts/{revision_id}/sources/{source_id}")
@@ -251,6 +256,7 @@ def history(campus_id: UUID, request: Request, db: DB):
                 "id": str(r.id),
                 "revision_id": str(r.dataset_revision_id),
                 "version": version,
+                "publication_order": r.publication_order,
                 "checksum": r.checksum,
                 "published_at": r.published_at,
                 "artifact_checksum": a.checksum if a else None,
@@ -262,7 +268,7 @@ def history(campus_id: UUID, request: Request, db: DB):
                 .join(Revision, Revision.id == Release.dataset_revision_id)
                 .outerjoin(ReleaseArtifact, ReleaseArtifact.release_id == Release.id)
                 .where(Release.campus_id == campus_id)
-                .order_by(Revision.version.desc())
+                .order_by(Release.publication_order.desc())
                 .limit(100)
             )
         ],

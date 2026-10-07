@@ -259,6 +259,15 @@ def sanitize_overlay(original):
             raise ValueError(
                 "Only outdoor Point/LineString/Polygon derivatives are supported; floorplans belong to M3."
             )
+        positions = (
+            [coords]
+            if kind == "Point"
+            else coords
+            if kind == "LineString"
+            else [p for ring in coords for p in ring]
+        )
+        if any(len(p) != 2 or any(type(n) not in {int, float} for n in p) for p in positions):
+            raise ValueError("Use numeric longitude/latitude pairs without booleans or altitude.")
         props = feature.get("properties") or {}
         if props.get("public") is not True:
             continue
@@ -808,6 +817,19 @@ def publish(db, revision, submission, payload, actor, request_id):
             "Approval reviewer is no longer authorized; return to draft and obtain fresh independent approval.",
             409,
         )
+    for source in full["sources"].values():
+        if source["approved_by"]:
+            source_reviewer = db.get(User, UUID(source["approved_by"]))
+            if (
+                not source_reviewer
+                or not source_reviewer.active
+                or "source_approve" not in permissions(db, source_reviewer.id, revision.campus_id)
+            ):
+                raise DomainError(
+                    "approval_revoked",
+                    "A source reviewer is no longer authorized; obtain a fresh source review and validation.",
+                    409,
+                )
     artifact = generate_artifact(full)
     revision.status = "frozen"
     revision.edit_version += 1
@@ -885,8 +907,7 @@ def rollback(db, campus_id, payload, actor, request_id):
         not target
         or not current
         or target.id == current.id
-        or db.get(Revision, target.dataset_revision_id).version
-        >= db.get(Revision, current.dataset_revision_id).version
+        or target.publication_order >= current.publication_order
         or db.get(Revision, target.dataset_revision_id).status != "frozen"
     ):
         raise DomainError(

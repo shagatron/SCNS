@@ -100,3 +100,7 @@ UV_CACHE_DIR=/tmp/scns-uv-cache PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chr
 No official maps, field validation, owner manual app test, physical-device/assistive-technology verification or deployment is implied by these synthetic automated checks.
 
 Staged data imports are delivered in 2B1. See [import permissions, formats, worker startup and transactional workflow](imports.md). Outdoor graph editing, diagnostics and draft route tests are delivered in 2B2; see [graph operations](graph-editor.md). Review/publication remains later work.
+
+## M2C update
+
+Exact-content validation, independent review, public artifacts, atomic publication and explicit rollback are available on `feat/milestone-2-publication`. Draft workflows remain private; submitted revisions lock edits and must be returned to draft before changes. Follow [publication operations and data-retaining Windows Docker Desktop updates](publication.md). Existing volumes, .env, accounts and public seed release IDs remain intact.

@@ -64,3 +64,7 @@ make generate-api
 ```
 
 Browser/migration runners reset only their explicitly disposable `_e2e_test`/`_migration_test` databases. Integration tests use rollback fixtures and uniquely scoped committed concurrency records. See [actual verification evidence](../testing/verification.md); physical campus maps, owner manual testing, real phones and production deployment remain unverified.
+
+## M2C update
+
+Exact-content validation, independent review, public artifacts, atomic publication and explicit rollback are available on `feat/milestone-2-publication`. Draft workflows remain private; submitted revisions lock edits and must be returned to draft before changes. Follow [publication operations and data-retaining Windows Docker Desktop updates](publication.md). Existing volumes, .env, accounts and public seed release IDs remain intact.

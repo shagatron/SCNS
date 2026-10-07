@@ -1,5 +1,40 @@
 # Verification evidence
 
+## M2B1 final verification — 7 October 2026 (Asia/Kolkata)
+
+Scope: staged CSV/JSON/GeoJSON draft imports only, based on `9f0e489`, with pushed checkpoints `790bc4a` and `6e54e5f`. No implementation restart. The latest resume preserved all UI/cache-refresh changes before further verification. Milestone 2B2, review/publication and deployment are outside this result.
+
+| Executed check | Observed result |
+|---|---|
+| `make check` (latest rerun after the added worker test) | Ruff/format **44 files**, TypeScript, ESLint passed |
+| `make build` on final application code | Vite build and Python compilation passed |
+| `make test-unit` | **35 Python unit + 14 frontend tests passed**; no skips |
+| `make test-integration` (final full run) | **50 PostGIS tests passed**, including 28 existing regressions and 22 import cases; no skips |
+| New worker test alone, then final full integration run | Passed: committed stale parsing lease recovers, retry ceiling holds, cancelled job is not processed, expired original/orphan cleanup preserves fresh orphans and DB history |
+| `make test-migrations` | Fresh/reset, downgrade to M1/re-upgrade through `f420e55f937e`, alias backfill/frozen guard, release/checksum preservation, schema alignment and one-time trusted CLI bootstrap passed |
+| `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e` | **28 passed**: six import, twelve admin/session and ten public-navigation journeys across desktop/360px mobile |
+| `make validate-dataset` | Original 11-place/13-node/27-edge outdoor fixture valid; no data imported |
+| `make generate-api` + before/after SHA-256 verification | OpenAPI, generated TS, original dataset schema and new import-bundle schema reproduced byte-for-byte |
+| Offline import validation CLI | Parsed all ten synthetic bundle records without writes; CLI clearly distinguishes parsing from authoritative staged/reference validation |
+| `python scripts/cloud-build.py` | Both images built with existing proxy/CA/dependency verification; no verification bypass |
+| Compose migration/startup and worker `once` | API/frontend/worker started; migrated durable queue readable; API/worker share private volume and API image |
+| Built nginx/API/browser smoke | Protected session/import endpoints 401; private data/storage paths 404; normal fresh admin login, zero alerts, exactly one session check |
+| Stored route before/after imports and built smoke | Public release `4eb587e6-5607-48ed-a8ca-f5c0d8f1c505`, Main Gate → Library **256.88m / three stored edges**, preserved |
+| Container/source SHA-256 | Import service identical inside/outside API image |
+| Host `make dev`, functional readiness/route/queue check, SIGTERM shutdown | All three services started; ready PostGIS and computed route succeeded; API/web ports closed and worker children stopped; Compose restored afterward |
+| Empty built private-volume cleanup | Zero files removed; job-history retention command completed |
+| `git diff --check` and ignore/staged-file review | Passed; secrets, raw source files, dependencies, database files, build outputs and browser artifacts excluded |
+
+Integration import evidence covers all supported catalog/outdoor entity types, JSON bundle ordering, CSV mapping and GeoJSON geometry; strict JSON/CSV/CRS/coordinate/boundary/metadata/byte/row/quota failures; duplicate IDs/codes, explicit adoption/upsert and unchanged template replay; campus/role/CSRF isolation; checksum/private-path protection; stale previews; real simultaneous distinct-job application (one commit/one conflict) and same-job replay (one apply audit); injected second-row rollback of entities/bindings/version/audits; existing-node dependent-graph integrity; unchanged public search/map/routes. Diagnostic export units escape formula-like values. Worker tests use actual committed leases/transactions in the disposable test database, not sleeps or mocked successful writes.
+
+Browser evidence covers upload → processing → preview → comparison/download → validate → explicit apply; catalog refresh after application; repeat unchanged import; CSV column mapping/conflict/policy reprocessing/cancellation; GeoJSON stale preview rejection/refresh; responsive overflow and axe checks. Random credentials/private files stay in isolated test environment/storage; admin traces/screenshots/video are disabled. The full run used source API/Vite/worker on 8001/5174 and took 2.1 minutes. It did **not** exercise all authenticated journeys against built nginx; the built stack received the smoke checks listed above.
+
+Earlier failing import browser selectors were corrected to accessible control roles. Browser assertions then caught stale cached catalog data after apply; the UI now invalidates the affected draft/dashboard. Those journeys and the full suite subsequently passed. No test assertion, permission boundary or public-isolation expectation was disabled to get a pass. The newly added recovery test was verified on resume; unchanged full unit/build/browser/migration runs were retained instead of needlessly repeated.
+
+Non-failing upstream warnings remain: Starlette TestClient recommends `httpx2`, the cloud helper's `UV_NATIVE_TLS` spelling is deprecated, and Playwright reports color-environment conflicts. No warnings were suppressed. No admin is bootstrapped in the developer database. Synthetic coordinates/evidence do not validate physical campus navigation or accessibility.
+
+**Not verified:** owner manual testing, physical phones, Safari/Firefox, human screen readers, official maps/source rights/field surveys, process-kill chaos/large-campus throughput, production penetration/TLS/load/backup restoration or remote GitHub Actions. PR creation is pending the completion push and will be recorded separately; previous GitHub API attempts were Forbidden. Git HTTPS pushes of both checkpoints are confirmed. The cloud startup draft is saved for future review; no new environment snapshot was published.
+
 ## M2B1 unfinished verification checkpoint — 7 October 2026 (Asia/Kolkata)
 
 The implementation follows pushed backend checkpoint `790bc4a` on `feat/milestone-2-imports`. The remaining local UI/cache-refresh work is being preserved in an explicitly unfinished checkpoint. Executed and passing: `make check build test-unit test-integration test-migrations validate-dataset` (**35 Python unit, 49 real PostGIS integration, 14 frontend tests**), and `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e` (**28 desktop/mobile tests**, including the original ten public-navigation regressions). No skips or remaining failures in those runs. Initial browser selector and stale-catalog-cache failures were fixed and rerun successfully.

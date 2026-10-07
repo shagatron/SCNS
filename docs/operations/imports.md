@@ -4,7 +4,7 @@ Imports are private draft operations. Public search, map and Dijkstra routing co
 
 ## Setup and startup
 
-From the repository root:
+From the repository root (stop Compose `api frontend import-worker` first when switching from built services to host development):
 
 ```bash
 make setup

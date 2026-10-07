@@ -1,3 +1,11 @@
+## M2B2 unfinished starting checkpoint — 7 October 2026
+
+Verified clean checkout at completed/pushed M2B1 `4444c68b533b6fa510b931c436f11fcdb461af58`; created `feat/milestone-2-graph-editor` directly from that commit without a worktree or reset. Read the master editor/integrity/quality requirements and existing implementation/documentation. No application changes or new checks yet.
+
+Authorized scope: outdoor draft graph viewing and selection, node/edge/anchor CRUD, stored polylines and paired directions, explicit intersection connection/split/snap, undo/redo, unsaved recovery and conflict reconciliation, source/accessibility disclosure, server validation and audit. Public immutable releases, imports and existing permissions remain intact. Review/publication, indoor tools and live closures remain later milestones.
+
+Next steps: implement atomic revision-CAS graph commands and diagnostics with PostGIS tests; build responsive visual controls and private per-tab recovery; run desktop/mobile graph plus all existing regressions, lint/type/build/schema and container smoke; update operations/checklist/evidence; push completion and attempt PR against `feat/milestone-2-imports`. This checkpoint is explicitly unfinished. Preserve existing `.env`, database volumes and private uploads.
+
 # Project progress
 
 ## Milestone 2B1 complete — 7 October 2026 (Asia/Kolkata)

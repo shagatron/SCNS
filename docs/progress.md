@@ -1,3 +1,11 @@
+## M2B2 unfinished visual-workflow checkpoint — 7 October 2026
+
+The responsive visual editor, node/paired-edge/anchor controls, stored polyline editing, pointer drawing/movement, explicit split/intersection connection, deletion preview, local undo/redo, per-account/tab recovery and revision conflict comparison are implemented. Recovery preserves unapplied text and selected draft; failed saves retain input. Dated verification evidence is required for renewed step-free claims. Diagnostics cover weak components, directed standard/step-free destination reachability, crossings/near duplicates and stale source notes. Exact database endpoints are used when writing lines to avoid rounded-GeoJSON precision failures; audit includes persisted length/geometry. Public-pointer writes remain absent.
+
+Executed earlier full checks: lint/type/build, **35 Python units, 19 frontend tests, 67 PostGIS integrations**, fresh/M1-down-and-up migration alignment, synthetic dataset validation passed. Subsequently added precision/anchor/near-duplicate coverage and changed exact-endpoint writes: focused **18 graph integrations passed**. Latest focused browser run: **9/10 passed**; mobile pointer-save failure is still under diagnosis. No failed/unrun check is counted complete.
+
+Next: finish pointer-save diagnosis; run stable-source full desktop/mobile graph/admin/import/public suite; rerun affected final core checks; build/migrate/start containers and smoke private/graph/public endpoints and stored route; finalize operations/checklist/evidence; commit/push completion and attempt PR to imports. This checkpoint is explicitly unfinished. All current frontend/test changes are preserved; no source implementation restart.
+
 ## M2B2 unfinished backend checkpoint — 7 October 2026
 
 Atomic campus-authorized outdoor graph batches, coherent reads, draft revision CAS, ordered explicit deletions, node movement with incident geometry/length updates, per-feature audit, graph quality diagnostics and stored-graph Dijkstra draft route tests are implemented. Migration `0007_graph_node_evidence` adds optional provenance notes without changing active releases. Graph attributes reuse import/catalog contracts; unverified moves reset affected paths to unknown accessibility/estimated distance.

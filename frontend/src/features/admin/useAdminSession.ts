@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useQuery, useQueryClient, type Query } from '@tanstack/react-query'
 import { ApiError } from '../../api/client'
 import { adminApi, type Session } from './api'
+import { clearGraphRecovery } from './graphState'
 
 const sessionKey = ['admin', 'session'] as const
 const privateData = (query: Query) => query.queryKey[0] === 'admin' && query.queryKey[1] !== 'session'
@@ -42,6 +43,7 @@ export function useAdminSession() {
     setEnded(false)
   }, [cache, discardPrivateData])
   const signOut = useCallback(() => {
+    clearGraphRecovery()
     void cache.cancelQueries({ queryKey: ['admin'] })
     discardPrivateData()
     cache.setQueryData(sessionKey, null)

@@ -1,7 +1,9 @@
 """Outdoor draft editor. Validate combined state before ordered transactional writes."""
 
 import json
+import re
 from collections import defaultdict
+from datetime import date, timedelta
 from uuid import UUID
 
 from geoalchemy2 import Geography
@@ -287,6 +289,27 @@ def apply_patch(db, revision, patch: GraphPatch, actor_id, request_id):
                 edge["geometry"]["coordinates"][-1] = node["point"]["coordinates"]
             edge["accessibility_status"] = "unknown"
             edge["distance_status"] = "estimated"
+    # Existing imported verification is readable; renewed assertions on edited features need a dated source.
+    for change in patch.changes:
+        if change.entity not in {"edges", "anchors"} or change.data is None:
+            continue
+        data = state[change.entity][str(change.id)]
+        if (
+            data == original[change.entity].get(str(change.id))
+            or data.get("accessibility_status") != "verified_step_free"
+        ):
+            continue
+        notes = data.get("evidence", data.get("accessibility_evidence", ""))
+        match = re.search(r"\b(\d{4}-\d{2}-\d{2})\b", notes)
+        try:
+            verified = date.fromisoformat(match.group(1)) if match else None
+        except ValueError:
+            verified = None
+        if verified is None or verified > date.today():
+            raise DomainError(
+                "graph_validation_failed",
+                "Verified step-free edits require source notes with a valid non-future verification date (YYYY-MM-DD). Keep unknown until verified.",
+            )
     errors = [x for x in inspect_state(db, revision, state) if x["severity"] == "error"]
     if errors:
         error = errors[0]
@@ -303,7 +326,7 @@ def apply_patch(db, revision, patch: GraphPatch, actor_id, request_id):
                 before = {k: v for k, v in before.items() if k != "distance_m"}
                 after = {k: v for k, v in after.items() if k != "distance_m"}
             if before != after:
-                changes.append((entity, UUID(identity), before, after))
+                changes.append((entity, UUID(identity), original[entity].get(identity), after))
     for entity in ("anchors", "edges", "nodes"):
         for kind, identity, _, after in changes:
             if kind == entity and after is None:
@@ -341,12 +364,38 @@ def apply_patch(db, revision, patch: GraphPatch, actor_id, request_id):
                     )
                 db.add(row)
                 db.flush()
+            elif entity == "edges":
+                row = db.get(Edge, (revision.id, identity)) or Edge(
+                    id=identity, campus_id=revision.campus_id, dataset_revision_id=revision.id
+                )
+                source = referenced(db, Node, revision.id, UUID(after["from_node_id"]))
+                target = referenced(db, Node, revision.id, UUID(after["to_node_id"]))
+                shape = func.ST_SetSRID(
+                    func.ST_GeomFromGeoJSON(json.dumps(after["geometry"])), 4326
+                )
+                # API coordinates are rounded GeoJSON; persist exact stored endpoints, not rounded copies.
+                shape = func.ST_SetPoint(
+                    func.ST_SetPoint(shape, 0, source.point),
+                    len(after["geometry"]["coordinates"]) - 1,
+                    target.point,
+                )
+                for key, value in after.items():
+                    if key not in {"geometry", "distance_m"}:
+                        setattr(row, key, UUID(value) if key.endswith("_id") else value)
+                row.geometry = shape
+                row.distance_m = func.ST_Length(cast(shape, Geography))
+                db.add(row)
+                db.flush()
             else:
-                write_item(db, revision, {"entity": entity, "id": str(identity), "data": after})
+                try:
+                    write_item(db, revision, {"entity": entity, "id": str(identity), "data": after})
+                except ValueError as error:
+                    raise DomainError("graph_validation_failed", str(error)) from None
     try:
         final_graph_guard(db, revision)
     except ValueError as error:
         raise DomainError("graph_validation_failed", str(error)) from None
+    stored = graph_rows(db, revision)
     for entity, identity, before, after in changes:
         audit(
             db,
@@ -357,7 +406,7 @@ def apply_patch(db, revision, patch: GraphPatch, actor_id, request_id):
             revision_id=revision.id,
             resource_id=identity,
             before=before,
-            after=after,
+            after=stored[entity].get(str(identity)) if after else None,
         )
     return graph_output(db, revision)
 
@@ -396,6 +445,31 @@ def validate_graph(db, revision):
                 continue
             adjacency[e["from_node_id"]].add(e["to_node_id"])
             reverse[e["to_node_id"]].add(e["from_node_id"])
+        weak = defaultdict(set)
+        for source, targets in adjacency.items():
+            for target in targets:
+                weak[source].add(target)
+                weak[target].add(source)
+        remaining = {
+            identity
+            for identity, n in state["nodes"].items()
+            if n["point"] and n["visibility"] == "public"
+        }
+        components = []
+        while remaining:
+            component = reachable(weak, {min(remaining)})
+            components.append(component)
+            remaining -= component
+        if len(components) > 1:
+            findings.append(
+                issue(
+                    "components_" + profile,
+                    f"{len(components)} public weak components for {profile}. Review isolated nodes/areas and add eligible explicit connections where needed.",
+                    "nodes",
+                    [min(c) for c in components[:100]],
+                    "warning",
+                )
+            )
         entrances = defaultdict(set)
         for a in state["anchors"].values():
             if (
@@ -432,6 +506,29 @@ def validate_graph(db, revision):
                     "warning",
                 )
             )
+    for entity, field in (("edges", "evidence"), ("anchors", "accessibility_evidence")):
+        for identity, item in state[entity].items():
+            if item["accessibility_status"] != "verified_step_free":
+                continue
+            match = re.search(r"\b(\d{4}-\d{2}-\d{2})\b", item[field])
+            try:
+                verified = date.fromisoformat(match.group(1)) if match else None
+            except ValueError:
+                verified = None
+            if (
+                verified is None
+                or verified > date.today()
+                or verified < date.today() - timedelta(days=365)
+            ):
+                findings.append(
+                    issue(
+                        "stale_evidence",
+                        "Step-free evidence is undated, future-dated or older than 365 days. Record a new survey/source date; synthetic notes are not physical verification.",
+                        entity,
+                        [identity],
+                        "warning",
+                    )
+                )
     for a, b in db.execute(
         text(
             """SELECT a.id,b.id FROM navigation_nodes a JOIN navigation_nodes b ON a.dataset_revision_id=b.dataset_revision_id AND a.id<b.id AND a.frame_id=b.frame_id AND a.point && ST_Expand(b.point,0.00001) WHERE a.dataset_revision_id=:revision AND ST_DWithin(a.point::geography,b.point::geography,1) LIMIT 100"""

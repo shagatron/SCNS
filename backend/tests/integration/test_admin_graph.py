@@ -352,3 +352,216 @@ def test_validation_route_preview_and_frozen_rejection(client, bundle, identity,
         ).status_code
         == 404
     )
+
+
+def test_crossings_remain_disconnected_until_explicit_split_and_shared_node(
+    client, bundle, identity
+):
+    headers, draft, path, state = start(client, bundle, identity)
+    frame = next((i for i, f in state["frames"].items() if f["kind"] == "outdoor"))
+    ids = [str(uuid4()) for _ in range(7)]
+    a, b, c, d, e, f, junction = ids
+    points = {a: [0.0026, 0.0024], b: [0.0032, 0.0024], c: [0.0029, 0.0021], d: [0.0029, 0.0027]}
+    nodes = [
+        {
+            "entity": "nodes",
+            "id": i,
+            "data": {
+                "frame_id": frame,
+                "label": i,
+                "point": {"type": "Point", "coordinates": point},
+            },
+        }
+        for i, point in points.items()
+    ]
+    edge_a = {
+        "frame_id": frame,
+        "from_node_id": a,
+        "to_node_id": b,
+        "physical_path_id": str(uuid4()),
+        "geometry": {"type": "LineString", "coordinates": [points[a], points[b]]},
+        "evidence": "Synthetic crossing; no physical verification",
+    }
+    edge_b = {
+        **edge_a,
+        "from_node_id": c,
+        "to_node_id": d,
+        "physical_path_id": str(uuid4()),
+        "geometry": {"type": "LineString", "coordinates": [points[c], points[d]]},
+    }
+    response = save(
+        client,
+        path,
+        headers,
+        1,
+        nodes
+        + [
+            {"entity": "edges", "id": e, "data": edge_a},
+            {"entity": "edges", "id": f, "data": edge_b},
+        ],
+    )
+    assert response.status_code == 200, response.text
+    assert len(response.json()["nodes"]) == len(state["nodes"]) + 4
+    report = client.get(path + "/validation").json()
+    assert any(
+        x["code"] == "unmapped_intersection" and set(x["ids"]) == {e, f}
+        for x in report["diagnostics"]
+    )
+    changes = [
+        {
+            "entity": "nodes",
+            "id": junction,
+            "data": {
+                "frame_id": frame,
+                "label": "Deliberate shared crossing",
+                "point": {"type": "Point", "coordinates": [0.0029, 0.0024]},
+            },
+        },
+        {"entity": "edges", "id": e},
+        {"entity": "edges", "id": f},
+    ]
+    for edge in (edge_a, edge_b):
+        for source, target, coords in [
+            (edge["from_node_id"], junction, [points[edge["from_node_id"]], [0.0029, 0.0024]]),
+            (junction, edge["to_node_id"], [[0.0029, 0.0024], points[edge["to_node_id"]]]),
+        ]:
+            changes.append(
+                {
+                    "entity": "edges",
+                    "id": str(uuid4()),
+                    "data": {
+                        **edge,
+                        "from_node_id": source,
+                        "to_node_id": target,
+                        "physical_path_id": str(uuid4()),
+                        "geometry": {"type": "LineString", "coordinates": coords},
+                    },
+                }
+            )
+    response = save(client, path, headers, 2, changes)
+    assert response.status_code == 200, response.text
+    assert (
+        sum(
+            junction in (x["from_node_id"], x["to_node_id"])
+            for x in response.json()["edges"].values()
+        )
+        == 4
+    )
+    assert not any(
+        x["code"] == "unmapped_intersection" and e in x["ids"]
+        for x in client.get(path + "/validation").json()["diagnostics"]
+    )
+
+
+def test_map_precision_dated_accessibility_anchor_update_and_near_duplicate_diagnostics(
+    client, db, bundle, identity
+):
+    from datetime import date
+
+    headers, draft, path, state = start(client, bundle, identity)
+    frame = next((i for i, f in state["frames"].items() if f["kind"] == "outdoor"))
+    a, b, e, r, physical, anchor = [str(uuid4()) for _ in range(6)]
+    first = [0.002617737293243408, 0.002439938719937187]
+    second = [0.002997737293243408, 0.002769938719937187]
+    changes = [
+        {
+            "entity": "nodes",
+            "id": i,
+            "data": {
+                "frame_id": frame,
+                "label": i,
+                "point": {"type": "Point", "coordinates": point},
+            },
+        }
+        for i, point in [(a, first), (b, second)]
+    ]
+    edge = {
+        "frame_id": frame,
+        "from_node_id": a,
+        "to_node_id": b,
+        "physical_path_id": physical,
+        "geometry": {"type": "LineString", "coordinates": [first, [0.00273, 0.00275], second]},
+        "evidence": "Synthetic editor test; not a physical survey",
+    }
+    changes += [
+        {"entity": "edges", "id": e, "data": edge},
+        {
+            "entity": "edges",
+            "id": r,
+            "data": {
+                **edge,
+                "from_node_id": b,
+                "to_node_id": a,
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": edge["geometry"]["coordinates"][::-1],
+                },
+            },
+        },
+    ]
+    result = save(client, path, headers, 1, changes)
+    assert result.status_code == 200, result.text
+    stored = result.json()
+    assert (
+        stored["edges"][e]["geometry"]["coordinates"][0]
+        == stored["nodes"][a]["point"]["coordinates"]
+    )
+    event = db.scalar(select(AuditEvent).where(AuditEvent.resource_id == e))
+    assert event.after["distance_m"] == stored["edges"][e]["distance_m"]
+    edge = edge_data(stored, e)
+    reverse = edge_data(stored, r)
+    for data in (edge, reverse):
+        data["accessibility_status"] = "verified_step_free"
+    attempt = save(
+        client,
+        path,
+        headers,
+        2,
+        [{"entity": "edges", "id": e, "data": edge}, {"entity": "edges", "id": r, "data": reverse}],
+    )
+    assert attempt.status_code == 422 and "YYYY-MM-DD" in attempt.text
+    for data in (edge, reverse):
+        data["evidence"] = (
+            f"Synthetic test source {date.today().isoformat()}; no physical verification."
+        )
+    result = save(
+        client,
+        path,
+        headers,
+        2,
+        [{"entity": "edges", "id": e, "data": edge}, {"entity": "edges", "id": r, "data": reverse}],
+    )
+    assert result.status_code == 200, result.text
+    place = next((i for i, p in state["places"].items() if p["visibility"] == "public"))
+    data = {"place_id": place, "node_id": a, "accessibility_status": "unknown"}
+    result = save(client, path, headers, 3, [{"entity": "anchors", "id": anchor, "data": data}])
+    assert result.status_code == 200, result.text
+    data.update(node_id=b, is_open=False)
+    result = save(client, path, headers, 4, [{"entity": "anchors", "id": anchor, "data": data}])
+    assert result.status_code == 200, result.text
+    assert (
+        result.json()["anchors"][anchor]["node_id"] == b
+        and result.json()["anchors"][anchor]["is_open"] is False
+    )
+    near = str(uuid4())
+    result = save(
+        client,
+        path,
+        headers,
+        5,
+        [
+            {
+                "entity": "nodes",
+                "id": near,
+                "data": {
+                    "frame_id": frame,
+                    "label": "Nearly duplicate",
+                    "point": {"type": "Point", "coordinates": [first[0] + 1e-06, first[1]]},
+                },
+            }
+        ],
+    )
+    assert result.status_code == 200, result.text
+    diagnostics = client.get(path + "/validation").json()["diagnostics"]
+    assert any(x["code"] == "near_duplicate" and set(x["ids"]) == {a, near} for x in diagnostics)
+    assert any(x["code"] == "components_step_free" for x in diagnostics)

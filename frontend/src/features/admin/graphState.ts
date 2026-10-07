@@ -2,12 +2,21 @@ import type { components } from '../../api/generated'
 
 type Schema = components['schemas']
 export type Position = [number, number]
-export type GraphNode = Schema['NodeFields']
+export type GraphNode = Schema['GraphNodeFields']
 export type GraphEdge = Schema['EdgeFields'] & { distance_m?: number }
 export type GraphAnchor = Schema['AnchorFields']
 export type Graph = { revision_version: number; campus: { name: string; is_demo: boolean; boundary: { type: 'Polygon'; coordinates: Position[][] } }; nodes: Record<string, GraphNode>; edges: Record<string, GraphEdge>; anchors: Record<string, GraphAnchor>; frames: Record<string, { code: string; kind: string }>; places: Record<string, { name: string; visibility: string; point: { coordinates: Position } }> }
 export type Layer = 'nodes' | 'edges' | 'anchors'
 export type Change = { entity: Layer; id: string; data?: GraphNode | GraphEdge | GraphAnchor }
+export function surfaceDistance(a: Position, b: Position) {
+  const radians = Math.PI / 180
+  const dLat = (b[1] - a[1]) * radians, dLon = (b[0] - a[0]) * radians
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a[1] * radians) * Math.cos(b[1] * radians) * Math.sin(dLon / 2) ** 2
+  return 6371008.8 * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(Math.max(0, 1 - h)))
+}
+function canonical(value: unknown): string {
+  return JSON.stringify(value, (_, item: unknown) => item && typeof item === 'object' && !Array.isArray(item) ? Object.fromEntries(Object.entries(item).sort(([a],[b]) => a.localeCompare(b))) : item)
+}
 export const clone = <T,>(value: T): T => JSON.parse(JSON.stringify(value)) as T
 export function plain(value: GraphEdge) { const fields = { ...value }; delete fields.distance_m; return fields }
 export function changes(base: Graph, work: Graph): Change[] {
@@ -16,7 +25,7 @@ export function changes(base: Graph, work: Graph): Change[] {
     for (const id of new Set([...Object.keys(base[entity]), ...Object.keys(work[entity])])) {
       const before = entity === 'edges' && base.edges[id] ? plain(base.edges[id]) : base[entity][id]
       const after = entity === 'edges' && work.edges[id] ? plain(work.edges[id]) : work[entity][id]
-      if (JSON.stringify(before) !== JSON.stringify(after)) result.push({ entity, id, ...(after ? { data: after } : {}) })
+      if (canonical(before) !== canonical(after)) result.push({ entity, id, ...(after ? { data: after } : {}) })
     }
   }
   return result
@@ -56,7 +65,7 @@ export function splitPath(graph: Graph, edgeId: string, vertex: number, nodeId?:
   if (vertex < 1 || vertex >= points.length - 1) throw new Error('Select an interior vertex to split; add a vertex at the desired intersection first.')
   const position = points[vertex] as Position
   const id = nodeId || crypto.randomUUID()
-  if (nodeId && Math.hypot(...graph.nodes[nodeId].point.coordinates.map((v, i) => (v - position[i]) * 111320) as Position) > 1) throw new Error('The selected intersection node must be within 1m of this vertex. Move/add the vertex deliberately first.')
+  if (nodeId && surfaceDistance(graph.nodes[nodeId].point.coordinates as Position, position) > 1) throw new Error('The selected intersection node must be within 1m of this vertex. Move/add the vertex deliberately first.')
   if ([source.from_node_id, source.to_node_id].includes(id)) throw new Error('An endpoint cannot be the split node.')
   const point = nodeId ? graph.nodes[nodeId].point.coordinates as Position : position
   if (!nodeId) graph.nodes[id] = { frame_id: source.frame_id, label: 'Unverified intersection', visibility: source.visibility ?? 'public', evidence: 'Editor-created split; source/last verification not recorded.', point: { type: 'Point', coordinates: point } }
@@ -82,7 +91,7 @@ export function reconcile(base: Graph, local: Graph, latest: Graph) {
     const entity = change.entity
     const before = entity === 'edges' && base.edges[change.id] ? plain(base.edges[change.id]) : base[entity][change.id]
     const current = entity === 'edges' && latest.edges[change.id] ? plain(latest.edges[change.id]) : latest[entity][change.id]
-    if (JSON.stringify(before) !== JSON.stringify(current) && JSON.stringify(current) !== JSON.stringify(change.data)) conflicts.push(change)
+    if (canonical(before) !== canonical(current) && canonical(current) !== canonical(change.data)) conflicts.push(change)
     else applyChange(merged, change)
   }
   return { merged, conflicts }
@@ -92,3 +101,5 @@ export function applyChange(graph: Graph, change: Change) {
   if (change.data) layer[change.id] = clone(change.data)
   else delete layer[change.id]
 }
+
+export function clearGraphRecovery() { try { for (const key of Object.keys(sessionStorage)) if (key.startsWith('scns-graph-recovery:') || key.startsWith('scns-admin-view:')) sessionStorage.removeItem(key) } catch { /* storage may be disabled */ } }

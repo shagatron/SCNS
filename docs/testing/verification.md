@@ -15,7 +15,7 @@ Branch `feat/milestone-2-publication` starts at verified `21c65fb`; existing che
 | `python scripts/cloud-build.py` | Final API/frontend images built with frozen dependencies and existing proxy/CA trust; no TLS verification bypass |
 | `python scripts/smoke-publication-containers.py` | **12 built nginx/API desktop/mobile browser journeys passed**, no skips (2 complete publication + 10 navigation); 1.0 minute, followed by readiness/anonymous admin 401/private source path 404 checks |
 | Built smoke cleanup | Only uniquely named owned test containers/network/`scns_built_*_e2e_test` database removed; existing DB and storage volumes retained |
-| Local Compose stopped application services, migrated and restarted built stack | Healthy API/DB/frontend/import-worker; original development active pointer and revision/user/import counts identical before/after; no seed/bootstrap/publish/rollback on developer data |
+| Local Compose stopped application services, migrated and restarted built stack | API/DB healthy, frontend/import-worker running; original development active pointer and revision/user/import counts identical before/after; no seed/bootstrap/publish/rollback on developer data |
 | Built development public regression | Main Gate → Library **256.88m / three stored edges**, release **4eb587e6-5607-48ed-a8ca-f5c0d8f1c505** unchanged |
 | `make validate-dataset` | Original 11-place/13-node/27-edge synthetic bundle valid |
 | `make generate-api` before/after SHA-256 | OpenAPI, generated TypeScript, dataset schema, import schema and publication source schema all reproduced byte-for-byte |

@@ -56,7 +56,13 @@ class PlaceOut(DTO):
     description: str
     aliases: list[str]
     building_name: str | None
-    point: Point
+    point: Point | None
+    floor_id: UUID | None = None
+    floor_label: str | None = None
+    frame_id: UUID | None = None
+    room_code: str | None = None
+    local_point: dict[str, float] | None = None
+    navigation_mode: Literal["outdoor", "indoor_catalog_only"] = "outdoor"
     routable: bool
     accessibility: Literal["unknown", "synthetic_evidence_only"] = "unknown"
 

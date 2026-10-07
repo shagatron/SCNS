@@ -20,6 +20,7 @@ from app.models import (
 from app.models.admin import Department, DepartmentPlace, PlaceAlias
 from app.models.floorplans import Floor, MapLayer
 from app.models.imports import ImportBinding
+from app.models.indoor import IndoorAccess, IndoorEdge, IndoorNode, Room
 from app.models.publication import SourceAsset
 from app.schemas.admin import CatalogRecord, CatalogWrite, DraftOut
 from app.services.admin_auth import audit
@@ -114,7 +115,18 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
             SourceAsset,
             Floor,
             MapLayer,
+            Room,
+            IndoorNode,
+            IndoorEdge,
+            IndoorAccess,
         ):
+            if model is Room:
+                db.execute(
+                    text(
+                        "UPDATE floors f SET layer_id = p.layer_id FROM floors p WHERE f.dataset_revision_id = :new AND p.dataset_revision_id = :parent AND f.id = p.id"
+                    ),
+                    {"new": revision.id, "parent": parent},
+                )
             table = model.__table__
             db.execute(
                 insert(table).from_select(
@@ -131,12 +143,7 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
                     ).where(table.c.dataset_revision_id == parent),
                 )
             )
-        db.execute(
-            text(
-                "UPDATE floors f SET layer_id = p.layer_id FROM floors p WHERE f.dataset_revision_id = :new AND p.dataset_revision_id = :parent AND f.id = p.id"
-            ),
-            {"new": revision.id, "parent": parent},
-        )
+
     audit(
         db,
         "draft.create",
@@ -199,7 +206,9 @@ def record(db: Session, entity: str, row) -> CatalogRecord:
             description=row.description,
             building_id=row.building_id,
             visibility=row.visibility,
-            point=json.loads(db.scalar(select(func.ST_AsGeoJSON(row.point)))),
+            point=json.loads(db.scalar(select(func.ST_AsGeoJSON(row.point))))
+            if row.point is not None
+            else None,
         )
     elif entity == "departments":
         data = dict(
@@ -246,7 +255,10 @@ def sync_aliases(db, revision_id, place_id):
             .order_by(PlaceAlias.value)
         )
     )
-    place.search_text = normalize(" ".join([place.code, place.name, place.kind, *place.aliases]))
+    room = db.get(Room, (revision_id, place_id))
+    place.search_text = normalize(
+        " ".join([room.code if room else place.code, place.name, place.kind, *place.aliases])
+    )
 
 
 def write_record(
@@ -260,6 +272,12 @@ def write_record(
             id=create_id or uuid4(), campus_id=revision.campus_id, dataset_revision_id=revision.id
         )
     )
+    if entity == "places" and resource_id and db.get(Room, (revision.id, resource_id)):
+        raise DomainError(
+            "conflict",
+            "Edit this floor-local destination through the indoor editor; do not replace its local coordinates with geography.",
+            409,
+        )
     before = record(db, entity, row).model_dump(mode="json") if resource_id else None
     values = data.model_dump()
     if entity == "buildings":

@@ -31,7 +31,12 @@ def graph_rows(db, revision):
             select(model, func.ST_AsGeoJSON(getattr(model, field), 15)) if field else select(model)
         )
         rows = db.execute(
-            query.where(model.dataset_revision_id == revision.id).order_by(model.id).limit(15001)
+            query.where(
+                model.dataset_revision_id == revision.id,
+                *([Place.point.is_not(None)] if model is Place else []),
+            )
+            .order_by(model.id)
+            .limit(15001)
         ).all()
         if len(rows) > 15000:
             raise DomainError(

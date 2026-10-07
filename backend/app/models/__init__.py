@@ -120,7 +120,7 @@ class Place(RevisionEntity, Base):
     search_text: Mapped[str] = mapped_column(Text, index=True)
     building_id: Mapped[uuid.UUID | None] = mapped_column(UUID)
     visibility: Mapped[str] = mapped_column(String(16))
-    point = mapped_column(Geometry("POINT", srid=4326), nullable=False)
+    point = mapped_column(Geometry("POINT", srid=4326), nullable=True)
     __table_args__ = (
         revision_fk(),
         UniqueConstraint("dataset_revision_id", "code"),

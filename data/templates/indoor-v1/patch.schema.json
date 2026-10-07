@@ -1,0 +1,577 @@
+{
+  "$defs": {
+    "IndoorAccessChange": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "const": "access",
+          "title": "Entity",
+          "type": "string"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IndoorAccessFields"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity",
+        "id"
+      ],
+      "title": "IndoorAccessChange",
+      "type": "object"
+    },
+    "IndoorAccessFields": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "verified_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified On"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "room_id": {
+          "format": "uuid",
+          "title": "Room Id",
+          "type": "string"
+        },
+        "node_id": {
+          "format": "uuid",
+          "title": "Node Id",
+          "type": "string"
+        },
+        "role": {
+          "const": "door",
+          "default": "door",
+          "title": "Role",
+          "type": "string"
+        },
+        "priority": {
+          "default": 0,
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Priority",
+          "type": "integer"
+        },
+        "accessibility_status": {
+          "default": "unknown",
+          "enum": [
+            "unknown",
+            "not_step_free",
+            "verified_step_free"
+          ],
+          "title": "Accessibility Status",
+          "type": "string"
+        },
+        "is_open": {
+          "default": true,
+          "title": "Is Open",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "room_id",
+        "node_id"
+      ],
+      "title": "IndoorAccessFields",
+      "type": "object"
+    },
+    "IndoorEdgeChange": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "const": "edges",
+          "title": "Entity",
+          "type": "string"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IndoorEdgeFields"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity",
+        "id"
+      ],
+      "title": "IndoorEdgeChange",
+      "type": "object"
+    },
+    "IndoorEdgeFields": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "verified_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified On"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "physical_path_id": {
+          "format": "uuid",
+          "title": "Physical Path Id",
+          "type": "string"
+        },
+        "from_node_id": {
+          "format": "uuid",
+          "title": "From Node Id",
+          "type": "string"
+        },
+        "to_node_id": {
+          "format": "uuid",
+          "title": "To Node Id",
+          "type": "string"
+        },
+        "kind": {
+          "default": "corridor",
+          "enum": [
+            "corridor",
+            "door"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "polyline": {
+          "items": {
+            "items": {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "maxItems": 500,
+          "minItems": 2,
+          "title": "Polyline",
+          "type": "array"
+        },
+        "accessibility_status": {
+          "default": "unknown",
+          "enum": [
+            "unknown",
+            "not_step_free",
+            "verified_step_free"
+          ],
+          "title": "Accessibility Status",
+          "type": "string"
+        },
+        "width_m": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 100,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Width M"
+        },
+        "slope_percent": {
+          "anyOf": [
+            {
+              "maximum": 1000,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Slope Percent"
+        },
+        "step_count": {
+          "anyOf": [
+            {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Count"
+        },
+        "surface": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Surface"
+        },
+        "is_open": {
+          "default": true,
+          "title": "Is Open",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "physical_path_id",
+        "from_node_id",
+        "to_node_id",
+        "polyline"
+      ],
+      "title": "IndoorEdgeFields",
+      "type": "object"
+    },
+    "IndoorNodeChange": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "const": "nodes",
+          "title": "Entity",
+          "type": "string"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IndoorNodeFields"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity",
+        "id"
+      ],
+      "title": "IndoorNodeChange",
+      "type": "object"
+    },
+    "IndoorNodeFields": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "verified_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified On"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "kind": {
+          "default": "junction",
+          "enum": [
+            "corridor",
+            "junction",
+            "door",
+            "entrance"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "x_px": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "X Px",
+          "type": "number"
+        },
+        "y_px": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Y Px",
+          "type": "number"
+        }
+      },
+      "required": [
+        "label",
+        "x_px",
+        "y_px"
+      ],
+      "title": "IndoorNodeFields",
+      "type": "object"
+    },
+    "RoomChange": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "const": "rooms",
+          "title": "Entity",
+          "type": "string"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RoomFields"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity",
+        "id"
+      ],
+      "title": "RoomChange",
+      "type": "object"
+    },
+    "RoomFields": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "verified_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified On"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "code": {
+          "maxLength": 32,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Code",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "kind": {
+          "default": "room",
+          "enum": [
+            "room",
+            "laboratory",
+            "office",
+            "facility",
+            "indoor_destination"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "maxLength": 4000,
+          "title": "Description",
+          "type": "string"
+        },
+        "aliases": {
+          "items": {
+            "maxLength": 160,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 50,
+          "title": "Aliases",
+          "type": "array"
+        },
+        "department_ids": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 50,
+          "title": "Department Ids",
+          "type": "array"
+        },
+        "x_px": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "X Px",
+          "type": "number"
+        },
+        "y_px": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Y Px",
+          "type": "number"
+        }
+      },
+      "required": [
+        "code",
+        "name",
+        "x_px",
+        "y_px"
+      ],
+      "title": "RoomFields",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "layer_id": {
+      "format": "uuid",
+      "title": "Layer Id",
+      "type": "string"
+    },
+    "mode": {
+      "default": "metric",
+      "enum": [
+        "metric",
+        "directions_only"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "changes": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/RoomChange"
+          },
+          {
+            "$ref": "#/$defs/IndoorNodeChange"
+          },
+          {
+            "$ref": "#/$defs/IndoorEdgeChange"
+          },
+          {
+            "$ref": "#/$defs/IndoorAccessChange"
+          }
+        ]
+      },
+      "maxItems": 500,
+      "minItems": 1,
+      "title": "Changes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "layer_id",
+    "changes"
+  ],
+  "title": "IndoorPatch",
+  "type": "object"
+}

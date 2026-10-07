@@ -128,6 +128,8 @@ def place(place_id: UUID, db: DB):
     )
     if found is None:
         raise DomainError("location_not_found", "This public location could not be found.", 404)
+    if db.scalar(public_places(found.dataset_revision_id).where(Place.id == found.id)) is None:
+        raise DomainError("location_not_found", "This public location could not be found.", 404)
     return place_output(db, [found], found.dataset_revision_id)[0]
 
 

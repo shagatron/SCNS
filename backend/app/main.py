@@ -11,6 +11,7 @@ from app.api.v1.admin import router as admin_router
 from app.api.v1.floorplans import router as floorplans_router
 from app.api.v1.graph import router as graph_router
 from app.api.v1.imports import router as imports_router
+from app.api.v1.indoor import router as indoor_router
 from app.api.v1.public import router
 from app.api.v1.publication import router as publication_router
 from app.core.config import get_settings
@@ -24,7 +25,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_settings().allowed_origins,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
     allow_headers=[
         "Content-Type",
         "X-CSRF-Token",
@@ -113,3 +114,6 @@ app.include_router(graph_router)
 
 app.include_router(publication_router)
 app.include_router(floorplans_router)
+
+
+app.include_router(indoor_router)

@@ -7,6 +7,7 @@ from app.models import (
     admin,  # noqa: F401
     floorplans,  # noqa: F401
     imports,  # noqa: F401
+    indoor,  # noqa: F401
     publication,  # noqa: F401
 )
 

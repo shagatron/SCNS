@@ -5,6 +5,7 @@ from app.main import app
 from app.schemas.dataset import Dataset
 from app.schemas.floorplans import CalibrationInput, FloorInput, UploadInput
 from app.schemas.imports import ImportBundle
+from app.schemas.indoor import IndoorPatch
 from app.schemas.publication import SourceInput
 
 root = Path(__file__).resolve().parents[3]
@@ -29,3 +30,7 @@ for name, model in [
     (root / f"data/templates/floorplan-v1/{name}.schema.json").write_text(
         json.dumps(model.model_json_schema(), indent=2) + "\n"
     )
+
+(root / "data/templates/indoor-v1/patch.schema.json").write_text(
+    json.dumps(IndoorPatch.model_json_schema(), indent=2) + "\n"
+)

@@ -10,7 +10,7 @@ from app.core.errors import DomainError
 from app.models import Anchor, Campus, Edge, Node, Place
 from app.routing.dijkstra import Arc, shortest_path
 from app.schemas.api import RouteOut, RouteRequest, RouteSegment
-from app.services.catalog import active_release
+from app.services.catalog import active_release, public_places
 
 
 def calculate_route(session: Session, request: RouteRequest) -> RouteOut:
@@ -23,8 +23,16 @@ def calculate_route(session: Session, request: RouteRequest) -> RouteOut:
     places = {}
     for place_id in {request.source.place_id, request.destination.place_id}:
         place = session.get(Place, (revision, place_id))
-        if place is None or place.visibility != "public":
+        if (
+            place is None
+            or session.scalar(public_places(revision).where(Place.id == place_id)) is None
+        ):
             raise DomainError("location_not_found", "This public location could not be found.", 404)
+        if place.point is None:
+            raise DomainError(
+                "location_not_routable",
+                "Indoor destination is searchable; indoor/outdoor routing is unavailable until the connector/routing slice.",
+            )
         places[place_id] = place
     settings = get_settings()
     nodes = session.scalars(

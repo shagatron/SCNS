@@ -177,6 +177,8 @@ def catalog(
     revision = get_draft(db, campus_id, revision_id)
     model = MODELS[entity]
     query = select(model).where(model.dataset_revision_id == revision.id)
+    if entity == "places":
+        query = query.where(model.point.is_not(None))
     if resource_id:
         query = query.where(model.id == resource_id)
     rows = db.scalars(query.order_by(model.id).limit(limit).offset(offset)).all()

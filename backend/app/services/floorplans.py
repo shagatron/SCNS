@@ -18,6 +18,7 @@ from sqlalchemy.orm import Session
 from app.core.errors import DomainError
 from app.models import Building, Campus, Frame, Node
 from app.models.floorplans import Floor, FloorplanJob, MapLayer
+from app.models.indoor import IndoorNode, Room
 from app.models.publication import SourceAsset
 from app.schemas.floorplans import CalibrationInput
 from app.services.admin_auth import audit
@@ -115,7 +116,16 @@ def dependencies(db, revision, floor):
         if floor.frame_id
         else 0
     )
+    indoor_count = sum(
+        db.scalar(
+            select(func.count())
+            .select_from(m)
+            .where(m.dataset_revision_id == revision.id, m.floor_id == floor.id)
+        )
+        for m in (IndoorNode, Room)
+    )
     return {
+        "indoor_records": indoor_count,
         "layer_ids": sorted(str(x) for x in layers),
         "pending_job_ids": sorted(str(x) for x in pending),
         "graph_nodes": nodes,
@@ -246,7 +256,7 @@ def delete_floor(db, revision, identity, payload, actor, request_id):
     editable(revision)
     floor = row(db, Floor, revision, identity)
     deps = dependencies(db, revision, floor)
-    if deps["graph_nodes"] or deps["pending_job_ids"]:
+    if deps["graph_nodes"] or deps["indoor_records"] or deps["pending_job_ids"]:
         raise DomainError(
             "conflict",
             "Floor has dependent graph nodes or staged jobs. Explicitly cancel staged jobs; graph dependencies require a later verified workflow.",
@@ -559,7 +569,7 @@ def apply_job(db, revision, job, payload, actor, request_id):
             "Selected floor plan changed. Explicitly reconcile/confirm the current layer before replacement.",
             409,
         )
-    if dependencies(db, revision, floor)["graph_nodes"]:
+    if any(dependencies(db, revision, floor)[k] for k in ("graph_nodes", "indoor_records")):
         raise DomainError(
             "conflict",
             "Plan replacement has dependent graph geometry; a verified transform/retrace is required in a later slice.",
@@ -739,7 +749,7 @@ def calibrate(db, revision, floor, payload, actor, request_id):
     editable(revision)
     if not floor.layer_id:
         raise DomainError("conflict", "Apply a plan before measuring its reference pixels.", 409)
-    if dependencies(db, revision, floor)["graph_nodes"]:
+    if any(dependencies(db, revision, floor)[k] for k in ("graph_nodes", "indoor_records")):
         raise DomainError(
             "conflict",
             "Dependent indoor geometry needs verified metric recalculation, unsupported in 3A.",

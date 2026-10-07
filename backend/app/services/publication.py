@@ -3,6 +3,7 @@
 import hashlib
 import json
 import math
+from datetime import date
 from uuid import UUID, uuid4
 
 from geoalchemy2 import Geography
@@ -25,6 +26,7 @@ from app.models import (
 from app.models.admin import AuditEvent, Department, DepartmentPlace, PlaceAlias, User
 from app.models.floorplans import Floor, MapLayer
 from app.models.imports import ImportBinding, ImportJob
+from app.models.indoor import IndoorAccess, IndoorEdge, IndoorNode, Room
 from app.models.publication import (
     ReleaseAction,
     ReleaseArtifact,
@@ -42,7 +44,7 @@ from app.services.admin_graph import route_test, validate_graph
 from app.services.catalog import normalize
 from app.services.imports import final_graph_guard, strict_json
 
-VALIDATOR = "floorplan-publication-v2"
+VALIDATOR = "indoor-publication-v3"
 TABLES = {
     "frames": Frame,
     "buildings": Building,
@@ -57,6 +59,10 @@ TABLES = {
     "sources": SourceAsset,
     "floors": Floor,
     "floorplan_layers": MapLayer,
+    "indoor_rooms": Room,
+    "indoor_nodes": IndoorNode,
+    "indoor_edges": IndoorEdge,
+    "indoor_access": IndoorAccess,
 }
 
 
@@ -122,6 +128,8 @@ def snapshot(db, revision):
                         if value is not None
                         else None
                     )
+                elif isinstance(value, date):
+                    value = value.isoformat()
                 elif isinstance(value, UUID):
                     value = str(value)
                 item[col.name] = value
@@ -292,6 +300,75 @@ def public_projection(full):
             "attribution": source["attribution"],
             "media_type": "image/png",
         }
+    result["indoor_rooms"] = {}
+    result["indoor_nodes"] = {}
+    result["indoor_edges"] = {}
+    result["indoor_access"] = {}
+    for entity, allowed_fields in {
+        "indoor_rooms": ("id", "floor_id", "frame_id", "code", "x_px", "y_px"),
+        "indoor_nodes": ("id", "floor_id", "frame_id", "kind", "label", "x_px", "y_px"),
+        "indoor_edges": (
+            "id",
+            "floor_id",
+            "frame_id",
+            "physical_path_id",
+            "from_node_id",
+            "to_node_id",
+            "kind",
+            "polyline",
+            "distance_m",
+            "distance_status",
+            "accessibility_status",
+            "width_m",
+            "slope_percent",
+            "step_count",
+            "surface",
+            "is_open",
+        ),
+        "indoor_access": (
+            "id",
+            "floor_id",
+            "frame_id",
+            "room_id",
+            "node_id",
+            "role",
+            "priority",
+            "accessibility_status",
+            "is_open",
+        ),
+    }.items():
+        for identity, row in full.get(entity, {}).items():
+            if row["visibility"] != "public" or row["floor_id"] not in result["floors"]:
+                continue
+            if entity == "indoor_rooms" and identity not in result["places"]:
+                continue
+            if entity == "indoor_edges" and any(
+                row[k] not in result["indoor_nodes"] for k in ("from_node_id", "to_node_id")
+            ):
+                continue
+            if entity == "indoor_access" and (
+                row["room_id"] not in result["indoor_rooms"]
+                or row["node_id"] not in result["indoor_nodes"]
+            ):
+                continue
+            result[entity][identity] = fields(row, allowed_fields)
+            if entity == "indoor_rooms":
+                result["places"][identity].update(
+                    code=row["code"],
+                    floor_id=row["floor_id"],
+                    frame_id=row["frame_id"],
+                    navigation_mode="indoor_catalog_only",
+                    routable=False,
+                )
+    for identity in list(result["places"]):
+        if identity in full.get("indoor_rooms", {}) and identity not in result["indoor_rooms"]:
+            del result["places"][identity]
+    for identity in list(result["departments"]):
+        result["departments"][identity]["place_ids"] = [
+            p for p in result["departments"][identity]["place_ids"] if p in result["places"]
+        ]
+        if not result["departments"][identity]["place_ids"]:
+            del result["departments"][identity]
     result["attributions"] = sorted(
         {
             s["attribution"]
@@ -525,6 +602,8 @@ def validate(db, revision, payload, actor, request_id):
         report("graph_integrity", exc.message if isinstance(exc, DomainError) else str(exc))
     for entity, model in MODELS.items():
         for row in db.scalars(select(model).where(model.dataset_revision_id == revision.id)):
+            if entity == "places" and str(row.id) in full["indoor_rooms"]:
+                continue
             try:
                 TypeAdapter(CatalogWrite).validate_python(record(db, entity, row).item)
             except (ValueError, ValidationError):
@@ -558,7 +637,16 @@ def validate(db, revision, payload, actor, request_id):
             )
         aliases = sorted(a["value"] for a in full["aliases"].values() if a["place_id"] == identity)
         expected_search = normalize(
-            " ".join([place["code"], place["name"], place["kind"], *place["aliases"]])
+            " ".join(
+                [
+                    full["indoor_rooms"][identity]["code"]
+                    if identity in full["indoor_rooms"]
+                    else place["code"],
+                    place["name"],
+                    place["kind"],
+                    *place["aliases"],
+                ]
+            )
         )
         if set(place["aliases"]) != set(aliases) or place["search_text"] != expected_search:
             report(
@@ -625,7 +713,26 @@ def validate(db, revision, payload, actor, request_id):
             )
     from app.schemas.floorplans import CalibrationInput, FloorInput
     from app.services.floorplans import calibration as validate_calibration
+    from app.services.indoor import validation as validate_indoor
 
+    for floor_record in db.scalars(select(Floor).where(Floor.dataset_revision_id == revision.id)):
+        if any(
+            db.scalar(
+                select(func.count())
+                .select_from(m)
+                .where(m.dataset_revision_id == revision.id, m.floor_id == floor_record.id)
+            )
+            for m in (Room, IndoorNode, IndoorEdge, IndoorAccess)
+        ):
+            indoor_quality = validate_indoor(db, revision, floor_record)
+            findings.extend(indoor_quality["diagnostics"])
+            if indoor_quality["truncated"]:
+                report(
+                    "indoor_budget",
+                    "Reduce findings to complete indoor validation.",
+                    "floors",
+                    [str(floor_record.id)],
+                )
     for identity, floor in full["floors"].items():
         try:
             FloorInput.model_validate(
@@ -780,7 +887,7 @@ def validate(db, revision, payload, actor, request_id):
         if visible:
             report(
                 "indoor_display_only",
-                "3A contains no rooms, corridors or indoor routes; this approved floor is display-only even when calibrated.",
+                "Same-floor traced topology may be present; no indoor or cross-floor routing is delivered before 3C. This floor remains display-only even when calibrated.",
                 "floors",
                 [identity],
                 "warning",
@@ -971,6 +1078,7 @@ def independent(db, submission, actor):
                     "floor.calibrate",
                     "floorplan.upload",
                     "floorplan.apply",
+                    "indoor.patch",
                 ]
             )
             | (AuditEvent.action == "import.apply")

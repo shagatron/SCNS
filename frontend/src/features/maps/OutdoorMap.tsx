@@ -41,7 +41,7 @@ export default function OutdoorMap({ campus, data, places, route, onDestination 
       <GeoJSON key={data.release_id} data={data as unknown as FeatureCollection} pointToLayer={(_feature, position) => circleMarker(position, { radius: 5, color: '#64728a', fillOpacity: 0.6 })} style={feature => feature?.properties.layer === 'building'
         ? { color: '#8fae9d', fillColor: '#dce8df', fillOpacity: 1, weight: 2 }
         : feature?.properties.layer === 'overlay' ? { color: '#64728a', weight: 2, fillOpacity: 0.15 } : { color: feature?.properties.open ? '#b4c6b4' : '#9d5951', weight: 5, dashArray: feature?.properties.open ? undefined : '5 8' }} />
-      {places.map(place => <CircleMarker key={place.id} center={toLeaflet(place.point.coordinates as [number, number])} radius={6}
+      {places.filter(place => place.point).map(place => <CircleMarker key={place.id} center={toLeaflet(place.point!.coordinates as [number, number])} radius={6}
         pathOptions={{ color: '#153e35', fillColor: '#ffffff', fillOpacity: 1, weight: 2 }}
         eventHandlers={{ click: () => onDestination(place) }}>
         <Tooltip direction="top" permanent className="place-label">{place.name}</Tooltip>

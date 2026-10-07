@@ -5308,6 +5308,300 @@
           }
         }
       }
+    },
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/floors/{floor_id}/indoor": {
+      "get": {
+        "tags": [
+          "admin-indoor"
+        ],
+        "summary": "Read",
+        "operationId": "read_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          },
+          {
+            "name": "floor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Floor Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "admin-indoor"
+        ],
+        "summary": "Edit",
+        "operationId": "edit_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_patch",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          },
+          {
+            "name": "floor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Floor Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IndoorPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/floors/{floor_id}/indoor/validation": {
+      "get": {
+        "tags": [
+          "admin-indoor"
+        ],
+        "summary": "Validate",
+        "operationId": "validate_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_validation_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          },
+          {
+            "name": "floor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Floor Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/floors/{floor_id}/indoor/preview": {
+      "post": {
+        "tags": [
+          "admin-indoor"
+        ],
+        "summary": "Preview",
+        "operationId": "preview_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_preview_post",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          },
+          {
+            "name": "floor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Floor Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IndoorPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -6573,6 +6867,436 @@
         ],
         "title": "ImportOptions"
       },
+      "IndoorAccessChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "access",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IndoorAccessFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "IndoorAccessChange"
+      },
+      "IndoorAccessFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "node_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Node Id"
+          },
+          "role": {
+            "type": "string",
+            "const": "door",
+            "title": "Role",
+            "default": "door"
+          },
+          "priority": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Priority",
+            "default": 0
+          },
+          "accessibility_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "not_step_free",
+              "verified_step_free"
+            ],
+            "title": "Accessibility Status",
+            "default": "unknown"
+          },
+          "is_open": {
+            "type": "boolean",
+            "title": "Is Open",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "node_id"
+        ],
+        "title": "IndoorAccessFields"
+      },
+      "IndoorEdgeChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "edges",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IndoorEdgeFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "IndoorEdgeChange"
+      },
+      "IndoorEdgeFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "physical_path_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Physical Path Id"
+          },
+          "from_node_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "From Node Id"
+          },
+          "to_node_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "To Node Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "corridor",
+              "door"
+            ],
+            "title": "Kind",
+            "default": "corridor"
+          },
+          "polyline": {
+            "items": {
+              "items": {
+                "type": "number",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              "type": "array",
+              "maxItems": 2,
+              "minItems": 2
+            },
+            "type": "array",
+            "maxItems": 500,
+            "minItems": 2,
+            "title": "Polyline"
+          },
+          "accessibility_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "not_step_free",
+              "verified_step_free"
+            ],
+            "title": "Accessibility Status",
+            "default": "unknown"
+          },
+          "width_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width M"
+          },
+          "slope_percent": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Slope Percent"
+          },
+          "step_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step Count"
+          },
+          "surface": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Surface"
+          },
+          "is_open": {
+            "type": "boolean",
+            "title": "Is Open",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "physical_path_id",
+          "from_node_id",
+          "to_node_id",
+          "polyline"
+        ],
+        "title": "IndoorEdgeFields"
+      },
+      "IndoorNodeChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "nodes",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IndoorNodeFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "IndoorNodeChange"
+      },
+      "IndoorNodeFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "corridor",
+              "junction",
+              "door",
+              "entrance"
+            ],
+            "title": "Kind",
+            "default": "junction"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "x_px": {
+            "type": "number",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "X Px"
+          },
+          "y_px": {
+            "type": "number",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Y Px"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "label",
+          "x_px",
+          "y_px"
+        ],
+        "title": "IndoorNodeFields"
+      },
+      "IndoorPatch": {
+        "properties": {
+          "layer_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Layer Id"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "directions_only"
+            ],
+            "title": "Mode",
+            "default": "metric"
+          },
+          "changes": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/RoomChange"
+                },
+                {
+                  "$ref": "#/components/schemas/IndoorNodeChange"
+                },
+                {
+                  "$ref": "#/components/schemas/IndoorEdgeChange"
+                },
+                {
+                  "$ref": "#/components/schemas/IndoorAccessChange"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Changes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "layer_id",
+          "changes"
+        ],
+        "title": "IndoorPatch"
+      },
       "LineString": {
         "properties": {
           "type": {
@@ -6992,7 +7716,83 @@
             "title": "Building Name"
           },
           "point": {
-            "$ref": "#/components/schemas/Point"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Point"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "floor_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Floor Id"
+          },
+          "floor_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Floor Label"
+          },
+          "frame_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frame Id"
+          },
+          "room_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Room Code"
+          },
+          "local_point": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Local Point"
+          },
+          "navigation_mode": {
+            "type": "string",
+            "enum": [
+              "outdoor",
+              "indoor_catalog_only"
+            ],
+            "title": "Navigation Mode",
+            "default": "outdoor"
           },
           "routable": {
             "type": "boolean",
@@ -7331,6 +8131,139 @@
           "reason"
         ],
         "title": "RollbackInput"
+      },
+      "RoomChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "rooms",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RoomFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "RoomChange"
+      },
+      "RoomFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "title": "Code"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "room",
+              "laboratory",
+              "office",
+              "facility",
+              "indoor_destination"
+            ],
+            "title": "Kind",
+            "default": "room"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Description",
+            "default": ""
+          },
+          "aliases": {
+            "items": {
+              "type": "string",
+              "maxLength": 160,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Aliases"
+          },
+          "department_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Department Ids"
+          },
+          "x_px": {
+            "type": "number",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "X Px"
+          },
+          "y_px": {
+            "type": "number",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Y Px"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "x_px",
+          "y_px"
+        ],
+        "title": "RoomFields"
       },
       "RouteExpectation": {
         "properties": {

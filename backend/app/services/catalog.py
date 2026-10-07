@@ -3,11 +3,13 @@ import re
 import unicodedata
 from uuid import UUID
 
-from sqlalchemy import func, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
 
 from app.core.errors import DomainError
 from app.models import ActiveRelease, Anchor, Building, Node, Place, Release, Revision
+from app.models.floorplans import Floor
+from app.models.indoor import Room
 from app.models.publication import ReleaseArtifact
 from app.schemas.api import PlaceOut, ReleaseOut
 
@@ -56,7 +58,29 @@ def active_release(session: Session, campus_id: UUID) -> ReleaseOut:
 
 
 def public_places(revision: UUID):
-    return select(Place).where(Place.dataset_revision_id == revision, Place.visibility == "public")
+    eligible_rooms = (
+        select(Room.id)
+        .join(
+            Floor,
+            (Floor.dataset_revision_id == Room.dataset_revision_id) & (Floor.id == Room.floor_id),
+        )
+        .join(
+            Building,
+            (Building.dataset_revision_id == Floor.dataset_revision_id)
+            & (Building.id == Floor.building_id),
+        )
+        .where(
+            Building.visibility == "public",
+            Room.dataset_revision_id == revision,
+            Room.visibility == "public",
+            Floor.visibility == "public",
+        )
+    )
+    return select(Place).where(
+        Place.dataset_revision_id == revision,
+        Place.visibility == "public",
+        or_(Place.point.is_not(None), Place.id.in_(eligible_rooms)),
+    )
 
 
 def place_output(session: Session, places: list[Place], revision: UUID) -> list[PlaceOut]:
@@ -93,18 +117,35 @@ def place_output(session: Session, places: list[Place], revision: UUID) -> list[
             )
         )
     )
+    rooms = {
+        r.id: r
+        for r in session.scalars(
+            select(Room).where(Room.dataset_revision_id == revision, Room.id.in_(ids))
+        )
+    }
+    floors = {
+        f.id: f for f in session.scalars(select(Floor).where(Floor.dataset_revision_id == revision))
+    }
     return [
         PlaceOut(
             id=p.id,
             campus_id=p.campus_id,
-            code=p.code,
+            code=rooms[p.id].code if p.id in rooms else p.code,
             name=p.name,
             kind=p.kind,
             description=p.description,
             aliases=p.aliases,
             building_name=buildings.get(p.building_id),
-            point=json.loads(points[p.id]),
-            routable=p.id in anchored,
+            point=json.loads(points[p.id]) if points[p.id] else None,
+            routable=p.id in anchored and p.id not in rooms,
+            floor_id=rooms[p.id].floor_id if p.id in rooms else None,
+            floor_label=floors[rooms[p.id].floor_id].label if p.id in rooms else None,
+            frame_id=rooms[p.id].frame_id if p.id in rooms else None,
+            room_code=rooms[p.id].code if p.id in rooms else None,
+            local_point={"x_px": rooms[p.id].x_px, "y_px": rooms[p.id].y_px}
+            if p.id in rooms
+            else None,
+            navigation_mode="indoor_catalog_only" if p.id in rooms else "outdoor",
         )
         for p in places
     ]

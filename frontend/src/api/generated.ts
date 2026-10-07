@@ -929,6 +929,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/floors/{floor_id}/indoor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read */
+        get: operations["read_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Edit */
+        patch: operations["edit_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_patch"];
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/floors/{floor_id}/indoor/validation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Validate */
+        get: operations["validate_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_validation_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/floors/{floor_id}/indoor/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Preview */
+        post: operations["preview_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1452,6 +1504,198 @@ export interface components {
                 [key: string]: string;
             };
         };
+        /** IndoorAccessChange */
+        IndoorAccessChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "access";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["IndoorAccessFields"] | null;
+        };
+        /** IndoorAccessFields */
+        IndoorAccessFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /** Verified On */
+            verified_on?: string | null;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /**
+             * Room Id
+             * Format: uuid
+             */
+            room_id: string;
+            /**
+             * Node Id
+             * Format: uuid
+             */
+            node_id: string;
+            /**
+             * Role
+             * @default door
+             * @constant
+             */
+            role: "door";
+            /**
+             * Priority
+             * @default 0
+             */
+            priority: number;
+            /**
+             * Accessibility Status
+             * @default unknown
+             * @enum {string}
+             */
+            accessibility_status: "unknown" | "not_step_free" | "verified_step_free";
+            /**
+             * Is Open
+             * @default true
+             */
+            is_open: boolean;
+        };
+        /** IndoorEdgeChange */
+        IndoorEdgeChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "edges";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["IndoorEdgeFields"] | null;
+        };
+        /** IndoorEdgeFields */
+        IndoorEdgeFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /** Verified On */
+            verified_on?: string | null;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /**
+             * Physical Path Id
+             * Format: uuid
+             */
+            physical_path_id: string;
+            /**
+             * From Node Id
+             * Format: uuid
+             */
+            from_node_id: string;
+            /**
+             * To Node Id
+             * Format: uuid
+             */
+            to_node_id: string;
+            /**
+             * Kind
+             * @default corridor
+             * @enum {string}
+             */
+            kind: "corridor" | "door";
+            /** Polyline */
+            polyline: number[][];
+            /**
+             * Accessibility Status
+             * @default unknown
+             * @enum {string}
+             */
+            accessibility_status: "unknown" | "not_step_free" | "verified_step_free";
+            /** Width M */
+            width_m?: number | null;
+            /** Slope Percent */
+            slope_percent?: number | null;
+            /** Step Count */
+            step_count?: number | null;
+            /** Surface */
+            surface?: string | null;
+            /**
+             * Is Open
+             * @default true
+             */
+            is_open: boolean;
+        };
+        /** IndoorNodeChange */
+        IndoorNodeChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "nodes";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["IndoorNodeFields"] | null;
+        };
+        /** IndoorNodeFields */
+        IndoorNodeFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /** Verified On */
+            verified_on?: string | null;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /**
+             * Kind
+             * @default junction
+             * @enum {string}
+             */
+            kind: "corridor" | "junction" | "door" | "entrance";
+            /** Label */
+            label: string;
+            /** X Px */
+            x_px: number;
+            /** Y Px */
+            y_px: number;
+        };
+        /** IndoorPatch */
+        IndoorPatch: {
+            /**
+             * Layer Id
+             * Format: uuid
+             */
+            layer_id: string;
+            /**
+             * Mode
+             * @default metric
+             * @enum {string}
+             */
+            mode: "metric" | "directions_only";
+            /** Changes */
+            changes: (components["schemas"]["RoomChange"] | components["schemas"]["IndoorNodeChange"] | components["schemas"]["IndoorEdgeChange"] | components["schemas"]["IndoorAccessChange"])[];
+        };
         /** LineString */
         LineString: {
             /**
@@ -1626,7 +1870,25 @@ export interface components {
             aliases: string[];
             /** Building Name */
             building_name: string | null;
-            point: components["schemas"]["Point"];
+            point: components["schemas"]["Point"] | null;
+            /** Floor Id */
+            floor_id?: string | null;
+            /** Floor Label */
+            floor_label?: string | null;
+            /** Frame Id */
+            frame_id?: string | null;
+            /** Room Code */
+            room_code?: string | null;
+            /** Local Point */
+            local_point?: {
+                [key: string]: number;
+            } | null;
+            /**
+             * Navigation Mode
+             * @default outdoor
+             * @enum {string}
+             */
+            navigation_mode: "outdoor" | "indoor_catalog_only";
             /** Routable */
             routable: boolean;
             /**
@@ -1775,6 +2037,59 @@ export interface components {
             key: string;
             /** Reason */
             reason: string;
+        };
+        /** RoomChange */
+        RoomChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "rooms";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["RoomFields"] | null;
+        };
+        /** RoomFields */
+        RoomFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /** Verified On */
+            verified_on?: string | null;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /**
+             * Kind
+             * @default room
+             * @enum {string}
+             */
+            kind: "room" | "laboratory" | "office" | "facility" | "indoor_destination";
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Aliases */
+            aliases?: string[];
+            /** Department Ids */
+            department_ids?: string[];
+            /** X Px */
+            x_px: number;
+            /** Y Px */
+            y_px: number;
         };
         /** RouteExpectation */
         RouteExpectation: {
@@ -5200,6 +5515,150 @@ export interface operations {
         responses: {
             /** @description Successful Response */
             201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+                revision_id: string;
+                floor_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                revision_id: string;
+                floor_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IndoorPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    validate_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_validation_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+                revision_id: string;
+                floor_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_api_v1_admin_campuses__campus_id__drafts__revision_id__floors__floor_id__indoor_preview_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                revision_id: string;
+                floor_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IndoorPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };

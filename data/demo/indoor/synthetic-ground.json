@@ -1,0 +1,436 @@
+{
+  "format": "scns-indoor-tracing-v1",
+  "synthetic": true,
+  "reference": {
+    "width_px": 600,
+    "height_px": 400
+  },
+  "records": {
+    "rooms": {
+      "ab92d5a0-16dd-5dca-ac03-10d5662fa281": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "code": "101",
+        "name": "Synthetic study room",
+        "kind": "room",
+        "description": "Invented indoor destination, no real campus mapping.",
+        "aliases": [
+          "Synthetic quiet study"
+        ],
+        "department_ids": [],
+        "x_px": 180,
+        "y_px": 170
+      },
+      "68c3a8f6-7226-5ab4-b4ad-74d31aee5ff7": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "code": "102",
+        "name": "Synthetic support office",
+        "kind": "office",
+        "description": "Invented indoor destination, no real campus mapping.",
+        "aliases": [],
+        "department_ids": [],
+        "x_px": 340,
+        "y_px": 170
+      },
+      "ae7c1b1b-ce16-571a-b24e-445cf0231a80": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "restricted",
+        "code": "R1",
+        "name": "Synthetic restricted store",
+        "kind": "room",
+        "description": "Invented indoor destination, no real campus mapping.",
+        "aliases": [],
+        "department_ids": [],
+        "x_px": 440,
+        "y_px": 280
+      }
+    },
+    "nodes": {
+      "94a5e757-4d34-52b1-a6f2-60187e5bd2e5": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "label": "Synthetic west",
+        "kind": "corridor",
+        "x_px": 100,
+        "y_px": 100
+      },
+      "0ff6e7c8-9a73-56c3-be80-5795c055cac8": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "label": "Synthetic centre",
+        "kind": "junction",
+        "x_px": 300,
+        "y_px": 100
+      },
+      "5ef5f763-8d1f-5acd-b79c-7d523a7ec726": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "label": "Synthetic east",
+        "kind": "corridor",
+        "x_px": 420,
+        "y_px": 100
+      },
+      "07b17f24-aca5-5096-84ce-61b37e494cdc": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "label": "Synthetic door101",
+        "kind": "door",
+        "x_px": 180,
+        "y_px": 120
+      },
+      "0aeece33-4a4e-5c05-8b89-e882335b4286": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "label": "Synthetic door102",
+        "kind": "door",
+        "x_px": 340,
+        "y_px": 120
+      },
+      "afa07d8d-4a31-5fbd-8487-0dff1e55f806": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "restricted",
+        "label": "Synthetic doorR1",
+        "kind": "door",
+        "x_px": 440,
+        "y_px": 240
+      }
+    },
+    "edges": {
+      "13f6a1df-8068-52be-8e38-894b2d5428c7": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "physical_path_id": "f86fc98a-c75a-5212-a06d-cad32bece533",
+        "from_node_id": "94a5e757-4d34-52b1-a6f2-60187e5bd2e5",
+        "to_node_id": "0ff6e7c8-9a73-56c3-be80-5795c055cac8",
+        "kind": "corridor",
+        "polyline": [
+          [
+            100,
+            100
+          ],
+          [
+            200,
+            100
+          ],
+          [
+            300,
+            100
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "a6db6233-8a04-5190-9278-cc343fdb9b0d": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "physical_path_id": "f86fc98a-c75a-5212-a06d-cad32bece533",
+        "from_node_id": "0ff6e7c8-9a73-56c3-be80-5795c055cac8",
+        "to_node_id": "94a5e757-4d34-52b1-a6f2-60187e5bd2e5",
+        "kind": "corridor",
+        "polyline": [
+          [
+            300,
+            100
+          ],
+          [
+            200,
+            100
+          ],
+          [
+            100,
+            100
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "3c3c6db2-fcdc-588d-9d34-5fa0e6079532": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "physical_path_id": "db936ebe-9cc5-5f64-881b-d1859a2fef2e",
+        "from_node_id": "0ff6e7c8-9a73-56c3-be80-5795c055cac8",
+        "to_node_id": "5ef5f763-8d1f-5acd-b79c-7d523a7ec726",
+        "kind": "corridor",
+        "polyline": [
+          [
+            300,
+            100
+          ],
+          [
+            360,
+            100
+          ],
+          [
+            420,
+            100
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "368985aa-94d1-5720-bfdd-9f1f6ec9e35f": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "physical_path_id": "db936ebe-9cc5-5f64-881b-d1859a2fef2e",
+        "from_node_id": "5ef5f763-8d1f-5acd-b79c-7d523a7ec726",
+        "to_node_id": "0ff6e7c8-9a73-56c3-be80-5795c055cac8",
+        "kind": "corridor",
+        "polyline": [
+          [
+            420,
+            100
+          ],
+          [
+            360,
+            100
+          ],
+          [
+            300,
+            100
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "2e0abc9f-9909-5264-b3e1-015e7ec5fa23": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "physical_path_id": "d34edff3-c860-5687-b7b8-aa2c986791d8",
+        "from_node_id": "94a5e757-4d34-52b1-a6f2-60187e5bd2e5",
+        "to_node_id": "07b17f24-aca5-5096-84ce-61b37e494cdc",
+        "kind": "door",
+        "polyline": [
+          [
+            100,
+            100
+          ],
+          [
+            180,
+            100
+          ],
+          [
+            180,
+            120
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "eae11e7e-3806-5aa3-8dea-0cf94fcd2de5": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "physical_path_id": "d34edff3-c860-5687-b7b8-aa2c986791d8",
+        "from_node_id": "07b17f24-aca5-5096-84ce-61b37e494cdc",
+        "to_node_id": "94a5e757-4d34-52b1-a6f2-60187e5bd2e5",
+        "kind": "door",
+        "polyline": [
+          [
+            180,
+            120
+          ],
+          [
+            180,
+            100
+          ],
+          [
+            100,
+            100
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "7e2794b8-0ce2-50f4-b988-d328d2b784ea": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "physical_path_id": "e662a385-ff2b-596e-b827-398db58f3f66",
+        "from_node_id": "0ff6e7c8-9a73-56c3-be80-5795c055cac8",
+        "to_node_id": "0aeece33-4a4e-5c05-8b89-e882335b4286",
+        "kind": "door",
+        "polyline": [
+          [
+            300,
+            100
+          ],
+          [
+            340,
+            100
+          ],
+          [
+            340,
+            120
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "31e1109d-94ff-5cc1-953e-9636585feda0": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "physical_path_id": "e662a385-ff2b-596e-b827-398db58f3f66",
+        "from_node_id": "0aeece33-4a4e-5c05-8b89-e882335b4286",
+        "to_node_id": "0ff6e7c8-9a73-56c3-be80-5795c055cac8",
+        "kind": "door",
+        "polyline": [
+          [
+            340,
+            120
+          ],
+          [
+            340,
+            100
+          ],
+          [
+            300,
+            100
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "ffbf6299-9db4-5a50-8c0e-377265de8470": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "restricted",
+        "physical_path_id": "c3ba001c-cde5-5e6c-8105-a03b76866381",
+        "from_node_id": "5ef5f763-8d1f-5acd-b79c-7d523a7ec726",
+        "to_node_id": "afa07d8d-4a31-5fbd-8487-0dff1e55f806",
+        "kind": "door",
+        "polyline": [
+          [
+            420,
+            100
+          ],
+          [
+            440,
+            100
+          ],
+          [
+            440,
+            240
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "0a18d71d-4490-5563-8f61-033a034d91b7": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "restricted",
+        "physical_path_id": "c3ba001c-cde5-5e6c-8105-a03b76866381",
+        "from_node_id": "afa07d8d-4a31-5fbd-8487-0dff1e55f806",
+        "to_node_id": "5ef5f763-8d1f-5acd-b79c-7d523a7ec726",
+        "kind": "door",
+        "polyline": [
+          [
+            440,
+            240
+          ],
+          [
+            440,
+            100
+          ],
+          [
+            420,
+            100
+          ]
+        ],
+        "accessibility_status": "unknown",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      }
+    },
+    "access": {
+      "f272fec9-f602-50df-a598-5fc7799842db": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "room_id": "ab92d5a0-16dd-5dca-ac03-10d5662fa281",
+        "node_id": "07b17f24-aca5-5096-84ce-61b37e494cdc",
+        "role": "door",
+        "priority": 0,
+        "accessibility_status": "unknown",
+        "is_open": true
+      },
+      "08acc73e-9859-596f-a34a-1305e4f30cdd": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "public",
+        "room_id": "68c3a8f6-7226-5ab4-b4ad-74d31aee5ff7",
+        "node_id": "0aeece33-4a4e-5c05-8b89-e882335b4286",
+        "role": "door",
+        "priority": 0,
+        "accessibility_status": "unknown",
+        "is_open": true
+      },
+      "7c602151-f51a-5105-a1f6-942b35c859a7": {
+        "evidence": "Invented synthetic tracing only; drawing does not establish field accessibility. PRIVATE-INDOOR-NOTE",
+        "verified_on": null,
+        "visibility": "restricted",
+        "room_id": "ae7c1b1b-ce16-571a-b24e-445cf0231a80",
+        "node_id": "afa07d8d-4a31-5fbd-8487-0dff1e55f806",
+        "role": "door",
+        "priority": 0,
+        "accessibility_status": "unknown",
+        "is_open": true
+      }
+    }
+  }
+}

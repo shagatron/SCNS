@@ -102,4 +102,4 @@ export function applyChange(graph: Graph, change: Change) {
   else delete layer[change.id]
 }
 
-export function clearGraphRecovery() { try { for (const key of Object.keys(sessionStorage)) if (key.startsWith('scns-graph-recovery:') || key.startsWith('scns-admin-view:') || key.startsWith('scns-floor-recovery:')) sessionStorage.removeItem(key) } catch { /* storage may be disabled */ } }
+export function clearGraphRecovery() { try { for (const key of Object.keys(sessionStorage)) if (key.startsWith('scns-graph-recovery:') || key.startsWith('scns-admin-view:') || key.startsWith('scns-floor-recovery:') || key.startsWith('scns-indoor-recovery:')) sessionStorage.removeItem(key) } catch { /* storage may be disabled */ } }

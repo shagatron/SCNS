@@ -18,7 +18,7 @@ from sqlalchemy.orm import Session
 from app.core.errors import DomainError
 from app.models import Building, Campus, Frame, Node
 from app.models.floorplans import Floor, FloorplanJob, MapLayer
-from app.models.indoor import IndoorNode, Room
+from app.models.indoor import IndoorAccess, IndoorEdge, IndoorNode, Room
 from app.models.publication import SourceAsset
 from app.schemas.floorplans import CalibrationInput
 from app.services.admin_auth import audit
@@ -233,6 +233,27 @@ def save_floor(db, revision, payload, actor, request_id, identity=None):
         )
     if identity and payload.id not in (None, identity):
         raise DomainError("invalid_input", "Stable floor IDs cannot be changed.")
+    if (
+        identity
+        and payload.visibility != "public"
+        and any(
+            db.scalar(
+                select(model.id)
+                .where(
+                    model.dataset_revision_id == revision.id,
+                    model.floor_id == floor.id,
+                    model.visibility == "public",
+                )
+                .limit(1)
+            )
+            for model in (Room, IndoorNode, IndoorEdge, IndoorAccess)
+        )
+    ):
+        raise DomainError(
+            "conflict",
+            "Restrict public indoor records explicitly before restricting their floor.",
+            409,
+        )
     for field, value in payload.model_dump(exclude={"id"}).items():
         setattr(floor, field, value)
     db.add(floor)

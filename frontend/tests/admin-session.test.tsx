@@ -45,11 +45,13 @@ describe('admin session lifecycle', () => {
     await waitFor(() => expect(result.current.session.data).toEqual(identity))
     cache.setQueryData(['admin', 'private-records'], { restricted: true })
     cache.setQueryData(['public', 'campuses'], ['public-data'])
+    sessionStorage.setItem('scns-indoor-recovery:expiry', 'private local tracing')
     await act(async () => { await result.current.session.refetch() })
     expect(result.current.session.data).toBeNull()
     expect(result.current.ended).toBe(true)
     expect(cache.getQueryData(['admin', 'private-records'])).toBeUndefined()
     expect(cache.getQueryData(['public', 'campuses'])).toEqual(['public-data'])
+    expect(sessionStorage.getItem('scns-indoor-recovery:expiry')).toBeNull()
   })
 
   it('protected 401 cancels an older check and cannot restore a revoked session', async () => {

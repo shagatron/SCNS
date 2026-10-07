@@ -54,7 +54,7 @@ def main():
         ]
         fixture_campuses.extend(
             create_fixture(db, release.dataset_revision_id, bundle, viewport, purpose)
-            for purpose in ("floorplan", "floorplan conflicts")
+            for purpose in ("floorplan", "floorplan conflicts", "indoor", "indoor conflicts")
             for viewport in ("desktop", "mobile")
         )
         owner = bootstrap(db, "browser-owner", "Browser owner", password, bundle.campus.id)

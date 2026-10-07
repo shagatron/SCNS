@@ -176,6 +176,7 @@ def main():
                 "-m",
                 "tests.browser_runner",
                 "floorplans.spec.ts",
+                "indoor.spec.ts",
                 "publication.spec.ts",
                 "navigation.spec.ts",
             ],

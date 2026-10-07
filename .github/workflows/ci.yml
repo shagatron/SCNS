@@ -12,7 +12,7 @@ jobs:
       - run: make setup demo check build test-unit test-integration test-migrations
       - run: cd frontend && npx playwright install --with-deps chromium
       - run: make test-e2e
-      - run: make generate-api && git diff --exit-code -- docs/architecture/openapi.json data/templates/dataset-v1.schema.json data/templates/import-v1/bundle.schema.json data/templates/publication-v1/source.schema.json frontend/src/api/generated.ts data/templates/floorplan-v1
+      - run: make generate-api && git diff --exit-code -- docs/architecture/openapi.json data/templates/dataset-v1.schema.json data/templates/import-v1/bundle.schema.json data/templates/publication-v1/source.schema.json frontend/src/api/generated.ts data/templates/floorplan-v1 data/templates/indoor-v1
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

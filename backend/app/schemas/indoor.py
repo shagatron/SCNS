@@ -51,6 +51,13 @@ class IndoorNodeFields(Evidence):
     x_px: PixelValue
     y_px: PixelValue
 
+    @field_validator("label")
+    @classmethod
+    def meaningful_label(cls, value):
+        if not value.strip():
+            raise ValueError("Use a meaningful node label")
+        return value.strip()
+
 
 class IndoorEdgeFields(Evidence):
     physical_path_id: UUID

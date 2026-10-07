@@ -250,6 +250,23 @@ def test_dependency_deletion_move_and_sql_guards(client, db, bundle, identity, r
         ).status_code
         == 409
     )
+    from tests.integration.test_floorplans import floor_payload
+
+    assert (
+        client.put(
+            path + f"/floors/{floor}",
+            json={**floor_payload(bundle), "visibility": "restricted"},
+            headers=version(h, current(client, path)),
+        ).status_code
+        == 409
+    )
+    with pytest.raises(DBAPIError), db.begin_nested():
+        db.execute(
+            text(
+                "UPDATE floors SET visibility='restricted' WHERE dataset_revision_id=:revision AND id=:floor"
+            ),
+            {"revision": draft["id"], "floor": floor},
+        )
     with pytest.raises(DBAPIError), db.begin_nested():
         db.execute(
             text("UPDATE indoor_edges SET distance_m=999 WHERE dataset_revision_id=:r"),
@@ -357,6 +374,26 @@ def test_exact_review_projection_clone_and_retained_rollback(
         ).status_code
         == 200
     )
+    with pytest.raises(DBAPIError), db.begin_nested():
+        db.execute(
+            text("UPDATE indoor_rooms SET x_px=1 WHERE dataset_revision_id=:revision"),
+            {"revision": release["dataset_revision_id"]},
+        )
+    route = client.post(
+        "/api/v1/routes",
+        json={
+            "campus_id": str(bundle.campus.id),
+            "source": {
+                "kind": "place",
+                "place_id": str(next(p.id for p in bundle.places if p.code == "GATE")),
+            },
+            "destination": {"kind": "place", "place_id": room},
+            "profile": "shortest",
+        },
+    )
+    assert route.status_code == 422 and route.json()["error"]["code"] == "location_not_routable", (
+        route.text
+    )
     h = sign_in(client, identity)
     clone = make_draft(client, bundle, h)
     nextpath = path.rsplit("/", 1)[0] + "/" + clone["id"]
@@ -378,3 +415,111 @@ def test_exact_review_projection_clone_and_retained_rollback(
     assert not client.get(f"/api/v1/campuses/{bundle.campus.id}/search?q=quiet%20study").json()[
         "items"
     ]
+
+
+def test_preview_is_nonmutating_typed_and_stale_guarded(client, db, bundle, identity, reviewer):
+    _, path, floor, layer, h = prepared(client, db, bundle, identity, reviewer)
+    v = current(client, path)
+    r = client.post(
+        path + f"/floors/{floor}/indoor/preview", json=fixture_payload(layer), headers=version(h, v)
+    )
+    assert r.status_code == 200 and len(r.json()["rooms"]) == 3
+    assert current(client, path) == v
+    assert not db.scalar(select(func.count()).select_from(Room))
+    assert not db.scalar(
+        select(func.count()).select_from(AuditEvent).where(AuditEvent.action == "indoor.patch")
+    )
+    assert (
+        client.post(
+            path + f"/floors/{floor}/indoor/preview",
+            json=fixture_payload(layer),
+            headers=version(h, v - 1),
+        ).status_code
+        == 409
+    )
+
+
+def test_graph_validation_reports_crossings_directed_unlinked_unknown_access(
+    client, db, bundle, identity, reviewer
+):
+    _, path, floor, layer, h = prepared(client, db, bundle, identity, reviewer)
+    payload = fixture_payload(layer)
+    # Remove reverse door direction only: one-way is valid but room door loses return reachability.
+    edges = [c for c in payload["changes"] if c["entity"] == "edges"]
+    reverse = next(
+        c for c in edges if c["data"]["polyline"] == [[180, 120], [180, 100], [100, 100]]
+    )
+    payload["changes"].remove(reverse)
+    # A distinct shaped line crosses the corridor without sharing a topology node.
+    a, b = uuid4(), uuid4()
+    for id, x, y in [(a, 200, 50), (b, 200, 150)]:
+        payload["changes"].append(
+            {
+                "entity": "nodes",
+                "id": str(id),
+                "data": {
+                    "kind": "junction",
+                    "label": "Synthetic isolated crossing",
+                    "x_px": x,
+                    "y_px": y,
+                },
+            }
+        )
+    payload["changes"].append(
+        {
+            "entity": "edges",
+            "id": str(uuid4()),
+            "data": {
+                "physical_path_id": str(uuid4()),
+                "from_node_id": str(a),
+                "to_node_id": str(b),
+                "polyline": [[200, 50], [200, 150]],
+            },
+        }
+    )
+    r = save(client, path, floor, h, payload)
+    assert r.status_code == 200, r.text
+    val = client.get(path + f"/floors/{floor}/indoor/validation").json()
+    codes = {d["code"] for d in val["diagnostics"]}
+    assert val["errors"] == 0
+    assert {
+        "indoor_unmapped_intersection",
+        "indoor_door_unreachable",
+        "indoor_step_free_unknown",
+        "indoor_components",
+    } <= codes
+
+
+def test_replacement_and_foreign_floor_identity_guards(client, db, bundle, identity, reviewer):
+    from tests.integration.test_floorplans import floor_payload
+
+    _, path, floor, layer, h = prepared(client, db, bundle, identity, reviewer)
+    r = save(client, path, floor, h, fixture_payload(layer))
+    assert r.status_code == 200, r.text
+    old = r.json()
+    v = current(client, path)
+    job = ready(client, db, path, h, floor, "synthetic-two-pages.pdf", 2)
+    assert apply(client, path, h, job, replace=layer, reset=True).status_code == 409
+    assert current(client, path) == v
+    other = client.post(path + "/floors", json=floor_payload(bundle, "B1"), headers=version(h, v))
+    assert other.status_code == 201
+    otherid = other.json()["id"]
+    job = ready(client, db, path, h, otherid)
+    r = apply(client, path, h, job)
+    assert r.status_code == 200
+    layer2 = r.json()["layer_id"]
+    floor2 = next(f for f in client.get(path + "/floors").json()["floors"] if f["id"] == otherid)
+    rh = sign_in(client, reviewer)
+    assert (
+        client.post(
+            path + f"/sources/{floor2['layer']['source_id']}/approve",
+            headers=version(rh, current(client, path)),
+        ).status_code
+        == 200
+    )
+    h = sign_in(client, identity)
+    r = save(client, path, otherid, h, fixture_payload(layer2, "directions_only"))
+    assert r.status_code == 409
+    # Same identity cannot be implicitly moved even when frame coordinates happen to match.
+    assert client.get(path + f"/floors/{floor}/indoor").json()["nodes"] == old["nodes"]
+    assert client.get(path + f"/floors/{otherid}/indoor").json()["rooms"] == {}

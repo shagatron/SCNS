@@ -20,6 +20,7 @@ export function useAdminSession() {
       try { return await adminApi<Session>('/session', { signal }) }
       catch (error) {
         if (signal.aborted || !(error instanceof ApiError) || error.code !== 'authentication_required') throw error
+        clearGraphRecovery()
         // An initial 401 is a normal anonymous result. Keep this observed query
         // alive so it settles, rather than clearing/recreating it on every 401.
         if (cache.getQueryData<Session | null>(sessionKey)) {

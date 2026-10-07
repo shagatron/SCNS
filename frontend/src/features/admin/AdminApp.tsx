@@ -42,7 +42,7 @@ export default function AdminApp() {
   const [campus, setCampus] = useState('')
   const [error, setError] = useState<unknown>(null)
   const [busy, setBusy] = useState(false)
-  const selected = session.data?.grants.find(g => g.campus_id === campus) ?? session.data?.grants[0]
+  const selected = session.data?.grants.find(g => g.campus_id === (campus || readAdminView(`${session.data?.user_id}:campus`))) ?? session.data?.grants[0]
   return <>
     <a className="skip-link" href="#admin-main">Skip to administration</a>
     <header className="admin-header"><a href="/">← Public campus navigation</a><strong>Campus administration</strong>{session.data && <button disabled={busy} onClick={async () => {
@@ -54,7 +54,7 @@ export default function AdminApp() {
     <main id="admin-main" className="admin-shell"><ErrorMessage error={error} />{ended && <ErrorMessage error={new Error('Your session ended. Sign in to continue.')} />}
       {session.isPending ? <p role="status">Checking your session…</p> : session.data ? <>
         <div className="admin-intro"><div><p className="eyebrow">DRAFT WORKSPACE</p><h1>Admin dashboard</h1><p>Signed in as {session.data.display_name}. Session expires {new Date(session.data.expires_at).toLocaleString()}.</p></div>
-          <label>Assigned campus<select value={selected?.campus_id ?? ''} onChange={e => setCampus(e.target.value)}>{session.data.grants.map(g => <option key={g.campus_id} value={g.campus_id}>{g.campus_name}</option>)}</select></label></div>
+          <label>Assigned campus<select value={selected?.campus_id ?? ''} onChange={e => { writeAdminView(`${session.data?.user_id}:campus`, e.target.value); setCampus(e.target.value) }}>{session.data.grants.map(g => <option key={g.campus_id} value={g.campus_id}>{g.campus_name}</option>)}</select></label></div>
         {selected ? <CampusDashboard key={selected.campus_id} campus={selected.campus_id} session={session.data} /> : <p>No campus permission is assigned. Contact your system administrator.</p>}
       </> : <><ErrorMessage error={session.error instanceof ApiError && session.error.code === 'authentication_required' ? null : session.error} /><Login onLogin={data => { setError(null); establish(data) }} /></>}
     </main>

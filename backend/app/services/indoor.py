@@ -409,7 +409,12 @@ def inspect(db, revision, floor, state, *, mode=None):
             [],
         )
     for identity in state["rooms"]:
-        if not any(a["room_id"] == identity and a["is_open"] for a in state["access"].values()):
+        if not any(
+            a["room_id"] == identity
+            and a["is_open"]
+            and (state["rooms"][identity]["visibility"] != "public" or a["visibility"] == "public")
+            for a in state["access"].values()
+        ):
             report(
                 "indoor_unlinked_room",
                 "Search label has no open mapped door: indoor routing remains unavailable. Map an explicit access link or acknowledge this unfinished destination.",
@@ -441,6 +446,91 @@ def inspect(db, revision, floor, state, *, mode=None):
             [min(c) for c in components[:100]],
             "warning",
         )
+    # Directed same-floor reachability is a validation diagnostic, not a 3C route engine.
+    corridors = {
+        identity
+        for identity, n in state["nodes"].items()
+        if n["kind"] in {"corridor", "junction"} and n["visibility"] == "public"
+    }
+    for profile in ("standard", "step_free"):
+        forward, reverse = defaultdict(set), defaultdict(set)
+        for e in state["edges"].values():
+            if (
+                e["is_open"]
+                and e["visibility"] == "public"
+                and (profile == "standard" or e["accessibility_status"] == "verified_step_free")
+            ):
+                forward[e["from_node_id"]].add(e["to_node_id"])
+                reverse[e["to_node_id"]].add(e["from_node_id"])
+
+        def reaches(start, adjacency):
+            seen, todo = set(), [start]
+            while todo:
+                n = todo.pop()
+                if n in corridors:
+                    return True
+                if n not in seen:
+                    seen.add(n)
+                    todo.extend(adjacency[n] - seen)
+            return False
+
+        for identity, a in state["access"].items():
+            if (
+                a["is_open"]
+                and a["visibility"] == "public"
+                and (profile == "standard" or a["accessibility_status"] == "verified_step_free")
+                and (not reaches(a["node_id"], forward) or not reaches(a["node_id"], reverse))
+            ):
+                report(
+                    "indoor_door_unreachable",
+                    f"{profile}: door lacks a permitted directed path to and from a corridor/junction. Review directionality and explicit connections; no public indoor route is yet available.",
+                    "access",
+                    [identity],
+                    "warning",
+                )
+        if profile == "step_free":
+            for identity, r in state["rooms"].items():
+                if r["visibility"] == "public" and not any(
+                    a["room_id"] == identity
+                    and a["is_open"]
+                    and a["visibility"] == "public"
+                    and a["accessibility_status"] == "verified_step_free"
+                    and reaches(a["node_id"], forward)
+                    and reaches(a["node_id"], reverse)
+                    for a in state["access"].values()
+                ):
+                    report(
+                        "indoor_step_free_unknown",
+                        "No complete independently evidenced same-floor step-free door/corridor connection. Unknown access is excluded, never inferred from the drawing.",
+                        "rooms",
+                        [identity],
+                        "warning",
+                    )
+    representatives = [items[0] for items in groups.values()]
+    crossings = 0
+    for i, (a_id, a) in enumerate(representatives):
+        for b_id, b in representatives[i + 1 :]:
+            # Shared endpoints deliberately connect. Other intersections remain separate.
+            common = {a["from_node_id"], a["to_node_id"]} & {b["from_node_id"], b["to_node_id"]}
+            if common:
+                continue
+            ax, ay = zip(*a["polyline"], strict=False)
+            bx, by = zip(*b["polyline"], strict=False)
+            if max(ax) < min(bx) or max(bx) < min(ax) or max(ay) < min(by) or max(by) < min(ay):
+                continue
+            if db.scalar(select(func.ST_Intersects(shape(a["polyline"]), shape(b["polyline"])))):
+                report(
+                    "indoor_unmapped_intersection",
+                    "These paths intersect in reference pixels without a shared topology node. Deliberately split both at one existing junction, or acknowledge the physical separation; crossing alone creates no connection.",
+                    "edges",
+                    [a_id, b_id],
+                    "warning",
+                )
+                crossings += 1
+                if crossings >= 100:
+                    break
+        if crossings >= 100:
+            break
     # Bound quadratic geometry diagnostics; reaching the cap blocks whole-draft completeness.
     nodes = list(state["nodes"].items())
     pairs = 0
@@ -480,13 +570,33 @@ def inspect(db, revision, floor, state, *, mode=None):
 
 def validation(db, revision, floor):
     findings = inspect(db, revision, floor, rows(db, revision, floor))
+    layer = db.get(MapLayer, (revision.id, floor.layer_id)) if floor.layer_id else None
+    for entity, model in MODELS.items():
+        for item in db.scalars(
+            select(model).where(
+                model.dataset_revision_id == revision.id, model.floor_id == floor.id
+            )
+        ):
+            if item.frame_id != floor.frame_id or not layer or item.source_id != layer.source_id:
+                findings.append(
+                    dict(
+                        code="indoor_frame_source",
+                        message="Stored floor-local coordinates reference a different frame/selected source. Explicitly remove/retrace these records; never reinterpret old pixels.",
+                        entity=entity,
+                        ids=[str(item.id)],
+                        severity="error",
+                    )
+                )
     return {
         "revision_version": revision.edit_version,
         "errors": sum(f["severity"] == "error" for f in findings),
         "warnings": sum(f["severity"] == "warning" for f in findings),
         "diagnostics": findings[:500],
         "truncated": len(findings) > 500
-        or sum(f["code"] == "indoor_near_duplicate" for f in findings) >= 100,
+        or any(
+            sum(f["code"] == code for f in findings) >= 100
+            for code in ("indoor_near_duplicate", "indoor_unmapped_intersection")
+        ),
     }
 
 

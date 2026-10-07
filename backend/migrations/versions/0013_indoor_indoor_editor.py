@@ -330,6 +330,7 @@ def upgrade():
     op.execute("""
     CREATE FUNCTION guard_indoor_floor_binding() RETURNS trigger LANGUAGE plpgsql AS $$
     BEGIN
+      IF NEW.visibility<>'public' AND (EXISTS(SELECT 1 FROM indoor_rooms WHERE dataset_revision_id=OLD.dataset_revision_id AND floor_id=OLD.id AND visibility='public') OR EXISTS(SELECT 1 FROM indoor_nodes WHERE dataset_revision_id=OLD.dataset_revision_id AND floor_id=OLD.id AND visibility='public')) THEN RAISE EXCEPTION 'Restrict public indoor content before its floor'; END IF;
       IF (NEW.layer_id IS DISTINCT FROM OLD.layer_id OR NEW.frame_id IS DISTINCT FROM OLD.frame_id) AND (EXISTS(SELECT 1 FROM indoor_nodes WHERE dataset_revision_id=OLD.dataset_revision_id AND floor_id=OLD.id) OR EXISTS(SELECT 1 FROM indoor_rooms WHERE dataset_revision_id=OLD.dataset_revision_id AND floor_id=OLD.id)) THEN RAISE EXCEPTION 'Selected plan has dependent indoor records'; END IF;
       RETURN NEW;
     END $$;

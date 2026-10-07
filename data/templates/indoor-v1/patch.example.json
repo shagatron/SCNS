@@ -1,0 +1,17 @@
+{
+  "layer_id": "00000000-0000-4000-8000-000000000001",
+  "mode": "metric",
+  "changes": [{
+    "entity": "nodes",
+    "id": "00000000-0000-4000-8000-000000000002",
+    "data": {
+      "kind": "junction",
+      "label": "Synthetic unverified junction",
+      "x_px": 100,
+      "y_px": 100,
+      "visibility": "public",
+      "evidence": "Invented template only; not field verification.",
+      "verified_on": null
+    }
+  }]
+}

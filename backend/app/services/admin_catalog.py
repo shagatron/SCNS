@@ -283,17 +283,30 @@ def write_record(
     if entity == "buildings":
         if not db.scalar(select(func.ST_IsValid(geometry(data.footprint)))):
             raise DomainError("invalid_input", "Building footprint is not a valid polygon.")
-        if data.visibility == "restricted" and db.scalar(
-            select(Place.id)
-            .where(
-                Place.dataset_revision_id == revision.id,
-                Place.building_id == row.id,
-                Place.visibility == "public",
+        if data.visibility == "restricted" and (
+            db.scalar(
+                select(Place.id)
+                .where(
+                    Place.dataset_revision_id == revision.id,
+                    Place.building_id == row.id,
+                    Place.visibility == "public",
+                )
+                .limit(1)
             )
-            .limit(1)
+            or db.scalar(
+                select(Floor.id)
+                .where(
+                    Floor.dataset_revision_id == revision.id,
+                    Floor.building_id == row.id,
+                    Floor.visibility == "public",
+                )
+                .limit(1)
+            )
         ):
             raise DomainError(
-                "conflict", "Change or detach public places before restricting their building.", 409
+                "conflict",
+                "Restrict or detach public places/floors before restricting their building.",
+                409,
             )
         values["footprint"] = geometry(data.footprint)
     elif entity == "places":

@@ -21,7 +21,7 @@ Both images rebuilt successfully. The local Compose stack was migrated/restarted
 
 ### Delivery and unfinished work
 
-The backend checkpoint is on GitHub. Remaining source, tests and documentation are ready for the completion commit/push on the same branch. Secrets, dependencies, database files and generated build/browser artifacts are excluded; lockfiles and generated API contracts are retained.
+The backend checkpoint and completion commit `8c0ac7fbc8b66c8727cb1e5e37b690cb44f11aa6` are pushed to `origin/feat/milestone-2-admin`; `git ls-remote` confirmed the completion commit. This final documentation receipt records that verified push. Secrets, dependencies, database files and generated build/browser artifacts are excluded; lockfiles and generated API contracts are retained.
 
 **PR creation blocked:** both read-only REST/GraphQL probes and the actual `gh pr create` attempt returned `Forbidden` from `api.github.com`. No PR URL was returned, no merge occurred, and no alternative GitHub connector is available. Git HTTPS push remains supported. The ready description is `docs/reviews/milestone-2a-pr.md`. The PR should target `feat/milestones-0-1`, because GitHub `main` still points at the original initial commit and does not yet contain `86e1591`.
 
@@ -29,7 +29,7 @@ Owner manual app testing is deferred as requested. Physical-phone/assistive-tech
 
 ### Exact next steps
 
-1. Complete the final commit/push of this verified source and documentation on `feat/milestone-2-admin`.
+1. Review the completed/pushed `feat/milestone-2-admin` branch. No source implementation or automated check remains unfinished for 2A.
 2. When GitHub API access is restored, open the unmerged PR:
 
    ```bash

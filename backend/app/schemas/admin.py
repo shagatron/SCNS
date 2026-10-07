@@ -56,6 +56,9 @@ class DraftOut(DTO):
 
 class DashboardOut(DTO):
     campus_id: UUID
+    campus_code: str
+    timezone: str
+    is_demo: bool
     campus_name: str
     permissions: list[str]
     release: ReleaseOut | None

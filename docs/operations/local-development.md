@@ -1,6 +1,6 @@
 # Local service operations
 
-`make setup demo dev` prepares local development. `make containers` builds API and nginx/frontend images; the README has explicit Compose migration/seed commands. PostGIS uses a named volume. Stop services with `docker compose stop` without removing data. Never use `docker compose down -v` on data you need to retain.
+`make setup demo dev` prepares local development and runs API, frontend and the private import worker. Stop Compose `api frontend import-worker` before source development; database workers must share the same storage root. `make containers` builds API and nginx/frontend images; the README has explicit Compose migration/seed commands. PostGIS uses a named volume; API/import worker share a separate private source volume. Start built services with `docker compose up -d --wait api frontend import-worker`. Stop services with `docker compose stop` without removing data. Never use `docker compose down -v` on data you need to retain.
 
 `GET /api/v1/health/live` checks process liveness; `GET /api/v1/health/ready` checks a real PostGIS query and the migrated schema. Readiness does not require demo seeding: an empty database has an honest empty-campus UI. Migrations are controlled steps; API workers do not migrate or seed at startup. The source host and containers share the same localhost-published development database when run on this machine.
 

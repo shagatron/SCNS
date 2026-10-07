@@ -18,6 +18,7 @@ from app.models import (
     Revision,
 )
 from app.models.admin import Department, DepartmentPlace, PlaceAlias
+from app.models.imports import ImportBinding
 from app.schemas.admin import CatalogRecord, CatalogWrite, DraftOut
 from app.services.admin_auth import audit
 from app.services.catalog import normalize
@@ -83,6 +84,7 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
             Department,
             PlaceAlias,
             DepartmentPlace,
+            ImportBinding,
         ):
             table = model.__table__
             db.execute(
@@ -208,13 +210,15 @@ def sync_aliases(db, revision_id, place_id):
     place.search_text = normalize(" ".join([place.code, place.name, place.kind, *place.aliases]))
 
 
-def write_record(db: Session, revision: Revision, payload: CatalogWrite, resource_id=None):
+def write_record(
+    db: Session, revision: Revision, payload: CatalogWrite, resource_id=None, *, create_id=None
+):
     entity, data = payload.entity, payload.data
     row = (
         referenced(db, MODELS[entity], revision.id, resource_id)
         if resource_id
         else MODELS[entity](
-            id=uuid4(), campus_id=revision.campus_id, dataset_revision_id=revision.id
+            id=create_id or uuid4(), campus_id=revision.campus_id, dataset_revision_id=revision.id
         )
     )
     before = record(db, entity, row).model_dump(mode="json") if resource_id else None
@@ -295,7 +299,10 @@ def write_record(db: Session, revision: Revision, payload: CatalogWrite, resourc
         setattr(row, key, value)
     db.add(row)
     db.flush()
-    if entity == "departments":
+    if entity == "departments" and (
+        before is None
+        or set(before["item"]["data"]["place_ids"]) != {str(value) for value in data.place_ids}
+    ):
         db.execute(
             delete(DepartmentPlace).where(
                 DepartmentPlace.dataset_revision_id == revision.id,

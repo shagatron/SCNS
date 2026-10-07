@@ -13,6 +13,10 @@ class Settings(BaseSettings):
     walking_speed_mps: float = Field(default=1.4, gt=0, le=3)
     allowed_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
     storage_root: str = "../storage"
+    import_byte_limit: int = Field(default=5 * 1024 * 1024, ge=1024, le=10 * 1024 * 1024)
+    import_row_limit: int = Field(default=2000, ge=1, le=10000)
+    import_parse_seconds: int = Field(default=30, ge=1, le=120)
+    import_storage_limit: int = Field(default=100 * 1024 * 1024, ge=1024)
     graph_node_limit: int = Field(default=50000, gt=0)
     graph_edge_limit: int = Field(default=150000, gt=0)
     session_cookie_secure: bool = False  # Local HTTP only; deployment remains gated.

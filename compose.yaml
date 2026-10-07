@@ -14,6 +14,7 @@ services:
       timeout: 3s
       retries: 30
   api:
+    image: scns-api
     build:
       context: .
       dockerfile: backend/Dockerfile
@@ -21,6 +22,8 @@ services:
       DATABASE_URL: postgresql+psycopg://scns:scns_local@db:5432/scns
       DEMO_ENABLED: "true"
       APP_ENV: development
+      STORAGE_ROOT: /app/storage
+    volumes: ["private-imports:/app/storage"]
     ports: ["127.0.0.1:8000:8000"]
     depends_on:
       db: {condition: service_healthy}
@@ -29,6 +32,17 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+  import-worker:
+    image: scns-api
+    command: ["python", "-m", "app.cli.imports", "worker"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://scns:scns_local@db:5432/scns
+      STORAGE_ROOT: /app/storage
+      APP_ENV: development
+    volumes: ["private-imports:/app/storage"]
+    depends_on:
+      api: {condition: service_healthy}
+    restart: unless-stopped
   frontend:
     build:
       context: .
@@ -38,3 +52,4 @@ services:
       api: {condition: service_healthy}
 volumes:
   postgres-data:
+  private-imports:

@@ -1,6 +1,6 @@
 # Smart Campus Navigation
 
-A working outdoor navigation demo built with React, TypeScript, Vite, Tailwind, TanStack Query, Leaflet, FastAPI, SQLAlchemy, Alembic, PostgreSQL and PostGIS. Milestones 0, 1 and the authorized admin-only slice 2A of the [master specification](docs/product/master-spec.md) are implemented. See the [requirements checklist](docs/product/requirements-checklist.md) and [verification report](docs/testing/verification.md) for scope and evidence.
+A working outdoor navigation demo built with React, TypeScript, Vite, Tailwind, TanStack Query, Leaflet, FastAPI, SQLAlchemy, Alembic, PostgreSQL and PostGIS. Milestones 0, 1, admin slice 2A and staged-import slice 2B1 of the [master specification](docs/product/master-spec.md) are implemented. See the [requirements checklist](docs/product/requirements-checklist.md) and [verification report](docs/testing/verification.md) for scope and evidence.
 
 **Demo Campus is wholly synthetic.** Its coordinates near (0°, 0°), buildings, paths, access conditions and accessibility evidence are invented. It is not the owner's campus and must not be used for real navigation. Public navigation requires no account, paid services, API keys or external map tiles. Administrator accounts are explicitly provisioned; there is no public deployment.
 
@@ -12,7 +12,7 @@ A working outdoor navigation demo built with React, TypeScript, Vite, Tailwind, 
 - Honest handling of one-way paths, closed/restricted edges, isolated destinations, unmapped entrances, same-place arrival and unknown step-free accessibility. The step-free example tests synthetic eligibility only.
 - Database-backed draft/release separation, frozen rows protected by triggers, atomic active-release selection, release IDs on responses and stale-release errors.
 - Campus-scoped admin login, one-time bootstrap, dashboard, private draft catalog CRUD, optimistic concurrency and append-only audit at `/admin`. See [admin setup and workflow](docs/operations/admin.md).
-- Private incoming-data directories, CSV/GeoJSON preparation templates, an executable versioned JSON validator and explicit idempotent demo seeding.
+- Private staged CSV/JSON/GeoJSON imports with field mapping, row diagnostics, change previews, stable IDs, explicit upsert, idempotent retries and atomic audited draft application. Synthetic executable templates, bounded worker and explicit idempotent demo seeding.
 
 The supplied repository contained no C code. `legacy/c-prototype/` records that fact and is reserved for the original prototype if supplied.
 
@@ -25,12 +25,12 @@ From the repository root:
 ```bash
 make setup                # frozen Python dependencies, npm ci, preserve/create local .env
 make demo                 # start PostGIS, apply migrations, explicitly seed Demo Campus
-make dev                  # API + frontend; Ctrl-C stops these development processes
+make dev                  # API + frontend + private import worker; Ctrl-C stops all
 ```
 
 On your own machine open `http://localhost:5173`. The API runs on port 8000, interactive API docs are at `http://localhost:8000/docs`, readiness is `/api/v1/health/ready`, and PostGIS is on localhost:54329. These are local addresses, not a published site. In a cloud workspace use its supported browser/port access tooling. No onboarding preview is created.
 
-Alternatively use two terminals: `make api` and `make web`. To stop PostGIS without deleting its data: `docker compose stop db`. The named volume survives restarts; no reset/drop is performed by normal setup.
+Alternatively use three terminals: `make api`, `make web` and `make worker`. Stop Compose `api`, `frontend` and `import-worker` before source development so only workers sharing the same private storage serve a database. To stop PostGIS without deleting its data: `docker compose stop db`. The named volume survives restarts; no reset/drop is performed by normal setup.
 
 The commands can also be run explicitly:
 
@@ -55,10 +55,10 @@ docker compose up -d --wait db
 docker compose build api frontend
 docker compose run --rm --no-deps api alembic upgrade head
 docker compose run --rm --no-deps api python -m app.cli.dataset seed-demo ../data/demo/campus.json
-docker compose up -d --wait api frontend
+docker compose up -d --wait api frontend import-worker
 ```
 
-Stop host `make dev` processes first because Compose uses the same ports. Compose binds ports to loopback and uses **local development credentials only**. Production mode intentionally refuses startup until the deployment milestone is completed. No worker is included because this slice has no background ingestion jobs.
+Stop host `make dev` processes first because Compose uses the same ports. Compose binds ports to loopback and uses **local development credentials only**. Production mode intentionally refuses startup until the deployment milestone is completed. The API and bounded import worker share a private named storage volume; originals are outside nginx and never published.
 
 ## Test and build
 
@@ -71,7 +71,7 @@ make test-migrations      # reset dedicated scns_migration_test; rehearse fresh/
 
 # One-time standard browser installation:
 cd frontend && npx playwright install --with-deps chromium && cd ..
-make test-e2e             # reset dedicated scns_e2e_test; seed and start isolated API/web
+make test-e2e             # reset scns_e2e_test; isolated API/web/worker and private storage
 
 # This cloud workspace already has Chromium; use this instead of downloading:
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e
@@ -102,3 +102,7 @@ Validation performs no database writes. The demo seed command only accepts `DEMO
 Milestone **2A** delivers campus-scoped admin authentication, catalog CRUD, audit and optimistic concurrency. The [one-time `bootstrap-admin` command](docs/operations/admin.md) is working. Milestones **2B/2C remain unimplemented**: staged CSV/JSON/GeoJSON imports, outdoor graph editing, validation/review approval, publication/rollback and approved asset projection. Real-data `import-dataset`, `export-release`, and backup/restore commands will be delivered with their relevant milestones.
 
 Indoor navigation/floorplans are Milestone 3; QR, geolocation, live closures, reports and saved-route offline/PWA support are Milestone 4. The present route policy uses static release state at request time and does not evaluate opening schedules. No real campus accessibility, physical path accuracy, load benchmark, screen-reader certification or deployment is claimed. Official maps and ownership/licensing decisions remain external inputs. No code license has been chosen on the owner's behalf; see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Staged draft imports (2B1)
+
+See [the import setup and workflow guide](docs/operations/imports.md) and [executable import-v1 templates](data/templates/import-v1/README.md). `make dev` now starts the private DB-backed import worker with API/frontend; Compose requires `docker compose up -d --wait api frontend import-worker`. Imports never publish and public navigation stays on the existing release.

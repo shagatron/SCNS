@@ -1,0 +1,3 @@
+external_id,campus_code,frame_id,label,point
+synthetic-node-a,DEMO,synthetic-wgs84,Synthetic import start,"{""type"": ""Point"", ""coordinates"": [0.0005, 0.001]}"
+synthetic-node-b,DEMO,synthetic-wgs84,Synthetic import door,"{""type"": ""Point"", ""coordinates"": [0.001, 0.001]}"

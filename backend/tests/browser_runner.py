@@ -2,8 +2,10 @@
 
 import os
 import secrets
+import signal
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 from alembic import command
@@ -54,9 +56,24 @@ def main():
     engine.dispose()
     # Ephemeral credentials only in child environment, never argv, files, traces or output.
     env = {**os.environ, "SCNS_E2E_PASSWORD": password}
-    result = subprocess.run(
-        ["npm", "run", "test:e2e", "--", *sys.argv[1:]], cwd=root / "frontend", env=env, check=False
-    )
+    with tempfile.TemporaryDirectory(prefix="scns-import-browser-") as storage:
+        env["STORAGE_ROOT"] = storage
+        worker = subprocess.Popen(
+            [sys.executable, "-m", "app.cli.imports", "worker"],
+            cwd=root / "backend",
+            env=env,
+            start_new_session=True,
+        )
+        try:
+            result = subprocess.run(
+                ["npm", "run", "test:e2e", "--", *sys.argv[1:]],
+                cwd=root / "frontend",
+                env=env,
+                check=False,
+            )
+        finally:
+            os.killpg(worker.pid, signal.SIGTERM)
+            worker.wait(timeout=10)
     raise SystemExit(result.returncode)
 
 

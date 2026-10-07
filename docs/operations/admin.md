@@ -39,10 +39,10 @@ docker compose run --rm --no-deps api alembic upgrade head
 docker compose run --rm --no-deps api python -m app.cli.dataset seed-demo ../data/demo/campus.json
 docker compose run --rm --no-deps api python -m app.cli.admin bootstrap-admin \
   --username campus-owner --display-name "Campus owner" --campus DEMO
-docker compose up -d --wait api frontend
+docker compose up -d --wait api frontend import-worker
 ```
 
-Skip bootstrap if already consumed. Host and Compose commands use the same local development database. Stop existing host services before starting Compose on ports 8000/5173, or stop Compose `api`/`frontend` before `make dev`. Browser tests use separate ports and need neither stopped.
+Skip bootstrap if already consumed. Host and Compose commands use the same local development database. Stop existing host services before starting Compose on ports 8000/5173, or stop Compose `api`/`frontend`/`import-worker` before `make dev`. Browser tests use separate ports and need neither stopped.
 
 ## Permissions delivered in 2A
 
@@ -85,7 +85,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e
 make generate-api
 ```
 
-`make test-e2e` provisions and **resets only `scns_e2e_test`**, migrates/seeds it, creates random ephemeral browser credentials, and starts isolated API/Vite processes on 8001/5174. It never reuses a running developer server. A non-default `E2E_DATABASE_URL` must name a database ending `_e2e_test`; the database must already exist. Credentials are passed only through child-process environment, and admin traces/video/screenshots are disabled. Public journey artifacts remain ignored under `frontend/test-results`.
+`make test-e2e` provisions and **resets only `scns_e2e_test`**, migrates/seeds it, creates random ephemeral browser credentials, and starts isolated API/Vite processes on 8001/5174 plus the bounded import worker with temporary private storage. It never reuses a running developer server. A non-default `E2E_DATABASE_URL` must name a database ending `_e2e_test`; the database must already exist. Credentials are passed only through child-process environment, and admin traces/video/screenshots are disabled. Public journey artifacts remain ignored under `frontend/test-results`.
 
 `make test-migrations` resets only `scns_migration_test`, exercises fresh migration, downgrade to M1 and re-upgrade with frozen demo data, checks alias backfill, active release/checksum preservation, frozen protection and model/schema alignment. `MIGRATION_DATABASE_URL` must end `_migration_test`. Both test commands are destructive to their dedicated test databases; never point them at valuable data. Integration tests use `scns_test` with rollback isolation; the concurrent-write case commits uniquely named temporary records and removes them afterward.
 
@@ -98,3 +98,5 @@ UV_CACHE_DIR=/tmp/scns-uv-cache PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chr
 ```
 
 No official maps, field validation, owner manual app test, physical-device/assistive-technology verification or deployment is implied by these synthetic automated checks.
+
+Staged data imports are delivered in 2B1. See [import permissions, formats, worker startup and transactional workflow](imports.md). Graph editing and review/publication remain later work.

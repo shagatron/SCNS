@@ -46,3 +46,5 @@ Geometry must accompany scalar edge rows: `edge-geometries.geojson` is an empty 
 6. Keep source originals private. Select/redact permitted derivative images before publication.
 7. Import into a **new real campus draft**, preview diagnostics, validate and obtain review. Do not overwrite Demo Campus.
 8. Physically walk the pilot routes before declaring them usable. Official maps and those approvals remain external dependencies.
+
+Executable 2B1 staged CSV/JSON/GeoJSON examples are in [`templates/import-v1/`](templates/import-v1/README.md). Root templates for future floors/connectors/QR remain preparation-only. See [private draft import rules and startup](../docs/operations/imports.md).

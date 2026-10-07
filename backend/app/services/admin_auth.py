@@ -22,8 +22,15 @@ COOKIE_PATH = "/api/v1/admin"
 HASHER = PasswordHasher(time_cost=3, memory_cost=65536, parallelism=2)
 DUMMY_HASH = HASHER.hash(secrets.token_urlsafe(32))
 PERMISSIONS = {
-    "editor": {"dashboard", "draft_read", "draft_create", "catalog_edit"},
-    "reviewer_publisher": {"dashboard", "draft_read", "audit_read"},
+    "editor": {
+        "dashboard",
+        "draft_read",
+        "draft_create",
+        "catalog_edit",
+        "import_read",
+        "import_write",
+    },
+    "reviewer_publisher": {"dashboard", "draft_read", "audit_read", "import_read"},
     "operations": {"dashboard"},
     "system_admin": {
         "dashboard",
@@ -32,6 +39,8 @@ PERMISSIONS = {
         "catalog_edit",
         "audit_read",
         "user_admin",
+        "import_read",
+        "import_write",
     },
 }
 

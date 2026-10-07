@@ -1,6 +1,6 @@
 # Requirements checklist
 
-Scope: **Milestones 0, 1, 2A, 2B1, outdoor graph 2B2 and review/publication 2C**, authorized by the owner. Application-level publication is tested only on isolated synthetic fixtures; deployment remains unauthorized. Later numbered milestones are recorded below, not claimed complete. Synthetic evidence validates software only. No real campus maps, field survey, license approval or deployment has been supplied/performed.
+Scope: **Milestones 0, 1, 2A, 2B1, outdoor graph 2B2 and review/publication 2C and indoor foundations 3A**, authorized by the owner. Application-level publication is tested only on isolated synthetic fixtures; deployment remains unauthorized. Later numbered milestones are recorded below, not claimed complete. Synthetic evidence validates software only. No real campus maps, field survey, license approval or deployment has been supplied/performed.
 
 Statuses: `not_started`, `in_progress`, `implemented`, `verified`, `deferred_extension`, `blocked_external`.
 
@@ -59,6 +59,11 @@ Statuses: `not_started`, `in_progress`, `implemented`, `verified`, `deferred_ext
 | REL-06 | Explicit authorized rollback and preserved ordered release history | 2C | `0010_release_order`, history/rollback API/UI | Publish-versus-rollback race, rollback race/retry/failure; out-of-order draft publication eligibility; earlier trusted demo release restoration | verified | Built nginx/API workflow verified; no closures exist (overlay 0); M4 must add closure reconciliation |
 | REL-07 | Coherent release-pinned public reads and stale-client recovery | 2C | public search/map/directory/routes, `App.tsx`, immutable projection | Same-release API IDs, stale 409s, current route/name after publication; desktop manual/mobile periodic recovery after failed metadata refresh; old results stay hidden until newer success | verified | Built nginx/API workflow verified; online poll 30s/focus/stale response; no offline route packs |
 | REL-08 | Responsive review/source/history controls and preserved prior workflows | 2C | admin/publication UI, backend/browser tests, operations guide | 40 source + 12 built nginx/API desktop/mobile journeys; 100 PostGIS, 41 Python + 20 frontend tests, static/build and affected migrations | verified | Built nginx/API workflow verified; Windows commands provided, actual Windows/physical devices unverified |
+| FLR-01 | Draft floor labels/order/elevation/visibility/stable references | 3A | In progress | Not run | in_progress | No rooms/connectors/routing |
+| FLR-02 | Private bounded PDF/PNG/JPEG processing, pages/redaction, durable jobs | 3A | In progress | Not run | in_progress | Originals stay private; no public deployment |
+| FLR-03 | Local plan preview and evidence-bound metric calibration | 3A | In progress | Not run | in_progress | Uncalibrated means display-only; no invented metres |
+| FLR-04 | Independent sanitized derivative approval and immutable release compatibility | 3A | In progress | Not run | in_progress | Existing M2C workflow retained |
+| FLR-05 | Responsive admin workflow and isolated regression/container verification | 3A | In progress | Not run | in_progress | Physical survey/Windows/manual testing external |
 | MAP-04 | Two-floor demo, room doors, floorplans and connectors | 3 | Master spec sections 7/8/18 | Not run | not_started | Indoor foundation exists; no indoor feature claimed |
 | LOC-01 | Permission-aware outdoor location and manual fallback | 4 | Master spec section 10.6 | Not run | not_started | Manual starts already work; no automatic location collection |
 | QR-01 | QR marker inventory, confirmation and revocation | 4 | `data/templates/qr_inventory.csv`; master spec section 11 | Not run | not_started | Template only; no active marker claimed |

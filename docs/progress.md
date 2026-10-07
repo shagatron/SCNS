@@ -1,3 +1,13 @@
+## M3A unfinished scope checkpoint — 8 October 2026 (Asia/Kolkata)
+
+Verified clean existing checkout at completed M2C `33a4ca1`; branch `feat/milestone-3a-floorplans` starts there, no worktree/reset/reimplementation. Read owner request, master coordinate/upload/asset requirements and existing admin/import/review architecture. No new implementation/tests are claimed yet.
+
+Acceptance: draft floors with stable IDs/labels/order/elevation/visibility and explicit dependencies; private PDF/PNG/JPEG originals with checksums/rights/provenance; durable bounded Linux-isolated decode/page/redaction jobs and retry/cancel/history; floor-local zoom/pan, top-left pixels and metric uniform-scale calibration with independent check measurements/dated uncertainty evidence; exact sanitized derivative approval and immutable approved public projection, draft locks/CAS/audit; permission/coordinate/worker/rollback/concurrency/desktop/mobile plus full prior regressions and built workflow checks. Uncalibrated plans are display-only with no indoor distance/ETA. Indoor graph/routing remains disabled.
+
+Slices: backend floor/job/layer/calibration and release integration; responsive UI/tests; complete verification/docs/delivery. Remainder of M3: room/corridor tracing and anchors (3B), entrance/cross-floor connectors and indoor route segments (3C), full two-floor indoor navigation acceptance. None is started by 3A.
+
+Next: implement bounded floorplan processing and transactional floor/layer writes, then admin workflow and isolated tests; checkpoint meaningful work, run required checks/images/built app against temporary accounts/databases only; update data-retaining Windows commands and evidence; push completion and attempt PR to `feat/milestone-2-publication`. Preserve developer data/.env/uploads/volumes and its active release; do not seed/publish/rollback it. No deployment/environment publication.
+
 ## M2C implementation and verification complete — 7 October 2026
 
 Delivered from clean verified `21c65fb` on `feat/milestone-2-publication`, existing checkout/no worktree/reset. Preserved completed admin/import/graph/public navigation. Pushed unfinished checkpoints `f7f3736`, `a604287`, `83c025d`; completion `49c215f` is pushed. Final hardening adds post-lock live authorization, byte-faithful UTF-8 source originals/metadata and periodic stale-client recovery. These changes are verified and pushed as `73a9bf6`; PR base is `feat/milestone-2-graph-editor`, with no merge.

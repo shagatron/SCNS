@@ -44,7 +44,16 @@ def review(campus_id: UUID, revision_id: UUID, request: Request, db: DB):
     return service.packet(db, service.locked_revision(db, campus_id, revision_id, read=True))
 
 
-@router.post("/drafts/{revision_id}/sources", status_code=201)
+@router.post(
+    "/drafts/{revision_id}/sources",
+    status_code=201,
+    openapi_extra={
+        "requestBody": {
+            "required": True,
+            "content": {"application/json": {"schema": SourceInput.model_json_schema()}},
+        }
+    },
+)
 async def register_source(
     campus_id: UUID, revision_id: UUID, request: Request, db: DB, if_match: Version = None
 ):

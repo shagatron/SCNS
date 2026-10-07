@@ -55,3 +55,16 @@ Publication supports at most 15,000 records per layer. Complete graph diagnostic
 Linux source contributor checks remain `make check build test-unit test-integration test-migrations test-e2e generate-api validate-dataset`; use system Chromium via `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e` here. Tests guard disposable database suffixes, use ephemeral accounts/credentials, isolate publication campuses per viewport, and disable authenticated traces/screenshots/video. They never publish/rollback the developer dataset.
 
 Windows can run core backend checks through the built API image against a **separate disposable test database**, not `scns`. Run static frontend checks/build on a host with pinned Node 24/npm dependencies, or use CI. Do not substitute deleting your development volumes for the documented isolated harness. Actual executed results and built-app browser verification are recorded in [verification](../testing/verification.md).
+
+### Built workflow smoke in this Linux development workspace
+
+After source browser tests have stopped and port 5174 is free:
+
+```sh
+python scripts/cloud-build.py  # this environment's verified proxy/CA build helper
+PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium python scripts/smoke-publication-containers.py
+```
+
+The smoke harness creates uniquely named temporary nginx/API containers, an isolated Docker network and a fresh `scns_built_*_e2e_test` database. It runs the publication and public-navigation desktop/mobile browser journeys through built nginx/API, then removes only those owned test resources. It neither resets `scns` nor removes named development/storage volumes. The ordinary `docker compose build api frontend` command is used on Windows; the cloud proxy helper is unnecessary there.
+
+Prior approved public artifacts remain immutable/retrievable after a later publication/rollback; later visibility edits do not erase already distributed public copies. Confirm only the intended public projection.

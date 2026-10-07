@@ -5,7 +5,7 @@ export npm_config_cache ?= /tmp/scns-npm-cache
 export TEST_DATABASE_URL ?= postgresql+psycopg://scns:scns_local@localhost:54329/scns_test
 DATASET ?= ../data/demo/campus.json
 
-.PHONY: setup db migrate seed-demo dev api web test test-unit test-integration test-e2e test-migrations check build containers generate-api validate-dataset test-db demo
+.PHONY: setup db migrate seed-demo dev api web test test-unit test-integration test-e2e test-migrations check build containers generate-api validate-dataset test-db demo test-container-publication
 setup:
 	cd backend && $(UV) sync --frozen
 	npm ci
@@ -70,3 +70,6 @@ generate-api:
 
 validate-dataset:
 	cd backend && $(UV) run --frozen python -m app.cli.dataset validate "$(DATASET)"
+
+test-container-publication: db
+	python scripts/smoke-publication-containers.py

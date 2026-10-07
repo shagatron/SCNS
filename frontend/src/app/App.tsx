@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState, useSyncExternalStore } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useState, useSyncExternalStore } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 import { api, ApiError, calculateRoute, type Campus, type MapData, type Place, type Release, type Search } from '../api/client'
@@ -51,23 +51,33 @@ export default function App() {
 
 function CampusExplorer({ campus, online }: { campus: Campus; online: boolean }) {
   const cache = useQueryClient()
-  const release = useQuery({ queryKey: ['release', campus.id], queryFn: () => api<Release>(`/campuses/${campus.id}/release`), refetchInterval: online ? 30000 : false })
+  const release = useQuery({ retry: false, queryKey: ['release', campus.id], queryFn: () => api<Release>(`/campuses/${campus.id}/release`), refetchInterval: online ? 30000 : false })
   const [seen, setSeen] = useState<string | null>(null)
   const [changed, setChanged] = useState(false)
   if (release.data && seen !== release.data.id) { setSeen(release.data.id); if (seen) setChanged(true) }
+  const [recovering, setRecovering] = useState(false)
+  const [epoch, setEpoch] = useState(0)
+  const refreshRelease = useCallback(async () => {
+    setChanged(true); setRecovering(true)
+    try {
+      await cache.fetchQuery({ queryKey: ['release', campus.id], queryFn: () => api<Release>(`/campuses/${campus.id}/release`), staleTime: 0, retry: false })
+      setEpoch(value => value + 1); setRecovering(false)
+    } catch { /* Query error remains visible; keep stale results hidden until retry succeeds. */ }
+  }, [cache, campus.id])
   useEffect(() => {
-    const refresh = () => { setChanged(true); void cache.invalidateQueries({ queryKey: ['release', campus.id] }) }
+    const refresh = () => { void refreshRelease() }
     window.addEventListener('campus-release-stale', refresh)
     return () => window.removeEventListener('campus-release-stale', refresh)
-  }, [cache, campus.id])
+  }, [refreshRelease])
   const id = release.data?.id
   const initial = useQuery({ queryKey: ['places', campus.id, id], enabled: !!id, retry: false, queryFn: ({ signal }) => api<Search>(`/campuses/${campus.id}/search?limit=100&expected_release_id=${id}`, { signal }) })
   return <>
     {changed && <p role="status" className="notice">The campus release changed. Previous route results and selections were cleared; choose destinations and calculate a route on the current map.</p>}
-    {release.error && <Failure error={release.error} retry={() => void release.refetch()} />}
-    {initial.error && <Failure error={initial.error} retry={() => void initial.refetch()} />}
+    {release.error && <Failure error={release.error} retry={() => void refreshRelease()} />}
+    {recovering && <p role="status">Refreshing campus data; previous route results are hidden.</p>}
+    {initial.error && !recovering && <Failure error={initial.error} retry={() => void initial.refetch()} />}
     {!initial.data && !initial.error && <p role="status" className="loading">Loading destinations for the current release…</p>}
-    {initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={release.data.id} campus={campus} initial={initial.data} online={online} release={release.data} />}
+    {!recovering && initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={`${release.data.id}:${epoch}`} campus={campus} initial={initial.data} online={online} release={release.data} />}
   </>
 }
 

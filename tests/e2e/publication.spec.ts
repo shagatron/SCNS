@@ -118,8 +118,15 @@ test('independent review publishes coherent public data, stale client recovers a
     expect(packet.submissions[0].checksum).toBe(packet.checksum)
     await expect(reviewer.page.getByRole('link', { name: /Download approved public release/ })).toBeVisible()
     // An established stale planner request triggers current-release reload and clears old results.
+    let failMetadataRefresh = true
+    await publicUser.page.route(`**/api/v1/campuses/${draft.campus_id}/release`, route => failMetadataRefresh ? route.abort() : route.continue())
     await publicUser.page.getByRole('button', { name: 'Find walking route' }).click()
     await expect(publicUser.page.getByRole('status').filter({ hasText: 'The campus release changed' })).toBeVisible()
+    await expect(publicUser.page.getByRole('status').filter({ hasText: 'Refreshing campus data; previous route results are hidden.' })).toBeVisible()
+    await expect(publicUser.page.getByText('Cannot reach campus data. Check your connection and try again.', { exact: true })).toBeVisible()
+    await expect(publicUser.page.getByRole('combobox', { name: 'Destination', exact: true })).toHaveCount(0)
+    failMetadataRefresh = false
+    await publicUser.page.getByRole('alert').filter({ hasText: 'Cannot reach campus data.' }).getByRole('button', { name: 'Try again', exact: true }).click()
     await expect(publicUser.page.getByRole('combobox', { name: 'Destination', exact: true })).toHaveValue('')
     await expect(publicUser.page.getByRole('heading', { name: /Your walking route/ })).toHaveCount(0)
     await publicUser.page.getByRole('combobox', { name: 'Destination', exact: true }).selectOption({ label: `Synthetic Reviewed Library ${viewport}` })
@@ -132,6 +139,8 @@ test('independent review publishes coherent public data, stale client recovers a
     expect(await artifact.text()).not.toContain('NEVER-PUBLIC-ORIGINAL')
     expect(await artifact.text()).not.toContain('PRIVATE-GEOMETRY-LABEL')
     expect(await artifact.text()).toContain('Approved synthetic overlay')
+    await expect(publicUser.page.locator('.map-panel .leaflet-marker-pane img')).toHaveCount(0) // approved point vectors never depend on missing marker PNG files
+    expect(await publicUser.page.locator('.map-panel path[stroke="#64728a"]').count()).toBeGreaterThan(0)
     await reviewer.page.getByRole('textbox', { name: 'Rollback reason', exact: true }).fill('Restore earlier synthetic release following isolated acceptance test.')
     await reviewer.page.getByRole('button', { name: 'Prepare rollback', exact: true }).click()
     await reviewer.page.getByRole('checkbox', { name: 'I understand public navigation will use the earlier release' }).check()

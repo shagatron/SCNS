@@ -3974,7 +3974,32 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Title */
+                    title: string;
+                    /**
+                     * Rights
+                     * @enum {string}
+                     */
+                    rights: "synthetic" | "authorized" | "restricted";
+                    /** Provenance */
+                    provenance: string;
+                    /** Attribution */
+                    attribution: string;
+                    /** Original */
+                    original?: {
+                        [key: string]: unknown;
+                    } | null;
+                    /**
+                     * Display Overlay
+                     * @default false
+                     */
+                    display_overlay?: boolean;
+                };
+            };
+        };
         responses: {
             /** @description Successful Response */
             201: {

@@ -3439,6 +3439,70 @@
               }
             }
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "title": {
+                    "maxLength": 160,
+                    "minLength": 1,
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "rights": {
+                    "enum": [
+                      "synthetic",
+                      "authorized",
+                      "restricted"
+                    ],
+                    "title": "Rights",
+                    "type": "string"
+                  },
+                  "provenance": {
+                    "maxLength": 4000,
+                    "minLength": 10,
+                    "title": "Provenance",
+                    "type": "string"
+                  },
+                  "attribution": {
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "title": "Attribution",
+                    "type": "string"
+                  },
+                  "original": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Original"
+                  },
+                  "display_overlay": {
+                    "default": false,
+                    "title": "Display Overlay",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "title",
+                  "rights",
+                  "provenance",
+                  "attribution"
+                ],
+                "title": "SourceInput",
+                "type": "object"
+              }
+            }
+          }
         }
       }
     },

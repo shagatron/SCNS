@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { CircleMarker, GeoJSON, MapContainer, Polyline, TileLayer, Tooltip, useMap } from 'react-leaflet'
 import type { FeatureCollection } from 'geojson'
+import { circleMarker } from 'leaflet'
 import type { Campus, MapData, Place, Route } from '../../api/client'
 import { toLeaflet } from './coordinates'
 import 'leaflet/dist/leaflet.css'
@@ -37,7 +38,7 @@ export default function OutdoorMap({ campus, data, places, route, onDestination 
     <MapContainer center={toLeaflet(campus.center.coordinates as [number, number])} zoom={17} minZoom={14} maxZoom={22}
       scrollWheelZoom={false} className="campus-map">
       {tileUrl && attribution && <TileLayer url={tileUrl} attribution={attribution} eventHandlers={{ tileerror: () => setTileFailed(true) }} />}
-      <GeoJSON key={data.release_id} data={data as unknown as FeatureCollection} style={feature => feature?.properties.layer === 'building'
+      <GeoJSON key={data.release_id} data={data as unknown as FeatureCollection} pointToLayer={(_feature, position) => circleMarker(position, { radius: 5, color: '#64728a', fillOpacity: 0.6 })} style={feature => feature?.properties.layer === 'building'
         ? { color: '#8fae9d', fillColor: '#dce8df', fillOpacity: 1, weight: 2 }
         : feature?.properties.layer === 'overlay' ? { color: '#64728a', weight: 2, fillOpacity: 0.15 } : { color: feature?.properties.open ? '#b4c6b4' : '#9d5951', weight: 5, dashArray: feature?.properties.open ? undefined : '5 8' }} />
       {places.map(place => <CircleMarker key={place.id} center={toLeaflet(place.point.coordinates as [number, number])} radius={6}

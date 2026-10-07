@@ -459,7 +459,7 @@ def test_apply_calibrate_independent_projection_publish_rollback_and_clone(
 
 
 def test_replacement_deletion_dependency_confirmation_and_calibration_reset(
-    client, db, bundle, identity
+    client, db, bundle, identity, reviewer
 ):
     headers = sign_in(client, identity)
     draft, path, floor = create(client, bundle, headers)
@@ -499,6 +499,28 @@ def test_replacement_deletion_dependency_confirmation_and_calibration_reset(
     data = client.get(path + "/floors").json()["floors"][0]
     assert data["frame"]["calibration"] is None and data["frame"]["metres_per_pixel"] is None
     assert len(data["dependencies"]["layer_ids"]) == 2
+    # Only the current selected derivative needs approval. Retained unapproved
+    # originals/layers must neither block the release nor appear in its projection.
+    review_headers = sign_in(client, reviewer)
+    assert (
+        client.post(
+            path + f"/sources/{data['layer']['source_id']}/approve",
+            headers=version(review_headers, current(client, path)),
+        ).status_code
+        == 200
+    )
+    headers = sign_in(client, identity)
+    run = client.post(
+        path + "/validations",
+        json=expectations(bundle),
+        headers=version(headers, current(client, path)),
+    ).json()
+    assert run["report"]["errors"] == 0, run
+    from app.services.publication import public_projection, snapshot
+
+    projection = public_projection(snapshot(db, db.get(Revision, UUID(draft["id"]))))
+    assert list(projection["floorplans"]) == [data["layer"]["id"]]
+    assert original_layer not in projection["floorplans"]
     assert (
         client.request(
             "DELETE",

@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { crc32 } from 'node:zlib'
 
 test.use({ trace: 'off', screenshot: 'off', video: 'off' })
 const fixture = (name: string) => resolve(process.cwd(), '../data/demo/floorplans', name)
@@ -71,6 +72,23 @@ test('private PDF page, masks, measured calibration, independent review and immu
     await expect.poll(() => plan.locator('.leaflet-image-layer').evaluate((element: HTMLImageElement) => element.naturalWidth)).toBe(600)
     await plan.getByRole('button', { name: 'Zoom in', exact: true }).click()
     await plan.getByRole('button', { name: 'Fit plan', exact: true }).click()
+    await page.getByRole('button', { name: 'Pick primary start on plan', exact: true }).click()
+    await plan.locator('.leaflet-container').scrollIntoViewIfNeeded()
+    const imageBox = await plan.locator('.leaflet-image-layer').boundingBox()
+    expect(imageBox).not.toBeNull()
+    await page.mouse.click(imageBox!.x + imageBox!.width / 2, imageBox!.y + imageBox!.height / 2)
+    await expect.poll(async () => Number(await page.getByLabel('Primary start X (px)', { exact: true }).inputValue())).toBeGreaterThan(290)
+    await expect.poll(async () => Number(await page.getByLabel('Primary start Y (px)', { exact: true }).inputValue())).toBeGreaterThan(190)
+    // Reuse the retained PDF, select another page, and require an explicit
+    // exact-current-layer replacement before applying anything to the draft.
+    await page.getByLabel('Process selected PDF page', { exact: true }).selectOption('1')
+    await page.getByRole('button', { name: 'Create a new selected-page/mask batch', exact: true }).click()
+    await expect(page.getByRole('status').filter({ hasText: 'Processing state: ready' })).toBeVisible({ timeout: 40000 })
+    await expect(page.getByRole('button', { name: 'Apply ready page to selected draft floor', exact: true })).toBeDisabled()
+    await page.getByRole('checkbox', { name: 'I confirm replacement of the current plan and clearing calibration' }).check()
+    await page.getByRole('button', { name: 'Apply ready page to selected draft floor', exact: true }).click()
+    await expect(page.getByText('Selected page 1', { exact: false })).toBeVisible()
+    await expect(page.getByLabel('Primary start X (px)', { exact: true })).toHaveValue('')
     const fields = { 'Primary start X (px)': '100', 'Primary start Y (px)': '100', 'Primary end X (px)': '300', 'Primary end Y (px)': '100', 'Known primary distance (m)': '10', 'Check start X (px)': '100', 'Check start Y (px)': '100', 'Check end X (px)': '100', 'Check end Y (px)': '300', 'Known check distance (m)': '15', 'Measurement uncertainty (m)': '0.05' }
     for (const [label, value] of Object.entries(fields)) await page.getByLabel(label, { exact: true }).fill(value)
     await page.getByLabel('Measurement date', { exact: true }).fill('2026-10-01')
@@ -142,7 +160,7 @@ test('floor conflicts retain inputs, reconcile explicitly and preserve private s
   const other = await otherContext.newPage()
   try {
     await login(page, 'owner', campus)
-    const { floor } = await draft(page)
+    const { data, floor } = await draft(page)
     await login(other, 'editor', campus)
     await page.getByRole('button', { name: 'Edit selected floor', exact: true }).click()
     await page.getByLabel('Floor label', { exact: true }).fill('Keep my unapplied synthetic basement label')
@@ -158,6 +176,18 @@ test('floor conflicts retain inputs, reconcile explicitly and preserve private s
     await page.getByRole('button', { name: 'Save floor metadata', exact: true }).click()
     await expect(page.getByRole('heading', { name: 'Keep my unapplied synthetic basement label', exact: true })).toBeVisible()
     await expect(page.getByRole('combobox', { name: 'Selected floor', exact: true })).toHaveValue(floor.id)
+    await page.getByRole('button', { name: 'Edit selected floor', exact: true }).click()
+    await page.getByLabel('Floor label', { exact: true }).fill('Recovered unapplied basement label')
+    await page.reload()
+    await page.getByRole('combobox', { name: 'Assigned campus' }).selectOption({ label: campus })
+    await page.getByRole('button', { name: 'Floors and floorplans', exact: true }).click()
+    await page.getByRole('combobox', { name: 'Selected draft' }).selectOption(data.id)
+    await expect(page.getByRole('button', { name: 'Restore unapplied inputs', exact: true })).toBeVisible()
+    await page.getByRole('button', { name: 'Restore unapplied inputs', exact: true }).click()
+    await expect(page.getByLabel('Floor label', { exact: true })).toHaveValue('Recovered unapplied basement label')
+    await page.getByRole('button', { name: 'Keep my inputs and reconcile latest version', exact: true }).click()
+    await page.getByRole('button', { name: 'Save floor metadata', exact: true }).click()
+    await expect(page.getByRole('heading', { name: 'Recovered unapplied basement label', exact: true })).toBeVisible()
     await page.getByLabel('Private floorplan file', { exact: true }).setInputFiles({ name: 'broken.pdf', mimeType: 'application/pdf', buffer: Buffer.from('%PDF-malformed test input') })
     await page.getByLabel('Plan title', { exact: true }).fill('Synthetic malformed boundary test')
     await page.getByLabel('Plan provenance', { exact: true }).fill('Deliberate invented malformed PDF; no private institutional data.')
@@ -170,6 +200,23 @@ test('floor conflicts retain inputs, reconcile explicitly and preserve private s
     page.on('dialog', dialog => void dialog.accept())
     await page.getByRole('button', { name: 'Cancel staged floorplan batch', exact: true }).click()
     await expect(page.getByRole('status').filter({ hasText: 'Processing state: cancelled' })).toBeVisible()
+    // A valid >5MiB PNG also tests nginx's 10MiB transport boundary, dependency listing and explicit
+    // floor deletion while cancelled/applied originals remain in private history.
+    const image = readFileSync(fixture('synthetic-ground.png'))
+    const text = Buffer.concat([Buffer.from('private_large_test\0'), Buffer.alloc(6 * 1024 * 1024, 88)])
+    const kind = Buffer.from('tEXt'); const length = Buffer.alloc(4); length.writeUInt32BE(text.length)
+    const crc = Buffer.alloc(4); crc.writeUInt32BE(crc32(Buffer.concat([kind, text])))
+    const largeImage = Buffer.concat([image.subarray(0, 33), length, kind, text, crc, image.subarray(33)])
+    await page.getByLabel('Private floorplan file', { exact: true }).setInputFiles({ name: 'synthetic-large.png', mimeType: 'image/png', buffer: largeImage })
+    await page.getByLabel('Plan title', { exact: true }).fill('Synthetic large PNG deletion boundary')
+    await page.getByRole('button', { name: 'Upload private plan for processing', exact: true }).click()
+    await expect(page.getByRole('status').filter({ hasText: 'Processing state: ready' })).toBeVisible({ timeout: 40000 })
+    await page.getByRole('button', { name: 'Apply ready page to selected draft floor', exact: true }).click()
+    await expect(page.getByText('Uncalibrated — display only; no metric navigation, distance or ETA.', { exact: true })).toBeVisible()
+    await page.getByText('Floor deletion dependencies', { exact: true }).click()
+    await page.getByRole('button', { name: 'Confirm delete floor and listed draft layers', exact: true }).click()
+    await expect(page.getByText('No floors yet. Create a draft floor in an existing building.', { exact: true })).toBeVisible()
+    await expect(page.getByText('Deleted historical floor', { exact: false })).toBeVisible()
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
   } finally { await otherContext.close() }
 })

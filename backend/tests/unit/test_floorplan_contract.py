@@ -6,6 +6,7 @@ import os
 import subprocess
 import sys
 from copy import deepcopy
+from datetime import UTC, datetime
 from pathlib import Path
 from uuid import uuid4
 
@@ -168,6 +169,21 @@ def test_uniform_scale_known_coordinates_and_rotated_lines():
         ]
         == 0.05
     )
+
+
+def test_measurement_date_uses_campus_day_and_validation_same_timezone(monkeypatch):
+    class Clock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return datetime(2026, 10, 7, 20, 0, tzinfo=UTC)
+
+    monkeypatch.setattr("app.services.floorplans.datetime", Clock)
+    data = measure()
+    data["measured_on"] = "2026-10-08"
+    payload = CalibrationInput.model_validate(data)
+    assert calibration(payload, 600, 400, uuid4(), True, "Asia/Kolkata")["metres_per_pixel"] == 0.05
+    with pytest.raises(DomainError):
+        calibration(payload, 600, 400, uuid4(), True, "UTC")
 
 
 @pytest.mark.parametrize(

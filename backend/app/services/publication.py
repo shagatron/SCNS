@@ -296,10 +296,30 @@ def public_projection(full):
         {
             s["attribution"]
             for s in full["sources"].values()
-            if s["approved_by"] and s["rights"] != "restricted"
+            if s["approved_by"]
+            and s["rights"] != "restricted"
+            and (
+                (s["derivative"] or {}).get("kind") != "floorplan"
+                or s["derivative"].get("layer_id") in result["floorplans"]
+            )
         }
     )
     return result
+
+
+def review_sources(full):
+    # Retained, unselected floorplan history stays private and cannot block or
+    # authorize the selected display derivative. Outdoor source rules are unchanged.
+    selected = {
+        full["floorplan_layers"][floor["layer_id"]]["source_id"]
+        for floor in full["floors"].values()
+        if floor["layer_id"] in full["floorplan_layers"]
+    }
+    return {
+        identity: source
+        for identity, source in full["sources"].items()
+        if (source["derivative"] or {}).get("kind") != "floorplan" or identity in selected
+    }
 
 
 def sanitize_overlay(original):
@@ -582,7 +602,7 @@ def validate(db, revision, payload, actor, request_id):
             "Register permitted rights/provenance and obtain independent source approval.",
             "sources",
         )
-    for identity, source in full["sources"].items():
+    for identity, source in review_sources(full).items():
         if source["approved_by"]:
             approver = db.get(User, UUID(source["approved_by"]))
             if (
@@ -716,6 +736,7 @@ def validate(db, revision, payload, actor, request_id):
                     frame["height_px"],
                     UUID(value["measured_by"]),
                     full["campus"]["is_demo"],
+                    full["campus"]["timezone"],
                 )
                 if value.get("layer_checksum") != layer["checksum"] or not math.isclose(
                     checked["metres_per_pixel"], frame["metres_per_pixel"], rel_tol=1e-12
@@ -1091,7 +1112,7 @@ def publish(db, revision, submission, payload, actor, request_id):
             "Approval reviewer is no longer authorized; return to draft and obtain fresh independent approval.",
             409,
         )
-    for source in full["sources"].values():
+    for source in review_sources(full).values():
         if source["approved_by"]:
             source_reviewer = db.get(User, UUID(source["approved_by"]))
             if (

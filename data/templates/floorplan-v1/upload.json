@@ -1,0 +1,11 @@
+{
+  "floor_id": "b8385f8d-3333-4333-8333-333333333333",
+  "key": "replace-with-unique-exact-batch-key",
+  "filename": "synthetic-two-pages.pdf",
+  "title": "Synthetic basement illustration",
+  "rights": "synthetic",
+  "provenance": "Invented 600x400 drawing for software tests only; no institutional source or field survey.",
+  "attribution": "Synthetic software fixture; never real navigation",
+  "page": 2,
+  "redactions": [{"x": 480, "y": 320, "width": 100, "height": 60}]
+}

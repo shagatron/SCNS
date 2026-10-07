@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { ApiError } from '../../api/client'
 import { adminApi, type Session } from './api'
 import { ErrorMessage } from './AdminApp'
+import { recoveryGeneration } from './graphState'
 import { readAdminView, writeAdminView } from './adminView'
 import { applyChange, changes, clone, evidence, fresh, key, layers, length, moveNode, pair, point, reconcile, remove, restore, setPath, split, type Edge, type Indoor, type Layer, type Point, type RecordValue, type Recovery, type Selection } from './indoorState'
 const Map = lazy(() => import('./IndoorMap'))
@@ -29,6 +30,7 @@ export function IndoorEditor({ path, session, editable }: { path: string; sessio
 }
 function Workspace({ path, initial, session, editable }: { path: string; initial: Indoor; session: Session; editable: boolean }) {
   const cache = useQueryClient(), recoveryKey = `scns-indoor-recovery:${session.user_id}:${path}:${initial.floor.id}`
+  const [generation] = useState(recoveryGeneration)
   const [state, setState] = useState<Recovery>(() => restore(recoveryKey, initial)), [error, setError] = useState<unknown>(null), [busy, setBusy] = useState(false), [storageError, setStorageError] = useState(false)
   const [mode, setMode] = useState<'metric' | 'directions_only'>('metric'), [tool, setTool] = useState('select'), [snap, setSnap] = useState(true), [vertex, setVertex] = useState(1), [junction, setJunction] = useState('')
   const [validation, setValidation] = useState<Validation | null>(null), [comparison, setComparison] = useState<(ReturnType<typeof reconcile> & { latest: Indoor }) | null>(null), [choices, setChoices] = useState<Record<string, string>>({}), [retrace, setRetrace] = useState(false)
@@ -38,9 +40,10 @@ function Workspace({ path, initial, session, editable }: { path: string; initial
   const dirty = pending.length > 0 || formDirty, disabled = busy || !editable || !work.ready || !!comparison
   const url = `${path}/floors/${initial.floor.id}/indoor`
   useEffect(() => {
+    if (recoveryGeneration() !== generation) return
     try { if (dirty) { const saved = JSON.stringify({ ...state, saved: Date.now() }); if (saved.length > 2_000_000) throw new Error('Recovery exceeds 2MB'); sessionStorage.setItem(recoveryKey, saved) } else sessionStorage.removeItem(recoveryKey) } catch { queueMicrotask(() => setStorageError(true)) }
     const prevent = (e: BeforeUnloadEvent) => { if (dirty) e.preventDefault() }; window.addEventListener('beforeunload', prevent); return () => window.removeEventListener('beforeunload', prevent)
-  }, [state, dirty, recoveryKey])
+  }, [state, dirty, recoveryKey, generation])
   function select(s: Selection) {
     if (formDirty) { setError(new Error('Apply or cancel your coordinate/polyline/alias input before selecting another feature. Input is retained.')); return }
     setState(old => { const value = s ? old.work[s.entity][s.id] : undefined, p = value && 'x_px' in value ? value : null; return { ...old, selected: s, coordinates: p ? [String(p.x_px), String(p.y_px)] : ['', ''], geometry: value && 'polyline' in value ? JSON.stringify(value.polyline) : '', alias: '' } }); setTool('select')

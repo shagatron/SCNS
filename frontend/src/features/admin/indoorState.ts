@@ -64,7 +64,7 @@ export function split(work: Indoor, edgeId: string, vertex: number, existing?: s
   for (const eid of pair(work, edgeId)) {
     const old = work.edges[eid], reversed = old.from_node_id !== edge.from_node_id, parts = reversed ? [clone(second).reverse(), clone(first).reverse()] : [first, second]
     delete work.edges[eid]
-    parts.forEach((polyline, i) => { const next = { ...clone(old), physical_path_id: physical[reversed ? 1 - i : i], from_node_id: i ? id : old.from_node_id, to_node_id: i ? old.to_node_id : id, polyline }; unverify(next); work.edges[crypto.randomUUID()] = next })
+    parts.forEach((polyline, i) => { const next = { ...clone(old), physical_path_id: physical[reversed ? 1 - i : i], from_node_id: i ? id : old.from_node_id, to_node_id: i ? old.to_node_id : id, polyline }; if (next.kind === 'door' && ![next.from_node_id, next.to_node_id].some(n => work.nodes[n].kind === 'door')) next.kind = 'corridor'; unverify(next); work.edges[crypto.randomUUID()] = next })
   }
   return id
 }

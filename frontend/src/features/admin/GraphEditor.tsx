@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { ApiError } from '../../api/client'
 import { adminApi } from './api'
 import { ErrorMessage } from './AdminApp'
-import { affected, applyChange, changes, clone, deleteNode, moveNode, pathEdges, reconcile, setPath, splitPath, surfaceDistance, type Change, type Graph, type GraphEdge, type Layer, type Position } from './graphState'
+import { affected, applyChange, changes, clone, deleteNode, moveNode, pathEdges, reconcile, recoveryGeneration, setPath, splitPath, surfaceDistance, type Change, type Graph, type GraphEdge, type Layer, type Position } from './graphState'
 const GraphMap = lazy(() => import('./GraphMap'))
 type Selection = { layer: Layer; id: string } | null
 type Recovery = { base: Graph; work: Graph; past: Graph[]; future: Graph[]; selected: Selection; geometry: string; coordinates: [string, string]; saved: number }
@@ -24,6 +24,7 @@ export function GraphEditor({ path, csrf, editable, userId }: { path: string; cs
 }
 function Workspace({ initial, path, csrf, editable, recoveryKey }: { initial: Graph; path: string; csrf: string; editable: boolean; recoveryKey: string }) {
   const cache = useQueryClient()
+  const [generation] = useState(recoveryGeneration)
   const [state, setState] = useState(() => editable ? restore(recoveryKey, initial) : restore('', initial))
   const [recovered] = useState(() => editable && state.saved < Date.now() - 100)
   const [storageError, setStorageError] = useState(false)
@@ -50,12 +51,13 @@ function Workspace({ initial, path, csrf, editable, recoveryKey }: { initial: Gr
   const stale = initial.revision_version !== state.base.revision_version
   const disabled = !editable || busy || !!comparison
   useEffect(() => {
+    if (recoveryGeneration() !== generation) return
     if (!editable) return
     let failed = false
     try { if (dirty) sessionStorage.setItem(recoveryKey, JSON.stringify({ ...state, saved: Date.now() })); else sessionStorage.removeItem(recoveryKey) } catch { failed = true }
     const timer = window.setTimeout(() => setStorageError(failed), 0)
     return () => window.clearTimeout(timer)
-  }, [state, recoveryKey, editable, dirty])
+  }, [state, recoveryKey, editable, dirty, generation])
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => { if (dirty) { event.preventDefault(); event.returnValue = '' } }
     window.addEventListener('beforeunload', warn); return () => window.removeEventListener('beforeunload', warn)

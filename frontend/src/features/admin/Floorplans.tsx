@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { ApiError } from '../../api/client'
+import { recoveryGeneration } from './graphState'
 import { ErrorMessage } from './AdminApp'
 import { adminApi, type Session } from './api'
 import { discardFloorRecovery, readFloorRecovery, saveFloorRecovery } from './floorRecovery'
@@ -45,14 +46,16 @@ export function Floorplans({ path, session, permissions }: { path: string; sessi
   const [notice, setNotice] = useState('')
   const [conflict, setConflict] = useState(false)
   const recoveryKey = `${session.user_id}:${path}`
+  const [generation] = useState(recoveryGeneration)
   const [recovered, setRecovered] = useState(() => readFloorRecovery(recoveryKey))
   const unsaved = dirty.floor || dirty.upload || dirty.measurement
   useEffect(() => {
+    if (recoveryGeneration() !== generation) return
     if (unsaved) saveFloorRecovery(recoveryKey, { form, measurement, uploadMeta, masks, page, selectedId, capturedVersion })
     else if (!recovered) discardFloorRecovery(recoveryKey)
     const prevent = (event: BeforeUnloadEvent) => { if (unsaved) event.preventDefault() }
     window.addEventListener('beforeunload', prevent); return () => window.removeEventListener('beforeunload', prevent)
-  }, [unsaved, recoveryKey, form, measurement, uploadMeta, masks, page, selectedId, capturedVersion, recovered])
+  }, [unsaved, recoveryKey, form, measurement, uploadMeta, masks, page, selectedId, capturedVersion, recovered, generation])
   if (floors.data && capturedVersion === null) setCapturedVersion(floors.data.edit_version)
   const data = floors.data
   const floor = data?.floors.find(f => f.id === selectedId) ?? data?.floors[0]

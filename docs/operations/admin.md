@@ -104,3 +104,7 @@ Staged data imports are delivered in 2B1. See [import permissions, formats, work
 ## M2C update
 
 Exact-content validation, independent review, public artifacts, atomic publication and explicit rollback are available on `feat/milestone-2-publication`. Draft workflows remain private; submitted revisions lock edits and must be returned to draft before changes. Follow [publication operations and data-retaining Windows Docker Desktop updates](publication.md). Existing volumes, .env, accounts and public seed release IDs remain intact.
+
+## M3A floorplan update
+
+Draft floors, private PDF/PNG/JPEG processing and evidence-bound calibration are available. The existing import worker also handles floorplan jobs; migrate through `0012_floorplans` before using the new images. [Floorplan workflow, limits and exact data-retaining Windows PowerShell update](floorplans.md) preserves .env/accounts/volumes/active release. Indoor tracing/connectors/routing remain unfinished 3B/3C.

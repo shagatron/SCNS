@@ -70,3 +70,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium python scripts/smoke-publi
 The smoke harness creates uniquely named temporary nginx/API containers, an isolated Docker network and a fresh `scns_built_*_e2e_test` database. It runs the publication and public-navigation desktop/mobile browser journeys through built nginx/API, then removes only those owned test resources. It neither resets `scns` nor removes named development/storage volumes. The ordinary `docker compose build api frontend` command is used on Windows; the cloud proxy helper is unnecessary there.
 
 Prior approved public artifacts remain immutable/retrievable after a later publication/rollback; later visibility edits do not erase already distributed public copies. Confirm only the intended public projection.
+
+## M3A floorplan update
+
+Draft floors, private PDF/PNG/JPEG processing and evidence-bound calibration are available. The existing import worker also handles floorplan jobs; migrate through `0012_floorplans` before using the new images. [Floorplan workflow, limits and exact data-retaining Windows PowerShell update](floorplans.md) preserves .env/accounts/volumes/active release. Indoor tracing/connectors/routing remain unfinished 3B/3C.

@@ -21,7 +21,7 @@ JSON API fields use snake_case; frontend types come from OpenAPI. UUIDs in the d
 
 GeoJSON arrays use longitude first. The map adapter is the sole place to swap to Leaflet's latitude-first tuples. Degrees are never subtracted as metres. Baseline time is distance / speed, with explicit uncertainty and no personalized promise. An image point `(20,30)` on a 600px-tall floor maps to Leaflet simple coordinates `[570,20]`. A 200px calibration line measured as 10m gives `0.05 m/px`; a 200px local path then measures 10m. Cross-floor subtraction is prohibited.
 
-The full master-spec entities not yet needed—floors/rooms, connectors, source assets, import jobs, reviews, operational overlays, QR and reports—will be introduced through dedicated migrations in their milestones, not empty speculative tables.
+Rooms/corridors, connectors, operational overlays, QR and reports remain later work. Source assets/import jobs/reviews and floorplan foundations are delivered by M2/M3A migrations as documented below.
 
 ## M2A additions
 
@@ -52,3 +52,13 @@ Node `evidence` is bounded private source/last-verification text, default blank/
 - `release_actions`: append-only actor/campus/idempotency key/fingerprint/result; duplicate same-payload publish/rollback retries return existing results; changed requests conflict. Audits remain append-only and transactional.
 
 New reviewed `Release.checksum` binds canonical full reviewed content; existing seed hashes keep their historical input meaning. `ReleaseOut` adds nullable `artifact_checksum` and `artifact_url`; null denotes a legacy trusted seed, not a fabricated approved artifact. Public artifact URLs include campus/release/public SHA-256 and are immutable. Public search/map/directory optionally accept `expected_release_id` and return `stale_release` when the active release changed, matching existing route behavior. Source JSON registration schema/template is `data/templates/publication-v1/`; source bytes stay in the protected DB backup boundary. No live closure schema/overlay was added.
+
+## M3A floorplan tables
+
+| Table | Meaning and integrity |
+|---|---|
+| `floors` | Revision/campus-scoped stable UUID and same-revision building; unique code per building, label, finite ordering, optional elevation, visibility, selected frame/layer; triple FK binds current layer to this floor |
+| `floorplan_layers` | Revision/floor/frame/source composite references, 1-based page, normalized reference/display dimensions, sanitized PNG BYTEA/SHA-256, private renderer/mask metadata; review/frozen guards |
+| `floorplan_jobs` | Durable campus/revision/actor batch, historical target floor UUID, exact original BYTEA/SHA-256/filename/media/options, idempotency key/fingerprint, state/attempts/lease, private output/metadata/failure, immutable apply options, UTC timestamps; originals/history cannot be deleted/rewritten and applied jobs cannot mutate |
+
+`coordinate_frames.calibration` now stores uniform-scale lines/checks, campus-local measurement date, uncertainty/private evidence, quality, author/independent reviewer/time and selected-layer hash. `source_assets` additionally holds private PDF/PNG/JPEG originals and exact approved floorplan derivative descriptors. Additive `0012_floorplans` does not alter existing release hashes/pointers. Floor reference pixels are distinct from smaller display PNG pixels, geographic degrees and metres. [Exact coordinates, API and public-release projection](floorplans.md); [JSON templates](../../data/templates/floorplan-v1/README.md). All 3A floors remain display-only; rooms/connectors/indoor routing are not delivered.

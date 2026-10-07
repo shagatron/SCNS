@@ -15,7 +15,7 @@ Put authorized owner files in these **ignored, private** directories:
 | `../storage/uploads/` | Future authenticated private upload storage |
 | `../storage/derived/` | Future reviewed derivatives, not automatically public |
 
-Do not put source plans, credentials, personal records or unreviewed derivatives in `frontend/public` or commit them. Directory presence does not mean uploads are implemented; authenticated uploads/import preview are M2/M3.
+Do not put source plans, credentials, personal records or unreviewed derivatives in `frontend/public` or commit them. Directory presence is preparation space. M2B1 text imports and M3A private PDF/image floorplan jobs are implemented; use their authenticated workflows rather than a static file directory.
 
 ## Executable outdoor JSON v1
 
@@ -28,7 +28,7 @@ make validate-dataset DATASET=/absolute/path/to/bundle.json
 
 The validator checks IDs/codes, duplicate anchors, references, visibility relationships, frame consistency, positive path topology, endpoint direction, geometry coordinate ranges and closed polygon rings. PostGIS checks and measures persisted geometry during synthetic seeding. This is structural validation, not proof of field correctness or source permission. Unknown outdoor distances are computed along approved input geometry instead of becoming zero. Reversed geometry requires a separate reversed directed edge.
 
-`make seed-demo DATASET=/absolute/path/to/edited-demo.json` is only for explicitly synthetic local data. Each changed bundle creates a frozen revision and release; unchanged bundles are idempotent. Real imports are intentionally unavailable until M2's access control, staged preview, review and publication workflow.
+`make seed-demo DATASET=/absolute/path/to/edited-demo.json` is only for explicitly synthetic local data. Each changed bundle creates a frozen revision and release; unchanged bundles are idempotent. Authorized real outdoor/catalog imports use the completed M2 staged preview, independent review and publication workflow; routine updates never reseed existing data.
 
 ## CSV / GeoJSON preparation templates
 
@@ -47,4 +47,6 @@ Geometry must accompany scalar edge rows: `edge-geometries.geojson` is an empty 
 7. Import into a **new real campus draft**, preview diagnostics, validate and obtain review. Do not overwrite Demo Campus.
 8. Physically walk the pilot routes before declaring them usable. Official maps and those approvals remain external dependencies.
 
-Executable 2B1 staged CSV/JSON/GeoJSON examples are in [`templates/import-v1/`](templates/import-v1/README.md). Root templates for future floors/connectors/QR remain preparation-only. See [private draft import rules and startup](../docs/operations/imports.md).
+Executable 2B1 staged CSV/JSON/GeoJSON examples are in [`templates/import-v1/`](templates/import-v1/README.md). Root floor/calibration CSV templates remain preparation-only; executable manual 3A floor/upload/calibration JSON is in [`templates/floorplan-v1/`](templates/floorplan-v1/README.md). Connectors/QR remain future preparation. See [private draft import rules and startup](../docs/operations/imports.md).
+
+M3A fixture PNG/JPEG/two-page PDF: [`demo/floorplans/`](demo/floorplans/README.md), explicitly synthetic 600×400 drawings with independent known 200px/10m lines. Real originals remain ignored/private and require their own rights/measurement evidence. Floorplans use protected database BYTEA rather than the text-import filesystem; no original is a public static asset. [Complete workflow/limits](../docs/operations/floorplans.md) and [coordinate/release contract](../docs/data/floorplans.md).

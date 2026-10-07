@@ -1,8 +1,8 @@
-# Architecture decisions — M0/M1 and M2A
+# Architecture decisions — M0 through M3A
 
 ## Scope
 
-The user authorized Milestones 0/1 and subsequently the admin-only Milestone 2A slice. The numbered milestones govern sequencing; the master document's broader suggested prompt to continue later milestones is not additional authorization. M0/M1 deliver an executable outdoor vertical slice. Full demo rooms/floors, QR, uploads, operational closures and offline features are explicitly assigned to their later milestones in the requirements checklist.
+The owner separately authorized M0/M1, admin/import/graph/review slices M2A–M2C and indoor floorplan foundations M3A. The numbered milestones govern sequencing; the master document's broader suggested prompt to continue later milestones is not additional authorization. M0/M1 deliver an executable outdoor vertical slice. Full demo room/corridor tracing, connectors/indoor navigation (3B/3C), QR, operational closures and offline features remain later work in the requirements checklist. Draft floors/private PDF/image upload/calibration are delivered by 3A; outdoor staged imports and publication are delivered by M2.
 
 Use the existing checkout. Cloud tasks are isolated already; do not create Git worktrees unless the owner requests one. There were no existing project instructions or C files; the initial commit held only a six-byte README.
 
@@ -10,7 +10,7 @@ Use the existing checkout. Cloud tasks are isolated already; do not create Git w
 
 React/TypeScript + Vite + Tailwind; TanStack Query for server state; Zod for route form input; Leaflet for outdoor rendering. FastAPI/Pydantic exposes `/api/v1`, with SQLAlchemy sessions and Alembic migrations. PostgreSQL/PostGIS is the canonical data store. npm workspaces share one locked JavaScript dependency tree across frontend and browser tests. Python uses a committed uv lockfile. There is no Redis, separate graph database, paid API, public account requirement or tile dependency.
 
-The public API has only reads and a route computation POST. It exposes no editor, uploader or filesystem server. The private `data/raw` and `storage` trees are ignored by Git and excluded from containers. Future source assets must pass authorization and derivative review before public delivery.
+The public API has only reads and a route computation POST. It exposes no editor, uploader or filesystem server. The private `data/raw` and `storage` trees are ignored by Git and excluded from containers. Source originals stay private; exact independently approved sanitized derivatives are available only through their immutable reviewed release.
 
 ## Revision and release foundations
 
@@ -71,3 +71,15 @@ An immutable monotonic publication order distinguishes release history from draf
 Public search/map/detail/routing retain explicit visibility-filtered frozen-revision queries, matching the reviewed artifact projection. Department projection removes private links; public overlay map geometry comes only from the immutable approved artifact. Optional expected-release IDs on map/search/directory complement route stale checks. Frontend acquires a release first, pins all data reads, keys state by release and clears stale route/selection state before refreshing. Successful polling/focus or manual metadata refresh completes recovery; pre-recovery cached metadata cannot restore old results. Online polling/on-focus and stale response handling work across API workers without a process-local graph cache. Private source routes require campus authorization; no raw storage URLs/static mounts exist.
 
 Floorplan images/PDF/calibration remain M3; closure overlay reconciliation, QR and offline packs remain M4. No publication/deployment of this cloud environment is authorized. Full contributor test commands and data-retaining PowerShell/Docker Desktop updates are in the operations guide.
+
+## M3A floorplans and calibration
+
+Additive migration `0012_floorplans` introduces revision-scoped stable floors/map layers and non-cascading private floorplan job history. Reuse campus locks, live session/CSRF/permissions, whole-draft CAS, atomic audit and database review/frozen guards. Applying a job creates source/layer/frame metadata in one transaction; duplicate applies or competing same-version writers cannot duplicate/overwrite content. Replacement explicitly clears calibration and refuses graph dependencies. Cloning preserves logical IDs/source bytes/layers; quotas include copied data.
+
+The existing DB-backed worker claims floorplan jobs with a committed lease/attempt before expensive decoding outside DB locks. The decoder is a bounded Linux-only child with minimal environment and no ambient files/network/process creation; Pillow/PDFium decode actual bytes and strip metadata into a fresh bounded PNG. Reference masks precede resampling. Cancellation discards late lease results, and stale leases recover with a three-attempt ceiling. No public storage mount, paid conversion service, extra broker or new service is required.
+
+A separate floor-local Leaflet `CRS.Simple` map uses top-left reference pixels; display thumbnails retain reference bounds and the sole adapter maps `(x,y)` to `[height-y,x]`. Uniform scale comes from a dated known line and consistent nonparallel independent checks with uncertainty; a different authorized reviewer approves exact evidence/checksum. Distorted/perspective fitting and indoor topology/routing are not implemented. API and authoritative validation use the campus timezone for measurement dates.
+
+Full reviewed checksums include selected and retained private floor/layer/evidence metadata; public artifacts explicitly project only current permitted independently approved PNG descriptors and limited floor/frame metadata. Retained unselected plan history stays private and cannot block approval of the current plan. Historical approved PNG endpoints include campus/release/layer/hash and survive rollback. Originals, masks and private evidence are excluded. All 3A floor projections enforce display-only/no metric navigation; uncalibrated display needs warning acknowledgement. Source/calibration/overall reviewer grant revocation is checked before publication. Existing releases/seed hashes remain unchanged.
+
+See [floorplan coordinate/API/storage contract](../data/floorplans.md), [workflow, Linux processing limits and data-retaining Windows update](../operations/floorplans.md), and [verification evidence](../testing/verification.md). The public outdoor planner is preserved; no public indoor floor picker or routing is claimed. 3B tracing and 3C connectors/routing require separate authorization.

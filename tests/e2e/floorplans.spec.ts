@@ -81,7 +81,7 @@ test('private PDF page, masks, measured calibration, independent review and immu
     await expect.poll(async () => Number(await page.getByLabel('Primary start Y (px)', { exact: true }).inputValue())).toBeGreaterThan(190)
     // Reuse the retained PDF, select another page, and require an explicit
     // exact-current-layer replacement before applying anything to the draft.
-    await page.getByLabel('Process selected PDF page', { exact: true }).selectOption('1')
+    await page.getByRole('combobox', { name: 'Process selected PDF page', exact: true }).selectOption('1')
     await page.getByRole('button', { name: 'Create a new selected-page/mask batch', exact: true }).click()
     await expect(page.getByRole('status').filter({ hasText: 'Processing state: ready' })).toBeVisible({ timeout: 40000 })
     await expect(page.getByRole('button', { name: 'Apply ready page to selected draft floor', exact: true })).toBeDisabled()

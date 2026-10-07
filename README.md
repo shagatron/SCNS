@@ -1,6 +1,6 @@
 # Smart Campus Navigation
 
-A working outdoor navigation demo built with React, TypeScript, Vite, Tailwind, TanStack Query, Leaflet, FastAPI, SQLAlchemy, Alembic, PostgreSQL and PostGIS. Milestones 0, 1, admin slice 2A and staged-import slice 2B1 of the [master specification](docs/product/master-spec.md) are implemented. See the [requirements checklist](docs/product/requirements-checklist.md) and [verification report](docs/testing/verification.md) for scope and evidence.
+A working outdoor navigation demo built with React, TypeScript, Vite, Tailwind, TanStack Query, Leaflet, FastAPI, SQLAlchemy, Alembic, PostgreSQL and PostGIS. Milestones 0, 1, admin/import/graph/review slices 2A–2C and indoor floorplan foundations 3A of the [master specification](docs/product/master-spec.md) are implemented. See the [requirements checklist](docs/product/requirements-checklist.md) and [verification report](docs/testing/verification.md) for scope and evidence.
 
 **Demo Campus is wholly synthetic.** Its coordinates near (0°, 0°), buildings, paths, access conditions and accessibility evidence are invented. It is not the owner's campus and must not be used for real navigation. Public navigation requires no account, paid services, API keys or external map tiles. Administrator accounts are explicitly provisioned; there is no public deployment.
 
@@ -12,7 +12,9 @@ A working outdoor navigation demo built with React, TypeScript, Vite, Tailwind, 
 - Honest handling of one-way paths, closed/restricted edges, isolated destinations, unmapped entrances, same-place arrival and unknown step-free accessibility. The step-free example tests synthetic eligibility only.
 - Database-backed draft/release separation, frozen rows protected by triggers, atomic active-release selection, release IDs on responses and stale-release errors.
 - Campus-scoped admin login, one-time bootstrap, dashboard, private draft catalog CRUD, optimistic concurrency and append-only audit at `/admin`. See [admin setup and workflow](docs/operations/admin.md).
-- Private staged CSV/JSON/GeoJSON imports with field mapping, row diagnostics, change previews, stable IDs, explicit upsert, idempotent retries and atomic audited draft application. Synthetic executable templates, bounded worker and explicit idempotent demo seeding.
+- Private staged CSV/JSON/GeoJSON imports with field mapping, row diagnostics, change previews, stable IDs, explicit upsert, idempotent retries and atomic audited draft application.
+- Visual outdoor draft graph editing and exact-content independent validation/review/publication/rollback.
+- Draft floors, private isolated PDF/PNG/JPEG page processing, masks, responsive local preview and evidence-bound calibration with independently approved sanitized immutable display assets. Indoor routing remains unfinished; see [3A workflow and Windows updates](docs/operations/floorplans.md).
 
 The supplied repository contained no C code. `legacy/c-prototype/` records that fact and is reserved for the original prototype if supplied.
 
@@ -95,13 +97,13 @@ make validate-dataset DATASET=/absolute/path/to/outdoor-bundle.json
 make seed-demo DATASET=/absolute/path/to/modified-demo.json
 ```
 
-Validation performs no database writes. The demo seed command only accepts `DEMO_ENABLED=true`, `is_demo=true`, code `DEMO`, and name `Demo Campus`. The first identical seed is a no-op; an edited bundle creates a new immutable revision/release and atomically advances the public pointer. Existing releases remain frozen. Repeating an old bundle does not roll back the current release. This is a **local synthetic fixture importer**, not the authorized real-data import/review UI planned for Milestone 2.
+Validation performs no database writes. The demo seed command only accepts `DEMO_ENABLED=true`, `is_demo=true`, code `DEMO`, and name `Demo Campus`. The first identical seed is a no-op; an edited bundle creates a new immutable revision/release and atomically advances the public pointer. Existing releases remain frozen. Repeating an old bundle does not roll back the current release. This is a **local synthetic fixture importer**. Use the private staged imports and independent review workflow for authorized data; do not reseed an existing installation during routine updates.
 
 ## Next milestone and limitations
 
-Milestone **2A** delivers campus-scoped admin authentication, catalog CRUD, audit and optimistic concurrency. The [one-time `bootstrap-admin` command](docs/operations/admin.md) is working. Milestones **2B1/2B2** deliver staged CSV/JSON/GeoJSON imports, the outdoor draft graph editor, graph diagnostics and draft route tests. **2C remains unimplemented**: review approval, publication/rollback and approved asset projection. Real-data `import-dataset`, `export-release`, and backup/restore commands will be delivered with their relevant milestones.
+Milestone **2A** delivers campus-scoped admin authentication, catalog CRUD, audit and optimistic concurrency. The [one-time `bootstrap-admin` command](docs/operations/admin.md) is working. Milestones **2B1/2B2** deliver staged CSV/JSON/GeoJSON imports, the outdoor draft graph editor, graph diagnostics and draft route tests. **2C** delivers exact-version independent review, publication/rollback and approved asset projection. **3A** delivers private floorplan processing, draft floors and calibration; the remaining indoor tracing/connectors/routing slices **3B/3C** are not implemented. Real-data `import-dataset`, `export-release`, and backup/restore commands will be delivered with their relevant milestones.
 
-Indoor navigation/floorplans are Milestone 3; QR, geolocation, live closures, reports and saved-route offline/PWA support are Milestone 4. The present route policy uses static release state at request time and does not evaluate opening schedules. No real campus accessibility, physical path accuracy, load benchmark, screen-reader certification or deployment is claimed. Official maps and ownership/licensing decisions remain external inputs. No code license has been chosen on the owner's behalf; see [CONTRIBUTING.md](CONTRIBUTING.md).
+Indoor floorplan foundations are delivered in 3A; room/corridor tracing, connectors and indoor navigation remain later Milestone 3 slices; QR, geolocation, live closures, reports and saved-route offline/PWA support are Milestone 4. The present route policy uses static release state at request time and does not evaluate opening schedules. No real campus accessibility, physical path accuracy, load benchmark, screen-reader certification or deployment is claimed. Official maps and ownership/licensing decisions remain external inputs. No code license has been chosen on the owner's behalf; see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Staged draft imports (2B1)
 
@@ -112,3 +114,7 @@ See [the import setup and workflow guide](docs/operations/imports.md) and [execu
 See [graph update/startup instructions, editing controls, recovery and concurrency](docs/operations/graph-editor.md). Node, paired directed-edge and entrance edits remain private drafts. Width/slope/steps/surface are unknown until provided; geometry changes never automatically certify accessibility. Per-tab recovery autosaves local input, while saving to the server is explicit. Graph validation and Dijkstra test routes do not publish.
 
 Milestone 2C adds exact-version validation/review, independent approval, immutable public artifacts, atomic publication and audited rollback. [Workflow and Windows Docker Desktop update commands](docs/operations/publication.md) preserve existing installation data; no deployment is authorized. Source/projection templates: [publication-v1](data/templates/publication-v1/README.md).
+
+## Indoor floorplan foundations (3A)
+
+[Data-retaining Windows PowerShell/Docker Desktop update and complete admin workflow](docs/operations/floorplans.md), [reference pixels/calibration/release contract](docs/data/floorplans.md), and [executable floorplan-v1 templates](data/templates/floorplan-v1/README.md). The existing import worker also processes floorplans. Originals stay in protected DB storage; only exact independently approved sanitized display PNGs are release assets. All 3A floors are explicitly display-only, including calibrated ones; no indoor route or physical survey claim.

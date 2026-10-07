@@ -29,6 +29,8 @@ class SourceAsset(RevisionEntity, Base):
     attribution: Mapped[str] = mapped_column(String(500))
     uploader_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("admin_users.id"))
     approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("admin_users.id"))
+    original_filename: Mapped[str | None] = mapped_column(String(160))
+    media_type: Mapped[str | None] = mapped_column(String(64))
     original: Mapped[bytes | None] = mapped_column(LargeBinary)
     original_checksum: Mapped[str | None] = mapped_column(String(64))
     derivative: Mapped[dict | None] = mapped_column(JSONB)

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useState, useSyncExternalStore } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 import { api, ApiError, calculateRoute, type Campus, type MapData, type Place, type Release, type Search } from '../api/client'
@@ -56,14 +56,22 @@ function CampusExplorer({ campus, online }: { campus: Campus; online: boolean })
   const [changed, setChanged] = useState(false)
   if (release.data && seen !== release.data.id) { setSeen(release.data.id); if (seen) setChanged(true) }
   const [recovering, setRecovering] = useState(false)
+  const recoveryDataTimestamp = useRef(0)
   const [epoch, setEpoch] = useState(0)
   const refreshRelease = useCallback(async () => {
+    recoveryDataTimestamp.current = cache.getQueryState(['release', campus.id])?.dataUpdatedAt ?? 0
     setChanged(true); setRecovering(true)
     try {
       await cache.fetchQuery({ queryKey: ['release', campus.id], queryFn: () => api<Release>(`/campuses/${campus.id}/release`), staleTime: 0, retry: false })
-      setEpoch(value => value + 1); setRecovering(false)
     } catch { /* Query error remains visible; keep stale results hidden until retry succeeds. */ }
   }, [cache, campus.id])
+  useEffect(() => {
+    // A successful periodic/focus fetch must also finish a failed stale refresh.
+    // Cached metadata from before recovery must never reveal the old planner.
+    if (recovering && !release.error && release.dataUpdatedAt > recoveryDataTimestamp.current) {
+      setEpoch(value => value + 1); setRecovering(false)
+    }
+  }, [recovering, release.error, release.dataUpdatedAt])
   useEffect(() => {
     const refresh = () => { void refreshRelease() }
     window.addEventListener('campus-release-stale', refresh)

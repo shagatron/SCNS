@@ -3992,6 +3992,10 @@ export interface operations {
                     original?: {
                         [key: string]: unknown;
                     } | null;
+                    /** Original Text */
+                    original_text?: string | null;
+                    /** Original Filename */
+                    original_filename?: string | null;
                     /**
                      * Display Overlay
                      * @default false

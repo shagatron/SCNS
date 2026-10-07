@@ -3486,6 +3486,32 @@
                     ],
                     "title": "Original"
                   },
+                  "original_text": {
+                    "anyOf": [
+                      {
+                        "maxLength": 5242880,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Original Text"
+                  },
+                  "original_filename": {
+                    "anyOf": [
+                      {
+                        "maxLength": 160,
+                        "minLength": 1,
+                        "pattern": "^[A-Za-z0-9_. -]+$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Original Filename"
+                  },
                   "display_overlay": {
                     "default": false,
                     "title": "Display Overlay",

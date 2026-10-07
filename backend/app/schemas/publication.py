@@ -1,7 +1,7 @@
 from typing import Literal
 from uuid import UUID
 
-from pydantic import Field, ValidationInfo, field_validator
+from pydantic import Field, ValidationInfo, field_validator, model_validator
 
 from app.schemas.api import DTO
 
@@ -22,7 +22,22 @@ class SourceInput(DTO):
     provenance: str = Field(min_length=10, max_length=4000)
     attribution: str = Field(min_length=1, max_length=500)
     original: dict | None = None
+    original_text: str | None = Field(default=None, max_length=5 * 1024 * 1024)
+    original_filename: str | None = Field(
+        default=None, min_length=1, max_length=160, pattern=r"^[A-Za-z0-9_. -]+$"
+    )
     display_overlay: bool = False
+
+    @model_validator(mode="after")
+    def one_original(self):
+        if self.original is not None and self.original_text is not None:
+            raise ValueError("Supply either inline JSON or original UTF-8 text, never both")
+        if self.original_filename and (
+            self.original_filename.startswith(".")
+            or not self.original_filename.lower().endswith((".json", ".geojson"))
+        ):
+            raise ValueError("Use a plain .json/.geojson original filename")
+        return self
 
     @field_validator("title", "provenance", "attribution")
     @classmethod

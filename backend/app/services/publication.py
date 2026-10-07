@@ -38,7 +38,7 @@ from app.services.admin_auth import audit, permissions
 from app.services.admin_catalog import MODELS, record
 from app.services.admin_graph import route_test, validate_graph
 from app.services.catalog import normalize
-from app.services.imports import final_graph_guard
+from app.services.imports import final_graph_guard, strict_json
 
 VALIDATOR = "outdoor-publication-v1"
 TABLES = {
@@ -296,7 +296,26 @@ def add_source(db, revision, payload, actor, request_id):
         raise DomainError(
             "invalid_input", "Synthetic rights are only allowed for a clearly labelled demo campus."
         )
-    raw = canonical(payload.original) if payload.original is not None else None
+    try:
+        raw = (
+            payload.original_text.encode("utf-8")
+            if payload.original_text is not None
+            else canonical(payload.original)
+            if payload.original is not None
+            else None
+        )
+        original = (
+            strict_json(payload.original_text.removeprefix("\ufeff"))
+            if payload.original_text is not None
+            else payload.original
+        )
+        if original is not None and not isinstance(original, dict):
+            raise ValueError("Original must be a JSON object")
+    except (ValueError, UnicodeError, RecursionError):
+        raise DomainError(
+            "invalid_input",
+            "Original must be valid UTF-8 JSON without duplicate keys/non-finite numbers; provide one original representation.",
+        ) from None
     if raw and len(raw) > 5 * 1024 * 1024:
         raise DomainError("upload_too_large", "Original exceeds the private 5MiB limit.", 413)
     if payload.display_overlay and (raw is None or payload.rights == "restricted"):
@@ -305,7 +324,7 @@ def add_source(db, revision, payload, actor, request_id):
             "A display derivative needs a permitted original; restricted originals never publish.",
         )
     try:
-        derivative = sanitize_overlay(payload.original) if payload.display_overlay else None
+        derivative = sanitize_overlay(original) if payload.display_overlay else None
     except (ValueError, TypeError, AttributeError, ValidationError):
         raise DomainError(
             "invalid_input",
@@ -336,6 +355,12 @@ def add_source(db, revision, payload, actor, request_id):
         provenance=payload.provenance,
         attribution=payload.attribution,
         uploader_id=actor.id,
+        original_filename=(payload.original_filename or "inline-source.json") if raw else None,
+        media_type="application/geo+json"
+        if payload.original_filename and payload.original_filename.lower().endswith(".geojson")
+        else "application/json"
+        if raw
+        else None,
         original=raw,
         original_checksum=hashlib.sha256(raw).hexdigest() if raw else None,
         derivative=derivative,

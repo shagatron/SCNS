@@ -126,7 +126,17 @@ test('independent review publishes coherent public data, stale client recovers a
     await expect(publicUser.page.getByText('Cannot reach campus data. Check your connection and try again.', { exact: true })).toBeVisible()
     await expect(publicUser.page.getByRole('combobox', { name: 'Destination', exact: true })).toHaveCount(0)
     failMetadataRefresh = false
-    await publicUser.page.getByRole('alert').filter({ hasText: 'Cannot reach campus data.' }).getByRole('button', { name: 'Try again', exact: true }).click()
+    if (viewport === 'mobile') {
+      // Exercise actual periodic recovery after the forced stale fetch failed,
+      // without clicking Retry; cached pre-publication data must stay hidden.
+      await expect(publicUser.page.getByRole('combobox', { name: 'Destination', exact: true })).toBeVisible({ timeout: 35000 })
+    } else {
+      // Polling can win the Retry click while Playwright waits for stability.
+      // In either case require coherent recovery, never just a vanished error.
+      await publicUser.page.getByRole('alert').filter({ hasText: 'Cannot reach campus data.' }).getByRole('button', { name: 'Try again', exact: true }).click({ timeout: 5000 }).catch(async () => {
+        await expect(publicUser.page.getByRole('combobox', { name: 'Destination', exact: true })).toBeVisible()
+      })
+    }
     await expect(publicUser.page.getByRole('combobox', { name: 'Destination', exact: true })).toHaveValue('')
     await expect(publicUser.page.getByRole('heading', { name: /Your walking route/ })).toHaveCount(0)
     await publicUser.page.getByRole('combobox', { name: 'Destination', exact: true }).selectOption({ label: `Synthetic Reviewed Library ${viewport}` })

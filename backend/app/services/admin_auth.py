@@ -111,7 +111,7 @@ def authenticated(db: Session, request: Request) -> tuple[User, AdminSession, st
             AdminSession.expires_at > datetime.now(UTC),
         )
     )
-    user = db.get(User, session.user_id) if session else None
+    user = db.get(User, session.user_id, populate_existing=True) if session else None
     if user is None or not user.active:
         raise DomainError(
             "authentication_required", "Your session has expired. Sign in again.", 401

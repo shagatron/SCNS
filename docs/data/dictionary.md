@@ -44,7 +44,7 @@ Node `evidence` is bounded private source/last-verification text, default blank/
 
 ## M2C review/release tables and contract
 
-- `source_assets`: revision/campus composite key; rights/provenance/public attribution, uploader/independent approver, private bounded BYTEA original and SHA-256, sanitized proposed outdoor derivative. Frozen/review guards; originals never projected. No filename/key is a public URL.
+- `source_assets`: revision/campus composite key; exact uploaded UTF-8 original bytes/SHA-256, nullable safe `original_filename` and `media_type` (0011 preserves existing original bytes/checksums); rights/provenance/public attribution, uploader/independent approver, private bounded BYTEA original and SHA-256, sanitized proposed outdoor derivative. Frozen/review guards; originals never projected. No filename/key is a public URL.
 - `validation_runs`: append-only exact revision/edit version/content checksum/validator version, authoritative diagnostics with stable warning IDs, computed standard/step-free route expectations/results, private source/import provenance packet and actor/time.
 - `review_submissions`: exact validation/version/checksum, submitter, warning acknowledgements and explicit submitted/approved/rejected/withdrawn/published states. Approved submissions retain review-locked revisions; rejection/withdrawal invalidates evidence by incrementing revision version.
 - `review_decisions`: append-only submission/reviewer/decision/notes/acknowledgements/time. Contributors cannot approve/publish their own revision; reviewer/source grant revocation is checked.

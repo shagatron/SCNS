@@ -636,3 +636,83 @@ def test_rollback_failure_retains_pointer_and_audit(
     db.expire_all()
     assert client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"] == current
     assert db.scalar(select(func.count()).select_from(AuditEvent)) == audits
+
+
+def test_publisher_grant_revoked_while_waiting_is_rechecked_after_lock(
+    client, db, bundle, identity, reviewer, monkeypatch
+):
+    draft, run, submission = ready(client, db, bundle, identity, reviewer)
+    approve(client, bundle, draft, run, submission, reviewer)
+    publisher = User(
+        username="late-publisher",
+        display_name="Separate publisher",
+        password_hash=HASHER.hash(secrets.token_urlsafe(24)),
+    )
+    password = secrets.token_urlsafe(24)
+    publisher.password_hash = HASHER.hash(password)
+    db.add(publisher)
+    db.flush()
+    db.add(
+        RoleAssignment(user_id=publisher.id, campus_id=bundle.campus.id, role="reviewer_publisher")
+    )
+    db.flush()
+    headers = sign_in(client, (publisher, password))
+    prior = service.campus_lock
+
+    def revoke_at_lock(db, campus_id):
+        prior(db, campus_id)
+        # Boundary injection models a grant disappearing while this request waited.
+        db.execute(text("DELETE FROM role_assignments WHERE user_id=:id"), {"id": publisher.id})
+
+    monkeypatch.setattr(service, "campus_lock", revoke_at_lock)
+    old = client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"]
+    edit = db.get(Revision, draft["id"]).edit_version
+    response = client.post(
+        path(bundle, draft) + "/publish",
+        json={
+            "submission_id": submission["id"],
+            "expected_release_id": old,
+            "key": "revoked-during-lock-wait",
+        },
+        headers=version(headers, edit),
+    )
+    assert response.status_code == 403, response.text
+    assert db.get(Revision, draft["id"]).status == "review"
+    assert client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"] == old
+
+
+def test_private_original_bytes_name_checksum_and_duplicate_key_rejection(
+    client, db, bundle, identity
+):
+    headers = sign_in(client, identity)
+    draft = make_draft(client, bundle, headers)
+    original = '\ufeff{\n  "note": "Private original UTF-8 café",\n  "type": "FeatureCollection", "features": []\n}\n'
+    payload = {
+        **source_payload(),
+        "original_text": original,
+        "original_filename": "synthetic-source.geojson",
+    }
+    source = client.post(
+        path(bundle, draft) + "/sources", json=payload, headers=version(headers, 1)
+    )
+    assert source.status_code == 201, source.text
+    downloaded = client.get(path(bundle, draft) + f"/sources/{source.json()['id']}/original")
+    assert downloaded.content == original.encode("utf-8")
+    assert "synthetic-source.geojson" in downloaded.headers["content-disposition"]
+    assert downloaded.headers["content-type"] == "application/geo+json"
+    packet = client.get(path(bundle, draft) + "/review").json()
+    row = packet["sources"][source.json()["id"]]
+    assert row["original_checksum"] == hashlib.sha256(original.encode()).hexdigest()
+    bad = {**payload, "original_text": '{"public":false,"public":true}'}
+    assert (
+        client.post(
+            path(bundle, draft) + "/sources", json=bad, headers=version(headers, 2)
+        ).status_code
+        == 422
+    )
+    assert db.get(Revision, draft["id"]).edit_version == 2
+    client.cookies.clear()
+    assert (
+        client.get(path(bundle, draft) + f"/sources/{source.json()['id']}/original").status_code
+        == 401
+    )

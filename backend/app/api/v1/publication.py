@@ -57,7 +57,7 @@ def review(campus_id: UUID, revision_id: UUID, request: Request, db: DB):
 async def register_source(
     campus_id: UUID, revision_id: UUID, request: Request, db: DB, if_match: Version = None
 ):
-    actor = await run_in_threadpool(authorize, db, request, campus_id, "catalog_edit")
+    await run_in_threadpool(authorize, db, request, campus_id, "catalog_edit")
     # Bound before decoding, unlike generic JSON request binding. Originals stay private BYTEA.
     raw = bytearray()
     async for chunk in request.stream():
@@ -74,8 +74,9 @@ async def register_source(
 
     def save():
         service.campus_lock(db, campus_id)
+        current_actor = authorize(db, request, campus_id, "catalog_edit")
         revision = service.locked_revision(db, campus_id, revision_id, if_match)
-        return service.add_source(db, revision, payload, actor, request.state.request_id)
+        return service.add_source(db, revision, payload, current_actor, request.state.request_id)
 
     return await run_in_threadpool(save)
 
@@ -119,8 +120,10 @@ def original(campus_id: UUID, revision_id: UUID, source_id: UUID, request: Reque
         raise DomainError("location_not_found", "Private original not found.", 404)
     return Response(
         source.original,
-        media_type="application/json",
-        headers={"Content-Disposition": 'attachment; filename="private-original.geojson"'},
+        media_type=source.media_type or "application/json",
+        headers={
+            "Content-Disposition": f'attachment; filename="{source.original_filename or "private-original.json"}"'
+        },
     )
 
 
@@ -238,6 +241,7 @@ def publish(
 ):
     actor = authorize(db, request, campus_id, "release_publish")
     service.campus_lock(db, campus_id)
+    actor = authorize(db, request, campus_id, "release_publish")
     prior = service.action_retry(db, campus_id, actor, payload)
     if prior is not None:
         if prior.get("revision_id") != str(revision_id):
@@ -290,6 +294,7 @@ def history(campus_id: UUID, request: Request, db: DB):
 def rollback(campus_id: UUID, payload: RollbackInput, request: Request, db: DB):
     actor = authorize(db, request, campus_id, "release_publish")
     service.campus_lock(db, campus_id)
+    actor = authorize(db, request, campus_id, "release_publish")
     prior = service.action_retry(db, campus_id, actor, payload)
     return (
         prior

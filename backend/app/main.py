@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from app.api.v1.admin import router as admin_router
+from app.api.v1.imports import router as imports_router
 from app.api.v1.public import router
 from app.core.config import get_settings
 from app.core.errors import DomainError
@@ -15,13 +16,13 @@ from app.core.errors import DomainError
 app = FastAPI(
     title="Smart Campus Navigation",
     version="0.1.0",
-    description="Outdoor navigation and Milestone 2A campus-scoped draft administration.",
+    description="Outdoor navigation and Campus-scoped draft administration and staged imports.",
 )
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_settings().allowed_origins,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["Content-Type", "X-CSRF-Token", "If-Match"],
+    allow_headers=["Content-Type", "X-CSRF-Token", "If-Match", "Idempotency-Key"],
     allow_credentials=True,
     expose_headers=["ETag", "X-Request-ID"],
 )
@@ -97,3 +98,4 @@ async def database_error(request: Request, exc: SQLAlchemyError):
 
 app.include_router(router)
 app.include_router(admin_router)
+app.include_router(imports_router)

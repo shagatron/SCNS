@@ -1,0 +1,2 @@
+external_id,campus_code,code,name,kind,point
+synthetic-csv-place,DEMO,CSV_P,Synthetic CSV candidate,help,"{""type"": ""Point"", ""coordinates"": [0.001, 0.001]}"

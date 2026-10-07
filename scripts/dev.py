@@ -32,7 +32,7 @@ if __name__ == "__main__":
     signal.signal(signal.SIGTERM, interrupt)
     exit_code = 0
     try:
-        for service in ("api", "web"):
+        for service in ("api", "web", "worker"):
             processes.append(subprocess.Popen(["make", service], cwd=root, start_new_session=True))
         while all(p.poll() is None for p in processes):
             time.sleep(.2)

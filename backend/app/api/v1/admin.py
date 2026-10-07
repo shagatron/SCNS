@@ -126,6 +126,9 @@ def dashboard(campus_id: UUID, request: Request, db: DB):
     return DashboardOut(
         campus_id=campus_id,
         campus_name=campus.name,
+        campus_code=campus.code,
+        timezone=campus.timezone,
+        is_demo=campus.is_demo,
         permissions=sorted(allowed),
         release=active_release(db, campus_id)
         if db.get(ActiveRelease, (campus_id, "public"))
@@ -136,7 +139,7 @@ def dashboard(campus_id: UUID, request: Request, db: DB):
         else 0,
         limitations=[
             "Draft catalog edits do not change the published map.",
-            "Import, map graph editing, review and publication are not enabled in Milestone 2A.",
+            "Staged imports apply only to drafts. Map graph editing, review and publication are not enabled.",
             "Operational closure tools are a later milestone.",
         ],
     )

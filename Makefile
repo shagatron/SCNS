@@ -28,6 +28,9 @@ dev:
 api:
 	cd backend && $(UV) run --frozen uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 
+worker:
+	cd backend && $(UV) run --frozen python -m app.cli.imports worker
+
 web:
 	cd frontend && npm run dev -- --host 127.0.0.1
 

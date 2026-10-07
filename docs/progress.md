@@ -1,5 +1,15 @@
 # Project progress
 
+## Milestone 2B1 backend checkpoint — 7 October 2026 (Asia/Kolkata)
+
+Verified baseline `9f0e489f0fff83d46b67ce3d8a9f95684c15b74c` in a clean checkout and created `feat/milestone-2-imports` from it. Read master-spec sections 8/17, prior progress/checklist and existing admin/session/catalog code before changes. Only staged imports are authorized; no graph editor, review/publication or deployment is included.
+
+Implemented private bounded CSV/import-v1 JSON/GeoJSON uploads, DB jobs/history, external-ID bindings, mapping/reprocessing, savepoint previews with row diagnostics/conflicts, explicit create-only/upsert policy, validation, whole-draft optimistic application, idempotent submission/apply, cancellation/retries and batch/record audits. Added a bounded child worker and private shared Compose volume; draft applications never touch public releases. Added executable synthetic templates and exact setup/worker/retention commands.
+
+Checkpoint evidence: **43 PostGIS integration tests initially**, 21 existing Python unit tests and 14 frontend tests passed; fresh and downgrade/re-upgrade migrations/schema alignment passed; lint/type/build passed before the subsequent concurrency/boundary hardening. **45 integration tests and 35 Python unit tests now pass**, including real concurrent distinct-job application and same-job replay; 14 frontend tests also pass. Browser admin/public baseline journeys pass so far; initial new import journeys failed on select-field test locators. Corrected locators yielded four passing import journeys; the other two caught stale catalog caching after apply, now fixed by invalidating the affected draft/dashboard. Final browser rerun remains pending. Do not treat the new UI/browser workflow or current final build as verified yet.
+
+Unfinished: finish isolated browser journeys and remaining concurrency/recovery/security tests; run final documented checks and built-stack smoke; update checklist/verification/PR description; commit/push remaining UI and evidence. Frontend work is preserved in this checkout. Backend checkpoint will be pushed, then work continues. PR target is `feat/milestone-2-admin`; GitHub API access was previously Forbidden, so test it after completion and save a compare-link fallback if still blocked.
+
 ## M2A session inspection fix — 7 October 2026 (Asia/Kolkata)
 
 Completed the follow-up on `feat/milestone-2-admin` from `bdbc2c4`. The screenshot branch `docs/app-preview-screenshots` and its historical PNGs are preserved separately. No Milestone 2B work was started.

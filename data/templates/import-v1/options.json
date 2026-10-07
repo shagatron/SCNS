@@ -1,0 +1,12 @@
+{
+  "schema_version": "import-v1",
+  "units": "WGS84_degrees_and_metres",
+  "campus_code": "DEMO",
+  "timezone": "Asia/Kolkata",
+  "format": "json",
+  "entity": "places",
+  "source_rights": "Original synthetic test data only",
+  "provenance": "Synthetic import-v1 template; no real campus or survey",
+  "policy": "create_only",
+  "mapping": {}
+}

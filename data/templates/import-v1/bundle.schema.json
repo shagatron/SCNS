@@ -1,0 +1,97 @@
+{
+  "$defs": {
+    "ImportRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "enum": [
+            "frames",
+            "buildings",
+            "places",
+            "nodes",
+            "edges",
+            "departments",
+            "department_places",
+            "aliases",
+            "anchors"
+          ],
+          "title": "Entity",
+          "type": "string"
+        },
+        "external_id": {
+          "pattern": "^[A-Za-z0-9_.:-]{1,120}$",
+          "title": "External Id",
+          "type": "string"
+        },
+        "existing_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Existing Id"
+        },
+        "data": {
+          "additionalProperties": true,
+          "title": "Data",
+          "type": "object"
+        }
+      },
+      "required": [
+        "entity",
+        "external_id",
+        "data"
+      ],
+      "title": "ImportRecord",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "import-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "units": {
+      "const": "WGS84_degrees_and_metres",
+      "title": "Units",
+      "type": "string"
+    },
+    "campus_code": {
+      "maxLength": 32,
+      "minLength": 1,
+      "title": "Campus Code",
+      "type": "string"
+    },
+    "timezone": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Timezone",
+      "type": "string"
+    },
+    "records": {
+      "items": {
+        "$ref": "#/$defs/ImportRecord"
+      },
+      "maxItems": 10000,
+      "minItems": 1,
+      "title": "Records",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "units",
+    "campus_code",
+    "timezone",
+    "records"
+  ],
+  "title": "ImportBundle",
+  "type": "object"
+}

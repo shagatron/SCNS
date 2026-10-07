@@ -5,6 +5,7 @@ from app.core.config import get_settings
 from app.models import (
     Base,
     admin,  # noqa: F401
+    imports,  # noqa: F401
 )
 
 config = context.config

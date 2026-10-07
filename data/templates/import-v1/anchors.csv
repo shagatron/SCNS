@@ -1,0 +1,2 @@
+external_id,campus_code,place_id,node_id,accessibility_status,accessibility_evidence,is_open
+synthetic-anchor,DEMO,synthetic-place,synthetic-node-b,unknown,No accessibility survey; synthetic testing only,true

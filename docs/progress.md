@@ -1,3 +1,20 @@
+## M3A delivery receipt and PR blocker — 8 October 2026 (Asia/Kolkata)
+
+Completed implementation/evidence **`ee704317a6da76f31a6512a3b54178105524eada`** is pushed to **`origin/feat/milestone-3a-floorplans`**, verified by exact `git ls-remote`. All five explicitly unfinished checkpoints are pushed. Working tree was clean after the completion push; this documentation-only receipt records delivery and will be pushed on the same branch. All 3A implementation/automated verification is complete; no unfinished source changes are hidden. .env/secrets/private originals/dependencies/databases/build outputs/authenticated traces were excluded; only clearly invented test plan fixtures were committed.
+
+Final evidence: **69 Python/24 frontend units, 118 PostGIS integrations, 44 source and 16 built nginx/API/actual image-worker desktop/mobile journeys**, lint/type/build, scripts, fresh/M1 downgrade/re-upgrade through 0012/bootstrap/alignment, two images, eight reproducible contracts, three model-valid templates, synthetic validation, retained original developer counters/pointer/release checksums/.env hash and 256.88m/3-edge route. Existing local API/DB are healthy and frontend/worker running. No developer reset/reseed/bootstrap/publish/rollback/volume deletion or cloud-environment publication.
+
+**PR creation blocked:** actual command below returned `Post "https://api.github.com/graphql": Forbidden` (exit 1), no PR URL and no merge. This is GitHub API access denial; HTTPS Git pushes are supported. Full prepared description: **`docs/reviews/milestone-3a-pr.md`**. [Compare/open the PR targeting publication](https://github.com/shagatron/SCNS/compare/feat%2Fmilestone-2-publication...feat%2Fmilestone-3a-floorplans?expand=1).
+
+```bash
+gh pr create --repo shagatron/SCNS --base feat/milestone-2-publication \
+  --head feat/milestone-3a-floorplans \
+  --title "Milestone 3A: private floorplans, draft floors and calibration" \
+  --body-file docs/reviews/milestone-3a-pr.md
+```
+
+Exact next steps: owner opens the unmerged PR through the compare page/body (or reruns the command when API access returns); use **`docs/operations/floorplans.md`** PowerShell/Docker Desktop Linux-container update in the existing Windows repository folder, retaining .env/data/volumes/accounts; manually exercise a new clearly synthetic draft with a separate reviewer when ready. Real source rights/measurements, actual Windows/physical devices/human AT/non-Chromium/Linux ARM, production scanning/security/load/backup restoration/kill chaos/remote Actions are not claimed verified. Later 3B room/corridor tracing and 3C connectors/indoor routing require separate authorization and have not started. No public indoor floor picker or metric indoor navigation is promised by 3A.
+
 ## M3A implementation and verification complete — 8 October 2026 (Asia/Kolkata)
 
 Completed on `feat/milestone-3a-floorplans` from verified M2C `33a4ca1`, existing checkout/no worktree/reset. Unfinished checkpoints `5cacbf8`, `9fbf0c0`, `66f0a4f`, `11683a3`, `df85a87` are pushed. Preserved the resumed selected-plan history fix and finished its backend/full browser/built-worker publication regression. A retained unselected/unapproved historic plan no longer blocks the current independently approved page or leaks into its public projection/attribution.

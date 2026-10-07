@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { lineMetres, mapToPixel, pixelToMap } from './floorplanCoordinates'
-import { readFloorRecovery, saveFloorRecovery } from './floorRecovery'
-import { clearGraphRecovery } from './graphState'
+import { lineMetres, mapToPixel, pixelToMap } from '../src/features/admin/floorplanCoordinates'
+import { readFloorRecovery, saveFloorRecovery } from '../src/features/admin/floorRecovery'
+import { clearGraphRecovery } from '../src/features/admin/graphState'
 
 describe('floor-local coordinate and recovery boundaries', () => {
   it('inverts y only at the map adapter; calibrated pixels use the known scale', () => {

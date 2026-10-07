@@ -8,7 +8,7 @@ from urllib.parse import quote
 from uuid import UUID, uuid4
 
 import pytest
-from sqlalchemy import func, select, text
+from sqlalchemy import delete, func, select, text
 from sqlalchemy.exc import DBAPIError
 
 from app.core.errors import DomainError
@@ -304,10 +304,25 @@ def test_apply_calibrate_independent_projection_publish_rollback_and_clone(
         ).status_code
         == 200
     )
+    calibration_password = secrets.token_urlsafe(24)
+    calibration_reviewer = User(
+        username="calibration-reviewer",
+        display_name="Independent calibration reviewer",
+        password_hash=HASHER.hash(calibration_password),
+    )
+    db.add(calibration_reviewer)
+    db.flush()
+    db.add(
+        RoleAssignment(
+            user_id=calibration_reviewer.id, campus_id=bundle.campus.id, role="reviewer_publisher"
+        )
+    )
+    db.flush()
+    calibration_headers = sign_in(client, (calibration_reviewer, calibration_password))
     assert (
         client.post(
             path + f"/floors/{floor}/calibration/approve",
-            headers=version(reviewer_headers, current(client, path)),
+            headers=version(calibration_headers, current(client, path)),
         ).status_code
         == 200
     )
@@ -347,6 +362,31 @@ def test_apply_calibrate_independent_projection_publish_rollback_and_clone(
         headers=version(reviewer_headers, v),
     )
     assert decision.status_code == 200, decision.text
+    # Revoke only the measurement reviewer, keeping source and overall approval live.
+    db.execute(
+        delete(RoleAssignment).where(
+            RoleAssignment.user_id == calibration_reviewer.id,
+            RoleAssignment.campus_id == bundle.campus.id,
+        )
+    )
+    db.flush()
+    refused = client.post(
+        path + "/publish",
+        json={
+            "submission_id": submitted.json()["id"],
+            "expected_release_id": old_release,
+            "key": str(uuid4()),
+        },
+        headers=version(reviewer_headers, current(client, path)),
+    )
+    assert refused.status_code == 409 and refused.json()["error"]["code"] == "approval_revoked"
+    assert client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"] == old_release
+    db.add(
+        RoleAssignment(
+            user_id=calibration_reviewer.id, campus_id=bundle.campus.id, role="reviewer_publisher"
+        )
+    )
+    db.flush()
     published = client.post(
         path + "/publish",
         json={
@@ -383,7 +423,7 @@ def test_apply_calibrate_independent_projection_publish_rollback_and_clone(
     assert (
         copied["id"] == floor
         and copied["layer_id"] == layer_id
-        and copied["frame"]["calibration"]["reviewer"] == str(reviewer[0].id)
+        and copied["frame"]["calibration"]["reviewer"] == str(calibration_reviewer.id)
     )
     assert (
         client.put(

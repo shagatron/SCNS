@@ -20,13 +20,13 @@ from app.models.admin import Department, DepartmentPlace, PlaceAlias
 from app.services.publication import checksum, snapshot
 
 
-def create_fixture(db, parent, bundle, viewport):
+def create_fixture(db, parent, bundle, viewport, purpose="publication"):
     campus_id, revision_id = uuid4(), uuid4()
     db.add(
         Campus(
             id=campus_id,
-            code=f"PUB_{viewport}",
-            name=f"Synthetic publication fixture {viewport}",
+            code=f"{'PUB' if purpose == 'publication' else purpose.upper().replace(' ', '_')}_{viewport}",
+            name=f"Synthetic {purpose} fixture {viewport}",
             timezone=bundle.campus.timezone,
             is_demo=True,
             center=db.get(Campus, bundle.campus.id).center,

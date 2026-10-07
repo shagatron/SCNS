@@ -1104,6 +1104,25 @@ def publish(db, revision, submission, payload, actor, request_id):
                     "A source reviewer is no longer authorized; obtain a fresh source review and validation.",
                     409,
                 )
+    for floor in full["floors"].values():
+        if floor["visibility"] != "public" or not floor["frame_id"]:
+            continue
+        calibration = full["frames"][floor["frame_id"]]["calibration"]
+        if calibration and calibration.get("reviewer"):
+            calibration_reviewer = db.get(
+                User, UUID(calibration["reviewer"]), populate_existing=True
+            )
+            if (
+                not calibration_reviewer
+                or not calibration_reviewer.active
+                or "source_approve"
+                not in permissions(db, calibration_reviewer.id, revision.campus_id)
+            ):
+                raise DomainError(
+                    "approval_revoked",
+                    "A calibration reviewer is no longer authorized; return to draft for fresh calibration review/validation.",
+                    409,
+                )
     artifact = generate_artifact(full)
     revision.status = "frozen"
     revision.edit_version += 1

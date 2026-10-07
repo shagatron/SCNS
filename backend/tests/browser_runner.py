@@ -52,6 +52,11 @@ def main():
             create_fixture(db, release.dataset_revision_id, bundle, viewport)
             for viewport in ("desktop", "mobile")
         ]
+        fixture_campuses.extend(
+            create_fixture(db, release.dataset_revision_id, bundle, viewport, purpose)
+            for purpose in ("floorplan", "floorplan conflicts")
+            for viewport in ("desktop", "mobile")
+        )
         owner = bootstrap(db, "browser-owner", "Browser owner", password, bundle.campus.id)
         for campus_id in fixture_campuses:
             db.add(RoleAssignment(user_id=owner.id, campus_id=campus_id, role="system_admin"))
@@ -68,12 +73,21 @@ def main():
     env = {**os.environ, "SCNS_E2E_PASSWORD": password}
     with tempfile.TemporaryDirectory(prefix="scns-import-browser-") as storage:
         env["STORAGE_ROOT"] = storage
-        worker = subprocess.Popen(
-            [sys.executable, "-m", "app.cli.imports", "worker"],
-            cwd=root / "backend",
-            env=env,
-            start_new_session=True,
-        )
+        worker_name = env.get("SCNS_E2E_BUILT_WORKER_CONTAINER")
+        worker = None
+        if worker_name:
+            if not worker_name.startswith("scns-publication-smoke-") or not worker_name.endswith(
+                "-worker"
+            ):
+                raise RuntimeError("Built worker must be an owned smoke container")
+            subprocess.run(["docker", "start", worker_name], stdout=subprocess.DEVNULL, check=True)
+        else:
+            worker = subprocess.Popen(
+                [sys.executable, "-m", "app.cli.imports", "worker"],
+                cwd=root / "backend",
+                env=env,
+                start_new_session=True,
+            )
         try:
             result = subprocess.run(
                 ["npm", "run", "test:e2e", "--", *sys.argv[1:]],
@@ -82,8 +96,9 @@ def main():
                 check=False,
             )
         finally:
-            os.killpg(worker.pid, signal.SIGTERM)
-            worker.wait(timeout=10)
+            if worker:
+                os.killpg(worker.pid, signal.SIGTERM)
+                worker.wait(timeout=10)
     raise SystemExit(result.returncode)
 
 

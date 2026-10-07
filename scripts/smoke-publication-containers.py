@@ -122,10 +122,43 @@ def main():
                 if time.monotonic() > deadline:
                     raise RuntimeError("Built nginx did not become ready") from None
                 time.sleep(0.25)
+        worker_name = f"{network}-worker"
+        run(
+            [
+                "docker",
+                "create",
+                "--name",
+                worker_name,
+                "--network",
+                network,
+                "--tmpfs",
+                "/app/storage",
+                *[
+                    part
+                    for key in (
+                        "DATABASE_URL",
+                        "ALLOWED_ORIGINS",
+                        "APP_ENV",
+                        "DEMO_ENABLED",
+                        "LOGIN_IP_LIMIT",
+                        "SESSION_COOKIE_SECURE",
+                    )
+                    for part in ("-e", key)
+                ],
+                "scns-api",
+                "python",
+                "-m",
+                "app.cli.imports",
+                "worker",
+            ],
+            env,
+        )
+        containers.append(worker_name)
         test_env = {
             **os.environ,
             "E2E_DATABASE_URL": f"postgresql+psycopg://scns:scns_local@localhost:54329/{database}",
             "SCNS_E2E_BUILT_URL": "http://127.0.0.1:5174",
+            "SCNS_E2E_BUILT_WORKER_CONTAINER": worker_name,
             "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH": os.environ.get(
                 "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH", "/usr/bin/chromium"
             ),
@@ -142,6 +175,7 @@ def main():
                 "python",
                 "-m",
                 "tests.browser_runner",
+                "floorplans.spec.ts",
                 "publication.spec.ts",
                 "navigation.spec.ts",
             ],
@@ -164,7 +198,7 @@ def main():
                 status = error.code
             assert status == expected, "Built app private/readiness boundary failed"
         print(
-            "Built nginx/API publication and public-navigation journeys passed; private boundaries verified."
+            "Built nginx/API/worker floorplan, publication and public-navigation journeys passed; private boundaries verified."
         )
         return 0
     finally:

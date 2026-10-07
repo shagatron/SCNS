@@ -1,3 +1,11 @@
+## M2B2 unfinished backend checkpoint — 7 October 2026
+
+Atomic campus-authorized outdoor graph batches, coherent reads, draft revision CAS, ordered explicit deletions, node movement with incident geometry/length updates, per-feature audit, graph quality diagnostics and stored-graph Dijkstra draft route tests are implemented. Migration `0007_graph_node_evidence` adds optional provenance notes without changing active releases. Graph attributes reuse import/catalog contracts; unverified moves reset affected paths to unknown accessibility/estimated distance.
+
+Executed: **15 new real PostGIS graph tests passed**, Ruff lint/format passed (49 files), contracts generated. The first test attempt found the database stopped; restarting the existing container fixed setup. Two initial rollback assertions mutated their own nested expected fixtures; deep-copying the fixtures fixed them. No application integrity assertion was relaxed.
+
+Unfinished: visual UI, undo/redo/split/snap/recovery/reconciliation and browser journeys; broader regressions, migration rehearsal and built-container smoke; final operational/evidence/checklist documentation and PR. Frontend graph-state helper is work in progress. No publication, indoor or closure work.
+
 ## M2B2 unfinished starting checkpoint — 7 October 2026
 
 Verified clean checkout at completed/pushed M2B1 `4444c68b533b6fa510b931c436f11fcdb461af58`; created `feat/milestone-2-graph-editor` directly from that commit without a worktree or reset. Read the master editor/integrity/quality requirements and existing implementation/documentation. No application changes or new checks yet.

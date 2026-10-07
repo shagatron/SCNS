@@ -449,6 +449,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/graph": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read Graph */
+        get: operations["read_graph_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_get"];
+        put?: never;
+        /** Save Graph */
+        post: operations["save_graph_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/graph/validation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Validation */
+        get: operations["validation_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_validation_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/graph/route-test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Test Route */
+        get: operations["test_route_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_route_test_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -476,6 +528,20 @@ export interface components {
              */
             entity: "aliases";
             data: components["schemas"]["AliasFields"];
+        };
+        /** AnchorChange */
+        AnchorChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "anchors";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["AnchorFields"] | null;
         };
         /** AnchorFields */
         AnchorFields: {
@@ -687,6 +753,75 @@ export interface components {
              */
             created_at: string;
         };
+        /** EdgeChange */
+        EdgeChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "edges";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["EdgeFields"] | null;
+        };
+        /** EdgeFields */
+        EdgeFields: {
+            /**
+             * Frame Id
+             * Format: uuid
+             */
+            frame_id: string;
+            /**
+             * From Node Id
+             * Format: uuid
+             */
+            from_node_id: string;
+            /**
+             * To Node Id
+             * Format: uuid
+             */
+            to_node_id: string;
+            /**
+             * Physical Path Id
+             * Format: uuid
+             */
+            physical_path_id: string;
+            /**
+             * Kind
+             * @default walkway
+             * @enum {string}
+             */
+            kind: "walkway" | "ramp" | "stairs";
+            geometry: components["schemas"]["LineString"];
+            /**
+             * Distance Status
+             * @default estimated
+             * @enum {string}
+             */
+            distance_status: "measured" | "estimated";
+            /**
+             * Accessibility Status
+             * @default unknown
+             * @enum {string}
+             */
+            accessibility_status: "verified_step_free" | "not_step_free" | "unknown";
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /**
+             * Is Open
+             * @default true
+             */
+            is_open: boolean;
+            /** Evidence */
+            evidence: string;
+        };
         /** ErrorDetail */
         ErrorDetail: {
             /** Code */
@@ -713,6 +848,33 @@ export interface components {
             roles: ("editor" | "reviewer_publisher" | "operations" | "system_admin")[];
             /** Permissions */
             permissions: string[];
+        };
+        /** GraphNodeFields */
+        GraphNodeFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /**
+             * Frame Id
+             * Format: uuid
+             */
+            frame_id: string;
+            /** Label */
+            label: string;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            point: components["schemas"]["Point"];
+        };
+        /** GraphPatch */
+        GraphPatch: {
+            /** Changes */
+            changes: (components["schemas"]["NodeChange"] | components["schemas"]["EdgeChange"] | components["schemas"]["AnchorChange"])[];
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -845,6 +1007,20 @@ export interface components {
             id: string;
             /** Revision Version */
             revision_version: number;
+        };
+        /** NodeChange */
+        NodeChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "nodes";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["GraphNodeFields"] | null;
         };
         /** NodeOption */
         NodeOption: {
@@ -3147,6 +3323,144 @@ export interface operations {
             path: {
                 campus_id: string;
                 filename: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_graph_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+                revision_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_graph_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                revision_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GraphPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    validation_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_validation_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+                revision_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    test_route_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_route_test_get: {
+        parameters: {
+            query: {
+                source: string;
+                target: string;
+                profile?: "shortest" | "step_free";
+            };
+            header?: never;
+            path: {
+                campus_id: string;
+                revision_id: string;
             };
             cookie?: never;
         };

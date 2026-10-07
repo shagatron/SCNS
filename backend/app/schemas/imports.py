@@ -53,6 +53,7 @@ class FrameFields(DTO):
 
 
 class NodeFields(DTO):
+    evidence: str = Field(default="", max_length=2000)
     frame_id: UUID
     label: Name
     visibility: Visibility = "public"

@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from app.api.v1.admin import router as admin_router
+from app.api.v1.graph import router as graph_router
 from app.api.v1.imports import router as imports_router
 from app.api.v1.public import router
 from app.core.config import get_settings
@@ -105,3 +106,4 @@ async def database_error(request: Request, exc: SQLAlchemyError):
 app.include_router(router)
 app.include_router(admin_router)
 app.include_router(imports_router)
+app.include_router(graph_router)

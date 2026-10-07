@@ -139,7 +139,7 @@ def dashboard(campus_id: UUID, request: Request, db: DB):
         else 0,
         limitations=[
             "Draft catalog edits do not change the published map.",
-            "Staged imports apply only to drafts. Map graph editing, review and publication are not enabled.",
+            "Staged imports apply only to drafts. Outdoor graph editing is draft-only. Review and publication are not enabled.",
             "Operational closure tools are a later milestone.",
         ],
     )

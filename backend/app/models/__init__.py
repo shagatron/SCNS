@@ -132,6 +132,7 @@ class Place(RevisionEntity, Base):
 
 class Node(RevisionEntity, Base):
     __tablename__ = "navigation_nodes"
+    evidence: Mapped[str] = mapped_column(Text, server_default="")
     frame_id: Mapped[uuid.UUID] = mapped_column(UUID)
     label: Mapped[str] = mapped_column(String(160))
     visibility: Mapped[str] = mapped_column(String(16))

@@ -2855,6 +2855,268 @@
           }
         }
       }
+    },
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/graph": {
+      "get": {
+        "tags": [
+          "admin-graph"
+        ],
+        "summary": "Read Graph",
+        "operationId": "read_graph_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admin-graph"
+        ],
+        "summary": "Save Graph",
+        "operationId": "save_graph_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_post",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/graph/validation": {
+      "get": {
+        "tags": [
+          "admin-graph"
+        ],
+        "summary": "Validation",
+        "operationId": "validation_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_validation_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/graph/route-test": {
+      "get": {
+        "tags": [
+          "admin-graph"
+        ],
+        "summary": "Test Route",
+        "operationId": "test_route_api_v1_admin_campuses__campus_id__drafts__revision_id__graph_route_test_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Source"
+            }
+          },
+          {
+            "name": "target",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Target"
+            }
+          },
+          {
+            "name": "profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "shortest",
+                "step_free"
+              ],
+              "type": "string",
+              "default": "shortest",
+              "title": "Profile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2906,6 +3168,37 @@
           "data"
         ],
         "title": "AliasWrite"
+      },
+      "AnchorChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "anchors",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnchorFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "AnchorChange"
       },
       "AnchorFields": {
         "properties": {
@@ -3439,6 +3732,124 @@
         ],
         "title": "DraftOut"
       },
+      "EdgeChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "edges",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EdgeFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "EdgeChange"
+      },
+      "EdgeFields": {
+        "properties": {
+          "frame_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Frame Id"
+          },
+          "from_node_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "From Node Id"
+          },
+          "to_node_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "To Node Id"
+          },
+          "physical_path_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Physical Path Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "walkway",
+              "ramp",
+              "stairs"
+            ],
+            "title": "Kind",
+            "default": "walkway"
+          },
+          "geometry": {
+            "$ref": "#/components/schemas/LineString"
+          },
+          "distance_status": {
+            "type": "string",
+            "enum": [
+              "measured",
+              "estimated"
+            ],
+            "title": "Distance Status",
+            "default": "estimated"
+          },
+          "accessibility_status": {
+            "type": "string",
+            "enum": [
+              "verified_step_free",
+              "not_step_free",
+              "unknown"
+            ],
+            "title": "Accessibility Status",
+            "default": "unknown"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "is_open": {
+            "type": "boolean",
+            "title": "Is Open",
+            "default": true
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Evidence"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "frame_id",
+          "from_node_id",
+          "to_node_id",
+          "physical_path_id",
+          "geometry",
+          "evidence"
+        ],
+        "title": "EdgeFields"
+      },
       "ErrorDetail": {
         "properties": {
           "code": {
@@ -3517,6 +3928,76 @@
           "permissions"
         ],
         "title": "GrantOut"
+      },
+      "GraphNodeFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "frame_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Frame Id"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "frame_id",
+          "label",
+          "point"
+        ],
+        "title": "GraphNodeFields"
+      },
+      "GraphPatch": {
+        "properties": {
+          "changes": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/NodeChange"
+                },
+                {
+                  "$ref": "#/components/schemas/EdgeChange"
+                },
+                {
+                  "$ref": "#/components/schemas/AnchorChange"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Changes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "changes"
+        ],
+        "title": "GraphPatch"
       },
       "HTTPValidationError": {
         "properties": {
@@ -3811,6 +4292,37 @@
           "revision_version"
         ],
         "title": "MutationOut"
+      },
+      "NodeChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "nodes",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GraphNodeFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "NodeChange"
       },
       "NodeOption": {
         "properties": {

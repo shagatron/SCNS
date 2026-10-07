@@ -1,3 +1,13 @@
+## M3B delivery receipt and PR blocker — 8 October 2026 (Asia/Kolkata)
+
+Verified implementation/evidence commit **`e7d6eeef09770abdb37598e3aac2d3f9f9aea873`** is pushed to `origin/feat/milestone-3b-indoor-editor`; exact remote SHA matched. Working tree was clean after that push. This documentation-only receipt records delivery and is committed/pushed on the same branch. All five explicitly unfinished checkpoints are pushed.
+
+Actual `gh pr create --repo shagatron/SCNS --base feat/milestone-3a-floorplans --head feat/milestone-3b-indoor-editor --title "Milestone 3B: visual same-floor indoor tracing and canonical room catalog" --body-file docs/reviews/milestone-3b-pr.md` returned **`Post "https://api.github.com/graphql": Forbidden`**, exit1. No PR or merge occurred. HTTPS Git push is supported; PR creation is blocked by GitHub API access. Complete committed [PR description](https://github.com/shagatron/SCNS/blob/feat/milestone-3b-indoor-editor/docs/reviews/milestone-3b-pr.md); correct [compare/open PR](https://github.com/shagatron/SCNS/compare/feat%2Fmilestone-3a-floorplans...feat%2Fmilestone-3b-indoor-editor?expand=1). Local receipt: `/tmp/scns-3b-pr-attempt.log`, uncommitted and without credentials.
+
+Final passing evidence remains **77 Python /35 frontend units,143 PostGIS integrations,48 source /20 built desktop/mobile journeys**, lint/type/build, migration rehearsal through0013 and9 reproducible contracts. All developer receipts match, and Main Gate→Library remains256.88m/three stored edges on the original release. Exact Windows data-preserving update and full fixture walkthrough: `docs/operations/indoor-editor.md`; data/API contract: `docs/data/indoor-editor.md`; actual evidence/limits: `docs/testing/verification.md`.
+
+**Next steps:** use the compare link and saved body to open the unmerged PR targeting `feat/milestone-3a-floorplans`; owner can update the existing Windows checkout using the documented commands and manually inspect the unpublished draft. Do not reseed/bootstrap/reset or remove volumes. Actual Windows/physical/field/production/remote Actions remain unverified. 3C connectors/end-to-end indoor routing requires separate authorization and has not started. No deployment or cloud-environment publication.
+
 ## M3B complete verification and implementation — 8 October 2026 (Asia/Kolkata)
 
 **Milestone 3B is complete** on `feat/milestone-3b-indoor-editor`, based exactly on completed 3A `87c390d7f93c87936d2253dd581764fde6ed0993`. Pushed unfinished checkpoints `c63aa03`, `1b7a622`, `f407ae5`, `4f07459`, `23cf00a` preserve scope, backend/editor, regression/runbook and final split/recovery work. Existing checkout preserved; no worktree/reset/discard.

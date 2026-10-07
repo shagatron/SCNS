@@ -247,9 +247,12 @@ def resolve_id(db, revision, entity, value, targets):
         return stable_id(revision.campus_id, entity, value)
 
 
-def normalize_rows(db, revision, rows, options):
+def normalize_rows(db, revision, rows, options, *, deadline=None):
+    deadline = deadline or time.monotonic() + get_settings().import_parse_seconds
     targets, seen, result = {}, set(), []
     for source in rows:
+        if time.monotonic() > deadline:
+            raise ValueError("Normalization time limit exceeded; split this batch")
         item = {
             "row": source["_row"],
             "entity": source.get("entity", options.entity),
@@ -328,6 +331,8 @@ def normalize_rows(db, revision, rows, options):
         except (ValueError, TypeError, DomainError) as exc:
             item["errors"].append(exc.message if isinstance(exc, DomainError) else str(exc))
     for item in result:
+        if time.monotonic() > deadline:
+            raise ValueError("Normalization time limit exceeded; split this batch")
         if item["errors"]:
             continue
         try:
@@ -538,6 +543,7 @@ def final_graph_guard(db, revision):
 
 
 def stage(db, job):
+    started = time.monotonic()
     revision = get_draft(db, job.campus_id, job.revision_id)
     # Shared lock gives a coherent preview version and blocks all ordinary CAS edits.
     db.execute(select(Revision.id).where(Revision.id == revision.id).with_for_update(read=True))
@@ -551,9 +557,12 @@ def stage(db, job):
     ):
         raise ValueError("Private upload size/checksum verification failed")
     rows = normalize_rows(
-        db, revision, parse_content(raw, options, db.get(Campus, job.campus_id)), options
+        db,
+        revision,
+        parse_content(raw, options, db.get(Campus, job.campus_id)),
+        options,
+        deadline=started + get_settings().import_parse_seconds,
     )
-    started = time.monotonic()
     with db.begin_nested() as simulation:
         for item in sorted(
             rows, key=lambda x: ORDER.index(x["entity"]) if x["entity"] in ORDER else 99
@@ -640,7 +649,13 @@ def process_job(db, job):
         DomainError,
     ) as exc:
         transition(job, "failed")
-        job.failure = (exc.message if isinstance(exc, DomainError) else str(exc))[:2000]
+        job.failure = (
+            "Private source is missing or unreadable. Ask an operator to inspect storage and resubmit the authorized file."
+            if isinstance(exc, OSError)
+            else exc.message
+            if isinstance(exc, DomainError)
+            else str(exc)
+        )[:2000]
         log(db, job, "failed", job.uploader_id, "import-worker", {"message": job.failure})
 
 

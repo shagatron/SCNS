@@ -1,5 +1,15 @@
 # Project progress
 
+## Milestone 2B1 unfinished UI/verification checkpoint — 7 October 2026 (Asia/Kolkata)
+
+Resumed in the existing `feat/milestone-2-imports` checkout. Confirmed `790bc4acc0b7ea67a01ec25b69a9f5a4e1651cc9` is both local HEAD and the pushed remote checkpoint. Preserved and checkpointed all remaining local work, including the responsive import UI, raw upload transport, catalog/dashboard cache refresh after apply, isolated browser journeys, metadata-header privacy hardening and shared API/worker image configuration. This checkpoint is **explicitly unfinished**, not milestone completion.
+
+Valid verification already executed on this implementation: Ruff/format, TypeScript/ESLint, Vite/Python build, **35 Python unit, 49 PostGIS integration, 14 frontend and 28 desktop/mobile browser tests**, fresh/downgrade/re-upgrade migrations and schema alignment, synthetic dataset validation. All passed without skips. The 28 browser tests include six import journeys, twelve admin/session journeys and all ten public-navigation regressions. Both container images built; local API/frontend/worker started, worker `once` and empty retention cleanup succeeded. Built nginx/API preserved the original 256.88m three-edge route/release; private paths remained 404, protected imports/session returned 401, and a fresh built admin visit showed normal sign-in with one session check and no alert. API image/source import-service hashes matched.
+
+Not yet verified: newly added `test_import_worker.py`, which exercises committed stale-lease recovery, exhausted retries, cancellation and orphan cleanup. No application code changed after the valid full regression/browser/container checks; this additional test still needs to run. Active setup documentation still needs its old two-process/no-worker wording updated; final verification/checklist/progress and PR description remain unfinished. GitHub PR creation has not been retried for 2B1.
+
+Exact next steps: push this unfinished checkpoint; run the new worker test and affected checks; finish active setup/worker documentation and reusable startup instructions; confirm generated contracts reproduce; record final evidence and remaining limitations; commit/push milestone completion; attempt `gh pr create --base feat/milestone-2-admin --head feat/milestone-2-imports` without merging, saving the PR body/compare link if API access remains blocked. Do not begin 2B2 or deploy.
+
 ## Milestone 2B1 backend checkpoint — 7 October 2026 (Asia/Kolkata)
 
 Verified baseline `9f0e489f0fff83d46b67ce3d8a9f95684c15b74c` in a clean checkout and created `feat/milestone-2-imports` from it. Read master-spec sections 8/17, prior progress/checklist and existing admin/session/catalog code before changes. Only staged imports are authorized; no graph editor, review/publication or deployment is included.

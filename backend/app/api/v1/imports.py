@@ -1,3 +1,5 @@
+import base64
+import binascii
 import hashlib
 import os
 import re
@@ -68,14 +70,17 @@ async def upload(
     request: Request,
     db: DB,
     filename: Annotated[str, Query(min_length=1, max_length=160)],
-    options: Annotated[str, Query(max_length=10000)],
+    options: Annotated[str, Header(alias="X-Import-Options", max_length=14000)],
     submission_key: Annotated[str, Header(alias="Idempotency-Key", min_length=8, max_length=80)],
 ):
     actor = authorize(db, request, campus_id, "import_write")
     get_draft(db, campus_id, revision_id)
     try:
-        parsed = ImportOptions.model_validate(strict_json(options))
-    except (ValueError, RecursionError):
+        decoded_options = base64.b64decode(options, validate=True).decode("utf-8")
+        if len(decoded_options) > 10000:
+            raise ValueError("Metadata limit exceeded")
+        parsed = ImportOptions.model_validate(strict_json(decoded_options))
+    except (ValueError, UnicodeError, binascii.Error, RecursionError):
         raise DomainError(
             "invalid_input",
             "Invalid import options. Use the documented import-v1 metadata and mapping.",

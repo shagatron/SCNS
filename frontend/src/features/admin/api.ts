@@ -14,13 +14,13 @@ export type User = Schema['UserOut']
 export type Role = Schema['RoleInput']['role']
 export type NodeOption = Schema['NodeOption']
 
-export async function adminApi<T>(path: string, options: { method?: string; body?: unknown; csrf?: string; version?: number; signal?: AbortSignal } = {}): Promise<T> {
+export async function adminApi<T>(path: string, options: { method?: string; body?: unknown; csrf?: string; version?: number; signal?: AbortSignal; rawBody?: Blob; headers?: Record<string, string> } = {}): Promise<T> {
   let response: Response
   try {
     response = await fetch(`/api/v1/admin${path}`, {
       method: options.method ?? 'GET', credentials: 'same-origin', signal: options.signal,
-      headers: { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...(options.csrf ? { 'X-CSRF-Token': options.csrf } : {}), ...(options.version ? { 'If-Match': `"${options.version}"` } : {}) },
-      body: options.body ? JSON.stringify(options.body) : undefined,
+      headers: { ...options.headers, ...(options.rawBody ? { 'Content-Type': 'application/octet-stream' } : {}), ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...(options.csrf ? { 'X-CSRF-Token': options.csrf } : {}), ...(options.version ? { 'If-Match': `"${options.version}"` } : {}) },
+      body: options.rawBody ?? (options.body ? JSON.stringify(options.body) : undefined),
     })
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') throw error

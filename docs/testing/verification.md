@@ -1,5 +1,13 @@
 # Verification evidence
 
+## M2B1 unfinished verification checkpoint — 7 October 2026 (Asia/Kolkata)
+
+The implementation follows pushed backend checkpoint `790bc4a` on `feat/milestone-2-imports`. The remaining local UI/cache-refresh work is being preserved in an explicitly unfinished checkpoint. Executed and passing: `make check build test-unit test-integration test-migrations validate-dataset` (**35 Python unit, 49 real PostGIS integration, 14 frontend tests**), and `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e` (**28 desktop/mobile tests**, including the original ten public-navigation regressions). No skips or remaining failures in those runs. Initial browser selector and stale-catalog-cache failures were fixed and rerun successfully.
+
+`python scripts/cloud-build.py` built both images. Compose migration/startup, worker `once`, empty-volume retention cleanup, built route/private-path/protected-endpoint smoke and an anonymous built admin browser check passed. Main Gate → Library stayed 256.88m over three edges on release `4eb587e6-5607-48ed-a8ca-f5c0d8f1c505`; fresh login had zero alerts and exactly one session check. Import-service SHA-256 matched inside/outside the API image. Full authenticated journeys ran against isolated source API/Vite/worker, not the built stack.
+
+A new committed-lease/retention test in `backend/tests/integration/test_import_worker.py` is added but **not run yet**. Final active setup documentation, contract reproducibility evidence, milestone delivery and PR creation remain pending. See `docs/progress.md` for exact next steps. No 2B2 implementation, public deployment or credentials provisioning in the developer database occurred.
+
 ## M2A admin session follow-up — 7 October 2026 (Asia/Kolkata)
 
 The inspection issue is fixed on `feat/milestone-2-admin`, based on `bdbc2c4`. A fresh anonymous `/session` 401 now resolves to a stable logged-out query result, without an expiration notice. Previously, the global 401 event cleared/recreated that same observed query and incorrectly displayed “Your session ended”. A known session rejected on recheck or a protected request still ends, cancels pending admin work, and removes private data. Anonymous focus/reconnect events do not initiate new checks. Successful login and deliberate logout reset the notice; cancelled older checks cannot override a newer login. Public query data is retained.

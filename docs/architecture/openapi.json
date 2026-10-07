@@ -2435,13 +2435,13 @@
             }
           },
           {
-            "name": "options",
-            "in": "query",
+            "name": "X-Import-Options",
+            "in": "header",
             "required": true,
             "schema": {
               "type": "string",
-              "maxLength": 10000,
-              "title": "Options"
+              "maxLength": 14000,
+              "title": "X-Import-Options"
             }
           },
           {

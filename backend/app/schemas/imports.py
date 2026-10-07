@@ -32,6 +32,13 @@ class ImportOptions(DTO):
     policy: Literal["create_only", "upsert"] = "create_only"
     mapping: dict[str, str] = Field(default_factory=dict, max_length=40)
 
+    @field_validator("source_rights", "provenance")
+    @classmethod
+    def nonblank_source(cls, value):
+        if not value.strip():
+            raise ValueError("Source rights and provenance cannot be blank")
+        return value.strip()
+
     @field_validator("mapping")
     @classmethod
     def bounded_mapping(cls, value):

@@ -22,7 +22,13 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=get_settings().allowed_origins,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["Content-Type", "X-CSRF-Token", "If-Match", "Idempotency-Key"],
+    allow_headers=[
+        "Content-Type",
+        "X-CSRF-Token",
+        "If-Match",
+        "Idempotency-Key",
+        "X-Import-Options",
+    ],
     allow_credentials=True,
     expose_headers=["ETag", "X-Request-ID"],
 )

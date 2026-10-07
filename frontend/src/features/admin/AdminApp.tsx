@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { ApiError } from '../../api/client'
 import { adminApi, type Dashboard, type Draft, type Session } from './api'
+import { Imports } from './Imports'
 import { Catalog } from './Catalog'
 import { AuditLog, Users } from './People'
 import { useAdminSession } from './useAdminSession'
@@ -69,18 +70,19 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
   const allowed = (permission: string) => data.permissions.includes(permission)
   const selected = data.drafts.find(d => d.id === draftId) ?? data.drafts[0]
   return <>
-    <aside className="admin-notice"><strong>Public navigation stays on its published release.</strong><p>Draft changes are private. Imports, graph editing, review and publication are reserved for later milestones. Synthetic campus data is for software testing only.</p></aside>
+    <aside className="admin-notice"><strong>Public navigation stays on its published release.</strong><p>Draft changes are private. Staged imports apply to drafts. Graph editing, review and publication are reserved for later milestones. Synthetic campus data is for software testing only.</p></aside>
     <section className="admin-card"><h2>Published release</h2>{data.release ? <p className="admin-id">{data.release.id}<br />Published {new Date(data.release.published_at).toLocaleString()}</p> : <p>No public release yet.</p>}
       <p>Permissions: {data.permissions.join(', ').replaceAll('_', ' ')}</p>
     </section>
     <div className="admin-tabs" aria-label="Administration sections">
       {allowed('draft_read') && <button aria-pressed={tab === 'catalog'} onClick={() => setTab('catalog')}>Draft catalog</button>}
+      {allowed('import_read') && <button aria-pressed={tab === 'imports'} onClick={() => setTab('imports')}>Data imports</button>}
       {allowed('audit_read') && <button aria-pressed={tab === 'audit'} onClick={() => setTab('audit')}>Audit records</button>}
       {allowed('user_admin') && <button aria-pressed={tab === 'users'} onClick={() => setTab('users')}>Users and roles</button>}
     </div>
     {tab === 'audit' && allowed('audit_read') && <AuditLog path={path} />}
     {tab === 'users' && allowed('user_admin') && <Users path={path} csrf={session.csrf_token} />}
-    {tab === 'catalog' && allowed('draft_read') && <>
+    {['catalog', 'imports'].includes(tab) && allowed('draft_read') && <>
       <section className="admin-card"><h2>Draft catalog</h2><p>A new draft copies the current public release, including its stored navigation graph. Catalog edits stay within the selected draft.</p>
         <div className="admin-actions"><label>Selected draft<select value={selected?.id ?? ''} onChange={e => setDraftId(e.target.value)}><option value="" disabled>No draft selected</option>{data.drafts.map(d => <option key={d.id} value={d.id}>Draft {d.version} · {new Date(d.created_at).toLocaleString()}</option>)}</select></label>
           {allowed('draft_create') && <button disabled={busy} onClick={async () => { setBusy(true); setError(null); try {
@@ -88,7 +90,8 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
           } catch (e) { setError(e) } finally { setBusy(false) } }}>{busy ? 'Creating draft…' : 'Create draft from published release'}</button>}
         </div><ErrorMessage error={error} />{data.drafts_total > 100 && <p>Showing the latest 100 drafts of {data.drafts_total}.</p>}
       </section>
-      {selected && <Catalog key={selected.id} path={`${path}/drafts/${selected.id}`} csrf={session.csrf_token} editable={allowed('catalog_edit')} />}
+      {selected && tab === 'imports' && <Imports key={selected.id} path={path} draftId={selected.id} csrf={session.csrf_token} editable={allowed('import_write')} campus={data} />}
+      {selected && tab === 'catalog' && <Catalog key={selected.id} path={`${path}/drafts/${selected.id}`} csrf={session.csrf_token} editable={allowed('catalog_edit')} />}
     </>}
     {!allowed('draft_read') && <section className="admin-card"><h2>Operations access</h2><p>Your role can inspect this dashboard. Live closure and issue tools are scheduled for a later milestone.</p></section>}
   </>

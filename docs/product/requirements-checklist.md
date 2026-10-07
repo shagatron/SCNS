@@ -1,6 +1,6 @@
 # Requirements checklist
 
-Scope: **Milestones 0, 1 and the admin-only Milestone 2A slice**, authorized by the owner. M2B/2C are not authorized for implementation in this delivery. Later numbered milestones are recorded below, not claimed complete. Synthetic evidence validates software only. No real campus maps, field survey, license approval or deployment has been supplied/performed.
+Scope: **Milestones 0, 1, 2A and staged-import Milestone 2B1**, authorized by the owner. Milestone 2B2 graph editing, review/publication and deployment are not authorized in this delivery. Later numbered milestones are recorded below, not claimed complete. Synthetic evidence validates software only. No real campus maps, field survey, license approval or deployment has been supplied/performed.
 
 Statuses: `not_started`, `in_progress`, `implemented`, `verified`, `deferred_extension`, `blocked_external`.
 
@@ -43,7 +43,7 @@ Statuses: `not_started`, `in_progress`, `implemented`, `verified`, `deferred_ext
 | ADM-05 | Optimistic concurrency, atomic audit and private drafts | 2A | revision edit_version, conditional SQL update, revision read lock, audit triggers | Simultaneous real DB writers: one commit/one conflict; two browser tabs reconcile without losing input; public search/map/routes unchanged | verified | Whole-draft version; manual save; no publication or autosave/recovery workflow |
 | ADM-06 | Append-only administrative audit with scoped retrieval | 2A | `audit_events`, protected audit endpoint/UI | Actor/revision/request and before/after assertions, rejected deletion, successful-change count, no credential values | verified | DB superuser is trusted; unscoped authentication events are operator-only database evidence |
 | MAP-05 | Outdoor graph editor, source evidence and edit recovery | 2B | Master spec section 9 | Not run | not_started | Explicitly outside authorized M2A scope |
-| DAT-05 | Staged CSV/JSON/GeoJSON draft import, preview and diagnostics | 2B1 | `services/imports.py`, import jobs/bindings migration, import-v1 templates, admin UI | 45 integration and 35 Python unit tests pass; final UI/browser/build evidence pending | in_progress | Private sources, mapping, stable IDs, upsert/idempotency, concurrency and audits; no graph editor or publication |
+| DAT-05 | Staged CSV/JSON/GeoJSON draft import, preview and diagnostics | 2B1 | `services/imports.py`, import jobs/bindings migration, import-v1 templates, admin UI | 49 integration, 35 Python unit and 28 browser tests pass; new worker recovery test and final delivery evidence pending | in_progress | Private sources, mapping, stable IDs, upsert/idempotency, concurrency and audits; no graph editor or publication |
 | REL-02 | Reviewer approval, approved artifacts, publication and rollback | 2C | Master spec sections 9/13 | Not run | not_started | Existing immutable revision and admin audit foundations will be extended; no publishing endpoint in 2A |
 | MAP-04 | Two-floor demo, room doors, floorplans and connectors | 3 | Master spec sections 7/8/18 | Not run | not_started | Indoor foundation exists; no indoor feature claimed |
 | LOC-01 | Permission-aware outdoor location and manual fallback | 4 | Master spec section 10.6 | Not run | not_started | Manual starts already work; no automatic location collection |

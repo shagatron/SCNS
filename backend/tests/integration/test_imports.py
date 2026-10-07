@@ -1,5 +1,6 @@
 """Real PostGIS staged import contract: security, atomicity and public isolation."""
 
+import base64
 import json
 import secrets
 from uuid import UUID, uuid4
@@ -59,12 +60,13 @@ def upload(client, bundle, draft, headers, records=None, raw=None, key=None, **o
     opts = options(bundle, **overrides)
     return client.post(
         paths(bundle, draft)[0],
-        params={"filename": "synthetic." + opts["format"], "options": json.dumps(opts)},
+        params={"filename": "synthetic." + opts["format"]},
         content=raw if raw is not None else payload(bundle, records),
         headers={
             **headers,
             "Content-Type": "application/octet-stream",
             "Idempotency-Key": key or str(uuid4()),
+            "X-Import-Options": base64.b64encode(json.dumps(opts).encode()).decode(),
         },
     )
 
@@ -489,3 +491,118 @@ def test_apply_failure_rolls_back_entities_version_bindings_and_audit(
         == 0
     )
     assert job.state == "validated"
+
+
+def test_all_executable_bundle_templates_and_unchanged_reimport(client, db, bundle, identity):
+    from pathlib import Path
+
+    headers = sign_in(client, identity)
+    draft = make_draft(client, bundle, headers)
+    root = Path(__file__).resolve().parents[3] / "data/templates/import-v1"
+    job = preview(
+        db, upload(client, bundle, draft, headers, raw=(root / "catalog-bundle.json").read_bytes())
+    )
+    assert job.preview["counts"]["add"] == 10, job.preview
+    apply(client, bundle, draft, headers, job)
+    again = preview(
+        db, upload(client, bundle, draft, headers, raw=(root / "catalog-bundle.json").read_bytes())
+    )
+    assert again.preview["counts"]["unchanged"] == 10, again.preview
+    base = f"/api/v1/admin/campuses/{bundle.campus.id}"
+    for name in ("places.csv", "catalog-bundle.json", "places.geojson"):
+        response = client.get(base + "/import-templates/" + name)
+        assert response.status_code == 200 and response.content == (root / name).read_bytes()
+    assert client.get(base + "/import-templates/secret.env").status_code == 404
+
+
+def test_node_change_cannot_invalidate_existing_edges_or_public_anchors(
+    client, db, bundle, identity
+):
+    headers = sign_in(client, identity)
+    draft = make_draft(client, bundle, headers)
+    node = bundle.nodes[0]
+    row = {
+        "entity": "nodes",
+        "external_id": "adopt-node",
+        "existing_id": str(node.id),
+        "data": {
+            "frame_id": str(node.frame_id),
+            "label": node.label,
+            "visibility": node.visibility,
+            "point": {"type": "Point", "coordinates": [0.001, 0.001]},
+        },
+    }
+    job = preview(db, upload(client, bundle, draft, headers, [row], policy="upsert"))
+    assert job.preview["counts"]["invalid"] == 1
+    assert any(
+        "invalidate existing graph" in message for message in job.preview["rows"][0]["errors"]
+    )
+    assert (
+        client.post(paths(bundle, draft)[1] + f"/{job.id}/validate", headers=headers).status_code
+        == 422
+    )
+
+
+def test_geojson_crs_boundary_row_limit_metadata_and_storage_quota(
+    client, db, bundle, identity, monkeypatch
+):
+    headers = sign_in(client, identity)
+    draft = make_draft(client, bundle, headers)
+    wrong_crs = preview(
+        db,
+        upload(
+            client,
+            bundle,
+            draft,
+            headers,
+            raw=b'{"type":"FeatureCollection","crs":{},"features":[]}',
+            format="geojson",
+        ),
+    )
+    assert wrong_crs.state == "failed" and "WGS84" in wrong_crs.failure
+    row = {
+        "entity": "places",
+        "external_id": "foreign-geometry",
+        "data": {
+            "code": "OUT",
+            "name": "Wrong campus",
+            "kind": "help",
+            "point": {"type": "Point", "coordinates": [10, 10]},
+        },
+    }
+    job = preview(db, upload(client, bundle, draft, headers, [row]))
+    assert "outside the target campus" in job.preview["rows"][0]["errors"][0]
+    assert (
+        upload(client, bundle, draft, headers, [department()], campus_code="FOREIGN").status_code
+        == 422
+    )
+    assert (
+        upload(client, bundle, draft, headers, [department()], source_rights="   ").status_code
+        == 422
+    )
+    monkeypatch.setenv("IMPORT_ROW_LIMIT", "1")
+    get_settings.cache_clear()
+    oversized = preview(db, upload(client, bundle, draft, headers, [department(), department("b")]))
+    assert oversized.state == "failed" and "row limit" in oversized.failure
+    monkeypatch.setenv("IMPORT_STORAGE_LIMIT", "1024")
+    get_settings.cache_clear()
+    assert (
+        upload(
+            client, bundle, draft, headers, raw=payload(bundle, [department()]) + b" " * 1024
+        ).status_code
+        == 413
+    )
+
+
+def test_checksum_verification_and_private_failure_redaction(client, db, bundle, identity):
+    headers = sign_in(client, identity)
+    draft = make_draft(client, bundle, headers)
+    response = upload(client, bundle, draft, headers, [department()])
+    job = db.get(ImportJob, UUID(response.json()["id"]))
+    private_path(job).write_bytes(b"{}")
+    process_job(db, job)
+    assert job.state == "failed" and "checksum" in job.failure
+    private_path(job).unlink()
+    process_job(db, job)
+    assert job.state == "failed" and "unreadable" in job.failure
+    assert job.storage_key not in job.failure and str(private_path(job)) not in job.failure

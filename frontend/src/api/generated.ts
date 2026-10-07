@@ -2935,9 +2935,9 @@ export interface operations {
         parameters: {
             query: {
                 filename: string;
-                options: string;
             };
             header: {
+                "X-Import-Options": string;
                 "Idempotency-Key": string;
             };
             path: {

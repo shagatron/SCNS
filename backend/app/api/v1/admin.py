@@ -117,7 +117,9 @@ def dashboard(campus_id: UUID, request: Request, db: DB):
     user = authorize(db, request, campus_id, "dashboard")
     allowed = permissions(db, user.id, campus_id)
     campus = db.get(Campus, campus_id)
-    query = select(Revision).where(Revision.campus_id == campus_id, Revision.status == "draft")
+    query = select(Revision).where(
+        Revision.campus_id == campus_id, Revision.status.in_(["draft", "review"])
+    )
     drafts = (
         db.scalars(query.order_by(Revision.version.desc()).limit(100)).all()
         if "draft_read" in allowed
@@ -139,7 +141,7 @@ def dashboard(campus_id: UUID, request: Request, db: DB):
         else 0,
         limitations=[
             "Draft catalog edits do not change the published map.",
-            "Staged imports apply only to drafts. Outdoor graph editing is draft-only. Review and publication are not enabled.",
+            "Staged imports apply only to drafts. Outdoor graph editing is draft-only. Review and publication require independent approval of exact validated content.",
             "Operational closure tools are a later milestone.",
         ],
     )

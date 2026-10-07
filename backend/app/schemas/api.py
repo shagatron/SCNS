@@ -42,6 +42,8 @@ class ReleaseOut(DTO):
     published_at: datetime
     version: int
     closure_overlay_version: int = 0
+    artifact_checksum: str | None = None
+    artifact_url: str | None = None
 
 
 class PlaceOut(DTO):

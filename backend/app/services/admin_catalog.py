@@ -19,6 +19,7 @@ from app.models import (
 )
 from app.models.admin import Department, DepartmentPlace, PlaceAlias
 from app.models.imports import ImportBinding
+from app.models.publication import SourceAsset
 from app.schemas.admin import CatalogRecord, CatalogWrite, DraftOut
 from app.services.admin_auth import audit
 from app.services.catalog import normalize
@@ -85,6 +86,7 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
             PlaceAlias,
             DepartmentPlace,
             ImportBinding,
+            SourceAsset,
         ):
             table = model.__table__
             db.execute(

@@ -22,6 +22,7 @@ export async function api<T>(path: string, options?: RequestInit): Promise<T> {
   }
   if (!response.ok) {
     const body = await response.json().catch(() => null)
+    if (body?.error?.code === 'stale_release' && !options?.signal?.aborted) window.dispatchEvent(new Event('campus-release-stale'))
     throw new ApiError(body?.error?.code ?? 'service_unavailable', body?.error?.message ?? 'Campus data is temporarily unavailable.', body?.error?.request_id)
   }
   return response.json() as Promise<T>

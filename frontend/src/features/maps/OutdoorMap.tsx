@@ -39,7 +39,7 @@ export default function OutdoorMap({ campus, data, places, route, onDestination 
       {tileUrl && attribution && <TileLayer url={tileUrl} attribution={attribution} eventHandlers={{ tileerror: () => setTileFailed(true) }} />}
       <GeoJSON key={data.release_id} data={data as unknown as FeatureCollection} style={feature => feature?.properties.layer === 'building'
         ? { color: '#8fae9d', fillColor: '#dce8df', fillOpacity: 1, weight: 2 }
-        : { color: feature?.properties.open ? '#b4c6b4' : '#9d5951', weight: 5, dashArray: feature?.properties.open ? undefined : '5 8' }} />
+        : feature?.properties.layer === 'overlay' ? { color: '#64728a', weight: 2, fillOpacity: 0.15 } : { color: feature?.properties.open ? '#b4c6b4' : '#9d5951', weight: 5, dashArray: feature?.properties.open ? undefined : '5 8' }} />
       {places.map(place => <CircleMarker key={place.id} center={toLeaflet(place.point.coordinates as [number, number])} radius={6}
         pathOptions={{ color: '#153e35', fillColor: '#ffffff', fillOpacity: 1, weight: 2 }}
         eventHandlers={{ click: () => onDestination(place) }}>
@@ -52,6 +52,7 @@ export default function OutdoorMap({ campus, data, places, route, onDestination 
     </MapContainer>
     <div className="map-legend"><span>● Destination</span><span>━ Walking path</span><span>┄ Closed path</span></div>
     <p className="map-source">Original synthetic campus geometry · WGS84 coordinates near 0°, 0° · no real campus map</p>
+    {[...new Set(data.features.filter(f => f.properties.layer === 'overlay').map(f => String(f.properties.attribution)))].map(text => <p className="map-source" key={text}>{text}</p>)}
     {tileFailed && <p role="status" className="notice">Background tiles are unavailable. Campus paths and text directions remain usable.</p>}
   </section>
 }

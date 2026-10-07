@@ -1,6 +1,6 @@
 import json
 from typing import Annotated
-from uuid import UUID
+from uuid import UUID, uuid5
 
 from fastapi import APIRouter, Depends, Query, Response
 from sqlalchemy import case, func, select, text
@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from app.core.errors import DomainError
 from app.db.session import get_session
 from app.models import ActiveRelease, Building, Campus, Edge, Node, Place, Release
+from app.models.publication import ReleaseArtifact
 from app.schemas.api import (
     CampusOut,
     ErrorOut,
@@ -22,6 +23,7 @@ from app.schemas.api import (
     SearchOut,
 )
 from app.services.catalog import active_release, normalize, place_output, public_places
+from app.services.publication import canonical
 from app.services.routes import calculate_route
 
 router = APIRouter(
@@ -83,8 +85,10 @@ def search(
     kind: str | None = Query(None, max_length=32),
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0, le=10000),
+    expected_release_id: UUID | None = None,
 ):
     release = active_release(db, campus_id)
+    check_expected(release, expected_release_id)
     query = public_places(release.dataset_revision_id)
     value = normalize(q)
     if value:
@@ -132,8 +136,10 @@ def map_data(
     db: DB,
     bbox: str = Query(..., max_length=120),
     zoom: int = Query(17, ge=14, le=22),
+    expected_release_id: UUID | None = None,
 ):
     release = active_release(db, campus_id)
+    check_expected(release, expected_release_id)
     try:
         west, south, east, north = map(float, bbox.split(","))
         if not (
@@ -176,6 +182,33 @@ def map_data(
             features.append(
                 MapFeature(id=item.id, geometry=json.loads(shape), properties=properties)
             )
+    artifact = db.get(ReleaseArtifact, release.id)
+    if artifact:
+        for asset in artifact.content["assets"].values():
+            for index, feature in enumerate(asset["geojson"]["features"]):
+                shape = feature["geometry"]
+                if db.scalar(
+                    select(
+                        func.ST_Intersects(
+                            func.ST_SetSRID(func.ST_GeomFromGeoJSON(json.dumps(shape)), 4326),
+                            extent,
+                        )
+                    )
+                ):
+                    if len(features) >= 2500:
+                        truncated = True
+                        break
+                    features.append(
+                        MapFeature(
+                            id=uuid5(UUID(asset["id"]), str(index)),
+                            geometry=shape,
+                            properties={
+                                "layer": "overlay",
+                                "name": feature["properties"]["label"],
+                                "attribution": asset["attribution"],
+                            },
+                        )
+                    )
     return MapOut(features=features, release_id=release.id, truncated=truncated)
 
 
@@ -183,3 +216,45 @@ def map_data(
 def route(request: RouteRequest, db: DB, response: Response):
     response.headers["Cache-Control"] = "no-store"
     return calculate_route(db, request)
+
+
+def check_expected(release, expected):
+    if expected is not None and expected != release.id:
+        raise DomainError(
+            "stale_release",
+            "The campus release changed. Reload coherent campus data before trying again.",
+            409,
+        )
+
+
+@router.get("/campuses/{campus_id}/artifacts/{release_id}/{artifact_checksum}.json")
+def public_artifact(campus_id: UUID, release_id: UUID, artifact_checksum: str, db: DB):
+    artifact = db.scalar(
+        select(ReleaseArtifact).where(
+            ReleaseArtifact.campus_id == campus_id,
+            ReleaseArtifact.release_id == release_id,
+            ReleaseArtifact.checksum == artifact_checksum,
+        )
+    )
+    if not artifact:
+        raise DomainError("location_not_found", "Public artifact not found.", 404)
+    return Response(
+        canonical(artifact.content),
+        media_type="application/json",
+        headers={
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "ETag": f'"{artifact.checksum}"',
+            "Content-Disposition": 'attachment; filename="public-release.json"',
+        },
+    )
+
+
+@router.get("/campuses/{campus_id}/directory")
+def department_directory(campus_id: UUID, db: DB, expected_release_id: UUID | None = None):
+    release = active_release(db, campus_id)
+    check_expected(release, expected_release_id)
+    artifact = db.get(ReleaseArtifact, release.id)
+    return {
+        "release_id": str(release.id),
+        "departments": list(artifact.content["departments"].values()) if artifact else [],
+    }

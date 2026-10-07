@@ -1,3 +1,9 @@
+## M2C unfinished implementation checkpoint — 7 October 2026
+
+Backend lifecycle/migration, private source/derivative registration/approval, whole-draft validation and expected-route evidence, exact-content independent review, immutable checksummed artifacts, guarded transactional publish/rollback with retry keys and audited history are implemented. Review submissions lock entity writes at API and database level; withdrawal/rejection returns to a fresh draft version. Responsive source/review/history screens and release-pinned public refresh are present but browser verification is unfinished.
+
+Focused result: 15 new backend unit/PostGIS tests passed (9 integration and 6 contract cases), plus 23 affected graph integration regressions passed. Type check and frontend lint passed with one Fast Refresh warning; helper extraction removes that warning and requires rerun. Full core suites and committed-transaction race tests are running; results are not yet claimed. New browser journeys, full migration rehearsal, built workflow smoke, Windows operations instructions and final evidence remain next. No developer release/draft was published or rolled back. This is explicitly unfinished.
+
 ## M2C unfinished scope checkpoint — 7 October 2026
 
 Authorized by the owner’s pasted request; existing checkout clean at verified `21c65fb`. Branch `feat/milestone-2-publication` starts there; no worktree/reset/discard. Prior 2B2 implementation and verification retained.

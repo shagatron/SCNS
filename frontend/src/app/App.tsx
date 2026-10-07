@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useSyncExternalStore } from 'react'
+import { lazy, Suspense, useEffect, useState, useSyncExternalStore } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 import { api, ApiError, calculateRoute, type Campus, type MapData, type Place, type Release, type Search } from '../api/client'
@@ -50,13 +50,28 @@ export default function App() {
 }
 
 function CampusExplorer({ campus, online }: { campus: Campus; online: boolean }) {
-  const initial = useQuery({ queryKey: ['places', campus.id], queryFn: () => api<Search>(`/campuses/${campus.id}/search?limit=100`) })
-  if (initial.error) return <Failure error={initial.error} retry={() => void initial.refetch()} />
-  if (!initial.data) return <p role="status" className="loading">Loading destinations…</p>
-  return <Planner campus={campus} initial={initial.data} online={online} />
+  const cache = useQueryClient()
+  const release = useQuery({ queryKey: ['release', campus.id], queryFn: () => api<Release>(`/campuses/${campus.id}/release`), refetchInterval: online ? 30000 : false })
+  const [seen, setSeen] = useState<string | null>(null)
+  const [changed, setChanged] = useState(false)
+  if (release.data && seen !== release.data.id) { setSeen(release.data.id); if (seen) setChanged(true) }
+  useEffect(() => {
+    const refresh = () => { setChanged(true); void cache.invalidateQueries({ queryKey: ['release', campus.id] }) }
+    window.addEventListener('campus-release-stale', refresh)
+    return () => window.removeEventListener('campus-release-stale', refresh)
+  }, [cache, campus.id])
+  const id = release.data?.id
+  const initial = useQuery({ queryKey: ['places', campus.id, id], enabled: !!id, retry: false, queryFn: ({ signal }) => api<Search>(`/campuses/${campus.id}/search?limit=100&expected_release_id=${id}`, { signal }) })
+  return <>
+    {changed && <p role="status" className="notice">The campus release changed. Previous route results and selections were cleared; choose destinations and calculate a route on the current map.</p>}
+    {release.error && <Failure error={release.error} retry={() => void release.refetch()} />}
+    {initial.error && <Failure error={initial.error} retry={() => void initial.refetch()} />}
+    {!initial.data && !initial.error && <p role="status" className="loading">Loading destinations for the current release…</p>}
+    {initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={release.data.id} campus={campus} initial={initial.data} online={online} release={release.data} />}
+  </>
 }
 
-function Planner({ campus, initial, online }: { campus: Campus; initial: Search; online: boolean }) {
+function Planner({ campus, initial, online, release }: { campus: Campus; initial: Search; online: boolean; release: Release }) {
   const [source, setSource] = useState(initial.items.find(p => p.code === 'GATE')?.id ?? initial.items[0]?.id ?? '')
   const [destination, setDestination] = useState('')
   const [profile, setProfile] = useState<'shortest' | 'step_free'>('shortest')
@@ -67,11 +82,10 @@ function Planner({ campus, initial, online }: { campus: Campus; initial: Search;
   const [mapVisible, setMapVisible] = useState(true)
   const [selectedPlaces, setSelectedPlaces] = useState<Place[]>([])
   const queryClient = useQueryClient()
-  const directory = useQuery({ queryKey: ['directory', campus.id, q, category, offset], queryFn: ({ signal }) => api<Search>(`/campuses/${campus.id}/search?${new URLSearchParams({ q, kind: category, offset: String(offset), limit: '6' })}`, { signal }) })
-  const release = useQuery({ queryKey: ['release', campus.id], queryFn: () => api<Release>(`/campuses/${campus.id}/release`) })
+  const directory = useQuery({ retry: false, queryKey: ['directory', campus.id, release.id, q, category, offset], queryFn: ({ signal }) => api<Search>(`/campuses/${campus.id}/search?${new URLSearchParams({ q, kind: category, offset: String(offset), limit: '6', expected_release_id: release.id })}`, { signal }) })
   const positions = campus.boundary.coordinates[0]
   const bbox = [Math.min(...positions.map(p => p[0])), Math.min(...positions.map(p => p[1])), Math.max(...positions.map(p => p[0])), Math.max(...positions.map(p => p[1]))].join(',')
-  const map = useQuery({ queryKey: ['map', campus.id], queryFn: () => api<MapData>(`/campuses/${campus.id}/map?bbox=${bbox}&zoom=17`) })
+  const map = useQuery({ queryKey: ['map', campus.id, release.id], retry: false, queryFn: ({ signal }) => api<MapData>(`/campuses/${campus.id}/map?bbox=${bbox}&zoom=17&expected_release_id=${release.id}`, { signal }) })
   const route = useMutation({ mutationFn: calculateRoute, onError(error) {
     if (error instanceof ApiError && error.code === 'stale_release') {
       void queryClient.invalidateQueries({ queryKey: ['release', campus.id] })
@@ -93,7 +107,7 @@ function Planner({ campus, initial, online }: { campus: Campus; initial: Search;
     const parsed = formSchema.safeParse({ source, destination, profile })
     if (!parsed.success) { setFormError('Choose both a starting point and a destination.'); return }
     setFormError('')
-    route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, expected_release_id: release.data?.id ?? initial.release_id })
+    route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, expected_release_id: release.id })
   }
   return <>
     <div className="explorer-grid">
@@ -105,13 +119,12 @@ function Planner({ campus, initial, online }: { campus: Campus; initial: Search;
             <div className="swap-row"><span className="connector-line" /><button type="button" className="text-button" onClick={() => { setSource(destination); setDestination(source); clear() }} aria-label="Swap start and destination">⇅ Swap</button></div>
             <label htmlFor="destination">Destination</label><select id="destination" value={destination} onChange={e => { setDestination(e.target.value); clear() }}><option value="">Where would you like to go?</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select>
             <label htmlFor="profile">Route preference</label><select id="profile" value={profile} onChange={e => { setProfile(e.target.value as typeof profile); clear() }}><option value="shortest">Shortest walking route</option><option value="step_free">Step-free · synthetic verification only</option></select>
-            <button type="submit" className="primary-button" disabled={!online || !release.data}>{route.isPending ? 'Finding your route…' : 'Find walking route'} <span aria-hidden="true">→</span></button>
+            <button type="submit" className="primary-button" disabled={!online}>{route.isPending ? 'Finding your route…' : 'Find walking route'} <span aria-hidden="true">→</span></button>
           </fieldset>
           {formError && <p role="alert" className="error-text">{formError}</p>}
         </form>
         {route.isPending && <p role="status">Calculating a route through mapped paths…</p>}
         {route.error && <div role="alert" className="error-box"><strong>Route unavailable</strong><p>{route.error.message}</p></div>}
-        {release.error && <Failure error={release.error} retry={() => void release.refetch()} />}
         {route.data && <><div role="status" className="sr-only">Route ready. {Math.round(route.data.distance_m)} metres.</div><RouteDetails route={route.data} /><button className="secondary-button" onClick={clear}>Clear route</button></>}
         {!route.data && !route.error && <div className="planner-hint"><span aria-hidden="true">◎</span><p>Start from a known landmark.<br /><small>Outdoor walking routes · no sign-in needed</small></p></div>}
       </section>
@@ -120,7 +133,7 @@ function Planner({ campus, initial, online }: { campus: Campus; initial: Search;
           {map.data && <Suspense fallback={<p className="loading">Loading map…</p>}><OutdoorMap campus={campus} data={map.data} places={initial.items} route={route.data} onDestination={choose} /></Suspense>}
           {map.isPending && <p role="status" className="loading">Loading campus paths…</p>}</>}
         {!mapVisible && <p className="empty-state">Map hidden. Plan your walk and follow the text directions.</p>}
-        <div className="map-footnote"><span>↗ Routes follow mapped paths</span><span>{release.data ? `Demo release ${release.data.version}` : 'Loading release…'}</span></div>
+        <div className="map-footnote"><span>↗ Routes follow mapped paths</span><span>{`Demo release ${release.version}`}</span></div>
       </div>
     </div>
     <section id="directory" className="directory" aria-labelledby="directory-heading"><div className="directory-header"><div><p className="eyebrow">FIND YOUR NEXT STOP</p><h2 id="directory-heading">Explore the campus</h2></div><p className="muted">Buildings, everyday essentials, and quiet corners.</p></div>

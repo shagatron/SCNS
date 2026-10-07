@@ -59,3 +59,8 @@
   .graph-map { height: 350px; }
   .graph-inspector { padding-top: 1rem; }
 }
+.publication-workspace > details { margin: 1rem 0; }
+.publication-workspace details details { margin: .75rem 0; }
+.publication-workspace summary { cursor: pointer; font-weight: 600; overflow-wrap: anywhere; }
+.publication-workspace label { margin: .75rem 0; }
+.publication-workspace article, .publication-workspace p { overflow-wrap: anywhere; }

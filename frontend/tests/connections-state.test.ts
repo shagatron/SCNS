@@ -10,3 +10,16 @@ describe('explicit connection edits', () => {
   it('merges independent records and requires choices for a concurrently changed record', () => { const base = initial(), mine = clone(base), latest = clone(base), ids = Object.keys(base.connectors); mine.connectors[ids[0]].label = 'Mine'; latest.connectors[ids[1]].label = 'Independent'; const result = reconcile(base, mine, latest); expect(result.conflicts).toEqual([]); expect(result.merged.connectors[ids[0]].label).toBe('Mine'); expect(result.merged.connectors[ids[1]].label).toBe('Independent'); latest.connectors[ids[0]].label = 'Concurrent'; expect(reconcile(base, mine, latest).conflicts).toHaveLength(1); latest.floors.$GROUND.layer_id = 'different'; expect(reconcile(base, mine, latest).changedPlans).toEqual(['$GROUND']) })
   it('recovers raw invalid fields and clears private recovery at logout', () => { const base = initial(), saved = fresh(base); saved.form = { distance_m: 'unfinished-number' }; sessionStorage.setItem('scns-connections-recovery:test', JSON.stringify(saved)); expect(restore('scns-connections-recovery:test', base).form.distance_m).toBe('unfinished-number'); const generation = recoveryGeneration(); clearGraphRecovery(); expect(recoveryGeneration()).not.toBe(generation); expect(sessionStorage.getItem('scns-connections-recovery:test')).toBeNull() })
 })
+
+it('retains unresolved record and raw-field decisions through reload and rejects corrupt context', () => {
+  const base = initial(), state = fresh(base), id = Object.keys(base.connectors)[0]
+  state.conflicts = [{ entity: 'connectors', id, data: { ...base.connectors[id], label: 'Retained mine' } }]
+  state.selected = { entity: 'connectors', id }; state.rawConflict = state.selected; state.form = { label: 'Retained raw input' }
+  sessionStorage.setItem('connection-decisions', JSON.stringify(state))
+  const recovered = restore('connection-decisions', base)
+  expect(recovered.conflicts?.[0].data && 'label' in recovered.conflicts[0].data && recovered.conflicts[0].data.label).toBe('Retained mine')
+  expect(recovered.rawConflict).toEqual(state.selected)
+  sessionStorage.setItem('connection-decisions', JSON.stringify({ ...state, work: { connectors: {} } }))
+  expect(restore('connection-decisions', base).conflicts).toBeUndefined()
+  sessionStorage.removeItem('connection-decisions')
+})

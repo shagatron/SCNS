@@ -25,6 +25,7 @@ export function QRInventory({ path, session, editable }: { path: string; session
   const [saved, setSaved] = useState('')
   const [reconciled, setReconciled] = useState(false)
   const data = inventory.data
+  const unsaved = selected ? Object.entries(input).some(([field, value]) => selected[field as keyof Input] !== value) : !!(input.label || input.node_id || input.intended_position)
   const latest = data?.items.find(item => item.id === selected?.id)
   function open(marker: Marker | null) {
     setSelected(marker); setInput(marker ? { label: marker.label, node_kind: marker.node_kind, node_id: marker.node_id, intended_position: marker.intended_position } : empty)
@@ -35,6 +36,7 @@ export function QRInventory({ path, session, editable }: { path: string; session
     try {
       const body = action === 'save' ? selected ? input : { ...input, key } : action === 'activate' ? installation : { reason }
       const result = await adminApi<Marker>(`${endpoint}${selected ? `/${selected.id}${action === 'save' ? '' : `/${action}`}` : ''}`, { method: action === 'save' && selected ? 'PUT' : 'POST', body, csrf: session.csrf_token, version: selected?.version })
+      if (action === 'save') { setInstallation(blankInstall); setReason('') }
       setSelected(result); setReconciled(false); setSaved(action === 'save' ? 'Marker saved as planned. Verify its installation before activating.' : action === 'activate' ? 'Installation recorded and marker activated.' : 'Marker revoked. Existing printed links cannot start routes.')
       await inventory.refetch()
     } catch (e) { setError(e); if (e instanceof ApiError && e.code === 'conflict') await inventory.refetch() }
@@ -57,6 +59,7 @@ export function QRInventory({ path, session, editable }: { path: string; session
       <ErrorMessage error={error} />{saved && <p role="status">{saved}</p>}
       {latest && selected && latest.version !== selected.version && <aside className="admin-notice"><p>Marker changed on the server. Your unsaved inputs are retained. Current server version: {latest.version} · {latest.label} · {latest.state} · target {latest.node_id}.</p><p>Server intended position: {latest.intended_position}</p><button disabled={busy} onClick={() => { setSelected(latest); setReconciled(true); setError(null) }}>Use latest version and keep my inputs</button><button disabled={busy} onClick={() => open(latest)}>Discard my inputs and load latest</button></aside>}
       {reconciled && <p role="status">Latest version accepted. Review retained inputs before saving or verifying.</p>}
+      {unsaved && <p role="status" className="notice">Unsaved marker fields. Saving replans the sign and clears installation verification.</p>}
       <form onSubmit={e => { e.preventDefault(); void write('save') }}><fieldset disabled={!editable || busy}>
         <label>Sign label<input value={input.label} required maxLength={160} onChange={e => setInput({ ...input, label: e.target.value })} /></label>
         <label>Published target node<select required value={`${input.node_kind}:${input.node_id}`} onChange={e => { const [kind, id] = e.target.value.split(':'); setInput({ ...input, node_kind: kind as Input['node_kind'], node_id: id }) }}><option value={`${input.node_kind}:`}>Choose a published node</option>{data.targets.map(t => <option key={`${t.kind}:${t.id}`} value={`${t.kind}:${t.id}`}>{t.kind} · {t.label}{t.floor_label ? ` · ${t.floor_label}` : ''}</option>)}</select></label>

@@ -240,7 +240,8 @@ def test_release_revalidation_never_resurrects_retired_revoked_or_moved_signs(
     qr.reconcile(db, seeded, release_projection(db, seeded), identity[0], "rollback-test")
     assert obj.state == "retired"
     assert route(client, bundle, marker).status_code == 410
-    assert client.get(f"/api/v1/qr/{uuid4()}").status_code == 404
+    missing = client.get(f"/api/v1/qr/{uuid4()}")
+    assert missing.status_code == 404 and missing.headers["cache-control"] == "no-store"
 
 
 def test_qr_survives_real_independent_publication_and_removed_indoor_target_rollback(
@@ -417,3 +418,25 @@ def test_unpublished_graph_and_floor_nodes_cannot_change_qr_inventory_or_public_
     )
     assert r.status_code == 422
     assert route(client, bundle, marker).json()["distance_m"] == 256.88
+
+
+@pytest.mark.parametrize("problem", ["future", "reversed_dates", "blank_evidence"])
+def test_invalid_installation_never_activates_or_audits_a_sign(
+    client, db, bundle, identity, problem
+):
+    h, data, marker = create(client, bundle, identity, active=False)
+    evidence = installation()
+    if problem == "future":
+        evidence["verified_on"] = "2099-01-01"
+    elif problem == "reversed_dates":
+        evidence["verified_on"] = "2020-01-01"
+    else:
+        evidence["evidence"] = " " * 20
+    before = db.scalar(select(func.count()).select_from(AuditEvent))
+    r = client.post(
+        endpoint(bundle) + f"/{marker['id']}/activate", json=evidence, headers=version(h, 1)
+    )
+    assert r.status_code == 422, r.text
+    obj = db.get(QRMarker, marker["id"])
+    assert obj.state == "planned" and obj.version == 1 and obj.installation == {}
+    assert db.scalar(select(func.count()).select_from(AuditEvent)) == before

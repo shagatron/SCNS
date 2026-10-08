@@ -18,6 +18,8 @@ class MarkerInput(DTO):
     @classmethod
     def meaningful(cls, value, info: ValidationInfo):
         value = value.strip()
+        if info.field_name == "label" and any(ord(c) < 32 for c in value):
+            raise ValueError("Use printable marker label text")
         if len(value) < (10 if info.field_name == "intended_position" else 1):
             raise ValueError("Provide meaningful marker text")
         return value

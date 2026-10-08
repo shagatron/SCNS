@@ -1,5 +1,5 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { onlineManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, expect, it, vi } from 'vitest'
 import QRStart from '../src/features/qr/QRStart'
 
@@ -11,7 +11,7 @@ function mount() {
   return { client, ...render(<QueryClientProvider client={client}><QRStart /></QueryClientProvider>) }
 }
 function reply(value: unknown) { return new Response(JSON.stringify(value), { status: 200, headers: { 'Content-Type': 'application/json' } }) }
-afterEach(() => { cleanup(); clients.splice(0).forEach(c => c.clear()); vi.unstubAllGlobals(); window.history.replaceState(null, '', '/') })
+afterEach(() => { cleanup(); onlineManager.setOnline(true); clients.splice(0).forEach(c => c.clear()); vi.unstubAllGlobals(); window.history.replaceState(null, '', '/') })
 
 it('requires explicit confirmation and loses it on reload/remount', async () => {
   vi.stubGlobal('fetch', vi.fn<typeof fetch>().mockImplementation(async () => reply(marker)))

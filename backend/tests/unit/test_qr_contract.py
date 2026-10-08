@@ -105,3 +105,14 @@ def test_qr_request_requires_explicit_confirmation_and_version():
         RouteRequest.model_validate(
             {**base, "source": {k: v for k, v in base["source"].items() if k != "confirmed"}}
         )
+
+
+def test_previous_place_source_default_kind_remains_compatible():
+    value = RouteRequest.model_validate(
+        {
+            "campus_id": str(uuid4()),
+            "source": {"place_id": str(uuid4())},
+            "destination": {"place_id": str(uuid4())},
+        }
+    )
+    assert value.source.kind == "place"

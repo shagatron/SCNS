@@ -65,7 +65,7 @@ New reviewed `Release.checksum` binds canonical full reviewed content; existing 
 
 Milestone3C indoor/mixed routing documentation: [data contract](../data/indoor-routing.md), [data-preserving Windows update and manual fixtures](../operations/indoor-routing.md). The earlier3A/3B milestone descriptions above describe those delivered slices; enabled reviewed3C floors now add explicit routing capability. Current3C verification is recorded separately in progress/testing evidence.
 
-##3C connection tables
+## 3C connection tables
 
 | Table | Purpose |
 |---|---|

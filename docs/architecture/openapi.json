@@ -9215,6 +9215,21 @@
             "format": "uuid",
             "title": "Campus Id"
           },
+          "campus_name": {
+            "type": "string",
+            "title": "Campus Name"
+          },
+          "building_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Building Name"
+          },
           "version": {
             "type": "integer",
             "title": "Version"
@@ -9333,6 +9348,7 @@
         "required": [
           "id",
           "campus_id",
+          "campus_name",
           "version",
           "state",
           "release_id",
@@ -10646,7 +10662,7 @@
             "title": "Campus Id"
           },
           "source": {
-            "anyOf": [
+            "oneOf": [
               {
                 "$ref": "#/components/schemas/PlaceSource"
               },
@@ -10654,7 +10670,14 @@
                 "$ref": "#/components/schemas/QRSource"
               }
             ],
-            "title": "Source"
+            "title": "Source",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "place": "#/components/schemas/PlaceSource",
+                "qr": "#/components/schemas/QRSource"
+              }
+            }
           },
           "destination": {
             "$ref": "#/components/schemas/PlaceSource"

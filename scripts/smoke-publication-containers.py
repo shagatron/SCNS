@@ -175,6 +175,7 @@ def main():
                 "python",
                 "-m",
                 "tests.browser_runner",
+                "qr.spec.ts",
                 "floorplans.spec.ts",
                 "indoor.spec.ts",
                 "indoor-routing.spec.ts",

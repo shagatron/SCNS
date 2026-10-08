@@ -220,11 +220,15 @@ def resolve(db, identity):
             "node_label": selected["node"]["label"],
             "floor_id": selected.get("floor", {}).get("id"),
             "floor_label": selected.get("floor", {}).get("label"),
+            "building_name": data.get("buildings", {})
+            .get(selected.get("floor", {}).get("building_id"), {})
+            .get("name"),
             "verified_on": obj.installation["verified_on"],
         }
     return MarkerResolution(
         id=obj.id,
         campus_id=obj.campus_id,
+        campus_name=data["campus"]["name"],
         version=obj.version,
         state=state,
         release_id=release.id,
@@ -264,6 +268,9 @@ def listing(db, campus):
                         "kind": kind,
                         "label": selected["node"]["label"],
                         "floor_label": selected.get("floor", {}).get("label"),
+                        "building_name": data.get("buildings", {})
+                        .get(selected.get("floor", {}).get("building_id"), {})
+                        .get("name"),
                     }
                 )
     items = [

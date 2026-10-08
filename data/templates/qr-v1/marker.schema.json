@@ -1,0 +1,46 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "label": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Label",
+      "type": "string"
+    },
+    "node_kind": {
+      "enum": [
+        "outdoor",
+        "indoor"
+      ],
+      "title": "Node Kind",
+      "type": "string"
+    },
+    "node_id": {
+      "format": "uuid",
+      "title": "Node Id",
+      "type": "string"
+    },
+    "intended_position": {
+      "maxLength": 2000,
+      "minLength": 10,
+      "title": "Intended Position",
+      "type": "string"
+    },
+    "key": {
+      "maxLength": 80,
+      "minLength": 8,
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "title": "Key",
+      "type": "string"
+    }
+  },
+  "required": [
+    "label",
+    "node_kind",
+    "node_id",
+    "intended_position",
+    "key"
+  ],
+  "title": "MarkerCreate",
+  "type": "object"
+}

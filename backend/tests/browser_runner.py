@@ -55,6 +55,8 @@ def main():
         fixture_campuses.extend(
             create_fixture(db, release.dataset_revision_id, bundle, viewport, purpose)
             for purpose in (
+                "qr",
+                "qr conflicts",
                 "floorplan",
                 "floorplan conflicts",
                 "indoor",

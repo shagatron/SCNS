@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, field_validator
 
 
 class DTO(BaseModel):
@@ -105,12 +105,19 @@ class QRSource(DTO):
 
 class RouteRequest(DTO):
     campus_id: UUID
-    source: PlaceSource | QRSource
+    source: PlaceSource | QRSource = Field(discriminator="kind")
     destination: PlaceSource
     profile: Literal["shortest", "step_free", "fastest"] = "shortest"
     cost_mode: Literal["metric", "directions_only"] = "metric"
     departure_at: AwareDatetime | None = None
     expected_release_id: UUID | None = None
+
+    @field_validator("source", mode="before")
+    @classmethod
+    def legacy_place_source(cls, value):
+        if isinstance(value, dict) and "kind" not in value and "place_id" in value:
+            return {"kind": "place", **value}
+        return value
 
 
 class RouteSegment(DTO):

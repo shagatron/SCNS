@@ -1,1 +1,1 @@
-external_id,campus_code,node_external_id,label,status,installed_at,verified_at,revoked_at
+marker_id,campus_code,node_kind,published_node_id,label,intended_position,actual_position,installer,installed_on,verified_on,state,marker_version,canonical_url

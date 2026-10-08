@@ -48,7 +48,9 @@ async def request_id(request: Request, call_next):
     response = await call_next(request)
     response.headers["X-Request-ID"] = request.state.request_id
     response.headers["X-Content-Type-Options"] = "nosniff"
-    if request.url.path.endswith("/routes") or request.url.path.startswith("/api/v1/admin"):
+    if request.url.path.endswith("/routes") or (
+        request.url.path.startswith("/api/v1/admin") or request.url.path.startswith("/api/v1/qr")
+    ):
         response.headers["Cache-Control"] = "no-store"
     return response
 
@@ -84,7 +86,7 @@ async def validation_error(request: Request, exc: RequestValidationError):
 
 @app.exception_handler(SQLAlchemyError)
 async def database_error(request: Request, exc: SQLAlchemyError):
-    if request.url.path.startswith("/api/v1/admin"):
+    if request.url.path.startswith("/api/v1/admin") or request.url.path.startswith("/api/v1/qr"):
         if isinstance(exc, IntegrityError):
             return error_response(
                 request,

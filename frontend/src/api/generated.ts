@@ -2328,6 +2328,10 @@ export interface components {
              * Format: uuid
              */
             campus_id: string;
+            /** Campus Name */
+            campus_name: string;
+            /** Building Name */
+            building_name?: string | null;
             /** Version */
             version: number;
             /**
@@ -2516,9 +2520,8 @@ export interface components {
         /** PlaceSource */
         PlaceSource: {
             /**
-             * Kind
-             * @default place
-             * @constant
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
              */
             kind: "place";
             /**
@@ -2579,8 +2582,8 @@ export interface components {
         /** QRSource */
         QRSource: {
             /**
-             * Kind
-             * @constant
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
              */
             kind: "qr";
             /**

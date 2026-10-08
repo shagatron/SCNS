@@ -2,7 +2,7 @@ from datetime import date
 from typing import Literal
 from uuid import UUID
 
-from pydantic import Field, field_validator
+from pydantic import Field, ValidationInfo, field_validator
 
 from app.schemas.api import DTO
 from app.schemas.publication import ReviewText
@@ -16,9 +16,9 @@ class MarkerInput(DTO):
 
     @field_validator("label", "intended_position")
     @classmethod
-    def meaningful(cls, value):
+    def meaningful(cls, value, info: ValidationInfo):
         value = value.strip()
-        if not value:
+        if len(value) < (10 if info.field_name == "intended_position" else 1):
             raise ValueError("Provide meaningful marker text")
         return value
 
@@ -36,8 +36,8 @@ class Installation(ReviewText):
 
     @field_validator("actual_position", "installer", "evidence")
     @classmethod
-    def meaningful(cls, value):
-        if len(value.strip()) < 1:
+    def meaningful(cls, value, info: ValidationInfo):
+        if len(value.strip()) < (1 if info.field_name == "installer" else 10):
             raise ValueError("Provide installation and verification evidence")
         return value.strip()
 
@@ -49,6 +49,8 @@ class Revoke(ReviewText):
 class MarkerResolution(DTO):
     id: UUID
     campus_id: UUID
+    campus_name: str
+    building_name: str | None = None
     version: int
     state: Literal["active", "planned", "revoked", "retired", "needs_verification"]
     release_id: UUID

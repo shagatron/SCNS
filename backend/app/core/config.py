@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     app_env: Literal["development", "test", "production"] = "development"
     database_url: str = "postgresql+psycopg://scns:scns_local@localhost:54329/scns"
     demo_enabled: bool = False
-    public_app_url: str = "http://localhost:5173"
+    public_app_url: str = Field(default="http://localhost:5173", max_length=180)
     walking_speed_mps: float = Field(default=1.4, gt=0, le=3)
     allowed_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
     storage_root: str = "../storage"
@@ -32,7 +32,8 @@ class Settings(BaseSettings):
 
         url = urlsplit(self.public_app_url)
         if (
-            url.username
+            any(c.isspace() or ord(c) < 32 for c in self.public_app_url)
+            or url.username
             or url.password
             or url.query
             or url.fragment
@@ -44,6 +45,10 @@ class Settings(BaseSettings):
             raise ValueError(
                 "PUBLIC_APP_URL needs an HTTPS origin; local HTTP loopback is demo-only"
             )
+        try:
+            _ = url.port
+        except ValueError as error:
+            raise ValueError("Invalid canonical origin port") from error
         self.public_app_url = self.public_app_url.rstrip("/")
         return self
 

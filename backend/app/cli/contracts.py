@@ -8,6 +8,7 @@ from app.schemas.floorplans import CalibrationInput, FloorInput, UploadInput
 from app.schemas.imports import ImportBundle
 from app.schemas.indoor import IndoorPatch
 from app.schemas.publication import SourceInput
+from app.schemas.qr import Installation, MarkerCreate
 
 root = Path(__file__).resolve().parents[3]
 (root / "docs/architecture/openapi.json").write_text(json.dumps(app.openapi(), indent=2) + "\n")
@@ -39,3 +40,8 @@ for name, model in [
 (root / "data/templates/connections-v1/patch.schema.json").write_text(
     json.dumps(ConnectionsPatch.model_json_schema(), indent=2) + "\n"
 )
+
+for name, model in [("marker", MarkerCreate), ("installation", Installation)]:
+    (root / f"data/templates/qr-v1/{name}.schema.json").write_text(
+        json.dumps(model.model_json_schema(), indent=2) + "\n"
+    )

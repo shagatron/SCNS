@@ -15,11 +15,17 @@ from app.services import qr
 from app.services.mixed_routes import release_projection
 from tests.integration.test_admin import identity as owner_identity
 from tests.integration.test_admin import sign_in, version
+from tests.integration.test_publication import reviewer as reviewer_identity
 
 
 @pytest.fixture
 def identity(db, bundle, seeded):
     return owner_identity.__wrapped__(db, bundle, seeded)
+
+
+@pytest.fixture
+def reviewer(db, bundle):
+    return reviewer_identity.__wrapped__(db, bundle)
 
 
 pytestmark = pytest.mark.integration
@@ -31,7 +37,7 @@ def endpoint(bundle):
 
 def payload(client, bundle):
     targets = client.get(endpoint(bundle)).json()["targets"]
-    node = next(t for t in targets if t["label"] == "Main Gate")
+    node = next(t for t in targets if t["label"] == "Gate")
     return {
         "key": str(uuid4()),
         "label": "Synthetic Main Gate sign",
@@ -235,3 +241,179 @@ def test_release_revalidation_never_resurrects_retired_revoked_or_moved_signs(
     assert obj.state == "retired"
     assert route(client, bundle, marker).status_code == 410
     assert client.get(f"/api/v1/qr/{uuid4()}").status_code == 404
+
+
+def test_qr_survives_real_independent_publication_and_removed_indoor_target_rollback(
+    client, db, bundle, identity, reviewer
+):
+    from tests.integration.test_connections import EXPECTED, setup_two, write
+    from tests.integration.test_floorplans import current
+    from tests.integration.test_indoor import ack
+    from tests.integration.test_publication import approve
+
+    draft, path, ground, upper, h, changes = setup_two(client, db, bundle, identity, reviewer)
+    old = client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"]
+    assert write(client, path, h, changes).status_code == 200
+    a, b, u, v = (EXPECTED[k] for k in ("ground_101", "ground_102", "upper_201", "upper_202"))
+    routes = [
+        {
+            "source": x,
+            "target": y,
+            "profile": p,
+            "expected_found": True,
+            "reason": "Invented calibrated two-floor acceptance, not real navigation.",
+        }
+        for x, y in (
+            (a, b),
+            (u, v),
+            (a, u),
+            (u, a),
+            (str(next(p.id for p in bundle.places if p.code == "GATE")), u),
+            (u, str(next(p.id for p in bundle.places if p.code == "GATE"))),
+        )
+        for p in ("shortest", "step_free")
+    ]
+    r = client.post(
+        path + "/validations", json={"routes": routes}, headers=version(h, current(client, path))
+    )
+    assert r.status_code == 200 and r.json()["report"]["errors"] == 0, r.text
+    run = r.json()
+    sub = client.post(
+        path + "/submissions",
+        json={"validation_id": run["id"], "acknowledgements": ack(run)},
+        headers=version(h, current(client, path)),
+    ).json()
+    rh, edit = approve(client, bundle, draft, run, sub, reviewer)
+    published = client.post(
+        path + "/publish",
+        json={"submission_id": sub["id"], "expected_release_id": old, "key": str(uuid4())},
+        headers=version(rh, edit),
+    )
+    assert published.status_code == 200, published.text
+    release = client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()
+    h = sign_in(client, identity)
+    inventory = client.get(endpoint(bundle)).json()
+    start = next(
+        t
+        for t in inventory["targets"]
+        if t["kind"] == "indoor"
+        and t["label"] == "Synthetic door101"
+        and t["floor_label"] == "Synthetic ground floor"
+    )
+    created = client.post(
+        endpoint(bundle),
+        json={
+            "key": str(uuid4()),
+            "label": "Synthetic ground QR",
+            "node_kind": "indoor",
+            "node_id": start["id"],
+            "intended_position": "Simulated synthetic ground node sign.",
+        },
+        headers=h,
+    )
+    assert created.status_code == 201, created.text
+    marker = created.json()
+    r = client.post(
+        endpoint(bundle) + f"/{marker['id']}/activate", json=installation(), headers=version(h, 1)
+    )
+    assert r.status_code == 200, r.text
+    marker = r.json()
+    resolved = client.get(f"/api/v1/qr/{marker['id']}").json()
+    assert resolved["floor_id"] == ground and resolved["floor_label"] == "Synthetic ground floor"
+    for destination, profile in ((b, "shortest"), (u, "shortest"), (u, "step_free")):
+        r = client.post(
+            "/api/v1/routes",
+            json={
+                "campus_id": str(bundle.campus.id),
+                "source": {
+                    "kind": "qr",
+                    "marker_id": marker["id"],
+                    "expected_marker_version": marker["version"],
+                    "confirmed": True,
+                },
+                "destination": {"place_id": destination},
+                "profile": profile,
+                "expected_release_id": release["id"],
+            },
+        )
+        assert r.status_code == 200, r.text
+        assert r.json()["floors"] and r.json()["source_node_id"] == start["id"]
+        assert r.json()["distance_m"] == (
+            18 if destination == b else 57 if profile == "step_free" else 36
+        )
+        if profile == "step_free":
+            assert any(s["kind"] == "lift" for s in r.json()["segments"])
+    rh = sign_in(client, reviewer)
+    rollback = client.post(
+        f"/api/v1/admin/campuses/{bundle.campus.id}/rollback",
+        json={
+            "target_release_id": old,
+            "expected_release_id": release["id"],
+            "key": str(uuid4()),
+            "reason": "Synthetic rollback removes the published floor and its QR node.",
+        },
+        headers=rh,
+    )
+    assert rollback.status_code == 200, rollback.text
+    assert client.get(f"/api/v1/qr/{marker['id']}").json()["state"] == "retired"
+    # Forward rollback is deliberately disallowed. Publish another independently
+    # reviewed outdoor draft, then restore the earlier indoor release normally.
+    from tests.integration.test_publication import ready
+
+    next_draft, next_run, next_sub = ready(client, db, bundle, identity, reviewer)
+    next_headers, next_edit = approve(client, bundle, next_draft, next_run, next_sub, reviewer)
+    next_path = f"/api/v1/admin/campuses/{bundle.campus.id}/drafts/{next_draft['id']}"
+    next_release = client.post(
+        next_path + "/publish",
+        json={"submission_id": next_sub["id"], "expected_release_id": old, "key": str(uuid4())},
+        headers=version(next_headers, next_edit),
+    )
+    assert next_release.status_code == 200, next_release.text
+    returned = client.post(
+        f"/api/v1/admin/campuses/{bundle.campus.id}/rollback",
+        json={
+            "target_release_id": release["id"],
+            "expected_release_id": next_release.json()["release_id"],
+            "key": str(uuid4()),
+            "reason": "Synthetic return must not resurrect a retired QR marker.",
+        },
+        headers=next_headers,
+    )
+    assert returned.status_code == 200, returned.text
+    assert client.get(f"/api/v1/qr/{marker['id']}").json()["state"] == "retired"
+    assert db.get(QRMarker, marker["id"]).version == 5
+
+
+def test_unpublished_graph_and_floor_nodes_cannot_change_qr_inventory_or_public_route(
+    client, db, bundle, identity
+):
+    from tests.integration.test_admin import make_draft
+    from tests.integration.test_admin_graph import node_data
+
+    h, data, marker = create(client, bundle, identity)
+    draft = make_draft(client, bundle, h)
+    path = f"/api/v1/admin/campuses/{bundle.campus.id}/drafts/{draft['id']}/graph"
+    state = client.get(path).json()
+    changed = node_data(state, data["node_id"])
+    changed["label"] = "Unpublished gate label"
+    new_id = str(uuid4())
+    added = {**changed, "label": "Unpublished new QR node"}
+    saved = client.post(
+        path,
+        json={
+            "changes": [
+                {"entity": "nodes", "id": data["node_id"], "data": changed},
+                {"entity": "nodes", "id": new_id, "data": added},
+            ]
+        },
+        headers=version(h, 1),
+    )
+    assert saved.status_code == 200, saved.text
+    assert client.get(f"/api/v1/qr/{marker['id']}").json()["node_label"] == "Gate"
+    targets = client.get(endpoint(bundle)).json()["targets"]
+    assert all(t["id"] != new_id for t in targets)
+    r = client.post(
+        endpoint(bundle), json={**data, "key": str(uuid4()), "node_id": new_id}, headers=h
+    )
+    assert r.status_code == 422
+    assert route(client, bundle, marker).json()["distance_m"] == 256.88

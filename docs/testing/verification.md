@@ -319,3 +319,7 @@ Latest Vite output (gzip): app JavaScript **103.49kB**, lazy Leaflet/map chunk *
 ## Not run / not claimed
 
 GitHub Actions execution has not been inspected remotely; its equivalent local checks passed. Safari/Firefox, physical phones, human screen-reader testing, throttled-network/load benchmarks, official basemap provider access, institution field routes, real accessibility surveys, production backup/restore and public deployment were not run. No official campus data was available. Those are later milestone/field obligations, not substituted by synthetic test results.
+
+## M3C GitHub delivery receipt
+
+Completion `cb45bf2` pushed successfully to `feat/milestone-3c-indoor-routing` and remote SHA matched. PR creation against `feat/milestone-3b-indoor-editor` was actually attempted via both `gh pr create` (GraphQL) and REST POST `/repos/shagatron/SCNS/pulls`; both returned `Forbidden`. This is an external API access blocker, not a failed application test or a merge. The complete description is [saved on GitHub](https://github.com/shagatron/SCNS/blob/feat/milestone-3c-indoor-routing/docs/reviews/milestone-3c-pr.md); [correct compare/open-PR link](https://github.com/shagatron/SCNS/compare/feat%2Fmilestone-3b-indoor-editor...feat%2Fmilestone-3c-indoor-routing?expand=1). No PR/merge/public deployment/cloud publication claimed.

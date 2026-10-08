@@ -17,7 +17,7 @@ from app.models import (
     Release,
     Revision,
 )
-from app.models.admin import Department, DepartmentPlace, PlaceAlias
+from app.models.admin import AuditEvent, Department, DepartmentPlace, PlaceAlias
 from app.models.connections import (
     Connector,
     ConnectorPath,
@@ -64,8 +64,24 @@ def get_draft(db: Session, campus_id: UUID, revision_id: UUID):
     return revision
 
 
-def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
+def create_draft(
+    db: Session, campus_id: UUID, actor_id: UUID, request_id: str, key: str | None = None
+):
     db.execute(text("SELECT pg_advisory_xact_lock(hashtext(:key))"), {"key": str(campus_id)})
+    if key:
+        prior = db.scalar(
+            select(AuditEvent).where(
+                AuditEvent.action == "draft.create",
+                AuditEvent.actor_id == actor_id,
+                AuditEvent.campus_id == campus_id,
+                AuditEvent.after["idempotency_key"].astext == key,
+            )
+        )
+        if prior:
+            revision = db.get(Revision, prior.revision_id)
+            if not revision or revision.status != "draft":
+                raise DomainError("conflict", "This retry belongs to a non-editable draft.", 409)
+            return draft_output(revision)
     active = db.get(ActiveRelease, (campus_id, "public"))
     release = db.get(Release, active.release_id) if active else None
     parent = release.dataset_revision_id if release else None
@@ -164,7 +180,11 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
         campus_id=campus_id,
         revision_id=revision.id,
         resource_id=revision.id,
-        after={"parent_id": str(parent) if parent else None, "version": revision.version},
+        after={
+            "parent_id": str(parent) if parent else None,
+            "version": revision.version,
+            **({"idempotency_key": key} if key else {}),
+        },
     )
     return draft_output(revision)
 

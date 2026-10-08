@@ -148,9 +148,16 @@ def dashboard(campus_id: UUID, request: Request, db: DB):
 
 
 @router.post("/campuses/{campus_id}/drafts", response_model=DraftOut, status_code=201)
-def new_draft(campus_id: UUID, request: Request, db: DB):
+def new_draft(
+    campus_id: UUID,
+    request: Request,
+    db: DB,
+    idempotency_key: Annotated[
+        str | None, Header(min_length=8, max_length=80, pattern=r"^[A-Za-z0-9_-]+$")
+    ] = None,
+):
     user = authorize(db, request, campus_id, "draft_create")
-    return create_draft(db, campus_id, user.id, request.state.request_id)
+    return create_draft(db, campus_id, user.id, request.state.request_id, idempotency_key)
 
 
 @router.get(

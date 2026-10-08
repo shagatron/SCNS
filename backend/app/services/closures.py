@@ -375,7 +375,7 @@ def public_status(db, campus, release, data, now=None):
 def apply(data, entries, window_end):
     result = deepcopy(data)
     for obj in entries:
-        if obj.state == "reopened" or (window_end is not None and obj.starts_at > window_end):
+        if obj.state == "reopened":
             continue
         value = target(data, obj.target_kind, obj.target_id)
         if obj.state == "unresolved" or not value or value["checksum"] != obj.target_checksum:
@@ -384,6 +384,8 @@ def apply(data, entries, window_end):
                 "An operational restriction needs target review. Routing is paused until the campus operator reconciles it; choose another campus or seek assistance.",
                 503,
             )
+        if window_end is not None and obj.starts_at > window_end:
+            continue
         if obj.target_kind == "outdoor_edge":
             result["edges"][str(obj.target_id)]["is_open"] = False
         elif obj.target_kind == "outdoor_path":

@@ -148,7 +148,9 @@ test('map pointer tools create and move nodes, draw and reposition polyline vert
   expect(JSON.parse(await coords.inputValue())).toHaveLength(3)
   const drawn=await coords.inputValue()
   await page.getByRole('combobox',{name:'Map tool'}).selectOption('vertex')
-  await clickCampus(.62,.22)
+  await page.getByRole('combobox',{name:'Selected path vertex',exact:true}).selectOption('1')
+  // A canvas click must be outside the vertex's hit radius on a 360px viewport.
+  await clickCampus(.55,.10)
   await expect(coords).not.toHaveValue(drawn)
   await save(page)
 })

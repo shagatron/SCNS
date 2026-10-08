@@ -103,14 +103,18 @@ def test_ambiguous_create_retries_use_one_audited_incident(owned):
         )
 
 
-def test_repeatable_read_snapshot_and_fresh_worker_read_are_coherent(owned):
+def test_repeatable_read_snapshot_and_fresh_worker_read_are_coherent(owned, database_engine):
     engine, campus, actor_id, payload = owned
     with (
-        Session(engine.execution_options(isolation_level="REPEATABLE READ")) as reader,
+        Session(database_engine) as reader,
         reader.begin(),
     ):
+        # Match production: public readers use the root REPEATABLE READ engine;
+        # operator writes use its READ COMMITTED option, not nested option engines.
+        assert reader.scalar(text("SHOW transaction_isolation")) == "repeatable read"
         assert closures.version(reader, campus) == 0 and closures.records(reader, campus) == []
         with Session(engine) as writer, writer.begin():
+            assert writer.scalar(text("SHOW transaction_isolation")) == "read committed"
             campus_lock(writer, campus)
             closures.mutate(
                 writer, campus, writer.get(User, actor_id), payload, '"0"', "fresh-worker"

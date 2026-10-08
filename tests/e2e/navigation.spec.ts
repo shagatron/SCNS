@@ -39,6 +39,7 @@ test('no route, same-place arrival, step-free constraints and swap', async ({ pa
 test('keyboard route and automated accessibility check', async ({ page }) => {
   await page.goto('/')
   await expect(page.getByLabel('Destination', { exact: true }).locator('option', { hasText: 'Library' })).toBeAttached()
+  await expect(page.getByRole('button', { name: 'Find walking route' })).toBeEnabled()
   await page.getByLabel('Destination', { exact: true }).focus()
   await page.keyboard.press('l')
   await page.keyboard.press('Tab')

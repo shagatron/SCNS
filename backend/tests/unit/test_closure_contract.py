@@ -52,5 +52,7 @@ def test_future_unknown_eta_and_unresolved_are_conservative_without_mutation():
     entry.state = "unresolved"
     with pytest.raises(DomainError, match="target review"):
         apply(data, [entry], None)
+    with pytest.raises(DomainError, match="target review"):
+        apply(data, [entry], now + timedelta(hours=1))
     entry.state = "reopened"
     assert apply(data, [entry], None)["edges"][identity]["is_open"]

@@ -50,7 +50,9 @@ async def request_id(request: Request, call_next):
     response = await call_next(request)
     response.headers["X-Request-ID"] = request.state.request_id
     response.headers["X-Content-Type-Options"] = "nosniff"
-    if request.url.path.endswith(("/routes", "/closures", "/release")) or (
+    if request.url.path.endswith(
+        ("/routes", "/closures", "/release", "/outdoor-location-match", "/location-policy")
+    ) or (
         request.url.path.startswith("/api/v1/admin") or request.url.path.startswith("/api/v1/qr")
     ):
         response.headers["Cache-Control"] = "no-store"

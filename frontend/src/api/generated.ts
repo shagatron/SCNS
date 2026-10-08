@@ -225,6 +225,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/location-policy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Location Policy */
+        get: operations["location_policy_api_v1_location_policy_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/outdoor-location-match": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Outdoor Location Match */
+        post: operations["outdoor_location_match_api_v1_outdoor_location_match_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/login": {
         parameters: {
             query?: never;
@@ -2060,6 +2094,49 @@ export interface components {
             /** Floors */
             floors: components["schemas"]["RouteFloor"][];
         };
+        /** GPSObservation */
+        GPSObservation: {
+            /** Latitude */
+            latitude: number;
+            /** Longitude */
+            longitude: number;
+            /** Accuracy M */
+            accuracy_m: number;
+            /**
+             * Observed At
+             * Format: date-time
+             */
+            observed_at: string;
+        };
+        /** GPSSource */
+        GPSSource: {
+            /** Latitude */
+            latitude: number;
+            /** Longitude */
+            longitude: number;
+            /** Accuracy M */
+            accuracy_m: number;
+            /**
+             * Observed At
+             * Format: date-time
+             */
+            observed_at: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "gps";
+            /**
+             * Confirmed Node Id
+             * Format: uuid
+             */
+            confirmed_node_id: string;
+            /**
+             * Confirmed
+             * @constant
+             */
+            confirmed: true;
+        };
         /** GrantOut */
         GrantOut: {
             /**
@@ -2385,6 +2462,72 @@ export interface components {
                 number,
                 number
             ][];
+        };
+        /** LocationCandidate */
+        LocationCandidate: {
+            /**
+             * Node Id
+             * Format: uuid
+             */
+            node_id: string;
+            /** Label */
+            label: string;
+            /** Path Distance M */
+            path_distance_m: number;
+            /** Approach Distance M */
+            approach_distance_m: number;
+        };
+        /** LocationMatch */
+        LocationMatch: {
+            /**
+             * Release Id
+             * Format: uuid
+             */
+            release_id: string;
+            /** Closure Overlay Version */
+            closure_overlay_version: number;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Accuracy M */
+            accuracy_m: number;
+            /** Candidates */
+            candidates: components["schemas"]["LocationCandidate"][];
+        };
+        /** LocationMatchRequest */
+        LocationMatchRequest: {
+            /**
+             * Campus Id
+             * Format: uuid
+             */
+            campus_id: string;
+            observation: components["schemas"]["GPSObservation"];
+            /**
+             * Profile
+             * @default shortest
+             * @enum {string}
+             */
+            profile: "shortest" | "step_free" | "fastest";
+            /**
+             * Expected Release Id
+             * Format: uuid
+             */
+            expected_release_id: string;
+            /** Expected Closure Overlay Version */
+            expected_closure_overlay_version: number;
+        };
+        /** LocationPolicy */
+        LocationPolicy: {
+            /** Max Accuracy M */
+            max_accuracy_m: number;
+            /** Max Age Seconds */
+            max_age_seconds: number;
+            /** Max Path Distance M */
+            max_path_distance_m: number;
+            /** Max Landmark Distance M */
+            max_landmark_distance_m: number;
         };
         /** LoginInput */
         LoginInput: {
@@ -3113,7 +3256,7 @@ export interface components {
              */
             campus_id: string;
             /** Source */
-            source: components["schemas"]["PlaceSource"] | components["schemas"]["QRSource"];
+            source: components["schemas"]["PlaceSource"] | components["schemas"]["QRSource"] | components["schemas"]["GPSSource"];
             destination: components["schemas"]["PlaceSource"];
             /**
              * Profile
@@ -4056,6 +4199,122 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["FloorsOut"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    location_policy_api_v1_location_policy_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LocationPolicy"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    outdoor_location_match_api_v1_outdoor_location_match_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LocationMatchRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LocationMatch"];
                 };
             };
             /** @description Not Found */

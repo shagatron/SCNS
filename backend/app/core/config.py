@@ -12,6 +12,10 @@ class Settings(BaseSettings):
     demo_enabled: bool = False
     public_app_url: str = Field(default="http://localhost:5173", max_length=180)
     walking_speed_mps: float = Field(default=1.4, gt=0, le=3)
+    gps_max_accuracy_m: float = Field(default=20, gt=0, le=50)
+    gps_max_age_seconds: int = Field(default=60, ge=10, le=120)
+    gps_max_path_distance_m: float = Field(default=25, gt=0, le=50)
+    gps_max_landmark_distance_m: float = Field(default=40, gt=0, le=100)
     allowed_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
     storage_root: str = "../storage"
     import_byte_limit: int = Field(default=5 * 1024 * 1024, ge=1024, le=10 * 1024 * 1024)

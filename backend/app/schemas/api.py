@@ -103,9 +103,52 @@ class QRSource(DTO):
     confirmed: Literal[True]
 
 
+class GPSObservation(DTO):
+    latitude: float = Field(ge=-90, le=90, allow_inf_nan=False)
+    longitude: float = Field(ge=-180, le=180, allow_inf_nan=False)
+    accuracy_m: float = Field(gt=0, allow_inf_nan=False)
+    observed_at: AwareDatetime
+
+
+class GPSSource(GPSObservation):
+    kind: Literal["gps"]
+    confirmed_node_id: UUID
+    confirmed: Literal[True]
+
+
+class LocationMatchRequest(DTO):
+    campus_id: UUID
+    observation: GPSObservation
+    profile: Literal["shortest", "step_free", "fastest"] = "shortest"
+    expected_release_id: UUID
+    expected_closure_overlay_version: int = Field(ge=0)
+
+
+class LocationPolicy(DTO):
+    max_accuracy_m: float
+    max_age_seconds: int
+    max_path_distance_m: float
+    max_landmark_distance_m: float
+
+
+class LocationCandidate(DTO):
+    node_id: UUID
+    label: str
+    path_distance_m: float
+    approach_distance_m: float
+
+
+class LocationMatch(DTO):
+    release_id: UUID
+    closure_overlay_version: int
+    expires_at: datetime
+    accuracy_m: float
+    candidates: list[LocationCandidate]
+
+
 class RouteRequest(DTO):
     campus_id: UUID
-    source: PlaceSource | QRSource = Field(discriminator="kind")
+    source: PlaceSource | QRSource | GPSSource = Field(discriminator="kind")
     destination: PlaceSource
     profile: Literal["shortest", "step_free", "fastest"] = "shortest"
     cost_mode: Literal["metric", "directions_only"] = "metric"

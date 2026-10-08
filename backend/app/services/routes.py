@@ -18,6 +18,14 @@ def calculate_route(session: Session, request: RouteRequest) -> RouteOut:
     from app.services.mixed_routes import release_projection
 
     release = active_release(session, request.campus_id)
+    if request.source.kind == "gps" and (
+        request.expected_release_id is None or request.expected_closure_overlay_version is None
+    ):
+        raise DomainError(
+            "invalid_input",
+            "Location starts require current release and restriction versions.",
+            422,
+        )
     if request.expected_release_id and request.expected_release_id != release.id:
         raise DomainError(
             "stale_release", "The map has changed. Refresh the campus and try again.", 409
@@ -79,6 +87,7 @@ def _calculate_route(session, request, release, projection, force_mixed=False):
 
     if (
         force_mixed
+        or request.source.kind == "gps"
         or request.source.kind == "qr"
         or request.profile == "fastest"
         or request.cost_mode == "directions_only"

@@ -88,6 +88,25 @@ def calculate(db, request, release, data=None):
             )
         start_node = (marker.node_kind, str(marker.node_id))
         source_marker = marker.id
+    elif request.source.kind == "gps":
+        from app.services.location import match
+
+        suggestion = match(db, request.campus_id, request.source, request.profile, release)
+        candidate = next(
+            (
+                c
+                for c in suggestion["candidates"]
+                if c["node_id"] == str(request.source.confirmed_node_id)
+            ),
+            None,
+        )
+        if candidate is None:
+            raise DomainError(
+                "location_needs_confirmation",
+                "The landmark is no longer suitable. Request location again or choose a manual/QR start.",
+                422,
+            )
+        start_node = ("outdoor", str(request.source.confirmed_node_id))
     else:
         source_place = request.source.place_id
     result = compute(
@@ -110,7 +129,11 @@ def calculate(db, request, release, data=None):
         "Published static availability is combined with live operational restrictions; recurring opening hours and lift queues are unsupported.",
         f"Baseline walking estimates assume {settings.walking_speed_mps:.1f}m/s. Connector traversal and lift wait use reviewed estimates when supplied; unknown components have no ETA.",
     ]
-    if start_node:
+    if request.source.kind == "gps":
+        warnings.append(
+            f"Outdoor location accuracy ±{request.source.accuracy_m:g}m. Route starts at the landmark you explicitly confirmed; its approximate straight-line approach distance is {candidate['approach_distance_m']:g}m, not verified walking distance and excluded from distance/ETA. No GPS-to-path shortcut or indoor position is inferred; this is not continuous tracking."
+        )
+    elif start_node:
         warnings.append(
             "Start is the labelled QR marker you explicitly confirmed, not a continuously tracked position."
         )

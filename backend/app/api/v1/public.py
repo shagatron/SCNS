@@ -16,6 +16,9 @@ from app.schemas.api import (
     ErrorOut,
     FloorsOut,
     HealthOut,
+    LocationMatch,
+    LocationMatchRequest,
+    LocationPolicy,
     MapFeature,
     MapOut,
     PlaceOut,
@@ -319,3 +322,29 @@ def public_floors(campus_id: UUID, db: DB, expected_release_id: UUID | None = No
         "release_id": release.id,
         "floors": floor_descriptors(release_projection(db, release), release),
     }
+
+
+@router.get("/location-policy", response_model=LocationPolicy)
+def location_policy():
+    from app.services.location import policy
+
+    return policy()
+
+
+@router.post("/outdoor-location-match", response_model=LocationMatch)
+def outdoor_location_match(payload: LocationMatchRequest, db: DB):
+    from app.services import closures
+    from app.services.location import match
+
+    release = active_release(db, payload.campus_id)
+    if release.id != payload.expected_release_id:
+        raise DomainError(
+            "stale_release", "The map changed. Request location again on the current release.", 409
+        )
+    if closures.version(db, payload.campus_id) != payload.expected_closure_overlay_version:
+        raise DomainError(
+            "stale_closures",
+            "Restrictions changed. Check restrictions and request location again.",
+            409,
+        )
+    return match(db, payload.campus_id, payload.observation, payload.profile, release)

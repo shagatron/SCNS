@@ -53,3 +53,13 @@ it('ignores late browser callbacks after navigation/unmount without sending coor
   unmount(); late?.({ coords: { latitude: .0002, longitude: .00015, accuracy: 5 }, timestamp: Date.now() })
   expect(fetch).toHaveBeenCalledTimes(1)
 })
+it('expires a proposal and handles unsupported contexts without retaining a fix', async () => {
+  const { fetch, invalidate } = setup()
+  fetch.mockImplementation(async input => new Response(JSON.stringify(String(input).endsWith('/location-policy') ? { max_accuracy_m: 20, max_age_seconds: 60 } : { release_id: 'release', closure_overlay_version: 0, accuracy_m: 5, expires_at: new Date(Date.now() + 100).toISOString(), candidates: [{ node_id: 'node', label: 'Gate', approach_distance_m: 0, path_distance_m: 0 }] })))
+  await userEvent.click(screen.getByRole('button', { name: 'Use my location' }))
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('confirmation ended'))
+  expect(invalidate).toHaveBeenCalledTimes(2)
+  vi.stubGlobal('isSecureContext', false)
+  await userEvent.click(screen.getByRole('button', { name: 'Use my location' }))
+  expect(screen.getByRole('alert')).toHaveTextContent('unavailable in this browser/context')
+})

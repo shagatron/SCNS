@@ -58,7 +58,7 @@ export default function OutdoorLocation({ campus, release, overlay, profile, rea
     {pending && <p role="status">Waiting for browser permission and a fresh location…</p>}
     {error && <p className="error-text" role="alert">{error}</p>}
     {value && <><p>Reported accuracy radius ±{value.match.accuracy_m}m; this is uncertainty, not proof of your position.</p>
-      <label htmlFor="location-landmark">Confirm a labelled outdoor landmark</label><select id="location-landmark" value={selected} onChange={e => setSelected(e.target.value)}>{value.match.candidates.map(c => <option key={c.node_id} value={c.node_id}>{c.label} · approximately {Math.round(c.approach_distance_m)}m away</option>)}</select>
+      <label htmlFor="location-landmark">Confirm a labelled outdoor landmark</label><select id="location-landmark" value={selected} onChange={e => { setSelected(e.target.value); onInvalidate() }}>{value.match.candidates.map(c => <option key={c.node_id} value={c.node_id}>{c.label} · approximately {Math.round(c.approach_distance_m)}m away</option>)}</select>
       <p>Only confirm if you are physically at this landmark. The straight-line approach is unverified and excluded from route distance/ETA. Do not cross walls or fences toward a suggestion.</p>
       <button type="button" disabled={!ready} onClick={() => onConfirm({ kind: 'gps', ...value.observation, confirmed: true, confirmed_node_id: selected }, value.match.expires_at)}>I am at this landmark now</button>
       <button type="button" onClick={() => { generation.current++; setValue(null); onInvalidate() }}>Discard location</button></>}

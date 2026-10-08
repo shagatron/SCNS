@@ -41,6 +41,8 @@ def active_release(session: Session, campus_id: UUID) -> ReleaseOut:
     if row is None:
         raise DomainError("location_not_found", "No published campus data is available.", 404)
     release, version = row
+    from app.services.closures import version as overlay_version
+
     artifact = session.get(ReleaseArtifact, release.id)
     return ReleaseOut(
         id=release.id,
@@ -49,6 +51,7 @@ def active_release(session: Session, campus_id: UUID) -> ReleaseOut:
         checksum=release.checksum,
         published_at=release.published_at,
         version=version,
+        closure_overlay_version=overlay_version(session, campus_id),
         publication_order=release.publication_order,
         artifact_checksum=artifact.checksum if artifact else None,
         artifact_url=f"/api/v1/campuses/{campus_id}/artifacts/{release.id}/{artifact.checksum}.json"

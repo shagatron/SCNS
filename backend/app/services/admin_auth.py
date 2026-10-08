@@ -24,6 +24,7 @@ DUMMY_HASH = HASHER.hash(secrets.token_urlsafe(32))
 PERMISSIONS = {
     "editor": {
         "qr_read",
+        "closure_read",
         "dashboard",
         "draft_read",
         "draft_create",
@@ -34,6 +35,7 @@ PERMISSIONS = {
     },
     "reviewer_publisher": {
         "qr_read",
+        "closure_read",
         "dashboard",
         "draft_read",
         "audit_read",
@@ -43,10 +45,12 @@ PERMISSIONS = {
         "release_publish",
         "source_approve",
     },
-    "operations": {"dashboard", "qr_read", "qr_manage"},
+    "operations": {"dashboard", "qr_read", "closure_read", "qr_manage", "closure_manage"},
     "system_admin": {
         "qr_read",
+        "closure_read",
         "qr_manage",
+        "closure_manage",
         "dashboard",
         "draft_read",
         "draft_create",

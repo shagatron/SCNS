@@ -5,6 +5,7 @@ import { adminApi, type Dashboard, type Draft, type Session } from './api'
 import { Publication, ReleaseHistory } from './Publication'
 import { Floorplans } from './Floorplans'
 import { QRInventory } from './QRInventory'
+import { Closures } from './Closures'
 import { Imports } from './Imports'
 import { Connections } from './Connections'
 import { IndoorEditor } from './IndoorEditor'
@@ -85,6 +86,7 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
       <p>Permissions: {data.permissions.join(', ').replaceAll('_', ' ')}</p>
     </section>
     <div className="admin-tabs" aria-label="Administration sections">
+      {allowed('closure_read') && <button aria-pressed={tab === 'closures'} onClick={() => selectTab('closures')}>Closures and outages</button>}
       {allowed('qr_read') && <button aria-pressed={tab === 'qr'} onClick={() => selectTab('qr')}>QR markers</button>}
       {allowed('draft_read') && <button aria-pressed={tab === 'catalog'} onClick={() => selectTab('catalog')}>Draft catalog</button>}
       {allowed('draft_read') && <button aria-pressed={tab === 'floors'} onClick={() => selectTab('floors')}>Floors and floorplans</button>}
@@ -96,6 +98,7 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
       {allowed('audit_read') && <button aria-pressed={tab === 'audit'} onClick={() => selectTab('audit')}>Audit records</button>}
       {allowed('user_admin') && <button aria-pressed={tab === 'users'} onClick={() => selectTab('users')}>Users and roles</button>}
     </div>
+    {tab === 'closures' && allowed('closure_read') && <Closures path={path} session={session} editable={allowed('closure_manage')} />}
     {tab === 'qr' && allowed('qr_read') && <QRInventory path={path} session={session} editable={allowed('qr_manage')} />}
     {tab === 'audit' && allowed('audit_read') && <AuditLog path={path} />}
     {tab === 'users' && allowed('user_admin') && <Users path={path} csrf={session.csrf_token} />}

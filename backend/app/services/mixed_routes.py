@@ -107,7 +107,7 @@ def calculate(db, request, release, data=None):
         if room:
             used.add(room["floor_id"])
     warnings = [
-        "Opening and connector availability are static published states; no live outages or time-dependent schedules are available.",
+        "Published static availability is combined with live operational restrictions; recurring opening hours and lift queues are unsupported.",
         f"Baseline walking estimates assume {settings.walking_speed_mps:.1f}m/s. Connector traversal and lift wait use reviewed estimates when supplied; unknown components have no ETA.",
     ]
     if start_node:

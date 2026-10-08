@@ -6488,6 +6488,309 @@
           }
         }
       }
+    },
+    "/api/v1/admin/campuses/{campus_id}/closures": {
+      "get": {
+        "tags": [
+          "admin-closures"
+        ],
+        "summary": "Listing",
+        "operationId": "listing_api_v1_admin_campuses__campus_id__closures_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admin-closures"
+        ],
+        "summary": "Create",
+        "operationId": "create_api_v1_admin_campuses__campus_id__closures_post",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClosureCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/closures/{closure_id}/reopen": {
+      "post": {
+        "tags": [
+          "admin-closures"
+        ],
+        "summary": "Reopen",
+        "operationId": "reopen_api_v1_admin_campuses__campus_id__closures__closure_id__reopen_post",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "closure_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Closure Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClosureDecision"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/closures/{closure_id}/rebind": {
+      "post": {
+        "tags": [
+          "admin-closures"
+        ],
+        "summary": "Rebind",
+        "operationId": "rebind_api_v1_admin_campuses__campus_id__closures__closure_id__rebind_post",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "closure_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Closure Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClosureRebind"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/campuses/{campus_id}/closures": {
+      "get": {
+        "tags": [
+          "closures"
+        ],
+        "summary": "Status",
+        "operationId": "status_api_v1_campuses__campus_id__closures_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClosureStatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -7004,6 +7307,197 @@
           "item"
         ],
         "title": "CatalogRecord"
+      },
+      "ClosureCreate": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 8,
+            "title": "Key"
+          },
+          "target_kind": {
+            "type": "string",
+            "enum": [
+              "outdoor_edge",
+              "outdoor_path",
+              "indoor_edge",
+              "connector"
+            ],
+            "title": "Target Kind"
+          },
+          "target_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Id"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 10,
+            "title": "Reason"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Starts At"
+          },
+          "estimated_end_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated End At"
+          },
+          "reopening_policy": {
+            "type": "string",
+            "const": "operator_verified",
+            "title": "Reopening Policy",
+            "default": "operator_verified"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "target_kind",
+          "target_id",
+          "reason",
+          "starts_at"
+        ],
+        "title": "ClosureCreate"
+      },
+      "ClosureDecision": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 8,
+            "title": "Key"
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Evidence"
+          },
+          "confirmed": {
+            "type": "boolean",
+            "const": true,
+            "title": "Confirmed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "evidence",
+          "confirmed"
+        ],
+        "title": "ClosureDecision"
+      },
+      "ClosureRebind": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 8,
+            "title": "Key"
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Evidence"
+          },
+          "confirmed": {
+            "type": "boolean",
+            "const": true,
+            "title": "Confirmed"
+          },
+          "target_kind": {
+            "type": "string",
+            "enum": [
+              "outdoor_edge",
+              "outdoor_path",
+              "indoor_edge",
+              "connector"
+            ],
+            "title": "Target Kind"
+          },
+          "target_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "evidence",
+          "confirmed",
+          "target_kind",
+          "target_id"
+        ],
+        "title": "ClosureRebind"
+      },
+      "ClosureStatus": {
+        "properties": {
+          "release_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Release Id"
+          },
+          "closure_overlay_version": {
+            "type": "integer",
+            "title": "Closure Overlay Version"
+          },
+          "checked_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Checked At"
+          },
+          "next_change_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Change At"
+          },
+          "unresolved_count": {
+            "type": "integer",
+            "title": "Unresolved Count"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PublicClosure"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release_id",
+          "closure_overlay_version",
+          "checked_at",
+          "next_change_at",
+          "unresolved_count",
+          "items"
+        ],
+        "title": "ClosureStatus"
       },
       "ConnectionsPatch": {
         "properties": {
@@ -9879,6 +10373,97 @@
         ],
         "title": "Polygon"
       },
+      "PublicClosure": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "target_kind": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "outdoor_edge",
+                  "outdoor_path",
+                  "indoor_edge",
+                  "connector"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Kind"
+          },
+          "target_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Starts At"
+          },
+          "estimated_end_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated End At"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "scheduled",
+              "active",
+              "unresolved"
+            ],
+            "title": "State"
+          },
+          "reopening_policy": {
+            "type": "string",
+            "const": "operator_verified",
+            "title": "Reopening Policy",
+            "default": "operator_verified"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "target_kind",
+          "target_id",
+          "label",
+          "reason",
+          "starts_at",
+          "estimated_end_at",
+          "state"
+        ],
+        "title": "PublicClosure"
+      },
       "PublishInput": {
         "properties": {
           "submission_id": {
@@ -10455,6 +11040,30 @@
             "format": "date-time",
             "title": "Departure At"
           },
+          "valid_until": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valid Until"
+          },
+          "restriction_window_end": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Restriction Window End"
+          },
           "profile": {
             "type": "string",
             "enum": [
@@ -10630,7 +11239,10 @@
           },
           "schedule_policy": {
             "type": "string",
-            "const": "static_release_state",
+            "enum": [
+              "static_release_state",
+              "live_overlay_conservative_window"
+            ],
             "title": "Schedule Policy",
             "default": "static_release_state"
           }
@@ -10724,6 +11336,18 @@
               }
             ],
             "title": "Expected Release Id"
+          },
+          "expected_closure_overlay_version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Closure Overlay Version"
           }
         },
         "additionalProperties": false,

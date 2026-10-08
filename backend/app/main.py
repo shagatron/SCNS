@@ -8,6 +8,8 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from app.api.v1.admin import router as admin_router
+from app.api.v1.closures import public_router as closures_public_router
+from app.api.v1.closures import router as closures_router
 from app.api.v1.connections import router as connections_router
 from app.api.v1.floorplans import router as floorplans_router
 from app.api.v1.graph import router as graph_router
@@ -48,7 +50,7 @@ async def request_id(request: Request, call_next):
     response = await call_next(request)
     response.headers["X-Request-ID"] = request.state.request_id
     response.headers["X-Content-Type-Options"] = "nosniff"
-    if request.url.path.endswith("/routes") or (
+    if request.url.path.endswith(("/routes", "/closures", "/release")) or (
         request.url.path.startswith("/api/v1/admin") or request.url.path.startswith("/api/v1/qr")
     ):
         response.headers["Cache-Control"] = "no-store"
@@ -126,3 +128,6 @@ app.include_router(connections_router)
 
 app.include_router(qr_router)
 app.include_router(qr_public_router)
+
+app.include_router(closures_router)
+app.include_router(closures_public_router)

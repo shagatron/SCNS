@@ -111,6 +111,7 @@ class RouteRequest(DTO):
     cost_mode: Literal["metric", "directions_only"] = "metric"
     departure_at: AwareDatetime | None = None
     expected_release_id: UUID | None = None
+    expected_closure_overlay_version: int | None = Field(default=None, ge=0)
 
     @field_validator("source", mode="before")
     @classmethod
@@ -169,6 +170,9 @@ class RouteOut(DTO):
     closure_overlay_version: int = 0
     generated_at: datetime
     departure_at: datetime
+    valid_until: datetime | None = None
+    restriction_window_end: datetime | None = None
+    next_closure_change_at: datetime | None = None
     profile: Literal["shortest", "step_free", "fastest"]
     source_place_id: UUID | None = None
     source_marker_id: UUID | None = None
@@ -188,7 +192,9 @@ class RouteOut(DTO):
     segments: list[RouteSegment]
     arrival_instruction: str
     warnings: list[str]
-    schedule_policy: Literal["static_release_state"] = "static_release_state"
+    schedule_policy: Literal["static_release_state", "live_overlay_conservative_window"] = (
+        "static_release_state"
+    )
 
 
 class ErrorDetail(DTO):

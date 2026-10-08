@@ -1342,9 +1342,13 @@ def publish(db, revision, submission, payload, actor, request_id):
     from app.services.qr import reconcile
 
     reconcile(db, release, artifact, actor, request_id)
+    from app.services.closures import reconcile as reconcile_closures
+
+    overlay_version = reconcile_closures(db, release, artifact, actor, request_id)
     submission.status = "published"
     result = {
         "release_id": str(release.id),
+        "closure_overlay_version": overlay_version,
         "artifact_checksum": checksum(artifact),
         "edit_version": revision.edit_version,
         "revision_id": str(revision.id),
@@ -1416,8 +1420,17 @@ def rollback(db, campus_id, payload, actor, request_id):
     from app.services.qr import reconcile
 
     reconcile(db, target, release_projection(db, target), actor, request_id)
+    from app.services.closures import reconcile as reconcile_closures
+
+    overlay_version = reconcile_closures(
+        db, target, release_projection(db, target), actor, request_id
+    )
     active.release_id = target.id
-    result = {"release_id": str(target.id), "previous_release_id": str(current.id)}
+    result = {
+        "release_id": str(target.id),
+        "previous_release_id": str(current.id),
+        "closure_overlay_version": overlay_version,
+    }
     db.add(
         ReleaseAction(
             campus_id=campus_id,
@@ -1436,7 +1449,7 @@ def rollback(db, campus_id, payload, actor, request_id):
         revision_id=target.dataset_revision_id,
         resource_id=target.id,
         before={"release_id": str(current.id)},
-        after={**result, "reason": payload.reason, "closure_overlay_version": 0},
+        after={**result, "reason": payload.reason, "closure_overlay_version": overlay_version},
     )
     db.flush()
     return result

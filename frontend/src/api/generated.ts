@@ -1170,6 +1170,75 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/campuses/{campus_id}/closures": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listing */
+        get: operations["listing_api_v1_admin_campuses__campus_id__closures_get"];
+        put?: never;
+        /** Create */
+        post: operations["create_api_v1_admin_campuses__campus_id__closures_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/closures/{closure_id}/reopen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reopen */
+        post: operations["reopen_api_v1_admin_campuses__campus_id__closures__closure_id__reopen_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/closures/{closure_id}/rebind": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rebind */
+        post: operations["rebind_api_v1_admin_campuses__campus_id__closures__closure_id__rebind_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/campuses/{campus_id}/closures": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Status */
+        get: operations["status_api_v1_campuses__campus_id__closures_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1383,6 +1452,91 @@ export interface components {
             id: string;
             /** Item */
             item: components["schemas"]["BuildingWrite"] | components["schemas"]["PlaceWrite"] | components["schemas"]["DepartmentWrite"] | components["schemas"]["AliasWrite"] | components["schemas"]["AnchorWrite"];
+        };
+        /** ClosureCreate */
+        ClosureCreate: {
+            /** Key */
+            key: string;
+            /**
+             * Target Kind
+             * @enum {string}
+             */
+            target_kind: "outdoor_edge" | "outdoor_path" | "indoor_edge" | "connector";
+            /**
+             * Target Id
+             * Format: uuid
+             */
+            target_id: string;
+            /** Reason */
+            reason: string;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /** Estimated End At */
+            estimated_end_at?: string | null;
+            /**
+             * Reopening Policy
+             * @default operator_verified
+             * @constant
+             */
+            reopening_policy: "operator_verified";
+        };
+        /** ClosureDecision */
+        ClosureDecision: {
+            /** Key */
+            key: string;
+            /** Evidence */
+            evidence: string;
+            /**
+             * Confirmed
+             * @constant
+             */
+            confirmed: true;
+        };
+        /** ClosureRebind */
+        ClosureRebind: {
+            /** Key */
+            key: string;
+            /** Evidence */
+            evidence: string;
+            /**
+             * Confirmed
+             * @constant
+             */
+            confirmed: true;
+            /**
+             * Target Kind
+             * @enum {string}
+             */
+            target_kind: "outdoor_edge" | "outdoor_path" | "indoor_edge" | "connector";
+            /**
+             * Target Id
+             * Format: uuid
+             */
+            target_id: string;
+        };
+        /** ClosureStatus */
+        ClosureStatus: {
+            /**
+             * Release Id
+             * Format: uuid
+             */
+            release_id: string;
+            /** Closure Overlay Version */
+            closure_overlay_version: number;
+            /**
+             * Checked At
+             * Format: date-time
+             */
+            checked_at: string;
+            /** Next Change At */
+            next_change_at: string | null;
+            /** Unresolved Count */
+            unresolved_count: number;
+            /** Items */
+            items: components["schemas"]["PublicClosure"][];
         };
         /** ConnectionsPatch */
         ConnectionsPatch: {
@@ -2567,6 +2721,40 @@ export interface components {
                 number
             ][][];
         };
+        /** PublicClosure */
+        PublicClosure: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Target Kind */
+            target_kind: ("outdoor_edge" | "outdoor_path" | "indoor_edge" | "connector") | null;
+            /** Target Id */
+            target_id: string | null;
+            /** Label */
+            label: string;
+            /** Reason */
+            reason: string;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /** Estimated End At */
+            estimated_end_at: string | null;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "scheduled" | "active" | "unresolved";
+            /**
+             * Reopening Policy
+             * @default operator_verified
+             * @constant
+             */
+            reopening_policy: "operator_verified";
+        };
         /** PublishInput */
         PublishInput: {
             /**
@@ -2845,6 +3033,10 @@ export interface components {
              * Format: date-time
              */
             departure_at: string;
+            /** Valid Until */
+            valid_until?: string | null;
+            /** Restriction Window End */
+            restriction_window_end?: string | null;
             /**
              * Profile
              * @enum {string}
@@ -2907,9 +3099,9 @@ export interface components {
             /**
              * Schedule Policy
              * @default static_release_state
-             * @constant
+             * @enum {string}
              */
-            schedule_policy: "static_release_state";
+            schedule_policy: "static_release_state" | "live_overlay_conservative_window";
         };
         /** RouteRequest */
         RouteRequest: {
@@ -2937,6 +3129,8 @@ export interface components {
             departure_at?: string | null;
             /** Expected Release Id */
             expected_release_id?: string | null;
+            /** Expected Closure Overlay Version */
+            expected_closure_overlay_version?: number | null;
         };
         /** RouteSegment */
         RouteSegment: {
@@ -6949,6 +7143,181 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MarkerResolution"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listing_api_v1_admin_campuses__campus_id__closures_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_api_v1_admin_campuses__campus_id__closures_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClosureCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reopen_api_v1_admin_campuses__campus_id__closures__closure_id__reopen_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                closure_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClosureDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rebind_api_v1_admin_campuses__campus_id__closures__closure_id__rebind_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                closure_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClosureRebind"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    status_api_v1_campuses__campus_id__closures_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClosureStatus"];
                 };
             };
             /** @description Validation Error */

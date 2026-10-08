@@ -1,5 +1,5 @@
 import json
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 
 from sqlalchemy import func, select
@@ -14,16 +14,72 @@ from app.services.catalog import active_release, public_places
 
 
 def calculate_route(session: Session, request: RouteRequest) -> RouteOut:
+    from app.services import closures
+    from app.services.mixed_routes import release_projection
+
     release = active_release(session, request.campus_id)
     if request.expected_release_id and request.expected_release_id != release.id:
         raise DomainError(
             "stale_release", "The map has changed. Refresh the campus and try again.", 409
         )
-    from app.services.mixed_routes import calculate, release_projection
-
-    projection = release_projection(session, release)
+    overlay_version = closures.version(session, request.campus_id)
     if (
-        request.source.kind == "qr"
+        request.expected_closure_overlay_version is not None
+        and request.expected_closure_overlay_version != overlay_version
+    ):
+        raise DomainError(
+            "stale_closures",
+            "Operational restrictions changed. Check current closures and recalculate.",
+            409,
+        )
+    data = release_projection(session, release)
+    entries = [o for o in closures.records(session, request.campus_id) if o.state != "reopened"]
+    now = datetime.now(UTC)
+    departure = max(request.departure_at or now, now)
+    window = departure + timedelta(hours=1)
+    # Monotonic expansion: exclude every restriction starting during the conservative
+    # route window. Unknown ETA excludes all scheduled restrictions rather than guessing.
+    for _ in range(len(entries) + 2):
+        projection = closures.apply(data, entries, window)
+        result = _calculate_route(session, request, release, projection, bool(entries))
+        duration = result.estimated_duration_s
+        if entries and duration is None and window is not None:
+            window = None
+            continue
+        if (
+            window is not None
+            and duration is not None
+            and departure + timedelta(seconds=duration) > window
+        ):
+            window = departure + timedelta(seconds=duration)
+            continue
+        status = closures.public_status(session, request.campus_id, release, data, now)
+        result.closure_overlay_version = overlay_version
+        result.schedule_policy = "live_overlay_conservative_window"
+        result.valid_until = min(
+            now + timedelta(seconds=30), status["next_change_at"] or now + timedelta(seconds=30)
+        )
+        result.restriction_window_end = window
+        result.next_closure_change_at = status["next_change_at"]
+        result.warnings.append(
+            "Live restrictions use overlay version "
+            + str(overlay_version)
+            + "; estimated ends never reopen paths. Scheduled restrictions are excluded across at least a one-hour route window; unknown ETA excludes all scheduled restrictions. Current operational state is used for past departures; recurring opening hours and queue prediction are unsupported."
+        )
+        return result
+    raise DomainError(
+        "service_unavailable",
+        "Cannot establish a conservative restriction window; retry or seek operator assistance.",
+        503,
+    )
+
+
+def _calculate_route(session, request, release, projection, force_mixed=False):
+    from app.services.mixed_routes import calculate
+
+    if (
+        force_mixed
+        or request.source.kind == "qr"
         or request.profile == "fastest"
         or request.cost_mode == "directions_only"
         or any(
@@ -142,7 +198,7 @@ def calculate_route(session: Session, request: RouteRequest) -> RouteOut:
     campus = session.get(Campus, request.campus_id)
     warnings = [
         f"Baseline ETA assumes a walking speed of {settings.walking_speed_mps:.1f} m/s; it excludes stops and personal mobility differences.",
-        "Opening and closure state comes from this map release. No live closures or time-dependent schedules are available.",
+        "Published static path eligibility is combined with the current operational restriction overlay.",
     ]
     if campus.is_demo:
         warnings.insert(

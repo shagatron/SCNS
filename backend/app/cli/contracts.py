@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from app.main import app
+from app.schemas.closures import ClosureCreate, ClosureDecision
 from app.schemas.connections import ConnectionsPatch
 from app.schemas.dataset import Dataset
 from app.schemas.floorplans import CalibrationInput, FloorInput, UploadInput
@@ -43,5 +44,10 @@ for name, model in [
 
 for name, model in [("marker", MarkerCreate), ("installation", Installation)]:
     (root / f"data/templates/qr-v1/{name}.schema.json").write_text(
+        json.dumps(model.model_json_schema(), indent=2) + "\n"
+    )
+
+for name, model in [("closure", ClosureCreate), ("decision", ClosureDecision)]:
+    (root / f"data/templates/closures-v1/{name}.schema.json").write_text(
         json.dumps(model.model_json_schema(), indent=2) + "\n"
     )

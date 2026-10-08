@@ -17,6 +17,7 @@ public_router = APIRouter(prefix="/api/v1/campuses/{campus_id}", tags=["closures
 
 @router.get("")
 def listing(campus_id: UUID, request: Request, db: DB):
+    campus_lock(db, campus_id)
     authorize(db, request, campus_id, "closure_read")
     release = active_release(db, campus_id)
     data = release_projection(db, release)

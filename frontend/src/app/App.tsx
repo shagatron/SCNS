@@ -137,7 +137,7 @@ function Planner({ campus, initial, online, release, qrStart }: { campus: Campus
   const showView = (next: string) => { setView(next); if (route.data) updateLink(next) }
   function clear() { route.reset(); setFormError(''); const url = new URL(window.location.href); url.search = new URLSearchParams({ campus: campus.id }).toString(); window.history.replaceState(null, '', url) }
   const reloaded = useRef(false)
-  useEffect(() => { if (!reloaded.current && linked && params.get('routed') === '1' && linkedPlaces.data && online && closures.fresh && closures.data?.release_id === release.id) { reloaded.current = true; route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id, expected_closure_overlay_version: closures.data?.closure_overlay_version }) } }, [linked, linkedPlaces.data, online, params, campus.id, source, destination, profile, costMode, release.id, route, closures.fresh, closures.data])
+  useEffect(() => { if (!reloaded.current && linked && params.get('routed') === '1' && linkedPlaces.data && online && closures.fresh && !closures.isFetching && closures.data?.release_id === release.id) { reloaded.current = true; route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id, expected_closure_overlay_version: closures.data?.closure_overlay_version }) } }, [linked, linkedPlaces.data, online, params, campus.id, source, destination, profile, costMode, release.id, route, closures.fresh, closures.isFetching, closures.data])
   function choose(place: Place) {
     if (route.isPending) return
     setSelectedPlaces(current => [...current.filter(p => p.id !== place.id), place])
@@ -148,7 +148,7 @@ function Planner({ campus, initial, online, release, qrStart }: { campus: Campus
     event.preventDefault()
     const parsed = formSchema.safeParse({ source: qrStart && source === qrValue ? qrStart.id : source, destination, profile })
     if (!parsed.success) { setFormError('Choose both a starting point and a destination.'); return }
-    if (!closures.fresh || (route.data.restriction_window_end != null && new Date(route.data.restriction_window_end).getTime() <= closures.clock) || (route.data.next_closure_change_at != null && new Date(route.data.next_closure_change_at).getTime() <= closures.clock) || closures.data?.release_id !== release.id) { setFormError('Check current operational restrictions before routing. Manual and QR selections remain available.'); return }
+    if (!closures.fresh || closures.isFetching || closures.data?.release_id !== release.id) { setFormError('Check current operational restrictions before routing. Manual and QR selections remain available.'); return }
     setFormError('')
     route.mutate({ campus_id: campus.id, source: qrStart && source === qrValue ? { kind: 'qr', marker_id: qrStart.id, expected_marker_version: qrStart.version, confirmed: true } : { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id, expected_closure_overlay_version: closures.data.closure_overlay_version }, { onSuccess(result) { const next = result.segments[0]?.floor_id ?? 'outdoor'; setView(next); updateLink(next) } })
   }
@@ -164,7 +164,7 @@ function Planner({ campus, initial, online, release, qrStart }: { campus: Campus
             <label htmlFor="destination">Destination</label><select id="destination" value={destination} onChange={e => { setDestination(e.target.value); clear() }}><option value="">Where would you like to go?</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select>
             <label htmlFor="profile">Route preference</label><select id="profile" value={profile} onChange={e => { setProfile(e.target.value as typeof profile); clear() }}><option value="shortest">Shortest walking route</option><option value="step_free">Step-free · synthetic verification only</option><option value="fastest" disabled={costMode === 'directions_only'}>Fastest · supported baseline estimates</option></select>
             <label htmlFor="cost-mode">Distance policy</label><select id="cost-mode" value={costMode} onChange={e => { setCostMode(e.target.value as typeof costMode); if (e.target.value === 'directions_only' && profile === 'fastest') setProfile('shortest'); clear() }}><option value="metric">Verified metric paths</option><option value="directions_only">Directions only · unknown distance allowed</option></select>
-            <button type="submit" className="primary-button" disabled={!online || !closures.fresh}>{route.isPending ? 'Finding your route…' : 'Find walking route'} <span aria-hidden="true">→</span></button>
+            <button type="submit" className="primary-button" disabled={!online || !closures.fresh || closures.isFetching}>{route.isPending ? 'Finding your route…' : 'Find walking route'} <span aria-hidden="true">→</span></button>
           </fieldset>
           {formError && <p role="alert" className="error-text">{formError}</p>}
         </form>

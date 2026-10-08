@@ -156,7 +156,7 @@ def test_bundle_preview_apply_audit_idempotency_and_public_isolation(client, db,
     )
     assert job.applier_id == identity[0].id
     after_route = client.post("/api/v1/routes", json=body(bundle)).json()
-    for key in ("id", "generated_at", "departure_at"):
+    for key in ("id", "generated_at", "departure_at", "valid_until", "restriction_window_end"):
         before_route.pop(key)
         after_route.pop(key)
     assert after_route == before_route

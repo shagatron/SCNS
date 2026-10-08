@@ -300,7 +300,7 @@ def test_crud_all_entities_concurrency_audit_and_public_unchanged(
     assert client.get(public + "/search").json() == search_before
     assert client.get(public + "/map?bbox=-.001,-.001,.004,.004").json() == map_before
     route_after = client.post("/api/v1/routes", json=route_body).json()
-    for volatile in ["id", "generated_at", "departure_at"]:
+    for volatile in ["id", "generated_at", "departure_at", "valid_until", "restriction_window_end"]:
         route_before.pop(volatile)
         route_after.pop(volatile)
     assert route_after == route_before

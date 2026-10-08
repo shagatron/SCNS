@@ -3037,6 +3037,8 @@ export interface components {
             valid_until?: string | null;
             /** Restriction Window End */
             restriction_window_end?: string | null;
+            /** Next Closure Change At */
+            next_closure_change_at?: string | null;
             /**
              * Profile
              * @enum {string}

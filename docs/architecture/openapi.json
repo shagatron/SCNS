@@ -11064,6 +11064,18 @@
             ],
             "title": "Restriction Window End"
           },
+          "next_closure_change_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Closure Change At"
+          },
           "profile": {
             "type": "string",
             "enum": [

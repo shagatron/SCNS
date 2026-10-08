@@ -37,11 +37,11 @@ def records(db, campus):
 def target(data, kind, identity):
     identity = str(identity)
     if kind in {"outdoor_edge", "outdoor_path"}:
-        rows = [
-            e
-            for i, e in data.get("edges", {}).items()
-            if (i if kind == "outdoor_edge" else e["physical_path_id"]) == identity
-        ]
+        rows = (
+            ([data["edges"][identity]] if identity in data.get("edges", {}) else [])
+            if kind == "outdoor_edge"
+            else [e for e in data.get("edges", {}).values() if e["physical_path_id"] == identity]
+        )
         if not rows:
             return None
         bindings = [
@@ -101,7 +101,10 @@ def target(data, kind, identity):
             bindings.append(
                 dict(
                     stop=s["id"],
-                    node=data["indoor_nodes"][s["node_id"]],
+                    node={
+                        k: data["indoor_nodes"][s["node_id"]].get(k)
+                        for k in ("id", "floor_id", "frame_id", "x_px", "y_px")
+                    },
                     frame=f["frame_id"],
                     layer=f["layer_id"],
                     plan=data["floorplans"][f["layer_id"]]["checksum"],
@@ -135,6 +138,9 @@ def target(data, kind, identity):
 
 def targets(data):
     choices = []
+    paths = {}
+    for i, edge in data.get("edges", {}).items():
+        paths.setdefault(edge["physical_path_id"], {})[i] = edge
     identities = [
         ("outdoor_edge", list(data.get("edges", {}))),
         ("outdoor_path", sorted({e["physical_path_id"] for e in data.get("edges", {}).values()})),
@@ -143,7 +149,11 @@ def targets(data):
     ]
     for kind, ids in identities:
         for identity in ids:
-            value = target(data, kind, identity)
+            value = target(
+                {**data, "edges": paths[identity]} if kind == "outdoor_path" else data,
+                kind,
+                identity,
+            )
             if value:
                 choices.append(value)
     return sorted(choices, key=lambda c: (c["kind"], c["label"], c["id"]))

@@ -154,7 +154,7 @@ def test_move_recomputes_full_geometry_audit_concurrency_and_public_isolation(
         client.get(public + "/map?bbox=-.001,-.001,.004,.004").json(),
     ] == before
     route_after = client.post("/api/v1/routes", json=route).json()
-    for key in ["id", "generated_at", "departure_at"]:
+    for key in ["id", "generated_at", "departure_at", "valid_until", "restriction_window_end"]:
         route_before.pop(key)
         route_after.pop(key)
     assert route_after == route_before

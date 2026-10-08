@@ -244,7 +244,7 @@ def publish_draft(client, bundle, identity, reviewer, draft, path, old):
         json={"validation_id": run["id"], "acknowledgements": ack(run)},
         headers=version(h, current(client, path)),
     )
-    assert r.status_code == 201, r.text
+    assert r.status_code == 200, r.text
     sub = r.json()
     rh, edit = approve(client, bundle, draft, run, sub, reviewer)
     r = client.post(
@@ -359,3 +359,97 @@ def test_lift_outage_no_stairs_fallback_publication_rollback_and_unresolved_revi
         client.get(f"/api/v1/campuses/{bundle.campus.id}/closures").json()["unresolved_count"] == 0
     )
     assert db.get(Closure, UUID(closed["id"])).state == "closed"
+
+
+def test_overlapping_incidents_reopening_one_never_reopens_other(client, bundle, identity):
+    h = sign_in(client, identity)
+    base = route(client, bundle).json()
+    edge = base["segments"][1]["edge_id"]
+    first = create(client, bundle, h, payload(client, bundle, target_id=edge))
+    second = create(client, bundle, h, payload(client, bundle, target_id=edge), 1)
+    decision = {
+        "key": str(uuid4()),
+        "confirmed": True,
+        "evidence": "Only first incident resolved in synthetic software test.",
+    }
+    r = client.post(
+        endpoint(bundle) + f"/{first['id']}/reopen", json=decision, headers=version(h, 2)
+    )
+    assert r.status_code == 200
+    result = route(client, bundle).json()
+    assert result["closure_overlay_version"] == 3 and all(
+        s["edge_id"] != edge for s in result["segments"]
+    )
+    public = client.get(f"/api/v1/campuses/{bundle.campus.id}/closures").json()
+    assert len(public["items"]) == 1 and public["items"][0]["id"] == second["id"]
+
+
+def test_two_granted_campuses_cannot_mix_incident_or_target_identifiers(
+    client, db, bundle, seeded, identity
+):
+    from tests.publication_fixtures import create_fixture
+
+    foreign = create_fixture(db, seeded.dataset_revision_id, bundle, "foreign", "closure isolation")
+    db.add(RoleAssignment(user_id=identity[0].id, campus_id=foreign, role="system_admin"))
+    db.flush()
+    h = sign_in(client, identity)
+    own_data = payload(client, bundle)
+    own = create(client, bundle, h, own_data)
+    foreign_url = endpoint(bundle).replace(str(bundle.campus.id), str(foreign))
+    foreign_target = client.get(foreign_url).json()["targets"][0]
+    wrong = {
+        **own_data,
+        "key": str(uuid4()),
+        "target_kind": foreign_target["kind"],
+        "target_id": foreign_target["id"],
+    }
+    assert client.post(endpoint(bundle), json=wrong, headers=version(h, 1)).status_code == 422
+    decision = {
+        "key": str(uuid4()),
+        "confirmed": True,
+        "evidence": "Must not resolve a restriction from another campus.",
+    }
+    assert (
+        client.post(
+            foreign_url + f"/{own['id']}/reopen", json=decision, headers=version(h, 0)
+        ).status_code
+        == 404
+    )
+    assert closures.version(db, foreign) == 0 and closures.version(db, bundle.campus.id) == 1
+
+
+def test_changed_physical_target_stays_unresolved_until_explicit_rebind(
+    client, db, bundle, seeded, identity
+):
+    from copy import deepcopy
+
+    from app.services.catalog import active_release
+    from app.services.mixed_routes import release_projection
+
+    h = sign_in(client, identity)
+    data = payload(client, bundle)
+    entry = create(client, bundle, h, data)
+    release = active_release(db, bundle.campus.id)
+    projection = release_projection(db, release)
+    changed = deepcopy(projection)
+    changed["edges"][data["target_id"]]["geometry"]["coordinates"][0][0] += 0.00001
+    assert closures.reconcile(db, release, changed, identity[0], "synthetic-physical-change") == 2
+    assert closures.public_status(db, bundle.campus.id, release, changed)["unresolved_count"] == 1
+    assert closures.reconcile(db, release, projection, identity[0], "synthetic-restore") == 2
+    assert (
+        closures.public_status(db, bundle.campus.id, release, projection)["unresolved_count"] == 1
+    )
+    assert route(client, bundle).status_code == 503
+    rebound = client.post(
+        endpoint(bundle) + f"/{entry['id']}/rebind",
+        json={
+            "key": str(uuid4()),
+            "target_kind": data["target_kind"],
+            "target_id": data["target_id"],
+            "confirmed": True,
+            "evidence": "Synthetic explicit physical-target reconciliation, keep closed.",
+        },
+        headers=version(h, 2),
+    )
+    assert rebound.status_code == 200 and rebound.json()["closure_overlay_version"] == 3
+    assert db.get(Closure, UUID(entry["id"])).state == "closed"

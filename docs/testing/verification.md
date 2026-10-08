@@ -1,5 +1,24 @@
 # Verification evidence
 
+## Public frontend polish — completed verification, 9 October 2026
+
+Presentation-only follow-up on `polish/public-route-planner`, directly from verified clean local/remote4B **129cb63a4a01d117c4913d7e330ac42769d932a5**. No4C work/branch found. Early explicitly unfinished visual checkpoint **2aa90d5** pushed. Public-only CSS and presentation wrappers/classes improve teal/neutral typography, spacing, button/control alignment, status boxes, route metrics/directions and outdoor/floor section discoverability. Algorithms/API/database/schema/permissions/publication/QR confirmation/restriction freshness and all synthetic/accessibility qualifications are unchanged. Admin and QR confirmation screens retain their styling. No dependency/new feature/milestone completion.
+
+| Executed check | Actual result |
+|---|---|
+| Frontend `npm run check --workspace frontend`, `npm run build --workspace frontend`, `npm test --workspace frontend` | TypeScript/ESLint/Vite production build pass; **47tests across11files pass** |
+| Affected source browser runner: navigation, closures, indoor-routing and QR suites | **24desktop/mobile Chromium journeys passed** (2.3minutes). Search/select/swap/keyboard/text-only/API-error/no-route/offline; current restrictions/stale-result hiding/conflict/retry; independent indoor release/18m/36m/57m floor transitions/unknown distance; QR confirmation/reassignment/revocation preserved. Disposable runner-owned test data only |
+| Read-only visual inspection at1440×1000,360×800,320×800 | Before/after homepage and route screenshots reviewed. Unchanged MainGate→Library256.88m/3edges; no horizontal document overflow, zero axe WCAG A/AA violations, keyboard focus3px solid on all three widths. Existing built vs source admin username font/padding/border/min-height match; no credentials entered |
+| Frozen frontend image/build smoke | Only frontend rebuilt using existing cloud-build proxy/CA/TLS/frozen dependency configuration; nginx frontend alone recreated without restarting API/worker/DB. Built public read-only checks at all three widths pass256.88m/3edges/no overflow/axe/focus; this is **not** a rerun of the full4B34journey container suite |
+| Data-preservation receipt | Developer before/after receipts byte-equivalent in parsed content: all table/floor counts, active pointers/release checksums, migration0016 and.env hash unchanged. Existing volumes/data/upload/account/restriction/QR histories retained; no developer writes/seeds/publish/reset |
+| Windows command checks | PowerShell7.5.4 parser and mocked existing/new branch, dirty-work preservation, exact Compose sequence and migration-failure halt passed on Linux; actual Windows commands not executed |
+
+Prior4B backend/migration/full-container evidence is reused because no backend/API/schema/publication/permission/algorithm code changed; those suites were not rerun here. Visual runner initially used Playwright's convenience newPage API unsupported by Axe; corrected the temporary harness to explicit contexts, then all checks passed. No application workaround/test assertion disabled.
+
+Temporary logs/screenshots: `/tmp/scns-polish-units.log`, `/tmp/scns-polish-browser.log`, `/tmp/scns-polish-visual.log`, `/tmp/scns-polish-built-visual.log`, `/tmp/scns-polish-frontend-image.log`, `/tmp/scns-polish-powershell.log`, `/tmp/scns-polish-before.json`/`after.json`, `/tmp/scns-polish-before-*.png`/`after-*.png`. Durable results are recorded here; screenshots contain only public synthetic data, are not committed.
+
+Limits: Chromium desktop/mobile emulation is not actual Windows, physical-device, Safari/Firefox or human assistive-technology testing. No location tests/collection,4C/later slice, admin redesign, phone/LAN access, real MUJ import, merge/deployment/cloud publication. Prior owner4A Windows/concurrency/sign evidence remains unchanged in the4B section. [Complete copy-paste Windows update and short exact synthetic walkthrough](../operations/public-polish.md).
+
 ## M4B closures/lift outages — completed verification, 8 October 2026
 
 Branch `feat/milestone-4b-closures` starts directly from verified clean local/remote4A **75a87df31bbc485da32f9fca1f3b08576bd42711** in the existing checkout. [Recorded slice plan](../product/milestone-4-plan.md) identifies4B as the next slice; optional outdoor location belongs to4C and was not implemented. Pushed explicitly unfinished checkpoints1a45e26/db38b8d/ce4c9ee/9c051c5 preserve progress. Operations scope: published directed outdoor/indoor edges, physical outdoor path pairs and whole connector groups, dated public reasons, informational estimated ends, explicit confirmed operator reopening/rebinding, separate campus overlay CAS/idempotency/audit, conservative hard route exclusion, online freshness and transactional publication/rollback reconciliation. No draft publication occurs when changing an incident.

@@ -97,8 +97,8 @@ def setup_two(client, db, bundle, identity, reviewer):
     anchor = next(i for i, a in graph["anchors"].items() if a["place_id"] == entrance)
     other = next(
         i
-        for i, a in graph["anchors"].items()
-        if a["node_id"] != graph["anchors"][anchor]["node_id"]
+        for i, n in graph["nodes"].items()
+        if n["label"] == "Central" and n["visibility"] == "public"
     )
     secondary = str(uuid4())
     r = client.post(
@@ -110,7 +110,7 @@ def setup_two(client, db, bundle, identity, reviewer):
                     "id": secondary,
                     "data": {
                         "place_id": entrance,
-                        "node_id": graph["anchors"][other]["node_id"],
+                        "node_id": other,
                         "accessibility_status": "verified_step_free",
                         "is_open": True,
                         "accessibility_evidence": "Synthetic alternative entrance 2026-10-01, invented test only",
@@ -379,6 +379,22 @@ def test_dependencies_and_late_failure_rollback(
         stop["floor_id"],
         h,
         {"layer_id": layer, "changes": [{"entity": "nodes", "id": stop["node_id"]}]},
+    )
+    assert result.status_code == 409 and result.json()["error"]["code"] == "routing_dependencies"
+    graph = client.get(path + f"/floors/{stop['floor_id']}/indoor").json()
+    moved_node = {
+        **graph["nodes"][stop["node_id"]],
+        "x_px": graph["nodes"][stop["node_id"]]["x_px"] + 1,
+    }
+    result = save(
+        client,
+        path,
+        stop["floor_id"],
+        h,
+        {
+            "layer_id": layer,
+            "changes": [{"entity": "nodes", "id": stop["node_id"], "data": moved_node}],
+        },
     )
     assert result.status_code == 409 and result.json()["error"]["code"] == "routing_dependencies"
     result = client.post(

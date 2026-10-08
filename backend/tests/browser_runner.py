@@ -61,6 +61,7 @@ def main():
                 "indoor conflicts",
                 "indoor routing",
                 "indoor routing conflicts",
+                "indoor routing unknown",
             )
             for viewport in ("desktop", "mobile")
         )

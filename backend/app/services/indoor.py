@@ -671,14 +671,17 @@ def proposal(db, revision, floor, payload):
     ):
         node = combined["nodes"].get(str(stop.node_id))
         connector = db.get(Connector, (revision.id, stop.connector_id))
+        old_node = before["nodes"].get(str(stop.node_id))
+        moved = node and old_node and any(node[k] != old_node[k] for k in ("x_px", "y_px"))
         if (
-            not node
+            moved
+            or not node
             or (connector.kind == "entrance" and node["kind"] != "entrance")
             or (stop.visibility == "public" and node["visibility"] != "public")
         ):
             raise DomainError(
                 "routing_dependencies",
-                f"Connector stop {stop.id} depends on this node/type/visibility. Explicitly remove or rewire its directed links and stop in Connections first.",
+                f"Connector stop {stop.id} depends on this node position/type/visibility. Explicitly remove or rewire its directed links and stop in Connections first.",
                 409,
             )
     problems = [

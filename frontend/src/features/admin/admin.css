@@ -80,3 +80,8 @@
 
 .indoor-lists { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 @media (max-width: 760px) { .indoor-lists { grid-template-columns: minmax(0, 1fr); } }
+
+.connections-workspace { min-width: 0; }
+.connections-workspace label { display: grid; gap: .25rem; margin: .75rem 0; }
+.connections-workspace p, .connections-workspace code, .connections-workspace button { overflow-wrap: anywhere; }
+.connections-workspace pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 300px; overflow: auto; }

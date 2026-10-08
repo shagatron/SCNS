@@ -4,6 +4,8 @@
 
 Branch `feat/milestone-4a-qr-markers`, verified parent `feat/milestone-3c-indoor-routing` at **8c797678e705786ae578476c22bca0970afb9ff9**. Original checkout was clean. Unfinished checkpoints170ebe2/2ced0af/3b51ac3/db97dfc/d6acdb9 were pushed; local selector changes were preserved/checkpointed on resume. [Authoritative M4 slice plan](../product/milestone-4-plan.md) limits this delivery to QR4A; no later slice, real MUJ import, merge, deployment or environment publication.
 
+Delivery: completed implementation/documentation commit **9dcc75fa73963774e8d410d2bb971981c9417c10** pushed and matched remote SHA. Final lint/type/contracts/whitespace checks passed. GitHub PR creation was attempted against the verified3C parent and blocked by GraphQL POST **Forbidden**; [prepared body](../reviews/milestone-4a-pr.md) and [correct comparison](https://github.com/shagatron/SCNS/compare/feat%2Fmilestone-3c-indoor-routing...feat%2Fmilestone-4a-qr-markers?expand=1) are retained. No merge or deployment. A documentation-only receipt commit follows the verified implementation commit.
+
 **Separate owner evidence:** on8October2026 the owner reported Windows manual3C18m same-floor/36m stairs/57m synthetic step-free lift and intentional disconnected-room no-route passed. These are owner-reported Windows/manual results, not cloud automation or a claim that Windows4A/physical surveys were run.
 
 | Executed check | Observed result |

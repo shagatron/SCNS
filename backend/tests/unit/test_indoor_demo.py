@@ -113,3 +113,29 @@ def test_pending_step_with_unrelated_concurrent_write_refuses_retry(tmp_path):
     with pytest.raises(DemoError, match="Cannot reconcile"):
         setup.step("trace", lambda: None, lambda: pytest.fail("must not write"))
     assert state["edit_version"] == 4 and state["steps"] == {}
+
+
+def test_lost_create_response_does_not_adopt_intervening_user_edits(tmp_path):
+    campus, owner_id, revision = str(uuid4()), str(uuid4()), str(uuid4())
+
+    class Owner:
+        def request(self, method, path, *args, **kwargs):
+            if path.endswith("/dashboard"):
+                return {
+                    "is_demo": True,
+                    "permissions": ["catalog_edit", "draft_create", "review_submit"],
+                    "release": {"id": "retained-public"},
+                }
+            if path.endswith("/drafts"):
+                assert method == "POST" and kwargs["headers"]["Idempotency-Key"]
+                return {"id": revision, "version": 4, "edit_version": 2, "status": "draft"}
+            if path.endswith("/floors") and method == "GET":
+                return {"status": "draft", "truncated": False, "edit_version": 2}
+            pytest.fail("No floor/record writes may follow an externally edited create retry")
+
+    with journal(tmp_path, campus, owner_id) as (path, state):
+        setup = Setup(Owner(), None, path, state, None)
+        with pytest.raises(DemoError, match="outside recorded"):
+            setup.run()
+        assert state["draft"] == revision and state["edit_version"] == 1
+        assert state["steps"] == {}

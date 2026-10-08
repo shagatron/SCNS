@@ -370,7 +370,11 @@ class Setup:
         png = self.owner.request("GET", self.base + f"/floorplan-jobs/{job}/preview", binary=True)
         with Image.open(io.BytesIO(png)) as image:
             image.load()
-            if image.size != (600, 400) or image.convert("RGB").getpixel((500, 340)) != (0, 0, 0):
+            if image.size != (600, 400) or image.convert("RGB").getpixel((500, 340)) != (
+                255,
+                255,
+                255,
+            ):
                 raise DemoError("Actual worker PNG/mask differs from the documented fixture.")
 
         def applied():
@@ -458,7 +462,7 @@ class Setup:
                     "node_id": node,
                     "is_open": True,
                     "accessibility_status": "verified_step_free",
-                    "accessibility_evidence": "Invented synthetic demo entrance2026-10-01 only; no survey.",
+                    "accessibility_evidence": "Invented synthetic demo entrance 2026-10-01 only; no survey.",
                 }
             }
         }
@@ -486,9 +490,8 @@ class Setup:
             draft = self.owner.request(
                 "POST", self.campus + "/drafts", headers={"Idempotency-Key": self.state["run"]}
             )
-            self.state.update(
-                draft=draft["id"], draft_number=draft["version"], edit_version=draft["edit_version"]
-            )
+            # A replay after a lost response must not adopt intervening user edits.
+            self.state.update(draft=draft["id"], draft_number=draft["version"], edit_version=1)
             self.save()
         self.base = self.campus + f"/drafts/{self.state['draft']}"
         print(f"{LABEL}: Draft{self.state['draft_number']} ({self.state['draft']})", flush=True)

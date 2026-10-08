@@ -108,3 +108,7 @@ Exact-content validation, independent review, public artifacts, atomic publicati
 ## M3A floorplan update
 
 Draft floors, private PDF/PNG/JPEG processing and evidence-bound calibration are available. The existing import worker also handles floorplan jobs; migrate through `0012_floorplans` before using the new images. [Floorplan workflow, limits and exact data-retaining Windows PowerShell update](floorplans.md) preserves .env/accounts/volumes/active release. Indoor tracing/connectors/routing remain unfinished 3B/3C.
+
+### Draft creation retries
+
+`POST /api/v1/admin/campuses/{campus}/drafts` optionally accepts `Idempotency-Key` (8–80 ASCII letters/digits/underscore/hyphen). A key is scoped to the authenticated actor and campus and retained in the immutable `draft.create` audit. Retrying returns the same editable draft without cloning/auditing it twice; a submitted/frozen prior draft returns409. Authorization and CSRF remain mandatory on every attempt. Keys are not permission tokens. Calls without a key retain existing create behavior. The [unpublished synthetic 3C helper](synthetic-3c-demo.md) journals its key before requesting creation and refuses to adopt intervening edits even when the original create response was lost.

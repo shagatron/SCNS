@@ -36,6 +36,8 @@ make dev                   # API, frontend and combined import/floorplan worker
 
 For container startup use the same build/stop/migrate/start sequence above in a shell. No external service, paid account or public deployment is required.
 
+For a resumable automated setup in a **separate unpublished draft**, use [the synthetic 3C helper](synthetic-3c-demo.md). It preserves retained ACA mapping and performs normal independent plan/calibration approvals. The manual workflow below remains available.
+
 ## Exact synthetic prerequisites and inputs
 
 Use a separate disposable synthetic campus/draft for review/publication experiments. Existing owner-reported Windows ACA Ground Floor tracing remains separate evidence and must be preserved; its reported scale 0.05m/reference-pixel and independent approvals do not establish current cloud data. If reusing an existing test floor, confirm reference dimensions600×400/current approved derivative+calibration and compare tracing before loading a fixture. The 3C ground fixture deliberately updates stable 3B records with **invented dated accessibility assertions**; do not apply it to real or unsurveyed production records.

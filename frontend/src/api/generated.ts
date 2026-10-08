@@ -4011,7 +4011,9 @@ export interface operations {
     new_draft_api_v1_admin_campuses__campus_id__drafts_post: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                "idempotency-key"?: string | null;
+            };
             path: {
                 campus_id: string;
             };

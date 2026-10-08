@@ -15,13 +15,13 @@ function Invoke-Compose {
 Push-Location (Split-Path -Parent $PSScriptRoot)
 try {
     # Build before stopping services; .env and existing named volumes stay intact.
-    Invoke-Compose @('build', 'api')
-    Invoke-Compose @('stop', 'api', 'import-worker')
-    Invoke-Compose @('up', '-d', '--wait', 'db')
-    Invoke-Compose @('run', '--rm', '--no-deps', 'api', 'alembic', 'upgrade', 'head')
-    Invoke-Compose @('up', '-d', '--wait', '--no-build', 'api', 'frontend', 'import-worker')
+    Invoke-Compose -ComposeArgs @('build', 'api', 'frontend')
+    Invoke-Compose -ComposeArgs @('stop', 'api', 'import-worker')
+    Invoke-Compose -ComposeArgs @('up', '-d', '--wait', 'db')
+    Invoke-Compose -ComposeArgs @('run', '--rm', '--no-deps', 'api', 'alembic', 'upgrade', 'head')
+    Invoke-Compose -ComposeArgs @('up', '-d', '--wait', '--no-build', 'api', 'frontend', 'import-worker')
     # Default Compose run TTY is essential for hidden getpass prompts. No passwords in argv/env/files.
-    Invoke-Compose @('run', '--rm', '--no-deps', 'api', 'python', '-m', 'app.cli.indoor_demo')
+    Invoke-Compose -ComposeArgs @('run', '--rm', '--no-deps', 'api', 'python', '-m', 'app.cli.indoor_demo')
 } finally {
     Pop-Location
 }

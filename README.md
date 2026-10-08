@@ -19,6 +19,8 @@ A working outdoor and indoor navigation demo built with React, TypeScript, Vite,
 
 The supplied repository contained no C code. `legacy/c-prototype/` records that fact and is reserved for the original prototype if supplied.
 
+For an existing installation, the [one-command unpublished synthetic 3C setup](docs/operations/synthetic-3c-demo.md) prepares a separate demo draft using the real worker and your existing owner/reviewer accounts, preserving existing mapping and the public release.
+
 ## Local development
 
 Prerequisites: Docker Engine/Desktop with Compose v2, Python 3.12 or 3.13, `uv` (tested 0.12.19), Node 24 (minimum 22.12), npm, Make, Bash. Dependency versions are locked in `backend/uv.lock` and the **root** npm workspace `package-lock.json`.

@@ -2,7 +2,7 @@
 
 ## Scope
 
-The owner separately authorized M0/M1, admin/import/graph/review slices M2A–M2C and indoor floorplan foundations M3A and same-floor visual tracing M3B. The numbered milestones govern sequencing; the master document's broader suggested prompt to continue later milestones is not additional authorization. M0/M1 deliver an executable outdoor vertical slice. Full two-floor connectors/indoor navigation (3C), QR, operational closures and offline features remain later work in the requirements checklist. Draft floors/private PDF/image upload/calibration are delivered by 3A; outdoor staged imports and publication are delivered by M2.
+The owner separately authorized M0/M1, admin/import/graph/review slices M2A–M2C and indoor floorplan foundations M3A same-floor visual tracing M3B, indoor/mixed routing M3C and the QR-only first slice M4A. The numbered milestones govern sequencing; the master document's broader suggested prompt to continue later milestones is not additional authorization. M0/M1 deliver an executable outdoor vertical slice. Two-floor connectors/indoor navigation3C and QR4A are delivered; operational closures/location/issues/PWA/facility/performance remain later M4 slices in the requirements checklist. Draft floors/private PDF/image upload/calibration are delivered by 3A; outdoor staged imports and publication are delivered by M2.
 
 Use the existing checkout. Cloud tasks are isolated already; do not create Git worktrees unless the owner requests one. There were no existing project instructions or C files; the initial commit held only a six-byte README.
 
@@ -93,3 +93,12 @@ Milestone3C indoor/mixed routing documentation: [data contract](../data/indoor-r
 ### Indoor/mixed routing3C
 
 Five revision-scoped policy/group/stop/path/entrance tables feed a strict permitted immutable projection. Dijkstra operates over separate indoor/outdoor namespaces and explicit transitions only. Directed physical pairs and nullable measured/baseline costs retain coordinate and uncertainty semantics. Admin edits use global CAS/atomic audit and bounded reload-safe explicit reconciliation. Multi-case capability evidence and independent exact-content review precede publication; rollback retains historical plan/artifact URLs. Public floor views use distinct local frames and release-pinned assets. Full rules: [3C contract](../data/indoor-routing.md).
+
+
+## M3C mixed routing and M4A QR boundary
+
+Explicit reviewed floor capability, directed stairs/lift/ramp/entrance paths and immutable floor/graph projection support mixed Dijkstra with separate geographic and reference-pixel geometry. Nullable physical distance/time is never fabricated; reviewed connector estimates retain their units. See [3C contract](../data/indoor-routing.md).
+
+QR operational inventory is separate from draft/release rows, referencing only currently published public nodes. Campus operations/system administrators create/label/replan/install/verify/activate/revoke signs with their own marker version, live session/CSRF/permissions and transactional audit. The existing campus lock serializes these writes and publication/rollback; marker revalidation and release pointer/audit commit or roll back together. Target geometry/frame/selected-plan digest detects movement; missing/restricted/disabled targets retire. Restoring a release never resurrects retired/revoked/unverified signs. No source-original/private-installation evidence projects publicly.
+
+Canonical origin is configured; random opaque IDs survive reassignment. Local SVG/PNG/PDF signs are readable and contain no external tracking. Public no-store resolution exposes a current label/campus/building/floor; explicit user confirmation plus marker/release versions starts Dijkstra exactly at a stored node. Existing place-source routes remain compatible. The public planner/maps/directions are reused, not redesigned. Confirmation is not continuous position and is cleared on reload, failed live check, connection loss and marker/release changes. Replanning clears both recorded and old form installation fields. See [QR contract](../data/qr.md), [installation/update guide](../operations/qr-markers.md) and [only the remaining M4 plan](../product/milestone-4-plan.md).

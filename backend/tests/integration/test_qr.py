@@ -440,3 +440,83 @@ def test_invalid_installation_never_activates_or_audits_a_sign(
     obj = db.get(QRMarker, marker["id"])
     assert obj.state == "planned" and obj.version == 1 and obj.installation == {}
     assert db.scalar(select(func.count()).select_from(AuditEvent)) == before
+
+
+def test_qr_audit_failure_rolls_back_publication_and_unchanged_target_survives_retry(
+    client, db, bundle, identity, reviewer, monkeypatch
+):
+    from app.models.publication import ReleaseArtifact
+    from tests.integration.test_publication import approve, path, ready
+
+    h, data, marker = create(client, bundle, identity)
+    old = client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"]
+    draft, run, submission = ready(client, db, bundle, identity, reviewer)
+    rh, edit_version = approve(client, bundle, draft, run, submission, reviewer)
+    payload = {"submission_id": submission["id"], "expected_release_id": old, "key": str(uuid4())}
+    original = qr.audit
+
+    def fail(*args, **kwargs):
+        raise DomainError("test_injected", "Injected marker-revalidation audit failure", 503)
+
+    monkeypatch.setattr(qr, "audit", fail)
+    failed = client.post(
+        path(bundle, draft) + "/publish", json=payload, headers=version(rh, edit_version)
+    )
+    assert failed.status_code == 503, failed.text
+    assert client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"] == old
+    assert db.scalar(select(func.count()).select_from(ReleaseArtifact)) == 0
+    unchanged = db.get(QRMarker, marker["id"])
+    assert (
+        unchanged.version == 2 and unchanged.state == "active" and str(unchanged.release_id) == old
+    )
+    monkeypatch.setattr(qr, "audit", original)
+    published = client.post(
+        path(bundle, draft) + "/publish", json=payload, headers=version(rh, edit_version)
+    )
+    assert published.status_code == 200, published.text
+    resolved = client.get(f"/api/v1/qr/{marker['id']}").json()
+    assert resolved["state"] == "active" and resolved["version"] == 3
+    assert resolved["release_id"] == published.json()["release_id"]
+    r = route(client, bundle, {**marker, "version": 3})
+    assert r.status_code == 200 and r.json()["distance_m"] == 256.88
+
+
+def test_qr_marker_node_and_route_references_cannot_cross_campus_even_with_both_grants(
+    client, db, bundle, identity, seeded
+):
+    from tests.publication_fixtures import create_fixture
+
+    h, data, marker = create(client, bundle, identity)
+    other = create_fixture(db, seeded.dataset_revision_id, bundle, "qr-isolation", purpose="qr")
+    db.add(RoleAssignment(user_id=identity[0].id, campus_id=other, role="operations"))
+    db.flush()
+    other_path = f"/api/v1/admin/campuses/{other}/qr-markers"
+    other_inventory = client.get(other_path)
+    assert other_inventory.status_code == 200
+    invalid = client.post(other_path, json={**data, "key": str(uuid4())}, headers=h)
+    assert invalid.status_code == 422
+    selected = other_inventory.json()["targets"][0]
+    update = {k: v for k, v in data.items() if k != "key"}
+    update["node_id"] = selected["id"]
+    assert (
+        client.put(other_path + f"/{marker['id']}", json=update, headers=version(h, 2)).status_code
+        == 404
+    )
+    foreign = client.post(
+        "/api/v1/routes",
+        json={
+            "campus_id": str(other),
+            "source": {
+                "kind": "qr",
+                "marker_id": marker["id"],
+                "expected_marker_version": 2,
+                "confirmed": True,
+            },
+            "destination": {
+                "kind": "place",
+                "place_id": str(next(p.id for p in bundle.places if p.code == "LIB")),
+            },
+        },
+    )
+    assert foreign.status_code == 404 and foreign.json()["error"]["code"] == "location_not_found"
+    assert db.get(QRMarker, marker["id"]).campus_id == bundle.campus.id

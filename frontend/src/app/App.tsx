@@ -129,7 +129,7 @@ function Planner({ campus, initial, online, release, qrStart }: { campus: Campus
 
   useEffect(() => { if (closures.data && closures.data.release_id !== release.id) window.dispatchEvent(new Event('campus-release-stale')) }, [closures.data, release.id])
   const [staleRouteId, setStaleRouteId] = useState<string | null>(null)
-  const route = useMutation({ mutationFn: calculateRoute, onError(error) {
+  const route = useMutation({ mutationFn: calculateRoute, gcTime: 0, onError(error) {
     if (source === gpsValue && error instanceof ApiError && error.code.startsWith('location_')) { setFormError(error.message); discardGPS(); setLocationEpoch(n => n + 1) }
     if (error instanceof ApiError && ['stale_marker', 'qr_unavailable'].includes(error.code)) window.dispatchEvent(new Event('qr-marker-stale'))
     if (error instanceof ApiError && error.code === 'stale_closures') void closures.refetch()

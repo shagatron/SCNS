@@ -8,6 +8,8 @@ from sqlalchemy import func, select
 
 from app.models.admin import AuditEvent
 from tests.integration.test_closures import create, endpoint, payload, sign_in
+from tests.integration.test_closures import identity as identity
+from tests.integration.test_closures import reviewer as reviewer
 
 pytestmark = pytest.mark.integration
 
@@ -149,3 +151,40 @@ def test_matching_and_routing_observe_live_restrictions(client, bundle, identity
     assert (
         result.status_code == 422 and result.json()["error"]["code"] == "location_no_suitable_path"
     )
+
+
+def test_gps_to_reviewed_indoor_entrances_and_lift_outage(client, db, bundle, identity, reviewer):
+    from tests.integration.test_closures import publish_draft
+    from tests.integration.test_connections import EXPECTED, setup_two, write
+
+    old = client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"]
+    draft, path, _, _, h, changes = setup_two(client, db, bundle, identity, reviewer)
+    assert write(client, path, h, changes).status_code == 200
+    publish_draft(client, bundle, identity, reviewer, draft, path, old)
+    value = match_payload(client, bundle, profile="step_free")
+    matched = client.post("/api/v1/outdoor-location-match", json=value)
+    assert matched.status_code == 200, matched.text
+    node = matched.json()["candidates"][0]["node_id"]
+    body = route_payload(bundle, value, node, destination={"place_id": EXPECTED["upper_201"]})
+    result = client.post("/api/v1/routes", json=body)
+    assert result.status_code == 200, result.text
+    assert any(s["kind"] == "entrance_transition" for s in result.json()["segments"])
+    assert len(result.json()["floors"]) == 2 and "latitude" not in result.text
+    h = sign_in(client, identity)
+    lift = next(
+        t
+        for t in client.get(endpoint(bundle)).json()["targets"]
+        if t["kind"] == "connector" and t["label"].startswith("lift ·")
+    )
+    create(client, bundle, h, payload(client, bundle, "connector", lift["id"]))
+    blocked = client.post("/api/v1/routes", json={**body, "expected_closure_overlay_version": 1})
+    assert (
+        blocked.status_code == 422
+        and blocked.json()["error"]["code"] == "no_verified_step_free_route"
+    )
+    ordinary = client.post(
+        "/api/v1/routes",
+        json={**body, "profile": "shortest", "expected_closure_overlay_version": 1},
+    )
+    assert ordinary.status_code == 200
+    assert any(s["kind"] == "stairs" for s in ordinary.json()["segments"])

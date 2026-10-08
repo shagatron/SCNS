@@ -64,3 +64,15 @@ New reviewed `Release.checksum` binds canonical full reviewed content; existing 
 `coordinate_frames.calibration` now stores uniform-scale lines/checks, campus-local measurement date, uncertainty/private evidence, quality, author/independent reviewer/time and selected-layer hash. `source_assets` additionally holds private PDF/PNG/JPEG originals and exact approved floorplan derivative descriptors. Additive `0012_floorplans` does not alter existing release hashes/pointers. Floor reference pixels are distinct from smaller display PNG pixels, geographic degrees and metres. [Exact coordinates, API and public-release projection](floorplans.md); [JSON templates](../../data/templates/floorplan-v1/README.md). All 3A floors remain display-only; rooms/connectors/indoor routing are not delivered.
 
 Milestone3C indoor/mixed routing documentation: [data contract](../data/indoor-routing.md), [data-preserving Windows update and manual fixtures](../operations/indoor-routing.md). The earlier3A/3B milestone descriptions above describe those delivered slices; enabled reviewed3C floors now add explicit routing capability. Current3C verification is recorded separately in progress/testing evidence.
+
+##3C connection tables
+
+| Table | Purpose |
+|---|---|
+| floor_routing | Explicit enabled/mode policy; stable identity equals floor; current plan/frame/source binding |
+| connectors | Same-building stairs/lift/ramp/entrance group with static availability |
+| connector_stops | Explicit served-floor stored indoor node, no inferred topology |
+| connector_paths | Directed cross-floor traversal; consistent physical pair; nullable measured distance/height and baseline seconds/wait |
+| entrance_transitions | Directed building anchor to entrance stop, priority, explicit nullable costs; no mixed-frame geometry |
+
+All tables reuse campus/revision/visibility/evidence/verification guards, whole-draft version and atomic audit. Reference integrity and frozen/review write guards are enforced by0014. Unknown physical attributes areNULL. Public projections expose only permitted rows and verified booleans; private evidence/dates/actors stay excluded. `uncertainty_note` is deliberately public explanatory text. [Typed units/eligibility/cost contract](indoor-routing.md).

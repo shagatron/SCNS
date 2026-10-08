@@ -28,9 +28,9 @@ Existing Linux source checkout:
 
 ```bash
 make setup                 # frozen dependencies; keeps an existing .env
-make db migrate            # forward-only developer migration
-# Free source ports before starting the host development processes:
+# Stop application services before migrating/updating the source processes:
 docker compose stop api frontend import-worker
+make db migrate            # forward-only developer migration
 make dev                   # API, frontend and combined import/floorplan worker
 ```
 
@@ -53,8 +53,8 @@ Use a separate disposable synthetic campus/draft for review/publication experime
 - Add/edit connector group: buildingACA, codeunique, label, stairs/lift/ramp/entrance, availabilityunknown bydefault. Supply private evidence/date only if warranted. Unknown/unavailable groups are excluded from routing. Select a floor stop's current floor/selected layer and exact stored node; use **Connection inspection floor** to pan/zoom/Fit and select its stored node. Entrance group requires entrance-kind node. No automatic floor/node creation occurs.
 - Directed floor path: choose group/fromstop/tostop (different floors), leave unknown costs/dimensions blank, choose accessibility explicitly. **Apply connection fields locally** stages changes. **Pair reverse direction** creates/synchronizes the reverse row; **Make one-way** confirms its removal. Entrance form uses group/stop/buildinganchor/direction/priority. Server rejects foreign campus/floor/reference, positive-step step-free assertions or inconsistent pair costs.
 - Delete a group/stop/path: **Delete connection and dependencies** lists every affected UUID and reverse/dependent link before confirmation. Undo/redo before save. Save increments draft version once and records actor/batch audit atomically. A failed write must leave prior data/version/audit unchanged. Do not delete developer topology to test a guard.
-- Recovery: select a connection, type `unfinished-cost` in distance m, reload; raw text must remain. Apply rejects nonfinite text without removing it. **Cancel form** discards deliberately. Recovery is same-tab2h/2MB/30actions, cleared after logout/session expiry/revocation. Private buffers cannot reappear from a ended-session effect.
-- Conflict: tabsA/B load same group. A applies local label`My retained staircase`, B applies`saved concurrent staircase` and saves. A save reportsconflict and **Keep my connection**/**Use server connection** choices; compare values explicitly, choose, then review and save again. Independent changes merge. **Compare latest draft** also compares before saving; selected-plan change requires explicit comparison/rebinding. Frozen/submitted revisions remain read-only; reviewer can inspect; operations has no editor. CSRF/campus/version protections stay server enforced.
+- Recovery: select a connection, type `unfinished-cost` in distance m, reload; raw text must remain. Apply rejects nonfinite text without removing it. **Cancel form** discards deliberately. Recovery is same-tab2h/2MB/30actions, cleared after logout/session expiry/revocation. Private buffers cannot reappear from an ended-session effect.
+- Conflict: tabsA/B load same group. A applies local label`My retained staircase`, B applies`saved concurrent staircase` and saves. A save reportsconflict and **Keep my connection**/**Use server connection** choices; compare values explicitly, choose, then review and save again. Independent changes merge. Unresolved choices and raw-field conflicts survive reload. If the same record changed while form text remains unapplied, compare the displayed strings and choose **Retain my unapplied fields** or **Use server fields** explicitly. **Compare latest draft** also compares before saving; selected-plan change requires explicit comparison/rebinding. Frozen/submitted revisions remain read-only; reviewer can inspect; operations has no editor. CSRF/campus/version protections stay server enforced.
 - **Validate saved connections** and existing floor graph validation explain unknown/unavailable/unlinked/incomplete costs and capability gaps. Inspect full diagnostics and their stable IDs. Fix blocking errors; a synthetic warning acknowledgement never certifies accessibility. Plan replacement/recalibration/floor or referenced node/anchor deletion must refuse invalidating saved dependencies.
 
 ## Review and public route manual test

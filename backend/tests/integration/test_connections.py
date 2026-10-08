@@ -183,6 +183,39 @@ def test_two_floor_routes_costs_and_public_draft_isolation(
         assert any(s["kind"] == "outdoor" for s in route["segments"])
         assert any(s["kind"] == "entrance_transition" for s in route["segments"])
         assert any(s["kind"] == "lift" for s in route["segments"])
+    # All explicit entrances/doors participate; compare combined choices with
+    # each independently restricted candidate graph rather than a hardcoded path.
+    for source, target in ((gate, u), (u, gate)):
+        combined_cost = compute(projected, source, target)["distance_m"]
+        for group in {t["connector_id"] for t in projected["entrance_transitions"].values()}:
+            single = deepcopy(projected)
+            single["entrance_transitions"] = {
+                i: t
+                for i, t in single["entrance_transitions"].items()
+                if t["connector_id"] == group
+            }
+            assert combined_cost <= compute(single, source, target)["distance_m"]
+    alternatives = deepcopy(projected)
+    door = next(row for row in alternatives["indoor_access"].values() if row["room_id"] == b)
+    alternative_id = str(uuid4())
+    alternatives["indoor_access"][alternative_id] = {
+        **door,
+        "id": alternative_id,
+        "room_id": a,
+        "priority": 10,
+    }
+    for profile in ("shortest", "step_free"):
+        all_choices = compute(alternatives, a, u, profile)["distance_m"]
+        only_alternative = deepcopy(alternatives)
+        only_alternative["indoor_access"] = {
+            i: row
+            for i, row in only_alternative["indoor_access"].items()
+            if row["room_id"] != a or i == alternative_id
+        }
+        assert all_choices == min(
+            compute(projected, a, u, profile)["distance_m"],
+            compute(only_alternative, a, u, profile)["distance_m"],
+        )
     with pytest.raises(DomainError, match="No eligible route"):
         compute(projected, a, EXPECTED["isolated"])
     assert "PRIVATE-CONNECTION-NOTE" not in json.dumps(projected)

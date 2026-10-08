@@ -29,3 +29,7 @@ QR inventory and confirmed stored-node route starts use migration0015_qr and cur
 ## M4B restrictions update
 
 Migration0016_closures adds initially empty operational history/version tables. Use [complete data-preserving Windows commands and exact outdoor/lift manual cases](closures.md); do not run seeds/bootstrap/demo helpers or publish drafts to update. Existing worker/image services are reused. [Restriction API, temporal and privacy contract](../data/closures.md) documents conservative scheduling and explicit operator-verified reopening. Actual4B Windows/device/physical checks remain unverified until owner-reported separately.
+
+## M4C outdoor location update
+
+Use [complete data-preserving Windows commands and precise Chrome simulation inputs](geolocation.md). No new migration; inherited0016 remains. Keep.env/accounts/drafts/releases/QRs/restrictions/uploads/volumes and localhost bindings. Browser location is an explicit opt-in one-shot; the synthetic near0°,0° data requires simulation for positive tests. Actual Windows polish/location/physical-device evidence remains unverified. [GPS privacy and initial-pilot matching contract](../data/location.md).

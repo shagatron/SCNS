@@ -78,7 +78,7 @@ Expect stale-location message, no matching request, manual/QR selection usable. 
 Object.defineProperty(navigator.geolocation, 'getCurrentPosition', { configurable: true, value: (success, failure) => failure({ code: 3 }) });
 ```
 
-Expect timed-out fallback. Do not disable Chrome's self-paste warning protections; type the short command yourself if necessary. Reload after the test.
+Expect timed-out fallback. Reload after either temporary console simulation to restore browser geolocation.
 
 ## Revalidation and regressions
 

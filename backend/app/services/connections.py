@@ -352,6 +352,7 @@ def output(db, revision):
     return {
         "revision_version": revision.edit_version,
         "status": revision.status,
+        "campus": {"is_demo": db.get(Campus, revision.campus_id).is_demo},
         **state,
         "buildings": {
             k: {"name": r.name, "code": r.code, "visibility": r.visibility}
@@ -360,6 +361,7 @@ def output(db, revision):
         "floors": {
             k: {
                 "label": r.label,
+                "code": r.code,
                 "building_id": str(r.building_id),
                 "layer_id": str(r.layer_id) if r.layer_id else None,
                 "frame_id": str(r.frame_id) if r.frame_id else None,

@@ -1,3 +1,11 @@
+## M3C resumed unfinished checkpoint — 8 October 2026 (Asia/Kolkata)
+
+Verified backend checkpoint **b54ebd01bf2a184f0d7e2ba4034e71c8deb1260e** was committed and pushed; remote feat/milestone-3c-indoor-routing matches it. Preserved local connection context metadata, private recovery clearing and unfinished typed connection-state helpers in this checkpoint before resuming. No implementation restart, worktree/reset or developer data changes.
+
+Earlier first12 connection integrations remain valid. The remaining **7 permission/dependency/committed concurrency/audit rollback tests passed** after correcting the operations test to retain its authorized pre-change version; combined19 focused connection cases have passing evidence. Last77 Python units and fresh/M1 migration rehearsal through0014 passed. Initial legacy136/143 run predates the estimated-outdoor compatibility fix; its7 errors are not claimed passing. Exact next action: rerun the affected full backend regressions and read-only Main Gate→Library check, then finish responsive Connections admin/public floor-route/multi-case review UI, lifecycle/publication/route/desktop/mobile/built tests, data-retaining runbook and accurate completion evidence/PR.
+
+Still unfinished; frontend mixed-route contract adaptation has not been verified. Preserve .env/accounts/uploads/volumes/drafts/releases; no developer reset/reseed/bootstrap/publication or M4/deployment/environment publication/merge.
+
 ## M3C unfinished backend checkpoint — 8 October 2026 (Asia/Kolkata)
 
 Scope checkpoint057d08b is pushed. Additive0014 now models explicit floor routing policies, stairs/lift/ramp/entrance groups, floor/frame/source-bound stops, directed connector paths and entrance transitions. Typed preview/atomic patches reuse campus/live authorization/CSRF/global CAS/audit; SQL guards cover cross-floor references, building/visibility, reverse pairs, frozen revisions and plan/calibration dependencies. Dijkstra consumes the permitted projection, considers multiple anchors with deterministic priority ties, returns typed floor/transition segments and nullable distance/ETA, and distinguishes shortest/step-free/fastest/explicit directions-only costs. Clone/hash/publication metadata integration and per-capability route evidence are in progress. Existing floors default display-only.

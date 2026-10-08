@@ -25,3 +25,7 @@ Milestone3C indoor/mixed routing documentation: [data contract](../data/indoor-r
 ## M4A QR update
 
 QR inventory and confirmed stored-node route starts use migration0015_qr and current published nodes. Follow [the exact data-preserving Windows update, synthetic inputs and expected results](qr-markers.md). `.env`, accounts, drafts, release pointers and upload/database volumes stay intact; no seed/bootstrap/draft publication is needed to update. `PUBLIC_APP_URL` configures canonical signage; default local loopback HTTP is a demo exception, nonlocal origins requireHTTPS. [QR contract](../data/qr.md), [remaining M4 slices](../product/milestone-4-plan.md).
+
+## M4B restrictions update
+
+Migration0016_closures adds initially empty operational history/version tables. Use [complete data-preserving Windows commands and exact outdoor/lift manual cases](closures.md); do not run seeds/bootstrap/demo helpers or publish drafts to update. Existing worker/image services are reused. [Restriction API, temporal and privacy contract](../data/closures.md) documents conservative scheduling and explicit operator-verified reopening. Actual4B Windows/device/physical checks remain unverified until owner-reported separately.

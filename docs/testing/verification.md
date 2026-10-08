@@ -4,6 +4,8 @@
 
 Presentation-only follow-up on `polish/public-route-planner`, directly from verified clean local/remote4B **129cb63a4a01d117c4913d7e330ac42769d932a5**. No4C work/branch found. Early explicitly unfinished visual checkpoint **2aa90d5** pushed. Public-only CSS and presentation wrappers/classes improve teal/neutral typography, spacing, button/control alignment, status boxes, route metrics/directions and outdoor/floor section discoverability. Algorithms/API/database/schema/permissions/publication/QR confirmation/restriction freshness and all synthetic/accessibility qualifications are unchanged. Admin and QR confirmation screens retain their styling. No dependency/new feature/milestone completion.
 
+Delivery: verified completed21d2a32683dce0236272eb0a463cda3a0e9ecf51 pushed and matched remote; base4B unchanged and working tree clean. Actual PR creation targeting4B blocked by GitHub GraphQL POST **Forbidden**. [Prepared concise description](../reviews/public-polish-pr.md), [correct compare/open-PR link](https://github.com/shagatron/SCNS/compare/feat%2Fmilestone-4b-closures...polish%2Fpublic-route-planner?expand=1). No merge. Documentation-only receipt follows.
+
 | Executed check | Actual result |
 |---|---|
 | Frontend `npm run check --workspace frontend`, `npm run build --workspace frontend`, `npm test --workspace frontend` | TypeScript/ESLint/Vite production build pass; **47tests across11files pass** |

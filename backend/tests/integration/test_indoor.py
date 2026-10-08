@@ -113,7 +113,7 @@ def test_full_local_topology_canonical_links_metric_audit_and_public_isolation(
     assert client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"] == old
     val = client.get(path + f"/floors/{floor}/indoor/validation").json()
     assert val["errors"] == 0 and any(
-        d["code"] == "indoor_3c_unavailable" for d in val["diagnostics"]
+        d["code"] == "indoor_display_only" for d in val["diagnostics"]
     )
     assert save(client, path, floor, h, fixture_payload(layer), v).status_code == 409
     assert db.scalar(select(func.count()).select_from(Room)) == 3

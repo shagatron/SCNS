@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from app.main import app
+from app.schemas.connections import ConnectionsPatch
 from app.schemas.dataset import Dataset
 from app.schemas.floorplans import CalibrationInput, FloorInput, UploadInput
 from app.schemas.imports import ImportBundle
@@ -33,4 +34,8 @@ for name, model in [
 
 (root / "data/templates/indoor-v1/patch.schema.json").write_text(
     json.dumps(IndoorPatch.model_json_schema(), indent=2) + "\n"
+)
+
+(root / "data/templates/connections-v1/patch.schema.json").write_text(
+    json.dumps(ConnectionsPatch.model_json_schema(), indent=2) + "\n"
 )

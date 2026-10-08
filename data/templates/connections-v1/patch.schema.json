@@ -1,0 +1,850 @@
+{
+  "$defs": {
+    "ConnectorChange": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "const": "connectors",
+          "title": "Entity",
+          "type": "string"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConnectorFields"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity",
+        "id"
+      ],
+      "title": "ConnectorChange",
+      "type": "object"
+    },
+    "ConnectorFields": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "verified_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified On"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "building_id": {
+          "format": "uuid",
+          "title": "Building Id",
+          "type": "string"
+        },
+        "code": {
+          "maxLength": 32,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.-]+$",
+          "title": "Code",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "stairs",
+            "lift",
+            "ramp",
+            "entrance"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "operational_status": {
+          "default": "unknown",
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ],
+          "title": "Operational Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "building_id",
+        "code",
+        "label",
+        "kind"
+      ],
+      "title": "ConnectorFields",
+      "type": "object"
+    },
+    "ConnectorPathFields": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "verified_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified On"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "connector_id": {
+          "format": "uuid",
+          "title": "Connector Id",
+          "type": "string"
+        },
+        "physical_path_id": {
+          "format": "uuid",
+          "title": "Physical Path Id",
+          "type": "string"
+        },
+        "distance_m": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 100000,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Distance M"
+        },
+        "distance_status": {
+          "default": "unknown",
+          "enum": [
+            "measured",
+            "estimated",
+            "unknown"
+          ],
+          "title": "Distance Status",
+          "type": "string"
+        },
+        "horizontal_distance_m": {
+          "anyOf": [
+            {
+              "maximum": 100000,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Horizontal Distance M"
+        },
+        "vertical_rise_m": {
+          "anyOf": [
+            {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vertical Rise M"
+        },
+        "baseline_traversal_s": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 86400,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Traversal S"
+        },
+        "wait_estimate_s": {
+          "anyOf": [
+            {
+              "maximum": 86400,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Wait Estimate S"
+        },
+        "uncertainty_note": {
+          "default": "",
+          "maxLength": 1000,
+          "title": "Uncertainty Note",
+          "type": "string"
+        },
+        "accessibility_status": {
+          "default": "unknown",
+          "enum": [
+            "unknown",
+            "not_step_free",
+            "verified_step_free"
+          ],
+          "title": "Accessibility Status",
+          "type": "string"
+        },
+        "width_m": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 100,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Width M"
+        },
+        "slope_percent": {
+          "anyOf": [
+            {
+              "maximum": 1000,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Slope Percent"
+        },
+        "step_count": {
+          "anyOf": [
+            {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Count"
+        },
+        "surface": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Surface"
+        },
+        "is_open": {
+          "default": true,
+          "title": "Is Open",
+          "type": "boolean"
+        },
+        "from_stop_id": {
+          "format": "uuid",
+          "title": "From Stop Id",
+          "type": "string"
+        },
+        "to_stop_id": {
+          "format": "uuid",
+          "title": "To Stop Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "connector_id",
+        "physical_path_id",
+        "from_stop_id",
+        "to_stop_id"
+      ],
+      "title": "ConnectorPathFields",
+      "type": "object"
+    },
+    "ConnectorStopFields": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "verified_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified On"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "connector_id": {
+          "format": "uuid",
+          "title": "Connector Id",
+          "type": "string"
+        },
+        "floor_id": {
+          "format": "uuid",
+          "title": "Floor Id",
+          "type": "string"
+        },
+        "layer_id": {
+          "format": "uuid",
+          "title": "Layer Id",
+          "type": "string"
+        },
+        "node_id": {
+          "format": "uuid",
+          "title": "Node Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "connector_id",
+        "floor_id",
+        "layer_id",
+        "node_id"
+      ],
+      "title": "ConnectorStopFields",
+      "type": "object"
+    },
+    "EntranceTransitionFields": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "verified_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified On"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "connector_id": {
+          "format": "uuid",
+          "title": "Connector Id",
+          "type": "string"
+        },
+        "physical_path_id": {
+          "format": "uuid",
+          "title": "Physical Path Id",
+          "type": "string"
+        },
+        "distance_m": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 100000,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Distance M"
+        },
+        "distance_status": {
+          "default": "unknown",
+          "enum": [
+            "measured",
+            "estimated",
+            "unknown"
+          ],
+          "title": "Distance Status",
+          "type": "string"
+        },
+        "horizontal_distance_m": {
+          "anyOf": [
+            {
+              "maximum": 100000,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Horizontal Distance M"
+        },
+        "vertical_rise_m": {
+          "anyOf": [
+            {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vertical Rise M"
+        },
+        "baseline_traversal_s": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 86400,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Traversal S"
+        },
+        "wait_estimate_s": {
+          "anyOf": [
+            {
+              "maximum": 86400,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Wait Estimate S"
+        },
+        "uncertainty_note": {
+          "default": "",
+          "maxLength": 1000,
+          "title": "Uncertainty Note",
+          "type": "string"
+        },
+        "accessibility_status": {
+          "default": "unknown",
+          "enum": [
+            "unknown",
+            "not_step_free",
+            "verified_step_free"
+          ],
+          "title": "Accessibility Status",
+          "type": "string"
+        },
+        "width_m": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 100,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Width M"
+        },
+        "slope_percent": {
+          "anyOf": [
+            {
+              "maximum": 1000,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Slope Percent"
+        },
+        "step_count": {
+          "anyOf": [
+            {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Count"
+        },
+        "surface": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Surface"
+        },
+        "is_open": {
+          "default": true,
+          "title": "Is Open",
+          "type": "boolean"
+        },
+        "stop_id": {
+          "format": "uuid",
+          "title": "Stop Id",
+          "type": "string"
+        },
+        "anchor_id": {
+          "format": "uuid",
+          "title": "Anchor Id",
+          "type": "string"
+        },
+        "direction": {
+          "enum": [
+            "in",
+            "out"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "priority": {
+          "default": 0,
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Priority",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "connector_id",
+        "physical_path_id",
+        "stop_id",
+        "anchor_id",
+        "direction"
+      ],
+      "title": "EntranceTransitionFields",
+      "type": "object"
+    },
+    "FloorRoutingChange": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "const": "policies",
+          "title": "Entity",
+          "type": "string"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FloorRoutingFields"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity",
+        "id"
+      ],
+      "title": "FloorRoutingChange",
+      "type": "object"
+    },
+    "FloorRoutingFields": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "verified_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified On"
+        },
+        "visibility": {
+          "default": "public",
+          "enum": [
+            "public",
+            "restricted"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "floor_id": {
+          "format": "uuid",
+          "title": "Floor Id",
+          "type": "string"
+        },
+        "layer_id": {
+          "format": "uuid",
+          "title": "Layer Id",
+          "type": "string"
+        },
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "mode": {
+          "default": "metric",
+          "enum": [
+            "metric",
+            "directions_only"
+          ],
+          "title": "Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "floor_id",
+        "layer_id"
+      ],
+      "title": "FloorRoutingFields",
+      "type": "object"
+    },
+    "PathChange": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "const": "paths",
+          "title": "Entity",
+          "type": "string"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConnectorPathFields"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity",
+        "id"
+      ],
+      "title": "PathChange",
+      "type": "object"
+    },
+    "StopChange": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "const": "stops",
+          "title": "Entity",
+          "type": "string"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConnectorStopFields"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity",
+        "id"
+      ],
+      "title": "StopChange",
+      "type": "object"
+    },
+    "TransitionChange": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "const": "transitions",
+          "title": "Entity",
+          "type": "string"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EntranceTransitionFields"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entity",
+        "id"
+      ],
+      "title": "TransitionChange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "changes": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/FloorRoutingChange"
+          },
+          {
+            "$ref": "#/$defs/ConnectorChange"
+          },
+          {
+            "$ref": "#/$defs/StopChange"
+          },
+          {
+            "$ref": "#/$defs/PathChange"
+          },
+          {
+            "$ref": "#/$defs/TransitionChange"
+          }
+        ]
+      },
+      "maxItems": 500,
+      "minItems": 1,
+      "title": "Changes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "changes"
+  ],
+  "title": "ConnectionsPatch",
+  "type": "object"
+}

@@ -62,7 +62,9 @@ class PlaceOut(DTO):
     frame_id: UUID | None = None
     room_code: str | None = None
     local_point: dict[str, float] | None = None
-    navigation_mode: Literal["outdoor", "indoor_catalog_only"] = "outdoor"
+    navigation_mode: Literal["outdoor", "indoor_catalog_only", "metric", "directions_only"] = (
+        "outdoor"
+    )
     routable: bool
     accessibility: Literal["unknown", "synthetic_evidence_only"] = "unknown"
 
@@ -98,7 +100,8 @@ class RouteRequest(DTO):
     campus_id: UUID
     source: PlaceSource
     destination: PlaceSource
-    profile: Literal["shortest", "step_free"] = "shortest"
+    profile: Literal["shortest", "step_free", "fastest"] = "shortest"
+    cost_mode: Literal["metric", "directions_only"] = "metric"
     departure_at: AwareDatetime | None = None
     expected_release_id: UUID | None = None
 
@@ -107,10 +110,39 @@ class RouteSegment(DTO):
     edge_id: UUID
     from_node_id: UUID
     to_node_id: UUID
-    kind: Literal["outdoor"] = "outdoor"
-    geometry: LineString
-    distance_m: float = Field(ge=0)
+    kind: Literal["outdoor", "indoor", "entrance_transition", "stairs", "lift", "ramp"] = "outdoor"
+    geometry: LineString | None = None
+    polyline: list[list[float]] | None = None
+    floor_id: UUID | None = None
+    to_floor_id: UUID | None = None
+    building_id: UUID | None = None
+    frame_id: UUID | None = None
+    connector_id: UUID | None = None
+    distance_status: Literal["measured", "calibrated", "estimated", "unknown"] = "measured"
+    estimated_duration_s: float | None = Field(default=None, ge=0)
+    distance_m: float | None = Field(default=None, ge=0)
     instruction: str
+
+
+class RouteFloor(DTO):
+    id: UUID
+    building_id: UUID
+    building_name: str
+    label: str
+    ordering: float
+    frame_id: UUID
+    layer_id: UUID
+    width_px: int
+    height_px: int
+    metres_per_pixel: float | None
+    navigation_mode: Literal["display_only", "metric", "directions_only"]
+    asset_url: str
+    attribution: str
+
+
+class FloorsOut(DTO):
+    release_id: UUID
+    floors: list[RouteFloor]
 
 
 class RouteOut(DTO):
@@ -121,13 +153,19 @@ class RouteOut(DTO):
     closure_overlay_version: int = 0
     generated_at: datetime
     departure_at: datetime
-    profile: Literal["shortest", "step_free"]
+    profile: Literal["shortest", "step_free", "fastest"]
     source_place_id: UUID
     destination_place_id: UUID
     source_anchor_id: UUID
     destination_anchor_id: UUID
-    distance_m: float = Field(ge=0)
-    estimated_duration_s: float = Field(ge=0)
+    distance_m: float | None = Field(default=None, ge=0)
+    estimated_duration_s: float | None = Field(default=None, ge=0)
+    known_distance_m: float | None = Field(default=None, ge=0)
+    distance_status: Literal["complete", "partial", "unknown"] = "complete"
+    cost_mode: Literal["metric", "directions_only"] = "metric"
+    cost_units: Literal["metres", "seconds", "traversals"] = "metres"
+    optimization_cost: float | None = Field(default=None, ge=0)
+    floors: list[RouteFloor] = Field(default_factory=list)
     walking_speed_mps: float
     segments: list[RouteSegment]
     arrival_instruction: str

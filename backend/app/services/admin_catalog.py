@@ -18,6 +18,13 @@ from app.models import (
     Revision,
 )
 from app.models.admin import Department, DepartmentPlace, PlaceAlias
+from app.models.connections import (
+    Connector,
+    ConnectorPath,
+    ConnectorStop,
+    EntranceTransition,
+    FloorRouting,
+)
 from app.models.floorplans import Floor, MapLayer
 from app.models.imports import ImportBinding
 from app.models.indoor import IndoorAccess, IndoorEdge, IndoorNode, Room
@@ -119,6 +126,11 @@ def create_draft(db: Session, campus_id: UUID, actor_id: UUID, request_id: str):
             IndoorNode,
             IndoorEdge,
             IndoorAccess,
+            FloorRouting,
+            Connector,
+            ConnectorStop,
+            ConnectorPath,
+            EntranceTransition,
         ):
             if model is Room:
                 db.execute(

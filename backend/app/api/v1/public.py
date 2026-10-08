@@ -14,6 +14,7 @@ from app.models.publication import ReleaseArtifact
 from app.schemas.api import (
     CampusOut,
     ErrorOut,
+    FloorsOut,
     HealthOut,
     MapFeature,
     MapOut,
@@ -292,3 +293,18 @@ def approved_floorplan(campus_id: UUID, release_id: UUID, layer_id: UUID, sha256
         media_type="image/png",
         headers={"Cache-Control": "public, max-age=31536000, immutable", "ETag": f'"{sha256}"'},
     )
+
+
+@router.get("/campuses/{campus_id}/floors", response_model=FloorsOut)
+def public_floors(campus_id: UUID, db: DB, expected_release_id: UUID | None = None):
+    from app.services.mixed_routes import floor_descriptors, release_projection
+
+    release = active_release(db, campus_id)
+    if expected_release_id and expected_release_id != release.id:
+        raise DomainError(
+            "stale_release", "The map has changed. Refresh all campus/floor data and retry.", 409
+        )
+    return {
+        "release_id": release.id,
+        "floors": floor_descriptors(release_projection(db, release), release),
+    }

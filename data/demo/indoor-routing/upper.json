@@ -1,0 +1,434 @@
+{
+  "format": "scns-indoor-tracing-v1",
+  "synthetic": true,
+  "reference": {
+    "width_px": 600,
+    "height_px": 400
+  },
+  "records": {
+    "rooms": {
+      "f9e7de6f-ccd0-5336-9de5-38431a7d5d1a": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "code": "201",
+        "name": "Upper Synthetic study room",
+        "kind": "room",
+        "description": "Invented indoor destination, no real campus mapping.",
+        "aliases": [],
+        "department_ids": [],
+        "x_px": 180,
+        "y_px": 170
+      },
+      "b46d9b49-b59f-5f6e-902a-99a7b2bee018": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "code": "202",
+        "name": "Upper Synthetic support office",
+        "kind": "office",
+        "description": "Invented indoor destination, no real campus mapping.",
+        "aliases": [],
+        "department_ids": [],
+        "x_px": 340,
+        "y_px": 170
+      },
+      "660fb779-6709-575b-b131-a259fccea73a": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "restricted",
+        "code": "R2",
+        "name": "Upper Synthetic restricted store",
+        "kind": "room",
+        "description": "Invented indoor destination, no real campus mapping.",
+        "aliases": [],
+        "department_ids": [],
+        "x_px": 440,
+        "y_px": 280
+      }
+    },
+    "nodes": {
+      "43654a7f-faab-5bfd-bfc9-884caa5ad497": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "label": "Synthetic west",
+        "kind": "entrance",
+        "x_px": 100,
+        "y_px": 100
+      },
+      "7751679e-8f88-5962-b618-21e31c2280f2": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "label": "Synthetic centre",
+        "kind": "junction",
+        "x_px": 300,
+        "y_px": 100
+      },
+      "70379653-b405-5ecd-a93e-90a9edfffa28": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "label": "Synthetic east",
+        "kind": "entrance",
+        "x_px": 420,
+        "y_px": 100
+      },
+      "d86b1696-2acd-5958-b641-ccd0766697ea": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "label": "Synthetic door101",
+        "kind": "door",
+        "x_px": 180,
+        "y_px": 120
+      },
+      "300db098-9b5d-5003-95c3-ef5b312fdfc0": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "label": "Synthetic door102",
+        "kind": "door",
+        "x_px": 340,
+        "y_px": 120
+      },
+      "1c43f9c8-609b-5368-95c5-1435a929e4e7": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "restricted",
+        "label": "Synthetic doorR1",
+        "kind": "door",
+        "x_px": 440,
+        "y_px": 240
+      }
+    },
+    "edges": {
+      "7951001b-efb9-5f2c-93c2-8558a4cf5d02": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "physical_path_id": "86affee0-3ca2-5cec-83e8-16a6f683b802",
+        "from_node_id": "43654a7f-faab-5bfd-bfc9-884caa5ad497",
+        "to_node_id": "7751679e-8f88-5962-b618-21e31c2280f2",
+        "kind": "corridor",
+        "polyline": [
+          [
+            100,
+            100
+          ],
+          [
+            200,
+            100
+          ],
+          [
+            300,
+            100
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "e5ccf250-f8dd-5255-9c62-52590951cb30": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "physical_path_id": "86affee0-3ca2-5cec-83e8-16a6f683b802",
+        "from_node_id": "7751679e-8f88-5962-b618-21e31c2280f2",
+        "to_node_id": "43654a7f-faab-5bfd-bfc9-884caa5ad497",
+        "kind": "corridor",
+        "polyline": [
+          [
+            300,
+            100
+          ],
+          [
+            200,
+            100
+          ],
+          [
+            100,
+            100
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "97e98e4d-889f-5f29-90bb-b58fbb300e8d": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "physical_path_id": "f320cfc9-d254-5cb7-afb8-fc7448daf692",
+        "from_node_id": "7751679e-8f88-5962-b618-21e31c2280f2",
+        "to_node_id": "70379653-b405-5ecd-a93e-90a9edfffa28",
+        "kind": "corridor",
+        "polyline": [
+          [
+            300,
+            100
+          ],
+          [
+            360,
+            100
+          ],
+          [
+            420,
+            100
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "7664d19e-e273-585e-855d-5f624fe63ede": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "physical_path_id": "f320cfc9-d254-5cb7-afb8-fc7448daf692",
+        "from_node_id": "70379653-b405-5ecd-a93e-90a9edfffa28",
+        "to_node_id": "7751679e-8f88-5962-b618-21e31c2280f2",
+        "kind": "corridor",
+        "polyline": [
+          [
+            420,
+            100
+          ],
+          [
+            360,
+            100
+          ],
+          [
+            300,
+            100
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "f37f864c-6936-52bc-be69-fd2abcfda098": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "physical_path_id": "8e92e39f-dc22-5da6-acc2-848b320299ce",
+        "from_node_id": "43654a7f-faab-5bfd-bfc9-884caa5ad497",
+        "to_node_id": "d86b1696-2acd-5958-b641-ccd0766697ea",
+        "kind": "door",
+        "polyline": [
+          [
+            100,
+            100
+          ],
+          [
+            180,
+            100
+          ],
+          [
+            180,
+            120
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "57764d2b-970a-52c1-8a0a-73d472c3d6dd": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "physical_path_id": "8e92e39f-dc22-5da6-acc2-848b320299ce",
+        "from_node_id": "d86b1696-2acd-5958-b641-ccd0766697ea",
+        "to_node_id": "43654a7f-faab-5bfd-bfc9-884caa5ad497",
+        "kind": "door",
+        "polyline": [
+          [
+            180,
+            120
+          ],
+          [
+            180,
+            100
+          ],
+          [
+            100,
+            100
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "a916e89b-d30c-5671-b35f-c9e3e015879e": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "physical_path_id": "a324a1be-6264-5e28-ae6b-4ed5821f1639",
+        "from_node_id": "7751679e-8f88-5962-b618-21e31c2280f2",
+        "to_node_id": "300db098-9b5d-5003-95c3-ef5b312fdfc0",
+        "kind": "door",
+        "polyline": [
+          [
+            300,
+            100
+          ],
+          [
+            340,
+            100
+          ],
+          [
+            340,
+            120
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "af8db2b4-9b61-57ff-a5ef-9503b2bb5002": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "physical_path_id": "a324a1be-6264-5e28-ae6b-4ed5821f1639",
+        "from_node_id": "300db098-9b5d-5003-95c3-ef5b312fdfc0",
+        "to_node_id": "7751679e-8f88-5962-b618-21e31c2280f2",
+        "kind": "door",
+        "polyline": [
+          [
+            340,
+            120
+          ],
+          [
+            340,
+            100
+          ],
+          [
+            300,
+            100
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "4591f936-e578-50ed-86a2-3c3a2a90e043": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "restricted",
+        "physical_path_id": "148bd5b4-f241-5383-90bd-700f987f22a0",
+        "from_node_id": "70379653-b405-5ecd-a93e-90a9edfffa28",
+        "to_node_id": "1c43f9c8-609b-5368-95c5-1435a929e4e7",
+        "kind": "door",
+        "polyline": [
+          [
+            420,
+            100
+          ],
+          [
+            440,
+            100
+          ],
+          [
+            440,
+            240
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      },
+      "2c410bc4-f077-5ad9-ae48-bc8cabbd3045": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "restricted",
+        "physical_path_id": "148bd5b4-f241-5383-90bd-700f987f22a0",
+        "from_node_id": "1c43f9c8-609b-5368-95c5-1435a929e4e7",
+        "to_node_id": "70379653-b405-5ecd-a93e-90a9edfffa28",
+        "kind": "door",
+        "polyline": [
+          [
+            440,
+            240
+          ],
+          [
+            440,
+            100
+          ],
+          [
+            420,
+            100
+          ]
+        ],
+        "accessibility_status": "verified_step_free",
+        "width_m": null,
+        "slope_percent": null,
+        "step_count": null,
+        "surface": null,
+        "is_open": true
+      }
+    },
+    "access": {
+      "6512efb4-cc4e-5985-92fb-42f3b583c4cf": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "room_id": "f9e7de6f-ccd0-5336-9de5-38431a7d5d1a",
+        "node_id": "d86b1696-2acd-5958-b641-ccd0766697ea",
+        "role": "door",
+        "priority": 0,
+        "accessibility_status": "verified_step_free",
+        "is_open": true
+      },
+      "795b99c2-8855-5afa-bedc-8ac5c45a1501": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "public",
+        "room_id": "b46d9b49-b59f-5f6e-902a-99a7b2bee018",
+        "node_id": "300db098-9b5d-5003-95c3-ef5b312fdfc0",
+        "role": "door",
+        "priority": 0,
+        "accessibility_status": "verified_step_free",
+        "is_open": true
+      },
+      "3df75d93-d4d5-5f49-8047-4690c3f39aee": {
+        "evidence": "Invented synthetic 3C topology/accessibility test evidence; no real campus survey. PRIVATE-CONNECTION-NOTE",
+        "verified_on": "2026-10-01",
+        "visibility": "restricted",
+        "room_id": "660fb779-6709-575b-b131-a259fccea73a",
+        "node_id": "1c43f9c8-609b-5368-95c5-1435a929e4e7",
+        "role": "door",
+        "priority": 0,
+        "accessibility_status": "verified_step_free",
+        "is_open": true
+      }
+    }
+  }
+}

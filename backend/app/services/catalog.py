@@ -126,6 +126,12 @@ def place_output(session: Session, places: list[Place], revision: UUID) -> list[
     floors = {
         f.id: f for f in session.scalars(select(Floor).where(Floor.dataset_revision_id == revision))
     }
+    artifact = session.scalar(
+        select(ReleaseArtifact)
+        .join(Release, Release.id == ReleaseArtifact.release_id)
+        .where(Release.dataset_revision_id == revision)
+    )
+    projected = artifact.content.get("places", {}) if artifact else {}
     return [
         PlaceOut(
             id=p.id,
@@ -137,7 +143,9 @@ def place_output(session: Session, places: list[Place], revision: UUID) -> list[
             aliases=p.aliases,
             building_name=buildings.get(p.building_id),
             point=json.loads(points[p.id]) if points[p.id] else None,
-            routable=p.id in anchored and p.id not in rooms,
+            routable=projected.get(str(p.id), {}).get("routable", False)
+            if p.id in rooms
+            else p.id in anchored,
             floor_id=rooms[p.id].floor_id if p.id in rooms else None,
             floor_label=floors[rooms[p.id].floor_id].label if p.id in rooms else None,
             frame_id=rooms[p.id].frame_id if p.id in rooms else None,
@@ -145,7 +153,11 @@ def place_output(session: Session, places: list[Place], revision: UUID) -> list[
             local_point={"x_px": rooms[p.id].x_px, "y_px": rooms[p.id].y_px}
             if p.id in rooms
             else None,
-            navigation_mode="indoor_catalog_only" if p.id in rooms else "outdoor",
+            navigation_mode=projected.get(str(p.id), {}).get(
+                "navigation_mode", "indoor_catalog_only"
+            )
+            if p.id in rooms
+            else "outdoor",
         )
         for p in places
     ]

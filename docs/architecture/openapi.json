@@ -904,6 +904,93 @@
         }
       }
     },
+    "/api/v1/campuses/{campus_id}/floors": {
+      "get": {
+        "summary": "Public Floors",
+        "operationId": "public_floors_api_v1_campuses__campus_id__floors_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "expected_release_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Expected Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FloorsOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
     "/api/v1/admin/login": {
       "post": {
         "tags": [
@@ -5602,6 +5689,260 @@
           }
         }
       }
+    },
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/connections": {
+      "get": {
+        "tags": [
+          "admin-connections"
+        ],
+        "summary": "Read",
+        "operationId": "read_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "admin-connections"
+        ],
+        "summary": "Edit",
+        "operationId": "edit_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_patch",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectionsPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/connections/preview": {
+      "post": {
+        "tags": [
+          "admin-connections"
+        ],
+        "summary": "Preview",
+        "operationId": "preview_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_preview_post",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectionsPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/connections/validation": {
+      "get": {
+        "tags": [
+          "admin-connections"
+        ],
+        "summary": "Validate",
+        "operationId": "validate_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_validation_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "revision_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Revision Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -6119,6 +6460,417 @@
         ],
         "title": "CatalogRecord"
       },
+      "ConnectionsPatch": {
+        "properties": {
+          "changes": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/FloorRoutingChange"
+                },
+                {
+                  "$ref": "#/components/schemas/ConnectorChange"
+                },
+                {
+                  "$ref": "#/components/schemas/StopChange"
+                },
+                {
+                  "$ref": "#/components/schemas/PathChange"
+                },
+                {
+                  "$ref": "#/components/schemas/TransitionChange"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Changes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "changes"
+        ],
+        "title": "ConnectionsPatch"
+      },
+      "ConnectorChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "connectors",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConnectorFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "ConnectorChange"
+      },
+      "ConnectorFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "building_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Building Id"
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "title": "Code"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "stairs",
+              "lift",
+              "ramp",
+              "entrance"
+            ],
+            "title": "Kind"
+          },
+          "operational_status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "unavailable",
+              "unknown"
+            ],
+            "title": "Operational Status",
+            "default": "unknown"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "building_id",
+          "code",
+          "label",
+          "kind"
+        ],
+        "title": "ConnectorFields"
+      },
+      "ConnectorPathFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "connector_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Connector Id"
+          },
+          "physical_path_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Physical Path Id"
+          },
+          "distance_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Distance M"
+          },
+          "distance_status": {
+            "type": "string",
+            "enum": [
+              "measured",
+              "estimated",
+              "unknown"
+            ],
+            "title": "Distance Status",
+            "default": "unknown"
+          },
+          "horizontal_distance_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizontal Distance M"
+          },
+          "vertical_rise_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vertical Rise M"
+          },
+          "baseline_traversal_s": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 86400.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline Traversal S"
+          },
+          "wait_estimate_s": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 86400.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wait Estimate S"
+          },
+          "uncertainty_note": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Uncertainty Note",
+            "default": ""
+          },
+          "accessibility_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "not_step_free",
+              "verified_step_free"
+            ],
+            "title": "Accessibility Status",
+            "default": "unknown"
+          },
+          "width_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width M"
+          },
+          "slope_percent": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Slope Percent"
+          },
+          "step_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step Count"
+          },
+          "surface": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Surface"
+          },
+          "is_open": {
+            "type": "boolean",
+            "title": "Is Open",
+            "default": true
+          },
+          "from_stop_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "From Stop Id"
+          },
+          "to_stop_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "To Stop Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "connector_id",
+          "physical_path_id",
+          "from_stop_id",
+          "to_stop_id"
+        ],
+        "title": "ConnectorPathFields"
+      },
+      "ConnectorStopFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "connector_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Connector Id"
+          },
+          "floor_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Floor Id"
+          },
+          "layer_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Layer Id"
+          },
+          "node_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Node Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "connector_id",
+          "floor_id",
+          "layer_id",
+          "node_id"
+        ],
+        "title": "ConnectorStopFields"
+      },
       "DashboardOut": {
         "properties": {
           "campus_id": {
@@ -6517,6 +7269,229 @@
         ],
         "title": "EdgeFields"
       },
+      "EntranceTransitionFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "connector_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Connector Id"
+          },
+          "physical_path_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Physical Path Id"
+          },
+          "distance_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Distance M"
+          },
+          "distance_status": {
+            "type": "string",
+            "enum": [
+              "measured",
+              "estimated",
+              "unknown"
+            ],
+            "title": "Distance Status",
+            "default": "unknown"
+          },
+          "horizontal_distance_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizontal Distance M"
+          },
+          "vertical_rise_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vertical Rise M"
+          },
+          "baseline_traversal_s": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 86400.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline Traversal S"
+          },
+          "wait_estimate_s": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 86400.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wait Estimate S"
+          },
+          "uncertainty_note": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Uncertainty Note",
+            "default": ""
+          },
+          "accessibility_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "not_step_free",
+              "verified_step_free"
+            ],
+            "title": "Accessibility Status",
+            "default": "unknown"
+          },
+          "width_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width M"
+          },
+          "slope_percent": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Slope Percent"
+          },
+          "step_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step Count"
+          },
+          "surface": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Surface"
+          },
+          "is_open": {
+            "type": "boolean",
+            "title": "Is Open",
+            "default": true
+          },
+          "stop_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Stop Id"
+          },
+          "anchor_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Anchor Id"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "in",
+              "out"
+            ],
+            "title": "Direction"
+          },
+          "priority": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Priority",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "connector_id",
+          "physical_path_id",
+          "stop_id",
+          "anchor_id",
+          "direction"
+        ],
+        "title": "EntranceTransitionFields"
+      },
       "ErrorDetail": {
         "properties": {
           "code": {
@@ -6624,6 +7599,122 @@
           "ordering"
         ],
         "title": "FloorInput"
+      },
+      "FloorRoutingChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "policies",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FloorRoutingFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "FloorRoutingChange"
+      },
+      "FloorRoutingFields": {
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Evidence",
+            "default": ""
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "restricted"
+            ],
+            "title": "Visibility",
+            "default": "public"
+          },
+          "floor_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Floor Id"
+          },
+          "layer_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Layer Id"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": false
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "directions_only"
+            ],
+            "title": "Mode",
+            "default": "metric"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "floor_id",
+          "layer_id"
+        ],
+        "title": "FloorRoutingFields"
+      },
+      "FloorsOut": {
+        "properties": {
+          "release_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Release Id"
+          },
+          "floors": {
+            "items": {
+              "$ref": "#/components/schemas/RouteFloor"
+            },
+            "type": "array",
+            "title": "Floors"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release_id",
+          "floors"
+        ],
+        "title": "FloorsOut"
       },
       "GrantOut": {
         "properties": {
@@ -7576,6 +8667,37 @@
         ],
         "title": "PageInput"
       },
+      "PathChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "paths",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConnectorPathFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "PathChange"
+      },
       "Pixel": {
         "properties": {
           "x": {
@@ -7789,7 +8911,9 @@
             "type": "string",
             "enum": [
               "outdoor",
-              "indoor_catalog_only"
+              "indoor_catalog_only",
+              "metric",
+              "directions_only"
             ],
             "title": "Navigation Mode",
             "default": "outdoor"
@@ -8281,9 +9405,19 @@
             "type": "string",
             "enum": [
               "shortest",
-              "step_free"
+              "step_free",
+              "fastest"
             ],
             "title": "Profile"
+          },
+          "cost_mode": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "directions_only"
+            ],
+            "title": "Cost Mode",
+            "default": "metric"
           },
           "expected_found": {
             "type": "boolean",
@@ -8319,6 +9453,96 @@
           "reason"
         ],
         "title": "RouteExpectation"
+      },
+      "RouteFloor": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "building_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Building Id"
+          },
+          "building_name": {
+            "type": "string",
+            "title": "Building Name"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "ordering": {
+            "type": "number",
+            "title": "Ordering"
+          },
+          "frame_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Frame Id"
+          },
+          "layer_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Layer Id"
+          },
+          "width_px": {
+            "type": "integer",
+            "title": "Width Px"
+          },
+          "height_px": {
+            "type": "integer",
+            "title": "Height Px"
+          },
+          "metres_per_pixel": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metres Per Pixel"
+          },
+          "navigation_mode": {
+            "type": "string",
+            "enum": [
+              "display_only",
+              "metric",
+              "directions_only"
+            ],
+            "title": "Navigation Mode"
+          },
+          "asset_url": {
+            "type": "string",
+            "title": "Asset Url"
+          },
+          "attribution": {
+            "type": "string",
+            "title": "Attribution"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "building_id",
+          "building_name",
+          "label",
+          "ordering",
+          "frame_id",
+          "layer_id",
+          "width_px",
+          "height_px",
+          "metres_per_pixel",
+          "navigation_mode",
+          "asset_url",
+          "attribution"
+        ],
+        "title": "RouteFloor"
       },
       "RouteOut": {
         "properties": {
@@ -8361,7 +9585,8 @@
             "type": "string",
             "enum": [
               "shortest",
-              "step_free"
+              "step_free",
+              "fastest"
             ],
             "title": "Profile"
           },
@@ -8386,14 +9611,88 @@
             "title": "Destination Anchor Id"
           },
           "distance_m": {
-            "type": "number",
-            "minimum": 0.0,
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Distance M"
           },
           "estimated_duration_s": {
-            "type": "number",
-            "minimum": 0.0,
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Estimated Duration S"
+          },
+          "known_distance_m": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Known Distance M"
+          },
+          "distance_status": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "partial",
+              "unknown"
+            ],
+            "title": "Distance Status",
+            "default": "complete"
+          },
+          "cost_mode": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "directions_only"
+            ],
+            "title": "Cost Mode",
+            "default": "metric"
+          },
+          "cost_units": {
+            "type": "string",
+            "enum": [
+              "metres",
+              "seconds",
+              "traversals"
+            ],
+            "title": "Cost Units",
+            "default": "metres"
+          },
+          "optimization_cost": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Optimization Cost"
+          },
+          "floors": {
+            "items": {
+              "$ref": "#/components/schemas/RouteFloor"
+            },
+            "type": "array",
+            "title": "Floors"
           },
           "walking_speed_mps": {
             "type": "number",
@@ -8438,8 +9737,6 @@
           "destination_place_id",
           "source_anchor_id",
           "destination_anchor_id",
-          "distance_m",
-          "estimated_duration_s",
           "walking_speed_mps",
           "segments",
           "arrival_instruction",
@@ -8464,10 +9761,20 @@
             "type": "string",
             "enum": [
               "shortest",
-              "step_free"
+              "step_free",
+              "fastest"
             ],
             "title": "Profile",
             "default": "shortest"
+          },
+          "cost_mode": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "directions_only"
+            ],
+            "title": "Cost Mode",
+            "default": "metric"
           },
           "departure_at": {
             "anyOf": [
@@ -8522,16 +9829,137 @@
           },
           "kind": {
             "type": "string",
-            "const": "outdoor",
+            "enum": [
+              "outdoor",
+              "indoor",
+              "entrance_transition",
+              "stairs",
+              "lift",
+              "ramp"
+            ],
             "title": "Kind",
             "default": "outdoor"
           },
           "geometry": {
-            "$ref": "#/components/schemas/LineString"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LineString"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "polyline": {
+            "anyOf": [
+              {
+                "items": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Polyline"
+          },
+          "floor_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Floor Id"
+          },
+          "to_floor_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "To Floor Id"
+          },
+          "building_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Building Id"
+          },
+          "frame_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frame Id"
+          },
+          "connector_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Connector Id"
+          },
+          "distance_status": {
+            "type": "string",
+            "enum": [
+              "measured",
+              "calibrated",
+              "estimated",
+              "unknown"
+            ],
+            "title": "Distance Status",
+            "default": "measured"
+          },
+          "estimated_duration_s": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated Duration S"
           },
           "distance_m": {
-            "type": "number",
-            "minimum": 0.0,
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Distance M"
           },
           "instruction": {
@@ -8545,8 +9973,6 @@
           "edge_id",
           "from_node_id",
           "to_node_id",
-          "geometry",
-          "distance_m",
           "instruction"
         ],
         "title": "RouteSegment"
@@ -8633,6 +10059,37 @@
         ],
         "title": "SessionOut"
       },
+      "StopChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "stops",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConnectorStopFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "StopChange"
+      },
       "SubmitInput": {
         "properties": {
           "validation_id": {
@@ -8655,6 +10112,37 @@
           "validation_id"
         ],
         "title": "SubmitInput"
+      },
+      "TransitionChange": {
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "transitions",
+            "title": "Entity"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EntranceTransitionFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entity",
+          "id"
+        ],
+        "title": "TransitionChange"
       },
       "UserInput": {
         "properties": {
@@ -8746,7 +10234,7 @@
               "$ref": "#/components/schemas/RouteExpectation"
             },
             "type": "array",
-            "maxItems": 50,
+            "maxItems": 250,
             "minItems": 2,
             "title": "Routes"
           }

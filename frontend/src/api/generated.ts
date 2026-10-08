@@ -191,6 +191,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/campuses/{campus_id}/floors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public Floors */
+        get: operations["public_floors_api_v1_campuses__campus_id__floors_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/login": {
         parameters: {
             query?: never;
@@ -981,6 +998,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read */
+        get: operations["read_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Edit */
+        patch: operations["edit_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_patch"];
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/connections/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Preview */
+        post: operations["preview_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/drafts/{revision_id}/connections/validation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Validate */
+        get: operations["validate_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_validation_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1195,6 +1264,173 @@ export interface components {
             /** Item */
             item: components["schemas"]["BuildingWrite"] | components["schemas"]["PlaceWrite"] | components["schemas"]["DepartmentWrite"] | components["schemas"]["AliasWrite"] | components["schemas"]["AnchorWrite"];
         };
+        /** ConnectionsPatch */
+        ConnectionsPatch: {
+            /** Changes */
+            changes: (components["schemas"]["FloorRoutingChange"] | components["schemas"]["ConnectorChange"] | components["schemas"]["StopChange"] | components["schemas"]["PathChange"] | components["schemas"]["TransitionChange"])[];
+        };
+        /** ConnectorChange */
+        ConnectorChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "connectors";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["ConnectorFields"] | null;
+        };
+        /** ConnectorFields */
+        ConnectorFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /** Verified On */
+            verified_on?: string | null;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /**
+             * Building Id
+             * Format: uuid
+             */
+            building_id: string;
+            /** Code */
+            code: string;
+            /** Label */
+            label: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "stairs" | "lift" | "ramp" | "entrance";
+            /**
+             * Operational Status
+             * @default unknown
+             * @enum {string}
+             */
+            operational_status: "available" | "unavailable" | "unknown";
+        };
+        /** ConnectorPathFields */
+        ConnectorPathFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /** Verified On */
+            verified_on?: string | null;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /**
+             * Connector Id
+             * Format: uuid
+             */
+            connector_id: string;
+            /**
+             * Physical Path Id
+             * Format: uuid
+             */
+            physical_path_id: string;
+            /** Distance M */
+            distance_m?: number | null;
+            /**
+             * Distance Status
+             * @default unknown
+             * @enum {string}
+             */
+            distance_status: "measured" | "estimated" | "unknown";
+            /** Horizontal Distance M */
+            horizontal_distance_m?: number | null;
+            /** Vertical Rise M */
+            vertical_rise_m?: number | null;
+            /** Baseline Traversal S */
+            baseline_traversal_s?: number | null;
+            /** Wait Estimate S */
+            wait_estimate_s?: number | null;
+            /**
+             * Uncertainty Note
+             * @default
+             */
+            uncertainty_note: string;
+            /**
+             * Accessibility Status
+             * @default unknown
+             * @enum {string}
+             */
+            accessibility_status: "unknown" | "not_step_free" | "verified_step_free";
+            /** Width M */
+            width_m?: number | null;
+            /** Slope Percent */
+            slope_percent?: number | null;
+            /** Step Count */
+            step_count?: number | null;
+            /** Surface */
+            surface?: string | null;
+            /**
+             * Is Open
+             * @default true
+             */
+            is_open: boolean;
+            /**
+             * From Stop Id
+             * Format: uuid
+             */
+            from_stop_id: string;
+            /**
+             * To Stop Id
+             * Format: uuid
+             */
+            to_stop_id: string;
+        };
+        /** ConnectorStopFields */
+        ConnectorStopFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /** Verified On */
+            verified_on?: string | null;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /**
+             * Connector Id
+             * Format: uuid
+             */
+            connector_id: string;
+            /**
+             * Floor Id
+             * Format: uuid
+             */
+            floor_id: string;
+            /**
+             * Layer Id
+             * Format: uuid
+             */
+            layer_id: string;
+            /**
+             * Node Id
+             * Format: uuid
+             */
+            node_id: string;
+        };
         /** DashboardOut */
         DashboardOut: {
             /**
@@ -1366,6 +1602,92 @@ export interface components {
             /** Evidence */
             evidence: string;
         };
+        /** EntranceTransitionFields */
+        EntranceTransitionFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /** Verified On */
+            verified_on?: string | null;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /**
+             * Connector Id
+             * Format: uuid
+             */
+            connector_id: string;
+            /**
+             * Physical Path Id
+             * Format: uuid
+             */
+            physical_path_id: string;
+            /** Distance M */
+            distance_m?: number | null;
+            /**
+             * Distance Status
+             * @default unknown
+             * @enum {string}
+             */
+            distance_status: "measured" | "estimated" | "unknown";
+            /** Horizontal Distance M */
+            horizontal_distance_m?: number | null;
+            /** Vertical Rise M */
+            vertical_rise_m?: number | null;
+            /** Baseline Traversal S */
+            baseline_traversal_s?: number | null;
+            /** Wait Estimate S */
+            wait_estimate_s?: number | null;
+            /**
+             * Uncertainty Note
+             * @default
+             */
+            uncertainty_note: string;
+            /**
+             * Accessibility Status
+             * @default unknown
+             * @enum {string}
+             */
+            accessibility_status: "unknown" | "not_step_free" | "verified_step_free";
+            /** Width M */
+            width_m?: number | null;
+            /** Slope Percent */
+            slope_percent?: number | null;
+            /** Step Count */
+            step_count?: number | null;
+            /** Surface */
+            surface?: string | null;
+            /**
+             * Is Open
+             * @default true
+             */
+            is_open: boolean;
+            /**
+             * Stop Id
+             * Format: uuid
+             */
+            stop_id: string;
+            /**
+             * Anchor Id
+             * Format: uuid
+             */
+            anchor_id: string;
+            /**
+             * Direction
+             * @enum {string}
+             */
+            direction: "in" | "out";
+            /**
+             * Priority
+             * @default 0
+             */
+            priority: number;
+        };
         /** ErrorDetail */
         ErrorDetail: {
             /** Code */
@@ -1402,6 +1724,67 @@ export interface components {
              * @enum {string}
              */
             visibility: "public" | "restricted";
+        };
+        /** FloorRoutingChange */
+        FloorRoutingChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "policies";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["FloorRoutingFields"] | null;
+        };
+        /** FloorRoutingFields */
+        FloorRoutingFields: {
+            /**
+             * Evidence
+             * @default
+             */
+            evidence: string;
+            /** Verified On */
+            verified_on?: string | null;
+            /**
+             * Visibility
+             * @default public
+             * @enum {string}
+             */
+            visibility: "public" | "restricted";
+            /**
+             * Floor Id
+             * Format: uuid
+             */
+            floor_id: string;
+            /**
+             * Layer Id
+             * Format: uuid
+             */
+            layer_id: string;
+            /**
+             * Enabled
+             * @default false
+             */
+            enabled: boolean;
+            /**
+             * Mode
+             * @default metric
+             * @enum {string}
+             */
+            mode: "metric" | "directions_only";
+        };
+        /** FloorsOut */
+        FloorsOut: {
+            /**
+             * Release Id
+             * Format: uuid
+             */
+            release_id: string;
+            /** Floors */
+            floors: components["schemas"]["RouteFloor"][];
         };
         /** GrantOut */
         GrantOut: {
@@ -1813,6 +2196,20 @@ export interface components {
             /** Redactions */
             redactions?: components["schemas"]["Redaction"][];
         };
+        /** PathChange */
+        PathChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "paths";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["ConnectorPathFields"] | null;
+        };
         /** Pixel */
         Pixel: {
             /** X */
@@ -1888,7 +2285,7 @@ export interface components {
              * @default outdoor
              * @enum {string}
              */
-            navigation_mode: "outdoor" | "indoor_catalog_only";
+            navigation_mode: "outdoor" | "indoor_catalog_only" | "metric" | "directions_only";
             /** Routable */
             routable: boolean;
             /**
@@ -2107,13 +2504,63 @@ export interface components {
              * Profile
              * @enum {string}
              */
-            profile: "shortest" | "step_free";
+            profile: "shortest" | "step_free" | "fastest";
+            /**
+             * Cost Mode
+             * @default metric
+             * @enum {string}
+             */
+            cost_mode: "metric" | "directions_only";
             /** Expected Found */
             expected_found: boolean;
             /** Maximum Distance M */
             maximum_distance_m?: number | null;
             /** Reason */
             reason: string;
+        };
+        /** RouteFloor */
+        RouteFloor: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Building Id
+             * Format: uuid
+             */
+            building_id: string;
+            /** Building Name */
+            building_name: string;
+            /** Label */
+            label: string;
+            /** Ordering */
+            ordering: number;
+            /**
+             * Frame Id
+             * Format: uuid
+             */
+            frame_id: string;
+            /**
+             * Layer Id
+             * Format: uuid
+             */
+            layer_id: string;
+            /** Width Px */
+            width_px: number;
+            /** Height Px */
+            height_px: number;
+            /** Metres Per Pixel */
+            metres_per_pixel: number | null;
+            /**
+             * Navigation Mode
+             * @enum {string}
+             */
+            navigation_mode: "display_only" | "metric" | "directions_only";
+            /** Asset Url */
+            asset_url: string;
+            /** Attribution */
+            attribution: string;
         };
         /** RouteOut */
         RouteOut: {
@@ -2156,7 +2603,7 @@ export interface components {
              * Profile
              * @enum {string}
              */
-            profile: "shortest" | "step_free";
+            profile: "shortest" | "step_free" | "fastest";
             /**
              * Source Place Id
              * Format: uuid
@@ -2178,9 +2625,33 @@ export interface components {
              */
             destination_anchor_id: string;
             /** Distance M */
-            distance_m: number;
+            distance_m?: number | null;
             /** Estimated Duration S */
-            estimated_duration_s: number;
+            estimated_duration_s?: number | null;
+            /** Known Distance M */
+            known_distance_m?: number | null;
+            /**
+             * Distance Status
+             * @default complete
+             * @enum {string}
+             */
+            distance_status: "complete" | "partial" | "unknown";
+            /**
+             * Cost Mode
+             * @default metric
+             * @enum {string}
+             */
+            cost_mode: "metric" | "directions_only";
+            /**
+             * Cost Units
+             * @default metres
+             * @enum {string}
+             */
+            cost_units: "metres" | "seconds" | "traversals";
+            /** Optimization Cost */
+            optimization_cost?: number | null;
+            /** Floors */
+            floors?: components["schemas"]["RouteFloor"][];
             /** Walking Speed Mps */
             walking_speed_mps: number;
             /** Segments */
@@ -2210,7 +2681,13 @@ export interface components {
              * @default shortest
              * @enum {string}
              */
-            profile: "shortest" | "step_free";
+            profile: "shortest" | "step_free" | "fastest";
+            /**
+             * Cost Mode
+             * @default metric
+             * @enum {string}
+             */
+            cost_mode: "metric" | "directions_only";
             /** Departure At */
             departure_at?: string | null;
             /** Expected Release Id */
@@ -2236,12 +2713,32 @@ export interface components {
             /**
              * Kind
              * @default outdoor
-             * @constant
+             * @enum {string}
              */
-            kind: "outdoor";
-            geometry: components["schemas"]["LineString"];
+            kind: "outdoor" | "indoor" | "entrance_transition" | "stairs" | "lift" | "ramp";
+            geometry?: components["schemas"]["LineString"] | null;
+            /** Polyline */
+            polyline?: number[][] | null;
+            /** Floor Id */
+            floor_id?: string | null;
+            /** To Floor Id */
+            to_floor_id?: string | null;
+            /** Building Id */
+            building_id?: string | null;
+            /** Frame Id */
+            frame_id?: string | null;
+            /** Connector Id */
+            connector_id?: string | null;
+            /**
+             * Distance Status
+             * @default measured
+             * @enum {string}
+             */
+            distance_status: "measured" | "calibrated" | "estimated" | "unknown";
+            /** Estimated Duration S */
+            estimated_duration_s?: number | null;
             /** Distance M */
-            distance_m: number;
+            distance_m?: number | null;
             /** Instruction */
             instruction: string;
         };
@@ -2282,6 +2779,20 @@ export interface components {
             /** Grants */
             grants: components["schemas"]["GrantOut"][];
         };
+        /** StopChange */
+        StopChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "stops";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["ConnectorStopFields"] | null;
+        };
         /** SubmitInput */
         SubmitInput: {
             /**
@@ -2293,6 +2804,20 @@ export interface components {
             acknowledgements?: {
                 [key: string]: string;
             };
+        };
+        /** TransitionChange */
+        TransitionChange: {
+            /**
+             * Entity
+             * @constant
+             */
+            entity: "transitions";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            data?: components["schemas"]["EntranceTransitionFields"] | null;
         };
         /** UserInput */
         UserInput: {
@@ -2962,6 +3487,66 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    public_floors_api_v1_campuses__campus_id__floors_get: {
+        parameters: {
+            query?: {
+                expected_release_id?: string | null;
+            };
+            header?: never;
+            path: {
+                campus_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FloorsOut"];
+                };
             };
             /** @description Not Found */
             404: {
@@ -5656,6 +6241,146 @@ export interface operations {
                 "application/json": components["schemas"]["IndoorPatch"];
             };
         };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+                revision_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                revision_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConnectionsPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_preview_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                revision_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConnectionsPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    validate_api_v1_admin_campuses__campus_id__drafts__revision_id__connections_validation_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+                revision_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {

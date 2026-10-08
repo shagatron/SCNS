@@ -51,14 +51,15 @@ class SourceInput(DTO):
 class RouteExpectation(ReviewText):
     source: UUID
     target: UUID
-    profile: Literal["shortest", "step_free"]
+    profile: Literal["shortest", "step_free", "fastest"]
+    cost_mode: Literal["metric", "directions_only"] = "metric"
     expected_found: bool
     maximum_distance_m: float | None = Field(default=None, gt=0, le=100000, allow_inf_nan=False)
     reason: str = Field(min_length=10, max_length=2000)
 
 
 class ValidateInput(DTO):
-    routes: list[RouteExpectation] = Field(min_length=2, max_length=50)
+    routes: list[RouteExpectation] = Field(min_length=2, max_length=250)
 
 
 class SubmitInput(DTO):

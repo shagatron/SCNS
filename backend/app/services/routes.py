@@ -19,6 +19,18 @@ def calculate_route(session: Session, request: RouteRequest) -> RouteOut:
         raise DomainError(
             "stale_release", "The map has changed. Refresh the campus and try again.", 409
         )
+    from app.services.mixed_routes import calculate, release_projection
+
+    projection = release_projection(session, release)
+    if (
+        request.profile == "fastest"
+        or request.cost_mode == "directions_only"
+        or any(
+            f.get("navigation_mode") in {"metric", "directions_only"}
+            for f in projection.get("floors", {}).values()
+        )
+    ):
+        return calculate(session, request, release, projection)
     revision = release.dataset_revision_id
     places = {}
     for place_id in {request.source.place_id, request.destination.place_id}:
@@ -31,7 +43,7 @@ def calculate_route(session: Session, request: RouteRequest) -> RouteOut:
         if place.point is None:
             raise DomainError(
                 "location_not_routable",
-                "Indoor destination is searchable; indoor/outdoor routing is unavailable until the connector/routing slice.",
+                "Indoor destination is searchable; routing remains display-only until its topology is explicitly enabled and reviewed.",
             )
         places[place_id] = place
     settings = get_settings()

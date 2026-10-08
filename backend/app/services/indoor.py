@@ -12,6 +12,7 @@ from sqlalchemy import delete, func, select
 from app.core.errors import DomainError
 from app.models import Building, Campus, Frame, Place
 from app.models.admin import Department, DepartmentPlace, PlaceAlias, User
+from app.models.connections import Connector, ConnectorStop, FloorRouting
 from app.models.floorplans import Floor, MapLayer
 from app.models.indoor import IndoorAccess, IndoorEdge, IndoorNode, Room
 from app.models.publication import SourceAsset
@@ -581,13 +582,15 @@ def inspect(db, revision, floor, state, *, mode=None):
         if pairs >= 100:
             break
     if state["rooms"] or state["nodes"]:
-        report(
-            "indoor_3c_unavailable",
-            "Same-floor catalog/topology only: no cross-floor or indoor/outdoor route is available before 3C.",
-            "floors",
-            [str(floor.id)],
-            "warning",
-        )
+        policy = db.get(FloorRouting, (revision.id, floor.id))
+        if not policy or not policy.enabled:
+            report(
+                "indoor_display_only",
+                "Floor topology remains display-only. Enable its routing capability with dated evidence after mapping and testing access.",
+                "floors",
+                [str(floor.id)],
+                "warning",
+            )
         if frame.metres_per_pixel is None:
             report(
                 "indoor_unknown_scale",
@@ -661,6 +664,23 @@ def proposal(db, revision, floor, payload):
             combined[change.entity][str(change.id)] = change.data.model_dump(mode="json")
         else:
             combined[change.entity].pop(str(change.id), None)
+    for stop in db.scalars(
+        select(ConnectorStop).where(
+            ConnectorStop.dataset_revision_id == revision.id, ConnectorStop.floor_id == floor.id
+        )
+    ):
+        node = combined["nodes"].get(str(stop.node_id))
+        connector = db.get(Connector, (revision.id, stop.connector_id))
+        if (
+            not node
+            or (connector.kind == "entrance" and node["kind"] != "entrance")
+            or (stop.visibility == "public" and node["visibility"] != "public")
+        ):
+            raise DomainError(
+                "routing_dependencies",
+                f"Connector stop {stop.id} depends on this node/type/visibility. Explicitly remove or rewire its directed links and stop in Connections first.",
+                409,
+            )
     problems = [
         d
         for d in inspect(db, revision, floor, combined, mode=payload.mode)

@@ -1,0 +1,13 @@
+{
+  "synthetic": true,
+  "ground_101": "ab92d5a0-16dd-5dca-ac03-10d5662fa281",
+  "ground_102": "68c3a8f6-7226-5ab4-b4ad-74d31aee5ff7",
+  "upper_201": "f9e7de6f-ccd0-5336-9de5-38431a7d5d1a",
+  "upper_202": "b46d9b49-b59f-5f6e-902a-99a7b2bee018",
+  "isolated": "9ac99726-4abf-5b95-b5d6-de3e3cc96a2e",
+  "stairs": "ed305702-bee6-58dc-829d-57c7436a1862",
+  "lift": "6a275bb2-1398-5728-8247-adb70d96a7a0",
+  "same_floor_101_to_102_m": 18,
+  "cross_floor_101_to_201_shortest_m": 36,
+  "cross_floor_101_to_201_step_free_m": 57
+}

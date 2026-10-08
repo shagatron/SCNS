@@ -17,6 +17,7 @@ from sqlalchemy.orm import Session
 
 from app.core.errors import DomainError
 from app.models import Building, Campus, Frame, Node
+from app.models.connections import ConnectorStop, FloorRouting
 from app.models.floorplans import Floor, FloorplanJob, MapLayer
 from app.models.indoor import IndoorAccess, IndoorEdge, IndoorNode, Room
 from app.models.publication import SourceAsset
@@ -122,7 +123,7 @@ def dependencies(db, revision, floor):
             .select_from(m)
             .where(m.dataset_revision_id == revision.id, m.floor_id == floor.id)
         )
-        for m in (IndoorNode, Room)
+        for m in (IndoorNode, Room, ConnectorStop, FloorRouting)
     )
     return {
         "indoor_records": indoor_count,

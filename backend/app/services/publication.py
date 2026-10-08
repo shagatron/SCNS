@@ -24,6 +24,13 @@ from app.models import (
     Revision,
 )
 from app.models.admin import AuditEvent, Department, DepartmentPlace, PlaceAlias, User
+from app.models.connections import (
+    Connector,
+    ConnectorPath,
+    ConnectorStop,
+    EntranceTransition,
+    FloorRouting,
+)
 from app.models.floorplans import Floor, MapLayer
 from app.models.imports import ImportBinding, ImportJob
 from app.models.indoor import IndoorAccess, IndoorEdge, IndoorNode, Room
@@ -40,11 +47,11 @@ from app.schemas.api import Point, Polygon
 from app.schemas.dataset import validate_positions
 from app.services.admin_auth import audit, permissions
 from app.services.admin_catalog import MODELS, record
-from app.services.admin_graph import route_test, validate_graph
+from app.services.admin_graph import validate_graph
 from app.services.catalog import normalize
 from app.services.imports import final_graph_guard, strict_json
 
-VALIDATOR = "indoor-publication-v3"
+VALIDATOR = "indoor-routing-v4"
 TABLES = {
     "frames": Frame,
     "buildings": Building,
@@ -63,6 +70,11 @@ TABLES = {
     "indoor_nodes": IndoorNode,
     "indoor_edges": IndoorEdge,
     "indoor_access": IndoorAccess,
+    "floor_routing": FloorRouting,
+    "connectors": Connector,
+    "connector_stops": ConnectorStop,
+    "connector_paths": ConnectorPath,
+    "entrance_transitions": EntranceTransition,
 }
 
 
@@ -360,6 +372,9 @@ def public_projection(full):
                     navigation_mode="indoor_catalog_only",
                     routable=False,
                 )
+    from app.routing.projection import project_connections
+
+    project_connections(result, full)
     for identity in list(result["places"]):
         if identity in full.get("indoor_rooms", {}) and identity not in result["indoor_rooms"]:
             del result["places"][identity]
@@ -884,10 +899,10 @@ def validate(db, revision, payload, actor, request_id):
                 [identity],
                 "warning",
             )
-        if visible:
+        if visible and not full.get("floor_routing", {}).get(identity, {}).get("enabled"):
             report(
                 "indoor_display_only",
-                "Same-floor traced topology may be present; no indoor or cross-floor routing is delivered before 3C. This floor remains display-only even when calibrated.",
+                "Floor remains display-only until topology evidence and explicit routing capability are enabled and reviewed.",
                 "floors",
                 [identity],
                 "warning",
@@ -917,8 +932,22 @@ def validate(db, revision, payload, actor, request_id):
             unknown,
             "warning",
         )
+    from app.services.connections import route_evidence_requirements
+    from app.services.connections import validation as connection_validation
+
+    connection_quality = connection_validation(db, revision)
+    findings.extend(connection_quality["diagnostics"])
+    if connection_quality["truncated"]:
+        report(
+            "connection_budget",
+            "Connection diagnostics are incomplete; reduce unresolved findings.",
+        )
+    projected = public_projection(full)
+    from app.core.config import get_settings
+    from app.routing.mixed import compute
+
     evidence = []
-    if {r.profile for r in payload.routes} != {"shortest", "step_free"}:
+    if not {"shortest", "step_free"}.issubset({r.profile for r in payload.routes}):
         report(
             "route_profiles",
             "Expected-route evidence must cover both standard and step-free profiles.",
@@ -932,10 +961,38 @@ def validate(db, revision, payload, actor, request_id):
                 for i in (expected.source, expected.target)
             ):
                 raise ValueError("Use two distinct public places.")
-            actual = route_test(db, revision, expected.source, expected.target, expected.profile)
+            try:
+                computed = compute(
+                    projected,
+                    str(expected.source),
+                    str(expected.target),
+                    expected.profile,
+                    expected.cost_mode,
+                    get_settings().walking_speed_mps,
+                )
+                actual = {
+                    "found": True,
+                    "distance_m": computed["distance_m"],
+                    "estimated_duration_s": computed["estimated_duration_s"],
+                    "cost_units": computed["cost_units"],
+                    "optimization_cost": computed["optimization_cost"],
+                    "edge_ids": [s["edge_id"] for s in computed["segments"]],
+                }
+            except DomainError as exc:
+                if exc.code not in {
+                    "no_route",
+                    "no_verified_step_free_route",
+                    "location_not_routable",
+                }:
+                    raise
+                actual = {"found": False, "distance_m": None, "edge_ids": [], "reason": exc.message}
             matched = actual["found"] == expected.expected_found and (
                 expected.maximum_distance_m is None
-                or (actual["found"] and actual["distance_m"] <= expected.maximum_distance_m)
+                or (
+                    actual["found"]
+                    and actual["distance_m"] is not None
+                    and actual["distance_m"] <= expected.maximum_distance_m
+                )
             )
             item.update(actual=actual, passed=matched)
             if not matched:
@@ -955,6 +1012,7 @@ def validate(db, revision, payload, actor, request_id):
                 "routes",
             )
         evidence.append(item)
+    findings.extend(route_evidence_requirements(full, evidence))
     for finding in findings:
         finding["id"] = checksum(finding)[:24]
     report_value = dict(
@@ -1079,6 +1137,7 @@ def independent(db, submission, actor):
                     "floorplan.upload",
                     "floorplan.apply",
                     "indoor.patch",
+                    "connections.patch",
                 ]
             )
             | (AuditEvent.action == "import.apply")

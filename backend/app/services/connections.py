@@ -492,9 +492,14 @@ def route_evidence_requirements(full, evidence):
     }
     results = []
 
-    def require(predicate, message, ids):
+    def require(predicate, message, ids, positive=False):
         cases = [e for e in evidence if e.get("passed") and predicate(e)]
-        if not {"shortest", "step_free"}.issubset({e["profile"] for e in cases}):
+        if not {"shortest", "step_free"}.issubset({e["profile"] for e in cases}) or (
+            positive
+            and not any(
+                e["profile"] == "shortest" and e.get("actual", {}).get("found") for e in cases
+            )
+        ):
             results.append(
                 dict(
                     code="indoor_route_evidence",
@@ -524,12 +529,14 @@ def route_evidence_requirements(full, evidence):
             lambda e, public=public: e["source"] in public or e["target"] in public,
             "Supply standard and step-free expected-route evidence involving each enabled floor (negative step-free evidence is allowed).",
             [floor],
+            positive=True,
         )
         if len(public) > 1:
             require(
                 lambda e, public=public: e["source"] in public and e["target"] in public,
                 "Supply same-floor standard and step-free route evidence for this floor.",
                 [floor],
+                positive=True,
             )
     public_paths = [
         e

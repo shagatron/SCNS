@@ -43,6 +43,7 @@ test('keyboard route and automated accessibility check', async ({ page }) => {
   await page.keyboard.press('l')
   await page.keyboard.press('Tab')
   await page.keyboard.press('Tab')
+  await page.keyboard.press('Tab')
   await page.keyboard.press('Enter')
   await expect(page.getByRole('heading', { name: 'Your route is ready' })).toBeVisible()
   const violations = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()

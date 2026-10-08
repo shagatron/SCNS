@@ -65,3 +65,5 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-container-public
 ```
 
 Integration uses guarded `*_test` sessions/owned committed fixtures; migration resets only `*_migration_test`; browser resets only `*_e2e_test` with ephemeral accounts/private storage. Built smoke owns a unique DB/network/container namespace and uses actual API/nginx/image worker. Never point these runners at developer/production DBs. Standard local Chromium installations may use Playwright's browser instead of the cloud executable override. Source and built smoke share port5174; run sequentially. See [actual verification evidence](../testing/verification.md), not the command list, for pass/fail counts and unverified areas.
+
+Milestone3C indoor/mixed routing documentation: [data contract](../data/indoor-routing.md), [data-preserving Windows update and manual fixtures](../operations/indoor-routing.md). The earlier3A/3B milestone descriptions above describe those delivered slices; enabled reviewed3C floors now add explicit routing capability. Current3C verification is recorded separately in progress/testing evidence.

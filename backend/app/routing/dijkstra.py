@@ -17,6 +17,7 @@ class Arc:
     accessibility: str = "unknown"
     is_open: bool = True
     visibility: str = "public"
+    priority: int = 0
 
     def __post_init__(self):
         if not math.isfinite(self.distance_m) or self.distance_m <= 0:
@@ -58,31 +59,43 @@ def shortest_path(
         edges.sort(key=lambda edge: edge.id)
     source_priorities, target_priorities = source_priorities or {}, target_priorities or {}
     serial = count()
-    best = {node: (0.0, source_priorities.get(node, 0), node) for node in sources}
+    best = {node: (0.0, source_priorities.get(node, 0), 0, node) for node in sources}
     previous: dict[str, Arc] = {}
     queue = [(rank, next(serial), node) for node, rank in sorted(best.items())]
     heapq.heapify(queue)
     terminal = None
     while queue:
         rank, _, node = heapq.heappop(queue)
-        distance, source_priority, origin = rank
+        distance, source_priority, path_priority, origin = rank
         if terminal and distance > terminal[0]:
             break
         if rank != best[node]:
             continue
         if node in targets:
-            candidate = (distance, target_priorities.get(node, 0), source_priority, node, origin)
+            candidate = (
+                distance,
+                target_priorities.get(node, 0),
+                source_priority,
+                path_priority,
+                node,
+                origin,
+            )
             if terminal is None or candidate < terminal:
                 terminal = candidate
             continue
         for arc in adjacency[node]:
-            candidate = (distance + arc.distance_m, source_priority, origin)
-            if candidate < best.get(arc.target, (math.inf, 0, "")):
+            candidate = (
+                distance + arc.distance_m,
+                source_priority,
+                path_priority + arc.priority,
+                origin,
+            )
+            if candidate < best.get(arc.target, (math.inf, 0, 0, "")):
                 best[arc.target] = candidate
                 previous[arc.target] = arc
                 heapq.heappush(queue, (candidate, next(serial), arc.target))
     if terminal:
-        node = terminal[3]
+        node = terminal[4]
         nodes, edges = [node], []
         while node in previous:
             arc = previous[node]

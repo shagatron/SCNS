@@ -399,3 +399,136 @@ def test_dependencies_and_late_failure_rollback(
     ]
     removed += [{"entity": "stops", "id": stop_id}]
     assert write(client, path, h, removed).status_code == 200
+
+
+def test_connection_release_review_public_contract_clone_frozen_and_rollback(
+    client, db, bundle, identity, reviewer
+):
+    from sqlalchemy import text
+    from sqlalchemy.exc import DBAPIError
+
+    from tests.integration.test_admin import make_draft
+    from tests.integration.test_indoor import ack
+
+    draft, path, ground, upper, h, changes = setup_two(client, db, bundle, identity, reviewer)
+    old = client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()["id"]
+    assert write(client, path, h, changes).status_code == 200
+    a, b, u, v = (EXPECTED[k] for k in ("ground_101", "ground_102", "upper_201", "upper_202"))
+    gate = str(next(p.id for p in bundle.places if p.code == "GATE"))
+    pairs = [(a, b), (u, v), (a, u), (u, a), (gate, u), (u, gate)]
+    routes = [
+        {
+            "source": start,
+            "target": end,
+            "profile": profile,
+            "expected_found": True,
+            "reason": "Invented two-floor, calibrated synthetic route acceptance; no real access assertion.",
+        }
+        for start, end in pairs
+        for profile in ("shortest", "step_free")
+    ]
+    r = client.post(
+        path + "/validations", json={"routes": routes}, headers=version(h, current(client, path))
+    )
+    assert r.status_code == 200, r.text
+    run = r.json()
+    assert run["report"]["errors"] == 0, json.dumps(run["report"])
+    r = client.post(
+        path + "/submissions",
+        json={"validation_id": run["id"], "acknowledgements": ack(run)},
+        headers=version(h, current(client, path)),
+    )
+    assert r.status_code == 200, r.text
+    sub = r.json()
+    assert write(client, path, h, changes).status_code == 409
+    rh = sign_in(client, reviewer)
+    r = client.post(
+        path + f"/submissions/{sub['id']}/decision",
+        json={
+            "decision": "approve",
+            "notes": "Independent two-floor synthetic connector review and acceptance.",
+            "acknowledgements": ack(run),
+        },
+        headers=version(rh, current(client, path)),
+    )
+    assert r.status_code == 200, r.text
+    r = client.post(
+        path + "/publish",
+        json={"submission_id": sub["id"], "expected_release_id": old, "key": str(uuid4())},
+        headers=version(rh, current(client, path)),
+    )
+    assert r.status_code == 200, r.text
+    release = client.get(f"/api/v1/campuses/{bundle.campus.id}/release").json()
+    artifact = client.get(release["artifact_url"]).json()
+    assert "PRIVATE-CONNECTION-NOTE" not in json.dumps(artifact)
+    assert "PRIVATE-INDOOR-NOTE" not in json.dumps(artifact)
+    floors = client.get(
+        f"/api/v1/campuses/{bundle.campus.id}/floors?expected_release_id={release['id']}"
+    ).json()
+    assert {f["id"] for f in floors["floors"]} == {ground, upper}
+    images = [f["asset_url"] for f in floors["floors"]]
+    assert all(client.get(url).content.startswith(b"\x89PNG") for url in images)
+    for source, target in ((a, b), (a, u), (u, a), (gate, u), (u, gate)):
+        for profile in ("shortest", "step_free", "fastest"):
+            response = client.post(
+                "/api/v1/routes",
+                json={
+                    "campus_id": str(bundle.campus.id),
+                    "source": {"kind": "place", "place_id": source},
+                    "destination": {"kind": "place", "place_id": target},
+                    "profile": profile,
+                    "expected_release_id": release["id"],
+                },
+            )
+            assert response.status_code == 200, response.text
+            route = response.json()
+            assert route["release_id"] == release["id"]
+            assert all(s["geometry"] is None for s in route["segments"] if s["kind"] != "outdoor")
+            if source == a and target == u and profile == "step_free":
+                assert route["distance_m"] == 57 and len(route["floors"]) == 2
+                link = next(s for s in route["segments"] if s["kind"] == "lift")
+                assert link["from_local_point"] and link["to_local_point"]
+    details = client.get(
+        f"/api/v1/campuses/{bundle.campus.id}/places/{a}?expected_release_id={release['id']}"
+    )
+    assert (
+        details.status_code == 200
+        and details.json()["routable"]
+        and details.json()["point"] is None
+    )
+    assert (
+        client.get(
+            f"/api/v1/campuses/{bundle.campus.id}/places/{a}?expected_release_id={old}"
+        ).status_code
+        == 409
+    )
+    assert client.get(f"/api/v1/campuses/{uuid4()}/places/{a}").status_code == 404
+    with pytest.raises(DBAPIError), db.begin_nested():
+        db.execute(
+            text(
+                "UPDATE connectors SET operational_status='unavailable' WHERE dataset_revision_id=:r"
+            ),
+            {"r": draft["id"]},
+        )
+    h = sign_in(client, identity)
+    copied = make_draft(client, bundle, h)
+    copied_path = path.rsplit("/", 1)[0] + "/" + copied["id"]
+    assert (
+        client.get(copied_path + "/connections").json()["paths"]
+        == client.get(path + "/connections").json()["paths"]
+    )
+    rh = sign_in(client, reviewer)
+    r = client.post(
+        f"/api/v1/admin/campuses/{bundle.campus.id}/rollback",
+        json={
+            "target_release_id": old,
+            "expected_release_id": release["id"],
+            "key": str(uuid4()),
+            "reason": "Synthetic rollback retaining immutable routing and plan artifacts.",
+        },
+        headers=rh,
+    )
+    assert r.status_code == 200, r.text
+    assert client.get(f"/api/v1/campuses/{bundle.campus.id}/floors").json()["floors"] == []
+    assert client.get(release["artifact_url"]).json() == artifact
+    assert all(client.get(url).content.startswith(b"\x89PNG") for url in images)

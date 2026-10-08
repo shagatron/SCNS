@@ -95,7 +95,9 @@ def compute(data, source, target, profile="shortest", mode="metric", speed=1.3):
             return
         if to_floor_id and mode == "metric" and floors[to_floor_id]["navigation_mode"] != "metric":
             return
-        arcs.append(Arc(key, a, b, cost, kind, row["accessibility_status"]))
+        arcs.append(
+            Arc(key, a, b, cost, kind, row["accessibility_status"], priority=row.get("priority", 0))
+        )
         seconds_by_edge[key] = seconds
         f = floors.get(floor_id, {})
         t = floors.get(to_floor_id, {})
@@ -194,7 +196,15 @@ def compute(data, source, target, profile="shortest", mode="metric", speed=1.3):
     for identity, e in sorted(data.get("connector_paths", {}).items()):
         c = usable(e)
         a, b = stops.get(e["from_stop_id"]), stops.get(e["to_stop_id"])
-        if not c or not a or not b or a["node_id"] not in indoor or b["node_id"] not in indoor:
+        if (
+            not c
+            or not a
+            or not b
+            or not a.get("verified")
+            or not b.get("verified")
+            or a["node_id"] not in indoor
+            or b["node_id"] not in indoor
+        ):
             continue
         add(
             "c:" + identity,

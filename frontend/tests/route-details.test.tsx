@@ -28,3 +28,11 @@ describe('text route', () => {
     expect(screen.getAllByRole('listitem')).toHaveLength(1)
   })
 })
+
+it('reports unknown total distance and ETA and labels directions-only honestly', () => {
+  render(<RouteDetails route={{ ...route, distance_m: null, estimated_duration_s: null, known_distance_m: 18, cost_mode: 'directions_only' }} />)
+  expect(screen.getByText('Distance unknown')).toBeInTheDocument()
+  expect(screen.getByText('ETA unavailable')).toBeInTheDocument()
+  expect(screen.getByText(/Known distance subtotal: 18.00m/)).toBeInTheDocument()
+  expect(screen.getByText(/not a shortest-distance or fastest route/)).toBeInTheDocument()
+})

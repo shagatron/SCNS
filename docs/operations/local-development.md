@@ -19,3 +19,5 @@ Exact-content validation, independent review, public artifacts, atomic publicati
 ## M3A floorplan update
 
 Draft floors, private PDF/PNG/JPEG processing and evidence-bound calibration are available. The existing import worker also handles floorplan jobs; migrate through `0012_floorplans` before using the new images. [Floorplan workflow, limits and exact data-retaining Windows PowerShell update](floorplans.md) preserves .env/accounts/volumes/active release. Indoor tracing/connectors/routing remain unfinished 3B/3C.
+
+Milestone3C indoor/mixed routing documentation: [data contract](../data/indoor-routing.md), [data-preserving Windows update and manual fixtures](../operations/indoor-routing.md). The earlier3A/3B milestone descriptions above describe those delivered slices; enabled reviewed3C floors now add explicit routing capability. Current3C verification is recorded separately in progress/testing evidence.

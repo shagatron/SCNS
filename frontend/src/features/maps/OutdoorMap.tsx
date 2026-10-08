@@ -11,12 +11,12 @@ type Props = { campus: Campus; data: MapData; places: Place[]; route?: Route; on
 function FitView({ campus, route }: Pick<Props, 'campus' | 'route'>) {
   const map = useMap()
   const fit = () => {
-    const points = route?.segments.flatMap(segment => segment.geometry.coordinates) ?? []
+    const points = route?.segments.flatMap(segment => segment.kind === 'outdoor' && segment.geometry ? segment.geometry.coordinates : []) ?? []
     const bounds = points.length > 1 ? points : campus.boundary.coordinates[0]
     map.fitBounds(bounds.map(p => toLeaflet(p as [number, number])), { padding: [28, 28], maxZoom: 18, animate: false })
   }
   useEffect(() => {
-    const points = route?.segments.flatMap(segment => segment.geometry.coordinates) ?? []
+    const points = route?.segments.flatMap(segment => segment.kind === 'outdoor' && segment.geometry ? segment.geometry.coordinates : []) ?? []
     const bounds = points.length > 1 ? points : campus.boundary.coordinates[0]
     map.fitBounds(bounds.map(p => toLeaflet(p as [number, number])), { padding: [28, 28], maxZoom: 18, animate: false })
     const observer = new ResizeObserver(() => {
@@ -46,8 +46,8 @@ export default function OutdoorMap({ campus, data, places, route, onDestination 
         eventHandlers={{ click: () => onDestination(place) }}>
         <Tooltip direction="top" permanent className="place-label">{place.name}</Tooltip>
       </CircleMarker>)}
-      {route?.segments.map(segment => <Polyline key={segment.edge_id}
-        positions={segment.geometry.coordinates.map(p => toLeaflet(p as [number, number]))}
+      {route?.segments.filter(segment => segment.kind === 'outdoor' && segment.geometry).map(segment => <Polyline key={segment.edge_id}
+        positions={segment.geometry!.coordinates.map(p => toLeaflet(p as [number, number]))}
         pathOptions={{ color: '#146855', weight: 6, opacity: 1 }} />)}
       <FitView campus={campus} route={route} />
     </MapContainer>

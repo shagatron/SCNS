@@ -420,3 +420,9 @@ Generated OpenAPI/TypeScript/schema artifacts reproduced without diff. Git ignor
 5. Owner can prepare authorized maps/rights/surveys using `data/README.md` and `data/templates/` while M2 is developed. These inputs do not block synthetic development. Indoor routes, QR, geolocation and offline saved routes remain M3/M4 work, as specified.
 
 Reusable cloud configuration: `install_script` and `start_skill` were saved as an environment configuration draft. This saves instructions only; it does not publish the environment or deploy the app. To use a new reusable snapshot, review/save the draft in environment settings and publish the environment there. No runtime secret or network allowlist changes were added.
+
+### 3C unfinished UI checkpoint — 2026-10-08
+
+Resumed full PostGIS regression passed **162 tests** (`/tmp/scns-3c-resumed-backend-regression.log`), including the outdoor `estimated` edge compatibility correction. The separate read-only check against the unchanged completed-3B developer containers returned Main Gate → Library **256.88m / three stored edges**. No developer data was seeded or reset.
+
+Added the connector/entrance form workspace, staged edits and non-mutating preview, pairing/dependency deletion, undo/recovery and explicit stale comparison. Added public floor-view switching and transition markers, nullable distance/ETA presentation, explicit directions-only and fastest preferences, release-pinned deep-link lookup, and multi-case review evidence controls. These UI changes remain **unfinished and not yet browser verified**. Remaining: exercise/fix recovery, reconciliation, publication/rollback and public views; meaningful additional tests; full source/built regressions, contracts/migrations, and final operations/Windows documentation. Do not treat this checkpoint as milestone completion.

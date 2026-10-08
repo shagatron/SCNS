@@ -2,10 +2,12 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState, useSyncExtern
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 import { api, ApiError, calculateRoute, type Campus, type MapData, type Place, type Release, type Search } from '../api/client'
+import type { components } from '../api/generated'
 import RouteDetails from '../features/routing/RouteDetails'
 
+const FloorRouteMap = lazy(() => import('../features/maps/FloorRouteMap'))
 const OutdoorMap = lazy(() => import('../features/maps/OutdoorMap'))
-const formSchema = z.object({ source: z.uuid(), destination: z.uuid(), profile: z.enum(['shortest', 'step_free']) })
+const formSchema = z.object({ source: z.uuid(), destination: z.uuid(), profile: z.enum(['shortest', 'step_free', 'fastest']) })
 
 function subscribeOnline(onChange: () => void) {
   window.addEventListener('online', onChange)
@@ -21,7 +23,7 @@ export default function App() {
   const online = useSyncExternalStore(subscribeOnline, () => navigator.onLine)
   const campuses = useQuery({ queryKey: ['campuses'], queryFn: () => api<Campus[]>('/campuses') })
   const health = useQuery({ queryKey: ['health'], queryFn: () => api('/health/ready'), retry: false })
-  const [campusId, setCampusId] = useState('')
+  const [campusId, setCampusId] = useState(() => new URLSearchParams(window.location.search).get('campus') ?? '')
   const campus = campuses.data?.find(c => c.id === campusId) ?? campuses.data?.[0]
   return <>
     <a className="skip-link" href="#planner">Skip to route planner</a>
@@ -41,7 +43,7 @@ export default function App() {
       {campuses.data?.length === 0 && <section className="empty-state"><h2>No published campus yet</h2><p>Prepare an authorized map and verified paths, or explicitly seed the synthetic demo using the setup guide.</p></section>}
       {campus && <CampusExplorer key={campus.id} campus={campus} online={online} />}
       <section id="about" className="about"><div><p className="eyebrow">KNOW YOUR MAP</p><h2>A demo with clear boundaries.</h2></div>
-        <p>These outdoor paths demonstrate graph-based navigation. Distances follow the synthetic paths; walking times are estimates. Indoor maps, live closures, and official campus data are coming in later milestones.</p>
+        <p>These outdoor paths demonstrate graph-based navigation. Distances follow the synthetic paths; walking times are estimates. Reviewed indoor floors and verified connectors can support floor-to-floor and outdoor routes. Static availability and time estimates are not live lift monitoring. Official campus data and live closures are not provided.</p>
         <details><summary>Preparing official campus data</summary><p>Gather permitted overview maps, building names, surveyed entrances, path connections, and accessibility evidence. Upload spaces and versioned templates are documented in the repository’s data guide. Real data must enter a new campus draft and be reviewed before publication.</p></details>
       </section>
     </main>
@@ -90,9 +92,15 @@ function CampusExplorer({ campus, online }: { campus: Campus; online: boolean })
 }
 
 function Planner({ campus, initial, online, release }: { campus: Campus; initial: Search; online: boolean; release: Release }) {
-  const [source, setSource] = useState(initial.items.find(p => p.code === 'GATE')?.id ?? initial.items[0]?.id ?? '')
-  const [destination, setDestination] = useState('')
-  const [profile, setProfile] = useState<'shortest' | 'step_free'>('shortest')
+  const [params] = useState(() => new URLSearchParams(window.location.search))
+  const linked = params.get('campus') === campus.id && params.get('release') === release.id
+  const [source, setSource] = useState((linked && z.uuid().safeParse(params.get('from')).success ? params.get('from') : null) ?? initial.items.find(p => p.code === 'GATE')?.id ?? initial.items[0]?.id ?? '')
+  const [destination, setDestination] = useState(linked && z.uuid().safeParse(params.get('to')).success ? params.get('to')! : '')
+  const [profile, setProfile] = useState<'shortest' | 'step_free' | 'fastest'>(linked && ['shortest', 'step_free', 'fastest'].includes(params.get('profile') ?? '') ? params.get('profile') as 'shortest' | 'step_free' | 'fastest' : 'shortest')
+  const [costMode, setCostMode] = useState<'metric' | 'directions_only'>(linked && params.get('mode') === 'directions_only' ? 'directions_only' : 'metric')
+  const [view, setView] = useState(linked ? params.get('view') ?? 'outdoor' : 'outdoor')
+  const floors = useQuery({ queryKey: ['floors', campus.id, release.id], retry: false, queryFn: () => api<components['schemas']['FloorsOut']>(`/campuses/${campus.id}/floors?expected_release_id=${release.id}`) })
+  const linkedPlaces = useQuery({ queryKey: ['linked-places', campus.id, release.id, source, destination], enabled: linked && !!source && !!destination, retry: false, queryFn: () => Promise.all([source, destination].map(id => api<Place>(`/campuses/${campus.id}/places/${id}?expected_release_id=${release.id}`))) })
   const [q, setQ] = useState('')
   const [category, setCategory] = useState('')
   const [offset, setOffset] = useState(0)
@@ -112,8 +120,12 @@ function Planner({ campus, initial, online, release }: { campus: Campus; initial
       void queryClient.invalidateQueries({ queryKey: ['directory', campus.id] })
     }
   } })
-  const choices = [...new Map([...initial.items, ...selectedPlaces].map(place => [place.id, place])).values()]
-  function clear() { route.reset(); setFormError('') }
+  const choices = [...new Map([...initial.items, ...(linkedPlaces.data ?? []), ...selectedPlaces].map(place => [place.id, place])).values()]
+  const updateLink = (nextView: string) => { const url = new URL(window.location.href); url.search = new URLSearchParams({ campus: campus.id, release: release.id, from: source, to: destination, profile, mode: costMode, view: nextView, routed: '1' }).toString(); window.history.replaceState(null, '', url) }
+  const showView = (next: string) => { setView(next); if (route.data) updateLink(next) }
+  function clear() { route.reset(); setFormError(''); const url = new URL(window.location.href); url.search = new URLSearchParams({ campus: campus.id }).toString(); window.history.replaceState(null, '', url) }
+  const reloaded = useRef(false)
+  useEffect(() => { if (!reloaded.current && linked && params.get('routed') === '1' && linkedPlaces.data && online) { reloaded.current = true; route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id }) } }, [linked, linkedPlaces.data, online, params, campus.id, source, destination, profile, costMode, release.id, route])
   function choose(place: Place) {
     if (route.isPending) return
     setSelectedPlaces(current => [...current.filter(p => p.id !== place.id), place])
@@ -125,7 +137,7 @@ function Planner({ campus, initial, online, release }: { campus: Campus; initial
     const parsed = formSchema.safeParse({ source, destination, profile })
     if (!parsed.success) { setFormError('Choose both a starting point and a destination.'); return }
     setFormError('')
-    route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, expected_release_id: release.id })
+    route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id }, { onSuccess(result) { const next = result.segments[0]?.floor_id ?? 'outdoor'; setView(next); updateLink(next) } })
   }
   return <>
     <div className="explorer-grid">
@@ -133,21 +145,26 @@ function Planner({ campus, initial, online, release }: { campus: Campus; initial
         <div className="section-title"><span className="eyebrow">LET’S GET YOU THERE</span><span aria-hidden="true">↗</span></div><h2 id="plan-heading">Plan your walk</h2><p className="muted">Your next destination is a few steps away.</p>
         <form onSubmit={submit}>
           <fieldset disabled={route.isPending}>
-            <label htmlFor="source">Starting point</label><select id="source" value={source} onChange={e => { setSource(e.target.value); clear() }}><option value="">Choose a starting point</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select>
+            <label htmlFor="source">Starting point</label><select id="source" value={source} onChange={e => { setSource(e.target.value); clear() }}><option value="">Choose a starting point</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select>
             <div className="swap-row"><span className="connector-line" /><button type="button" className="text-button" onClick={() => { setSource(destination); setDestination(source); clear() }} aria-label="Swap start and destination">⇅ Swap</button></div>
-            <label htmlFor="destination">Destination</label><select id="destination" value={destination} onChange={e => { setDestination(e.target.value); clear() }}><option value="">Where would you like to go?</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select>
-            <label htmlFor="profile">Route preference</label><select id="profile" value={profile} onChange={e => { setProfile(e.target.value as typeof profile); clear() }}><option value="shortest">Shortest walking route</option><option value="step_free">Step-free · synthetic verification only</option></select>
+            <label htmlFor="destination">Destination</label><select id="destination" value={destination} onChange={e => { setDestination(e.target.value); clear() }}><option value="">Where would you like to go?</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select>
+            <label htmlFor="profile">Route preference</label><select id="profile" value={profile} onChange={e => { setProfile(e.target.value as typeof profile); clear() }}><option value="shortest">Shortest walking route</option><option value="step_free">Step-free · synthetic verification only</option><option value="fastest" disabled={costMode === 'directions_only'}>Fastest · supported baseline estimates</option></select>
+            <label htmlFor="cost-mode">Distance policy</label><select id="cost-mode" value={costMode} onChange={e => { setCostMode(e.target.value as typeof costMode); if (e.target.value === 'directions_only' && profile === 'fastest') setProfile('shortest'); clear() }}><option value="metric">Verified metric paths</option><option value="directions_only">Directions only · unknown distance allowed</option></select>
             <button type="submit" className="primary-button" disabled={!online}>{route.isPending ? 'Finding your route…' : 'Find walking route'} <span aria-hidden="true">→</span></button>
           </fieldset>
           {formError && <p role="alert" className="error-text">{formError}</p>}
         </form>
         {route.isPending && <p role="status">Calculating a route through mapped paths…</p>}
         {route.error && <div role="alert" className="error-box"><strong>Route unavailable</strong><p>{route.error.message}</p></div>}
-        {route.data && <><div role="status" className="sr-only">Route ready. {Math.round(route.data.distance_m)} metres.</div><RouteDetails route={route.data} /><button className="secondary-button" onClick={clear}>Clear route</button></>}
-        {!route.data && !route.error && <div className="planner-hint"><span aria-hidden="true">◎</span><p>Start from a known landmark.<br /><small>Outdoor walking routes · no sign-in needed</small></p></div>}
+        {route.data && <><div role="status" className="sr-only">Route ready. {route.data.distance_m == null ? 'Distance unknown.' : `${Math.round(route.data.distance_m)} metres.`}</div><RouteDetails route={route.data} onView={showView} /><button className="secondary-button" onClick={clear}>Clear route</button></>}
+        {!route.data && !route.error && <div className="planner-hint"><span aria-hidden="true">◎</span><p>Start from a known landmark.<br /><small>Reviewed public routes · no sign-in needed</small></p></div>}
       </section>
-      <div className="map-column"><div className="map-toolbar"><span>{campus.name} <span className="muted">/ Outdoor</span></span><button className="text-button" onClick={() => setMapVisible(!mapVisible)}>{mapVisible ? 'Hide map' : 'Show map'}</button></div>
-        {mapVisible && <>{map.error && <Failure error={map.error} retry={() => void map.refetch()} />}
+      <div className="map-column"><div className="map-toolbar"><span>{campus.name} <span className="muted">/ {view === 'outdoor' ? 'Outdoor' : floors.data?.floors.find(f => f.id === view)?.label ?? 'Floor'}</span></span><button className="text-button" onClick={() => setMapVisible(!mapVisible)}>{mapVisible ? 'Hide map' : 'Show map'}</button></div>
+        <label htmlFor="public-floor">Building and floor view</label><select id="public-floor" value={view} onChange={e => showView(e.target.value)}><option value="outdoor">Outdoor campus</option>{floors.data?.floors.map(f => <option key={f.id} value={f.id}>{f.building_name} · {f.label} · {f.navigation_mode.replaceAll('_', ' ')}</option>)}</select>
+        {floors.error && <Failure error={floors.error} retry={() => void floors.refetch()} />}{linkedPlaces.error && <Failure error={linkedPlaces.error} retry={() => void linkedPlaces.refetch()} />}
+        {params.get('release') && !linked && <p role="status" className="notice">The shared route belongs to a different release. Choose destinations on the current release; the previous route has not been reused.</p>}
+        {mapVisible && view !== 'outdoor' && floors.data?.floors.find(f => f.id === view) && <Suspense fallback={<p>Loading floor route viewer…</p>}><FloorRouteMap key={view} floor={floors.data.floors.find(f => f.id === view)!} route={route.data} places={choices} /></Suspense>}
+        {mapVisible && view === 'outdoor' && <>{map.error && <Failure error={map.error} retry={() => void map.refetch()} />}
           {map.data && <Suspense fallback={<p className="loading">Loading map…</p>}><OutdoorMap campus={campus} data={map.data} places={initial.items} route={route.data} onDestination={choose} /></Suspense>}
           {map.isPending && <p role="status" className="loading">Loading campus paths…</p>}</>}
         {!mapVisible && <p className="empty-state">Map hidden. Plan your walk and follow the text directions.</p>}
@@ -162,7 +179,7 @@ function Planner({ campus, initial, online, release }: { campus: Campus; initial
       <div className="places-grid">{directory.data?.items.map(place => <article className="place-card" key={place.id}><div className={`place-icon icon-${place.kind}`} aria-hidden="true">{({ library: '▤', cafe: '☕', water: '◉', garden: '❋', entrance: '↗' } as Record<string, string>)[place.kind] ?? '▦'}</div>
         <div className="place-card-body"><p className="eyebrow">{place.kind}</p><h3>{place.name}</h3><p>{place.building_name ?? 'Outdoor destination'}</p><details><summary>Place details</summary><p>{place.description}</p><p>Code: {place.code} · Accessibility: unknown until surveyed.</p></details>
           {place.floor_label && <p>Floor: {place.floor_label} · Room {place.room_code}</p>}
-          {!place.routable && <p className="unavailable">{place.navigation_mode === 'indoor_catalog_only' ? 'Indoor catalog only · routing requires the later connector milestone' : 'Entrance not mapped · routing unavailable'}</p>}
+          {!place.routable && <p className="unavailable">{place.navigation_mode === 'indoor_catalog_only' ? 'Indoor catalog only · no reviewed routing capability or eligible door' : 'Entrance not mapped · routing unavailable'}</p>}
           <button disabled={route.isPending} className="text-button" onClick={() => choose(place)} aria-label={`Route to ${place.name}`}>Route here <span aria-hidden="true">↗</span></button>
           <button disabled={route.isPending} className="text-button start-here" onClick={() => { setSelectedPlaces(current => [...current, place]); setSource(place.id); clear(); document.getElementById('source')?.focus() }} aria-label={`Start at ${place.name}`}>Start here</button>
         </div></article>)}</div>

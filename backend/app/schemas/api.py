@@ -118,6 +118,8 @@ class RouteSegment(DTO):
     building_id: UUID | None = None
     frame_id: UUID | None = None
     connector_id: UUID | None = None
+    from_local_point: dict[str, float] | None = None
+    to_local_point: dict[str, float] | None = None
     distance_status: Literal["measured", "calibrated", "estimated", "unknown"] = "measured"
     estimated_duration_s: float | None = Field(default=None, ge=0)
     distance_m: float | None = Field(default=None, ge=0)

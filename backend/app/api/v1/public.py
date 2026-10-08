@@ -117,6 +117,17 @@ def search(
     )
 
 
+@router.get("/campuses/{campus_id}/places/{place_id}", response_model=PlaceOut)
+def campus_place(campus_id: UUID, place_id: UUID, db: DB, expected_release_id: UUID | None = None):
+    release = active_release(db, campus_id)
+    if expected_release_id is not None and expected_release_id != release.id:
+        raise DomainError("stale_release", "The campus release changed. Refresh campus data.", 409)
+    found = db.scalar(public_places(release.dataset_revision_id).where(Place.id == place_id))
+    if found is None:
+        raise DomainError("location_not_found", "This public location could not be found.", 404)
+    return place_output(db, [found], release.dataset_revision_id)[0]
+
+
 @router.get("/places/{place_id}", response_model=PlaceOut)
 def place(place_id: UUID, db: DB):
     found = db.scalar(

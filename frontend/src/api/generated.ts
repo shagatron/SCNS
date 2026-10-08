@@ -89,6 +89,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/campuses/{campus_id}/places/{place_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Campus Place */
+        get: operations["campus_place_api_v1_campuses__campus_id__places__place_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/places/{place_id}": {
         parameters: {
             query?: never;
@@ -2729,6 +2746,14 @@ export interface components {
             frame_id?: string | null;
             /** Connector Id */
             connector_id?: string | null;
+            /** From Local Point */
+            from_local_point?: {
+                [key: string]: number;
+            } | null;
+            /** To Local Point */
+            to_local_point?: {
+                [key: string]: number;
+            } | null;
             /**
              * Distance Status
              * @default measured
@@ -3127,6 +3152,67 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SearchOut"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    campus_place_api_v1_campuses__campus_id__places__place_id__get: {
+        parameters: {
+            query?: {
+                expected_release_id?: string | null;
+            };
+            header?: never;
+            path: {
+                campus_id: string;
+                place_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlaceOut"];
                 };
             };
             /** @description Not Found */

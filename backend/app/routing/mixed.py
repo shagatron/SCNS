@@ -136,6 +136,12 @@ def compute(data, source, target, profile="shortest", mode="metric", speed=1.3):
             "building_id": f.get("building_id") or t.get("building_id"),
             "frame_id": f.get("frame_id"),
             "connector_id": row.get("connector_id"),
+            "from_local_point": {k: indoor[a[2:]][k] for k in ("x_px", "y_px")}
+            if a.startswith("i:")
+            else None,
+            "to_local_point": {k: indoor[b[2:]][k] for k in ("x_px", "y_px")}
+            if b.startswith("i:")
+            else None,
             "instruction": instruction,
         }
 

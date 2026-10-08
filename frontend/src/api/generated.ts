@@ -1067,6 +1067,109 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/campuses/{campus_id}/qr-markers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listing */
+        get: operations["listing_api_v1_admin_campuses__campus_id__qr_markers_get"];
+        put?: never;
+        /** Create */
+        post: operations["create_api_v1_admin_campuses__campus_id__qr_markers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/qr-markers/{marker_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit */
+        put: operations["edit_api_v1_admin_campuses__campus_id__qr_markers__marker_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/qr-markers/{marker_id}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Activate */
+        post: operations["activate_api_v1_admin_campuses__campus_id__qr_markers__marker_id__activate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/qr-markers/{marker_id}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revoke */
+        post: operations["revoke_api_v1_admin_campuses__campus_id__qr_markers__marker_id__revoke_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/campuses/{campus_id}/qr-markers/{marker_id}/sign.{format}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Sign */
+        get: operations["sign_api_v1_admin_campuses__campus_id__qr_markers__marker_id__sign__format__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qr/{marker_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Resolution */
+        get: operations["resolution_api_v1_qr__marker_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2096,6 +2199,25 @@ export interface components {
             /** Changes */
             changes: (components["schemas"]["RoomChange"] | components["schemas"]["IndoorNodeChange"] | components["schemas"]["IndoorEdgeChange"] | components["schemas"]["IndoorAccessChange"])[];
         };
+        /** Installation */
+        Installation: {
+            /** Actual Position */
+            actual_position: string;
+            /** Installer */
+            installer: string;
+            /**
+             * Installed On
+             * Format: date
+             */
+            installed_on: string;
+            /**
+             * Verified On
+             * Format: date
+             */
+            verified_on: string;
+            /** Evidence */
+            evidence: string;
+        };
         /** LineString */
         LineString: {
             /**
@@ -2157,6 +2279,85 @@ export interface components {
             release_id: string;
             /** Truncated */
             truncated: boolean;
+        };
+        /** MarkerCreate */
+        MarkerCreate: {
+            /** Label */
+            label: string;
+            /**
+             * Node Kind
+             * @enum {string}
+             */
+            node_kind: "outdoor" | "indoor";
+            /**
+             * Node Id
+             * Format: uuid
+             */
+            node_id: string;
+            /** Intended Position */
+            intended_position: string;
+            /** Key */
+            key: string;
+        };
+        /** MarkerInput */
+        MarkerInput: {
+            /** Label */
+            label: string;
+            /**
+             * Node Kind
+             * @enum {string}
+             */
+            node_kind: "outdoor" | "indoor";
+            /**
+             * Node Id
+             * Format: uuid
+             */
+            node_id: string;
+            /** Intended Position */
+            intended_position: string;
+        };
+        /** MarkerResolution */
+        MarkerResolution: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Campus Id
+             * Format: uuid
+             */
+            campus_id: string;
+            /** Version */
+            version: number;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "active" | "planned" | "revoked" | "retired" | "needs_verification";
+            /**
+             * Release Id
+             * Format: uuid
+             */
+            release_id: string;
+            /** Label */
+            label?: string | null;
+            /** Node Id */
+            node_id?: string | null;
+            /** Node Kind */
+            node_kind?: ("outdoor" | "indoor") | null;
+            /** Node Label */
+            node_label?: string | null;
+            /** Floor Id */
+            floor_id?: string | null;
+            /** Floor Label */
+            floor_label?: string | null;
+            /** Verified On */
+            verified_on?: string | null;
+            /** Is Demo */
+            is_demo: boolean;
+            /** Message */
+            message: string;
         };
         /** Measurement */
         Measurement: {
@@ -2375,6 +2576,26 @@ export interface components {
             /** Key */
             key: string;
         };
+        /** QRSource */
+        QRSource: {
+            /**
+             * Kind
+             * @constant
+             */
+            kind: "qr";
+            /**
+             * Marker Id
+             * Format: uuid
+             */
+            marker_id: string;
+            /** Expected Marker Version */
+            expected_marker_version: number;
+            /**
+             * Confirmed
+             * @constant
+             */
+            confirmed: true;
+        };
         /** Redaction */
         Redaction: {
             /** X */
@@ -2426,6 +2647,11 @@ export interface components {
             artifact_checksum?: string | null;
             /** Artifact Url */
             artifact_url?: string | null;
+        };
+        /** Revoke */
+        Revoke: {
+            /** Reason */
+            reason: string;
         };
         /** RoleInput */
         RoleInput: {
@@ -2621,21 +2847,19 @@ export interface components {
              * @enum {string}
              */
             profile: "shortest" | "step_free" | "fastest";
-            /**
-             * Source Place Id
-             * Format: uuid
-             */
-            source_place_id: string;
+            /** Source Place Id */
+            source_place_id?: string | null;
+            /** Source Marker Id */
+            source_marker_id?: string | null;
+            /** Source Node Id */
+            source_node_id?: string | null;
             /**
              * Destination Place Id
              * Format: uuid
              */
             destination_place_id: string;
-            /**
-             * Source Anchor Id
-             * Format: uuid
-             */
-            source_anchor_id: string;
+            /** Source Anchor Id */
+            source_anchor_id?: string | null;
             /**
              * Destination Anchor Id
              * Format: uuid
@@ -2691,7 +2915,8 @@ export interface components {
              * Format: uuid
              */
             campus_id: string;
-            source: components["schemas"]["PlaceSource"];
+            /** Source */
+            source: components["schemas"]["PlaceSource"] | components["schemas"]["QRSource"];
             destination: components["schemas"]["PlaceSource"];
             /**
              * Profile
@@ -6477,6 +6702,250 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listing_api_v1_admin_campuses__campus_id__qr_markers_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_api_v1_admin_campuses__campus_id__qr_markers_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarkerCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_api_v1_admin_campuses__campus_id__qr_markers__marker_id__put: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                marker_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarkerInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activate_api_v1_admin_campuses__campus_id__qr_markers__marker_id__activate_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                marker_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Installation"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revoke_api_v1_admin_campuses__campus_id__qr_markers__marker_id__revoke_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "If-Match"?: string | null;
+            };
+            path: {
+                campus_id: string;
+                marker_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Revoke"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sign_api_v1_admin_campuses__campus_id__qr_markers__marker_id__sign__format__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campus_id: string;
+                marker_id: string;
+                format: "svg" | "png" | "pdf";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolution_api_v1_qr__marker_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                marker_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarkerResolution"];
                 };
             };
             /** @description Validation Error */

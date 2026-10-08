@@ -1339,6 +1339,9 @@ def publish(db, revision, submission, payload, actor, request_id):
         db.add(
             ActiveRelease(campus_id=revision.campus_id, audience="public", release_id=release.id)
         )
+    from app.services.qr import reconcile
+
+    reconcile(db, release, artifact, actor, request_id)
     submission.status = "published"
     result = {
         "release_id": str(release.id),
@@ -1409,6 +1412,10 @@ def rollback(db, campus_id, payload, actor, request_id):
             "Target artifact failed integrity verification; the active release was retained.",
             422,
         )
+    from app.services.mixed_routes import release_projection
+    from app.services.qr import reconcile
+
+    reconcile(db, target, release_projection(db, target), actor, request_id)
     active.release_id = target.id
     result = {"release_id": str(target.id), "previous_release_id": str(current.id)}
     db.add(

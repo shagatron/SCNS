@@ -96,9 +96,16 @@ class PlaceSource(DTO):
     place_id: UUID
 
 
+class QRSource(DTO):
+    kind: Literal["qr"]
+    marker_id: UUID
+    expected_marker_version: int = Field(ge=1)
+    confirmed: Literal[True]
+
+
 class RouteRequest(DTO):
     campus_id: UUID
-    source: PlaceSource
+    source: PlaceSource | QRSource
     destination: PlaceSource
     profile: Literal["shortest", "step_free", "fastest"] = "shortest"
     cost_mode: Literal["metric", "directions_only"] = "metric"
@@ -156,9 +163,11 @@ class RouteOut(DTO):
     generated_at: datetime
     departure_at: datetime
     profile: Literal["shortest", "step_free", "fastest"]
-    source_place_id: UUID
+    source_place_id: UUID | None = None
+    source_marker_id: UUID | None = None
+    source_node_id: UUID | None = None
     destination_place_id: UUID
-    source_anchor_id: UUID
+    source_anchor_id: UUID | None = None
     destination_anchor_id: UUID
     distance_m: float | None = Field(default=None, ge=0)
     estimated_duration_s: float | None = Field(default=None, ge=0)

@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     app_env: Literal["development", "test", "production"] = "development"
     database_url: str = "postgresql+psycopg://scns:scns_local@localhost:54329/scns"
     demo_enabled: bool = False
+    public_app_url: str = "http://localhost:5173"
     walking_speed_mps: float = Field(default=1.4, gt=0, le=3)
     allowed_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
     storage_root: str = "../storage"
@@ -24,6 +25,27 @@ class Settings(BaseSettings):
     login_account_limit: int = Field(default=5, ge=1, le=20)
     login_ip_limit: int = Field(default=30, ge=1, le=100)
     login_window_seconds: int = Field(default=900, ge=60, le=3600)
+
+    @model_validator(mode="after")
+    def canonical_url(self):
+        from urllib.parse import urlsplit
+
+        url = urlsplit(self.public_app_url)
+        if (
+            url.username
+            or url.password
+            or url.query
+            or url.fragment
+            or url.path not in ("", "/")
+            or not url.hostname
+            or url.scheme not in ("http", "https")
+            or (url.scheme == "http" and url.hostname not in ("localhost", "127.0.0.1", "::1"))
+        ):
+            raise ValueError(
+                "PUBLIC_APP_URL needs an HTTPS origin; local HTTP loopback is demo-only"
+            )
+        self.public_app_url = self.public_app_url.rstrip("/")
+        return self
 
     @model_validator(mode="after")
     def production_guard(self):

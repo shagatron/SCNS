@@ -23,6 +23,7 @@ services:
       DEMO_ENABLED: "true"
       APP_ENV: development
       STORAGE_ROOT: /app/storage
+      PUBLIC_APP_URL: ${PUBLIC_APP_URL:-http://localhost:5173}
     volumes: ["private-imports:/app/storage"]
     ports: ["127.0.0.1:8000:8000"]
     depends_on:

@@ -4,9 +4,9 @@ from app.core.errors import DomainError
 from app.routing.dijkstra import Arc, shortest_path
 
 
-def compute(data, source, target, profile="shortest", mode="metric", speed=1.3):
+def compute(data, source, target, profile="shortest", mode="metric", speed=1.3, *, start_node=None):
     places = data["places"]
-    if source not in places or target not in places:
+    if (start_node is None and source not in places) or target not in places:
         raise DomainError("location_not_found", "This public location could not be found.", 404)
     if profile not in {"shortest", "step_free", "fastest"} or mode not in {
         "metric",
@@ -47,7 +47,12 @@ def compute(data, source, target, profile="shortest", mode="metric", speed=1.3):
             ]
         )
 
-    starts, ends = candidates(source), candidates(target)
+    starts, ends = candidates(source) if start_node is None else [], candidates(target)
+    if start_node is not None:
+        kind, identity = start_node
+        available = outdoor if kind == "outdoor" else indoor
+        if identity in available:
+            starts = [(0, None, ("o:" if kind == "outdoor" else "i:") + identity)]
     if not starts or not ends:
         code = "no_verified_step_free_route" if profile == "step_free" else "location_not_routable"
         raise DomainError(

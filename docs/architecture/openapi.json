@@ -6059,6 +6059,435 @@
           }
         }
       }
+    },
+    "/api/v1/admin/campuses/{campus_id}/qr-markers": {
+      "get": {
+        "tags": [
+          "admin-qr"
+        ],
+        "summary": "Listing",
+        "operationId": "listing_api_v1_admin_campuses__campus_id__qr_markers_get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admin-qr"
+        ],
+        "summary": "Create",
+        "operationId": "create_api_v1_admin_campuses__campus_id__qr_markers_post",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkerCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/qr-markers/{marker_id}": {
+      "put": {
+        "tags": [
+          "admin-qr"
+        ],
+        "summary": "Edit",
+        "operationId": "edit_api_v1_admin_campuses__campus_id__qr_markers__marker_id__put",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "marker_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Marker Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkerInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/qr-markers/{marker_id}/activate": {
+      "post": {
+        "tags": [
+          "admin-qr"
+        ],
+        "summary": "Activate",
+        "operationId": "activate_api_v1_admin_campuses__campus_id__qr_markers__marker_id__activate_post",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "marker_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Marker Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Installation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/qr-markers/{marker_id}/revoke": {
+      "post": {
+        "tags": [
+          "admin-qr"
+        ],
+        "summary": "Revoke",
+        "operationId": "revoke_api_v1_admin_campuses__campus_id__qr_markers__marker_id__revoke_post",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "marker_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Marker Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Revoke"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/campuses/{campus_id}/qr-markers/{marker_id}/sign.{format}": {
+      "get": {
+        "tags": [
+          "admin-qr"
+        ],
+        "summary": "Sign",
+        "operationId": "sign_api_v1_admin_campuses__campus_id__qr_markers__marker_id__sign__format__get",
+        "parameters": [
+          {
+            "name": "campus_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Campus Id"
+            }
+          },
+          {
+            "name": "marker_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Marker Id"
+            }
+          },
+          {
+            "name": "format",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                "svg",
+                "png",
+                "pdf"
+              ],
+              "type": "string",
+              "title": "Format"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/qr/{marker_id}": {
+      "get": {
+        "tags": [
+          "qr"
+        ],
+        "summary": "Resolution",
+        "operationId": "resolution_api_v1_qr__marker_id__get",
+        "parameters": [
+          {
+            "name": "marker_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Marker Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarkerResolution"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -8504,6 +8933,48 @@
         ],
         "title": "IndoorPatch"
       },
+      "Installation": {
+        "properties": {
+          "actual_position": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Actual Position"
+          },
+          "installer": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Installer"
+          },
+          "installed_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Installed On"
+          },
+          "verified_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Verified On"
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Evidence"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "actual_position",
+          "installer",
+          "installed_on",
+          "verified_on",
+          "evidence"
+        ],
+        "title": "Installation"
+      },
       "LineString": {
         "properties": {
           "type": {
@@ -8647,6 +9118,228 @@
           "truncated"
         ],
         "title": "MapOut"
+      },
+      "MarkerCreate": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "node_kind": {
+            "type": "string",
+            "enum": [
+              "outdoor",
+              "indoor"
+            ],
+            "title": "Node Kind"
+          },
+          "node_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Node Id"
+          },
+          "intended_position": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Intended Position"
+          },
+          "key": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 8,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "label",
+          "node_kind",
+          "node_id",
+          "intended_position",
+          "key"
+        ],
+        "title": "MarkerCreate"
+      },
+      "MarkerInput": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "node_kind": {
+            "type": "string",
+            "enum": [
+              "outdoor",
+              "indoor"
+            ],
+            "title": "Node Kind"
+          },
+          "node_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Node Id"
+          },
+          "intended_position": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Intended Position"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "label",
+          "node_kind",
+          "node_id",
+          "intended_position"
+        ],
+        "title": "MarkerInput"
+      },
+      "MarkerResolution": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "campus_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Campus Id"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "planned",
+              "revoked",
+              "retired",
+              "needs_verification"
+            ],
+            "title": "State"
+          },
+          "release_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Release Id"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "node_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Node Id"
+          },
+          "node_kind": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "outdoor",
+                  "indoor"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Node Kind"
+          },
+          "node_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Node Label"
+          },
+          "floor_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Floor Id"
+          },
+          "floor_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Floor Label"
+          },
+          "verified_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified On"
+          },
+          "is_demo": {
+            "type": "boolean",
+            "title": "Is Demo"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "campus_id",
+          "version",
+          "state",
+          "release_id",
+          "is_demo",
+          "message"
+        ],
+        "title": "MarkerResolution"
       },
       "Measurement": {
         "properties": {
@@ -9205,6 +9898,39 @@
         ],
         "title": "PublishInput"
       },
+      "QRSource": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "qr",
+            "title": "Kind"
+          },
+          "marker_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Marker Id"
+          },
+          "expected_marker_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Marker Version"
+          },
+          "confirmed": {
+            "type": "boolean",
+            "const": true,
+            "title": "Confirmed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "marker_id",
+          "expected_marker_version",
+          "confirmed"
+        ],
+        "title": "QRSource"
+      },
       "Redaction": {
         "properties": {
           "x": {
@@ -9316,6 +10042,22 @@
           "version"
         ],
         "title": "ReleaseOut"
+      },
+      "Revoke": {
+        "properties": {
+          "reason": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "reason"
+        ],
+        "title": "Revoke"
       },
       "RoleInput": {
         "properties": {
@@ -9707,9 +10449,40 @@
             "title": "Profile"
           },
           "source_place_id": {
-            "type": "string",
-            "format": "uuid",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Source Place Id"
+          },
+          "source_marker_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Marker Id"
+          },
+          "source_node_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Node Id"
           },
           "destination_place_id": {
             "type": "string",
@@ -9717,8 +10490,15 @@
             "title": "Destination Place Id"
           },
           "source_anchor_id": {
-            "type": "string",
-            "format": "uuid",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Source Anchor Id"
           },
           "destination_anchor_id": {
@@ -9849,9 +10629,7 @@
           "generated_at",
           "departure_at",
           "profile",
-          "source_place_id",
           "destination_place_id",
-          "source_anchor_id",
           "destination_anchor_id",
           "walking_speed_mps",
           "segments",
@@ -9868,7 +10646,15 @@
             "title": "Campus Id"
           },
           "source": {
-            "$ref": "#/components/schemas/PlaceSource"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PlaceSource"
+              },
+              {
+                "$ref": "#/components/schemas/QRSource"
+              }
+            ],
+            "title": "Source"
           },
           "destination": {
             "$ref": "#/components/schemas/PlaceSource"

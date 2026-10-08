@@ -487,3 +487,9 @@ Owner reports passing Windows manual demo checks:18m same-floor,36m stairs,57m s
 ### Milestone4A started — unfinished
 
 Read authoritative specification; actual M4 scope, manageable slice acceptance/dependencies recorded in `docs/product/milestone-4-plan.md`. Branch `feat/milestone-4a-qr-markers` starts from verified8c79767. Only QR inventory/lifecycle/signage/confirmed public stored-node starts/release revalidation is being implemented. Checks remain unfinished. Later closures/location/issues/PWA/facility/performance slices are planned only. Accounts/.env/uploads/drafts/releases/volumes preserved; no reseed/redesign/real MUJ import/merge/deployment/cloud publication.
+
+### M4A unfinished implementation checkpoint — 8 October 2026
+
+QR operational inventory, migration 0015, campus permissions, optimistic marker versions, audited installation/activation/reassignment/revocation, local SVG/PNG/PDF signs and explicit confirmed public QR-start routing are implemented locally. Publication/rollback reconcile current public-node bindings transactionally and do not resurrect retired/revoked markers. Admin controls preserve inputs across stale-edit comparison. Public QR confirmation is cleared on reload, changed marker/release, and connection loss. Existing place routes remain available.
+
+Initial lint/type/build and 89 existing Python/41 frontend unit tests passed; the expanded Python unit suite now passes 100 tests, including decoded PNG/PDF QR payloads. Full PostGIS regression is running. This checkpoint is explicitly unfinished: add real publication/indoor/concurrency coverage, complete isolated desktop/mobile journeys, migration/container rehearsal and documentation, then fix any findings. No developer data has been seeded, reset or deleted. Public release remains unchanged.

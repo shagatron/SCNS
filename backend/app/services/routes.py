@@ -23,7 +23,8 @@ def calculate_route(session: Session, request: RouteRequest) -> RouteOut:
 
     projection = release_projection(session, release)
     if (
-        request.profile == "fastest"
+        request.source.kind == "qr"
+        or request.profile == "fastest"
         or request.cost_mode == "directions_only"
         or any(
             f.get("navigation_mode") in {"metric", "directions_only"}

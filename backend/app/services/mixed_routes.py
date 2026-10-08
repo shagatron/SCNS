@@ -65,16 +65,44 @@ def calculate(db, request, release, data=None):
         raise DomainError(
             "service_unavailable", "This graph exceeds the configured routing budget.", 503
         )
+    start_node = None
+    source_place = None
+    source_marker = None
+    if request.source.kind == "qr":
+        from app.services.qr import resolve
+
+        marker = resolve(db, request.source.marker_id)
+        if marker.campus_id != request.campus_id:
+            raise DomainError("location_not_found", "This marker belongs to another campus.", 404)
+        if marker.release_id != release.id:
+            raise DomainError(
+                "stale_release", "The map changed. Confirm the marker on the current release.", 409
+            )
+        if marker.state != "active":
+            raise DomainError("qr_unavailable", marker.message, 410)
+        if marker.version != request.source.expected_marker_version:
+            raise DomainError(
+                "stale_marker",
+                "The QR marker changed. Reload and confirm its current label before routing.",
+                409,
+            )
+        start_node = (marker.node_kind, str(marker.node_id))
+        source_marker = marker.id
+    else:
+        source_place = request.source.place_id
     result = compute(
         data,
-        str(request.source.place_id),
+        str(source_place),
         str(request.destination.place_id),
         request.profile,
         request.cost_mode,
         settings.walking_speed_mps,
+        start_node=start_node,
     )
     used = {s[k] for s in result["segments"] for k in ("floor_id", "to_floor_id") if s[k]}
-    for identity in (str(request.source.place_id), str(request.destination.place_id)):
+    if start_node and start_node[0] == "indoor":
+        used.add(data["indoor_nodes"][start_node[1]]["floor_id"])
+    for identity in (str(source_place), str(request.destination.place_id)):
         room = data.get("indoor_rooms", {}).get(identity)
         if room:
             used.add(room["floor_id"])
@@ -82,6 +110,10 @@ def calculate(db, request, release, data=None):
         "Opening and connector availability are static published states; no live outages or time-dependent schedules are available.",
         f"Baseline walking estimates assume {settings.walking_speed_mps:.1f}m/s. Connector traversal and lift wait use reviewed estimates when supplied; unknown components have no ETA.",
     ]
+    if start_node:
+        warnings.append(
+            "Start is the labelled QR marker you explicitly confirmed, not a continuously tracked position."
+        )
     if data["campus"]["is_demo"]:
         warnings.insert(
             0,
@@ -105,7 +137,9 @@ def calculate(db, request, release, data=None):
         departure_at=request.departure_at or now,
         profile=request.profile,
         cost_mode=request.cost_mode,
-        source_place_id=request.source.place_id,
+        source_place_id=source_place,
+        source_marker_id=source_marker,
+        source_node_id=start_node[1] if start_node else None,
         destination_place_id=request.destination.place_id,
         walking_speed_mps=settings.walking_speed_mps,
         floors=[f for f in floor_descriptors(data, release) if f["id"] in used],

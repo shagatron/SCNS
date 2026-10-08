@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 import { api, ApiError, calculateRoute, type Campus, type MapData, type Place, type Release, type Search } from '../api/client'
 import type { components } from '../api/generated'
+import type { ConfirmedQR } from '../features/qr/QRStart'
 import RouteDetails from '../features/routing/RouteDetails'
 
 const FloorRouteMap = lazy(() => import('../features/maps/FloorRouteMap'))
@@ -19,11 +20,11 @@ function Failure({ error, retry }: { error: Error; retry: () => void }) {
   return <div className="error-box" role="alert"><p>{error.message}</p><button onClick={retry}>Try again</button></div>
 }
 
-export default function App() {
+export default function App({ qrStart }: { qrStart?: ConfirmedQR }) {
   const online = useSyncExternalStore(subscribeOnline, () => navigator.onLine)
   const campuses = useQuery({ queryKey: ['campuses'], queryFn: () => api<Campus[]>('/campuses') })
   const health = useQuery({ queryKey: ['health'], queryFn: () => api('/health/ready'), retry: false })
-  const [campusId, setCampusId] = useState(() => new URLSearchParams(window.location.search).get('campus') ?? '')
+  const [campusId, setCampusId] = useState(() => qrStart?.campus_id ?? new URLSearchParams(window.location.search).get('campus') ?? '')
   const campus = campuses.data?.find(c => c.id === campusId) ?? campuses.data?.[0]
   return <>
     <a className="skip-link" href="#planner">Skip to route planner</a>
@@ -33,7 +34,7 @@ export default function App() {
     </header>
     <main>
       <div className="page-intro"><div><p className="eyebrow">A LITTLE LESS LOST. A LOT MORE CAMPUS.</p><h1>Find your way around.</h1><p>Choose a place. Plan your walk. Explore what’s nearby.</p></div>
-        <div className="campus-control"><label htmlFor="campus">Explore campus</label><select id="campus" value={campus?.id ?? ''} onChange={e => setCampusId(e.target.value)}>
+        <div className="campus-control"><label htmlFor="campus">Explore campus</label><select id="campus" disabled={!!qrStart} value={campus?.id ?? ''} onChange={e => setCampusId(e.target.value)}>
           {campuses.data?.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
         </select><span className="connection"><i className={online && health.isSuccess ? 'status-dot' : 'status-dot offline'} />{!online ? 'Offline · connection needed for new routes' : health.isSuccess ? 'Campus service connected' : 'Checking campus service…'}</span></div>
       </div>
@@ -41,7 +42,7 @@ export default function App() {
       {campuses.isPending && <p role="status" className="loading">Loading campus…</p>}
       {campuses.error && <Failure error={campuses.error} retry={() => void campuses.refetch()} />}
       {campuses.data?.length === 0 && <section className="empty-state"><h2>No published campus yet</h2><p>Prepare an authorized map and verified paths, or explicitly seed the synthetic demo using the setup guide.</p></section>}
-      {campus && <CampusExplorer key={campus.id} campus={campus} online={online} />}
+      {campus && <CampusExplorer key={campus.id} campus={campus} online={online} qrStart={qrStart} />}
       <section id="about" className="about"><div><p className="eyebrow">KNOW YOUR MAP</p><h2>A demo with clear boundaries.</h2></div>
         <p>These outdoor paths demonstrate graph-based navigation. Distances follow the synthetic paths; walking times are estimates. Reviewed indoor floors and verified connectors can support floor-to-floor and outdoor routes. Static availability and time estimates are not live lift monitoring. Official campus data and live closures are not provided.</p>
         <details><summary>Preparing official campus data</summary><p>Gather permitted overview maps, building names, surveyed entrances, path connections, and accessibility evidence. Upload spaces and versioned templates are documented in the repository’s data guide. Real data must enter a new campus draft and be reviewed before publication.</p></details>
@@ -51,7 +52,7 @@ export default function App() {
   </>
 }
 
-function CampusExplorer({ campus, online }: { campus: Campus; online: boolean }) {
+function CampusExplorer({ campus, online, qrStart }: { campus: Campus; online: boolean; qrStart?: ConfirmedQR }) {
   const cache = useQueryClient()
   const release = useQuery({ retry: false, queryKey: ['release', campus.id], queryFn: () => api<Release>(`/campuses/${campus.id}/release`), refetchInterval: online ? 30000 : false })
   const [seen, setSeen] = useState<string | null>(null)
@@ -87,14 +88,16 @@ function CampusExplorer({ campus, online }: { campus: Campus; online: boolean })
     {recovering && <p role="status">Refreshing campus data; previous route results are hidden.</p>}
     {initial.error && !recovering && <Failure error={initial.error} retry={() => void initial.refetch()} />}
     {!initial.data && !initial.error && <p role="status" className="loading">Loading destinations for the current release…</p>}
-    {!recovering && initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={`${release.data.id}:${epoch}`} campus={campus} initial={initial.data} online={online} release={release.data} />}
+    {qrStart && release.data && qrStart.release_id !== release.data.id && <p role="status" className="notice">The published map changed. <button onClick={() => window.dispatchEvent(new Event('qr-marker-stale'))}>Recheck and confirm the QR marker</button></p>}
+    {!recovering && (!qrStart || qrStart.release_id === release.data?.id) && initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={`${release.data.id}:${epoch}`} campus={campus} initial={initial.data} online={online} release={release.data} qrStart={qrStart?.release_id === release.data.id ? qrStart : undefined} />}
   </>
 }
 
-function Planner({ campus, initial, online, release }: { campus: Campus; initial: Search; online: boolean; release: Release }) {
+function Planner({ campus, initial, online, release, qrStart }: { campus: Campus; initial: Search; online: boolean; release: Release; qrStart?: ConfirmedQR }) {
   const [params] = useState(() => new URLSearchParams(window.location.search))
-  const linked = params.get('campus') === campus.id && params.get('release') === release.id
-  const [source, setSource] = useState((linked && z.uuid().safeParse(params.get('from')).success ? params.get('from') : null) ?? initial.items.find(p => p.code === 'GATE')?.id ?? initial.items[0]?.id ?? '')
+  const linked = !qrStart && params.get('campus') === campus.id && params.get('release') === release.id
+  const qrValue = qrStart ? `qr:${qrStart.id}` : ''
+  const [source, setSource] = useState(qrValue || ((linked && z.uuid().safeParse(params.get('from')).success ? params.get('from') : null) ?? initial.items.find(p => p.code === 'GATE')?.id ?? initial.items[0]?.id ?? ''))
   const [destination, setDestination] = useState(linked && z.uuid().safeParse(params.get('to')).success ? params.get('to')! : '')
   const [profile, setProfile] = useState<'shortest' | 'step_free' | 'fastest'>(linked && ['shortest', 'step_free', 'fastest'].includes(params.get('profile') ?? '') ? params.get('profile') as 'shortest' | 'step_free' | 'fastest' : 'shortest')
   const [costMode, setCostMode] = useState<'metric' | 'directions_only'>(linked && params.get('mode') === 'directions_only' ? 'directions_only' : 'metric')
@@ -113,6 +116,7 @@ function Planner({ campus, initial, online, release }: { campus: Campus; initial
   const bbox = [Math.min(...positions.map(p => p[0])), Math.min(...positions.map(p => p[1])), Math.max(...positions.map(p => p[0])), Math.max(...positions.map(p => p[1]))].join(',')
   const map = useQuery({ queryKey: ['map', campus.id, release.id], retry: false, queryFn: ({ signal }) => api<MapData>(`/campuses/${campus.id}/map?bbox=${bbox}&zoom=17&expected_release_id=${release.id}`, { signal }) })
   const route = useMutation({ mutationFn: calculateRoute, onError(error) {
+    if (error instanceof ApiError && ['stale_marker', 'qr_unavailable'].includes(error.code)) window.dispatchEvent(new Event('qr-marker-stale'))
     if (error instanceof ApiError && error.code === 'stale_release') {
       void queryClient.invalidateQueries({ queryKey: ['release', campus.id] })
       void queryClient.invalidateQueries({ queryKey: ['map', campus.id] })
@@ -134,10 +138,10 @@ function Planner({ campus, initial, online, release }: { campus: Campus; initial
   }
   function submit(event: React.FormEvent) {
     event.preventDefault()
-    const parsed = formSchema.safeParse({ source, destination, profile })
+    const parsed = formSchema.safeParse({ source: qrStart && source === qrValue ? qrStart.id : source, destination, profile })
     if (!parsed.success) { setFormError('Choose both a starting point and a destination.'); return }
     setFormError('')
-    route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id }, { onSuccess(result) { const next = result.segments[0]?.floor_id ?? 'outdoor'; setView(next); updateLink(next) } })
+    route.mutate({ campus_id: campus.id, source: qrStart && source === qrValue ? { kind: 'qr', marker_id: qrStart.id, expected_marker_version: qrStart.version, confirmed: true } : { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id }, { onSuccess(result) { const next = result.segments[0]?.floor_id ?? 'outdoor'; setView(next); updateLink(next) } })
   }
   return <>
     <div className="explorer-grid">
@@ -145,8 +149,8 @@ function Planner({ campus, initial, online, release }: { campus: Campus; initial
         <div className="section-title"><span className="eyebrow">LET’S GET YOU THERE</span><span aria-hidden="true">↗</span></div><h2 id="plan-heading">Plan your walk</h2><p className="muted">Your next destination is a few steps away.</p>
         <form onSubmit={submit}>
           <fieldset disabled={route.isPending}>
-            <label htmlFor="source">Starting point</label><select id="source" value={source} onChange={e => { setSource(e.target.value); clear() }}><option value="">Choose a starting point</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select>
-            <div className="swap-row"><span className="connector-line" /><button type="button" className="text-button" onClick={() => { setSource(destination); setDestination(source); clear() }} aria-label="Swap start and destination">⇅ Swap</button></div>
+            <label htmlFor="source">Starting point</label><select id="source" value={source} onChange={e => { setSource(e.target.value); clear() }}><option value="">Choose a starting point</option>{qrStart && <option value={qrValue}>Confirmed QR · {qrStart.label} · {qrStart.node_label}{qrStart.floor_label ? ` · ${qrStart.floor_label}` : ''}</option>}{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select>
+            <div className="swap-row"><span className="connector-line" /><button type="button" disabled={source === qrValue} className="text-button" onClick={() => { setSource(destination); setDestination(source); clear() }} aria-label="Swap start and destination">⇅ Swap</button></div>
             <label htmlFor="destination">Destination</label><select id="destination" value={destination} onChange={e => { setDestination(e.target.value); clear() }}><option value="">Where would you like to go?</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select>
             <label htmlFor="profile">Route preference</label><select id="profile" value={profile} onChange={e => { setProfile(e.target.value as typeof profile); clear() }}><option value="shortest">Shortest walking route</option><option value="step_free">Step-free · synthetic verification only</option><option value="fastest" disabled={costMode === 'directions_only'}>Fastest · supported baseline estimates</option></select>
             <label htmlFor="cost-mode">Distance policy</label><select id="cost-mode" value={costMode} onChange={e => { setCostMode(e.target.value as typeof costMode); if (e.target.value === 'directions_only' && profile === 'fastest') setProfile('shortest'); clear() }}><option value="metric">Verified metric paths</option><option value="directions_only">Directions only · unknown distance allowed</option></select>

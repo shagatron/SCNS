@@ -15,6 +15,8 @@ from app.api.v1.imports import router as imports_router
 from app.api.v1.indoor import router as indoor_router
 from app.api.v1.public import router
 from app.api.v1.publication import router as publication_router
+from app.api.v1.qr import public_router as qr_public_router
+from app.api.v1.qr import router as qr_router
 from app.core.config import get_settings
 from app.core.errors import DomainError
 
@@ -119,3 +121,6 @@ app.include_router(floorplans_router)
 
 app.include_router(indoor_router)
 app.include_router(connections_router)
+
+app.include_router(qr_router)
+app.include_router(qr_public_router)

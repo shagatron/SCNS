@@ -4,6 +4,7 @@ import { ApiError } from '../../api/client'
 import { adminApi, type Dashboard, type Draft, type Session } from './api'
 import { Publication, ReleaseHistory } from './Publication'
 import { Floorplans } from './Floorplans'
+import { QRInventory } from './QRInventory'
 import { Imports } from './Imports'
 import { Connections } from './Connections'
 import { IndoorEditor } from './IndoorEditor'
@@ -84,6 +85,7 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
       <p>Permissions: {data.permissions.join(', ').replaceAll('_', ' ')}</p>
     </section>
     <div className="admin-tabs" aria-label="Administration sections">
+      {allowed('qr_read') && <button aria-pressed={tab === 'qr'} onClick={() => selectTab('qr')}>QR markers</button>}
       {allowed('draft_read') && <button aria-pressed={tab === 'catalog'} onClick={() => selectTab('catalog')}>Draft catalog</button>}
       {allowed('draft_read') && <button aria-pressed={tab === 'floors'} onClick={() => selectTab('floors')}>Floors and floorplans</button>}
       {allowed('draft_read') && <button aria-pressed={tab === 'indoor'} onClick={() => selectTab('indoor')}>Indoor floor editor</button>}
@@ -94,6 +96,7 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
       {allowed('audit_read') && <button aria-pressed={tab === 'audit'} onClick={() => selectTab('audit')}>Audit records</button>}
       {allowed('user_admin') && <button aria-pressed={tab === 'users'} onClick={() => selectTab('users')}>Users and roles</button>}
     </div>
+    {tab === 'qr' && allowed('qr_read') && <QRInventory path={path} session={session} editable={allowed('qr_manage')} />}
     {tab === 'audit' && allowed('audit_read') && <AuditLog path={path} />}
     {tab === 'users' && allowed('user_admin') && <Users path={path} csrf={session.csrf_token} />}
     {['catalog', 'imports', 'graph', 'review', 'floors', 'indoor', 'connections'].includes(tab) && allowed('draft_read') && <>
@@ -114,6 +117,6 @@ function CampusDashboard({ campus, session }: { campus: string; session: Session
       {selected?.status === 'draft' && tab === 'catalog' && <Catalog key={selected.id} path={`${path}/drafts/${selected.id}`} csrf={session.csrf_token} editable={allowed('catalog_edit')} />}
     </>}
     {tab === 'review' && allowed('draft_read') && <ReleaseHistory path={path} session={session} canPublish={allowed('release_publish')} />}
-    {!allowed('draft_read') && <section className="admin-card"><h2>Operations access</h2><p>Your role can inspect this dashboard. Live closure and issue tools are scheduled for a later milestone.</p></section>}
+    {!allowed('draft_read') && <section className="admin-card"><h2>Operations access</h2><p>Your role can inspect this dashboard and manage QR signs in QR markers. Live closure and issue tools are scheduled for a later milestone.</p></section>}
   </>
 }

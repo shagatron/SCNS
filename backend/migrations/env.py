@@ -10,6 +10,7 @@ from app.models import (
     imports,  # noqa: F401
     indoor,  # noqa: F401
     publication,  # noqa: F401
+    qr,  # noqa: F401
 )
 
 config = context.config

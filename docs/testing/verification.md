@@ -2,6 +2,8 @@
 
 ## M4C outdoor location — completed verification, 9 October 2026
 
+Delivery: verified completed **f5625bb6b42db36d2a144c13fc81ff0118ca740f** pushed, remote SHA matched and tree clean. Actual PR creation targeting `polish/public-route-planner` returned GitHub GraphQL POST **Forbidden**; no PR/merge. [Prepared body](../reviews/milestone-4c-pr.md), [compare/open PR](https://github.com/shagatron/SCNS/compare/polish%2Fpublic-route-planner...feat%2Fmilestone-4c-geolocation?expand=1). Subsequent receipt commit is documentation only.
+
 Existing checkout, clean local/remote public-polish parent **0fa84cba5f4bac97c4678be3cb7f7bb9fc597cd9** → `feat/milestone-4c-geolocation`. Unfinished checkpoints a7d38e0/c1a913b/d0b8716/77d7c5f were pushed. Public polish preserved; only4C implemented. The master10.6 initial-pilot exception suggests a published outdoor anchor landmark from eligible path proximity and requires explicit physical confirmation. Routing begins at that stored node, not a GPS split node. Approximate straight-line approach is unverified and excluded from distance/ETA; no wall crossing, inferred floor or continuous tracking is claimed.
 
 | Executed check | Actual result |

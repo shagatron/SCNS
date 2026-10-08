@@ -1,0 +1,95 @@
+/* Public planner only: admin and QR confirmation screens retain their styles. */
+.public-app {
+  color: #203e38;
+  background: #f5f7f6;
+  line-height: 1.5;
+  --public-muted: #52675f;
+  --public-border: #d4dfda;
+}
+.public-app h1 { letter-spacing: -1.2px; font-weight: 700; }
+.public-app h2 { letter-spacing: -.5px; }
+.public-app button { border-color: #aebfb6; line-height: 1.45; }
+.public-app button:disabled { opacity: 1; color: #65736d; background: #edf1ef; border-color: #d4dfda; }
+.public-app :focus-visible { outline: 3px solid #9a4b0d; outline-offset: 3px; }
+.public-app input, .public-app select { font-size: 15px; min-height: 48px; border-color: #aebfb6; }
+.public-app label { font-size: 14px; color: #294c40; }
+.public-app .site-header { height: 84px; background: #fff; border-color: var(--public-border); }
+.public-app .brand { font-size: 23px; }
+.public-app main { padding-top: 32px; padding-bottom: 12px; }
+.public-app .eyebrow { font-size: 11px; letter-spacing: 1.4px; color: #49614e; }
+.public-app .page-intro { gap: 24px; }
+.public-app .campus-control { width: 280px; }
+.public-app .connection { font-size: 12px; line-height: 1.5; }
+.public-app .demo-banner { background: #faf3df; border-color: #dfcfaa; color: #594b27; margin: 22px 0 24px; }
+.public-app .demo-banner p { font-size: 13px; }
+.public-app .explorer-grid { grid-template-columns: 370px minmax(0, 1fr); gap: 24px; }
+.public-app .planner-card { padding: 24px; border-color: var(--public-border); border-radius: 16px; box-shadow: 0 4px 16px #203e3808; }
+.public-app .muted { color: var(--public-muted); font-size: 14px; }
+.public-app .planner-card > .muted { margin-bottom: 18px; }
+.public-app .planner-field label { margin: 0 0 8px; }
+.public-app .planner-field + .planner-field { margin-top: 18px; }
+.public-app .swap-row { height: 40px; margin: 4px 0; }
+.public-app .text-button { font-size: 13px; color: #245c48; }
+.public-app .primary-button { min-height: 50px; margin-top: 22px; font-size: 15px; background: #1b4d3e; border-color: #1b4d3e; }
+.public-app .primary-button:hover:not(:disabled) { background: #12392e; }
+.public-app .primary-button:disabled { color: #52675f; background: #e3ebe7; border-color: #c1d1c9; }
+.public-app .secondary-button { min-height: 46px; font-size: 14px; }
+.public-app .notice { padding: 14px; border: 1px solid #dfcfaa; border-radius: 10px; background: #faf3df; color: #594b27; font-size: 13px; overflow-wrap: anywhere; }
+.public-app .restriction-status { margin-bottom: 20px; border-color: #c7d9d1; background: #f0f6f3; color: #294c40; }
+.public-app .restriction-status p { margin-bottom: 10px; line-height: 1.55; }
+.public-app .restriction-status p:last-child { margin-bottom: 0; }
+.public-app .restriction-status button { font-size: 13px; background: white; }
+.public-app .restriction-status p[role="alert"] { color: #7b3822; font-weight: 600; margin-top: 12px; }
+.public-app .loading, .public-app .empty-state { padding: 20px; border: 1px solid var(--public-border); color: var(--public-muted); background: #eef3f0; line-height: 1.6; }
+.public-app .error-box { font-size: 14px; border-left: 4px solid #a04b2b; line-height: 1.6; }
+.public-app .error-box strong { display: block; margin-bottom: 6px; }
+.public-app .planner-hint p { font-size: 13px; }
+.public-app .planner-hint small { font-size: 12px; color: var(--public-muted); }
+.public-app .map-toolbar { gap: 12px; flex-wrap: wrap; margin-bottom: 14px; font-size: 14px; }
+.public-app .view-controls { padding: 14px 16px; background: white; border: 1px solid var(--public-border); border-radius: 12px; margin-bottom: 12px; }
+.public-app .view-controls label { margin-bottom: 8px; }
+.public-app .map-panel { border-color: var(--public-border); }
+.public-app .map-caption { font-size: 12px; flex-wrap: wrap; }
+.public-app .map-caption > span:last-child { font-size: 11px; }
+.public-app .map-legend { font-size: 12px; gap: 16px; }
+.public-app .map-source { font-size: 11px; line-height: 1.6; overflow-wrap: anywhere; }
+.public-app .map-panel > p[role="status"] { padding: 8px 16px; margin: 0; font-size: 13px; }
+.public-app .map-footnote { font-size: 12px; flex-wrap: wrap; }
+.public-app .route-details { margin-top: 24px; padding-top: 24px; overflow-wrap: anywhere; }
+.public-app .route-details h2 { font-size: 22px; }
+.public-app .route-metrics { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; padding: 18px; margin: 18px 0; border: 1px solid #d2e2d8; background: #edf5f0; }
+.public-app .route-metrics strong { font-size: 27px; line-height: 1.25; letter-spacing: -.5px; }
+.public-app .route-metrics strong + strong { border-left: 1px solid #c1d7cb; padding-left: 14px; }
+.public-app .route-metrics small { font-size: 12px; line-height: 1.5; margin-top: 5px; letter-spacing: 0; }
+.public-app .directions { font-size: 14px; line-height: 1.6; padding-left: 24px; margin-bottom: 8px; }
+.public-app .directions li { padding: 12px 0 14px 6px; border-bottom: 1px solid #e1e9e4; }
+.public-app .directions li:last-child { border-bottom: 0; }
+.public-app .directions small { font-size: 12px; color: var(--public-muted); margin-top: 4px; }
+.public-app .direction-views { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.public-app .direction-views button { max-width: 100%; text-align: left; background: #f4f8f5; color: #245c48; font-size: 13px; overflow-wrap: anywhere; }
+.public-app details { font-size: 14px; line-height: 1.6; }
+.public-app summary { padding-top: 14px; padding-bottom: 14px; }
+.public-app .place-card p { font-size: 13px; color: var(--public-muted); }
+.public-app .place-card h3 { font-size: 17px; line-height: 1.4; }
+.public-app .place-card .eyebrow { font-size: 10px; }
+.public-app .place-card details { font-size: 13px; }
+.public-app .place-card .unavailable { color: #7b4a25; }
+.public-app .pagination > span, .public-app .about > p { font-size: 13px; color: var(--public-muted); }
+.public-app footer { font-size: 12px; }
+@media (max-width: 1100px) {
+  .public-app .explorer-grid { grid-template-columns: 340px minmax(0, 1fr); gap: 20px; }
+  .public-app .planner-card { padding: 22px; }
+}
+@media (max-width: 760px) {
+  .public-app .site-header { height: 78px; gap: 10px; padding: 0 16px; }
+  .public-app .brand { font-size: 20px; gap: 9px; }
+  .public-app .brand-mark { width: 36px; height: 36px; }
+  .public-app main { padding: 26px 16px 0; }
+  .public-app .campus-control { width: 100%; }
+  .public-app .planner-card { padding: 20px; }
+  .public-app .map-toolbar > span { flex: 1; min-width: 0; }
+  .public-app .route-metrics { padding: 14px; gap: 10px; }
+  .public-app .route-metrics strong { font-size: 24px; }
+  .public-app .route-metrics strong + strong { padding-left: 10px; }
+  .public-app .demo-pill { white-space: normal; text-align: center; max-width: 82px; }
+}

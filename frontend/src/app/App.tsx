@@ -6,6 +6,7 @@ import { api, ApiError, calculateRoute, type Campus, type MapData, type Place, t
 import type { components } from '../api/generated'
 import type { ConfirmedQR } from '../features/qr/QRStart'
 import RouteDetails from '../features/routing/RouteDetails'
+import '../styles/public.css'
 
 const FloorRouteMap = lazy(() => import('../features/maps/FloorRouteMap'))
 const OutdoorMap = lazy(() => import('../features/maps/OutdoorMap'))
@@ -27,7 +28,7 @@ export default function App({ qrStart }: { qrStart?: ConfirmedQR }) {
   const health = useQuery({ queryKey: ['health'], queryFn: () => api('/health/ready'), retry: false })
   const [campusId, setCampusId] = useState(() => qrStart?.campus_id ?? new URLSearchParams(window.location.search).get('campus') ?? '')
   const campus = campuses.data?.find(c => c.id === campusId) ?? campuses.data?.[0]
-  return <>
+  return <div className="public-app">
     <a className="skip-link" href="#planner">Skip to route planner</a>
     <header className="site-header"><a className="brand" href="#"><span className="brand-mark" aria-hidden="true">↗</span><span>Campus<span className="brand-light">ways</span><small>SMART CAMPUS NAVIGATION</small></span></a>
       <nav aria-label="Main navigation"><a href="#planner">Explore</a><a href="#directory">Directory</a><a href="#about">About the data</a></nav>
@@ -50,7 +51,7 @@ export default function App({ qrStart }: { qrStart?: ConfirmedQR }) {
       </section>
     </main>
     <footer><span>Campusways <span aria-hidden="true">↗</span></span><p>Made for a more walkable campus. Demo data only.</p><a href="/api/v1/health/ready">API health</a></footer>
-  </>
+  </div>
 }
 
 function CampusExplorer({ campus, online, qrStart }: { campus: Campus; online: boolean; qrStart?: ConfirmedQR }) {
@@ -156,26 +157,26 @@ function Planner({ campus, initial, online, release, qrStart }: { campus: Campus
     <div className="explorer-grid">
       <section id="planner" className="planner-card" aria-labelledby="plan-heading">
         <div className="section-title"><span className="eyebrow">LET’S GET YOU THERE</span><span aria-hidden="true">↗</span></div><h2 id="plan-heading">Plan your walk</h2><p className="muted">Your next destination is a few steps away.</p>
-        <aside className="notice" aria-label="Operational restrictions"><p>{closures.fresh ? `Live restrictions checked · overlay v${closures.data?.closure_overlay_version}` : 'Current closures unavailable. A connection and successful check are required for a new route.'}</p><button type="button" disabled={!online || closures.isFetching} onClick={() => void closures.refetch()}>Check restrictions</button>{closures.error && <p role="alert">{closures.error.message}</p>}{closures.data?.unresolved_count ? <p role="alert">A retained restriction needs operator review; routing is paused.</p> : null}{closures.data?.items.map(item => <p key={item.id}>{item.label} · {item.state} · {item.reason}. Estimated end {item.estimated_end_at ? new Date(item.estimated_end_at).toLocaleString() : 'unknown'}; operator verification required.</p>)}</aside>
+        <aside className="notice restriction-status" aria-label="Operational restrictions"><p>{closures.fresh ? `Live restrictions checked · overlay v${closures.data?.closure_overlay_version}` : 'Current closures unavailable. A connection and successful check are required for a new route.'}</p><button type="button" disabled={!online || closures.isFetching} onClick={() => void closures.refetch()}>Check restrictions</button>{closures.error && <p role="alert">{closures.error.message}</p>}{closures.data?.unresolved_count ? <p role="alert">A retained restriction needs operator review; routing is paused.</p> : null}{closures.data?.items.map(item => <p key={item.id}>{item.label} · {item.state} · {item.reason}. Estimated end {item.estimated_end_at ? new Date(item.estimated_end_at).toLocaleString() : 'unknown'}; operator verification required.</p>)}</aside>
         <form onSubmit={submit}>
-          <fieldset disabled={route.isPending}>
-            <label htmlFor="source">Starting point</label><select id="source" value={source} onChange={e => { setSource(e.target.value); clear() }}><option value="">Choose a starting point</option>{qrStart && <option value={qrValue}>Confirmed QR · {qrStart.label} · {qrStart.node_label}{qrStart.floor_label ? ` · ${qrStart.floor_label}` : ''}</option>}{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select>
+          <fieldset className="planner-fields" disabled={route.isPending}>
+            <div className="planner-field"><label htmlFor="source">Starting point</label><select id="source" value={source} onChange={e => { setSource(e.target.value); clear() }}><option value="">Choose a starting point</option>{qrStart && <option value={qrValue}>Confirmed QR · {qrStart.label} · {qrStart.node_label}{qrStart.floor_label ? ` · ${qrStart.floor_label}` : ''}</option>}{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select></div>
             <div className="swap-row"><span className="connector-line" /><button type="button" disabled={source === qrValue} className="text-button" onClick={() => { setSource(destination); setDestination(source); clear() }} aria-label="Swap start and destination">⇅ Swap</button></div>
-            <label htmlFor="destination">Destination</label><select id="destination" value={destination} onChange={e => { setDestination(e.target.value); clear() }}><option value="">Where would you like to go?</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select>
-            <label htmlFor="profile">Route preference</label><select id="profile" value={profile} onChange={e => { setProfile(e.target.value as typeof profile); clear() }}><option value="shortest">Shortest walking route</option><option value="step_free">Step-free · synthetic verification only</option><option value="fastest" disabled={costMode === 'directions_only'}>Fastest · supported baseline estimates</option></select>
-            <label htmlFor="cost-mode">Distance policy</label><select id="cost-mode" value={costMode} onChange={e => { setCostMode(e.target.value as typeof costMode); if (e.target.value === 'directions_only' && profile === 'fastest') setProfile('shortest'); clear() }}><option value="metric">Verified metric paths</option><option value="directions_only">Directions only · unknown distance allowed</option></select>
+            <div className="planner-field"><label htmlFor="destination">Destination</label><select id="destination" value={destination} onChange={e => { setDestination(e.target.value); clear() }}><option value="">Where would you like to go?</option>{choices.map(p => <option key={p.id} value={p.id}>{p.name}{p.floor_label ? ` · ${p.building_name} · ${p.floor_label}` : ''}</option>)}</select></div>
+            <div className="planner-field"><label htmlFor="profile">Route preference</label><select id="profile" value={profile} onChange={e => { setProfile(e.target.value as typeof profile); clear() }}><option value="shortest">Shortest walking route</option><option value="step_free">Step-free · synthetic verification only</option><option value="fastest" disabled={costMode === 'directions_only'}>Fastest · supported baseline estimates</option></select></div>
+            <div className="planner-field"><label htmlFor="cost-mode">Distance policy</label><select id="cost-mode" value={costMode} onChange={e => { setCostMode(e.target.value as typeof costMode); if (e.target.value === 'directions_only' && profile === 'fastest') setProfile('shortest'); clear() }}><option value="metric">Verified metric paths</option><option value="directions_only">Directions only · unknown distance allowed</option></select></div>
             <button type="submit" className="primary-button" disabled={!online || !closures.fresh || closures.isFetching}>{route.isPending ? 'Finding your route…' : 'Find walking route'} <span aria-hidden="true">→</span></button>
           </fieldset>
           {formError && <p role="alert" className="error-text">{formError}</p>}
         </form>
         {route.data && !visibleRoute && <p role="alert" className="notice">Previous route hidden: restrictions changed or current closure information is unavailable. Your selections are retained. Check restrictions and calculate again before walking.</p>}
-        {route.isPending && <p role="status">Calculating a route through mapped paths…</p>}
+        {route.isPending && <p role="status" className="loading">Calculating a route through mapped paths…</p>}
         {route.error && <div role="alert" className="error-box"><strong>Route unavailable</strong><p>{route.error.message}</p></div>}
         {visibleRoute && <><div role="status" className="sr-only">Route ready. {visibleRoute.distance_m == null ? 'Distance unknown.' : `${Math.round(visibleRoute.distance_m)} metres.`}</div><RouteDetails route={visibleRoute} onView={showView} /><button className="secondary-button" onClick={clear}>Clear route</button></>}
         {!route.data && !route.error && <div className="planner-hint"><span aria-hidden="true">◎</span><p>Start from a known landmark.<br /><small>Reviewed public routes · no sign-in needed</small></p></div>}
       </section>
       <div className="map-column"><div className="map-toolbar"><span>{campus.name} <span className="muted">/ {view === 'outdoor' ? 'Outdoor' : floors.data?.floors.find(f => f.id === view)?.label ?? 'Floor'}</span></span><button className="text-button" onClick={() => setMapVisible(!mapVisible)}>{mapVisible ? 'Hide map' : 'Show map'}</button></div>
-        <label htmlFor="public-floor">Building and floor view</label><select id="public-floor" value={view} onChange={e => showView(e.target.value)}><option value="outdoor">Outdoor campus</option>{floors.data?.floors.map(f => <option key={f.id} value={f.id}>{f.building_name} · {f.label} · {f.navigation_mode.replaceAll('_', ' ')}</option>)}</select>
+        <div className="view-controls"><label htmlFor="public-floor">Building and floor view</label><select id="public-floor" value={view} onChange={e => showView(e.target.value)}><option value="outdoor">Outdoor campus</option>{floors.data?.floors.map(f => <option key={f.id} value={f.id}>{f.building_name} · {f.label} · {f.navigation_mode.replaceAll('_', ' ')}</option>)}</select></div>
         {floors.error && <Failure error={floors.error} retry={() => void floors.refetch()} />}{linkedPlaces.error && <Failure error={linkedPlaces.error} retry={() => void linkedPlaces.refetch()} />}
         {params.get('release') && !linked && <p role="status" className="notice">The shared route belongs to a different release. Choose destinations on the current release; the previous route has not been reused.</p>}
         {mapVisible && view !== 'outdoor' && floors.data?.floors.find(f => f.id === view) && <Suspense fallback={<p>Loading floor route viewer…</p>}><FloorRouteMap key={view} floor={floors.data.floors.find(f => f.id === view)!} route={visibleRoute} places={choices} /></Suspense>}

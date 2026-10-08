@@ -15,7 +15,7 @@ async function login(page: Page, campus: string, role = 'owner') {
 async function create(page: Page, label: string) {
   await page.getByLabel('Sign label', { exact: true }).fill(label)
   await page.getByRole('combobox', { name: 'Published target node', exact: true }).selectOption({ label: 'outdoor · Gate' })
-  await page.getByLabel('Intended installation position', { exact: true }).fill('Synthetic invented Main Gate position; simulated sign only.')
+  await page.getByRole('textbox', { name: 'Intended installation position', exact: true }).fill('Synthetic invented Main Gate position; simulated sign only.')
   const result = page.waitForResponse(r => r.url().endsWith('/qr-markers') && r.request().method() === 'POST')
   await page.getByRole('button', { name: 'Create planned marker', exact: true }).click()
   const response = await result; expect(response.status()).toBe(201)
@@ -24,7 +24,7 @@ async function create(page: Page, label: string) {
 }
 async function activate(page: Page, location = 'Main Gate') {
   await page.getByLabel('Installer', { exact: true }).fill('Synthetic operator')
-  await page.getByLabel('Actual installed position', { exact: true }).fill(`Simulated invented ${location} node; not a physical sign.`)
+  await page.getByRole('textbox', { name: 'Actual installed position', exact: true }).fill(`Simulated invented ${location} node; not a physical sign.`)
   const today = new Date().toISOString().slice(0, 10)
   await page.getByLabel('Installation date', { exact: true }).fill(today)
   await page.getByLabel('Verification date', { exact: true }).fill(today)
@@ -74,11 +74,11 @@ test('operations signs, explicit QR confirmation, computed route, reload and rev
     expect((await new AxeBuilder({ page: publicPage }).include('main').analyze()).violations).toEqual([])
     await page.getByLabel('Sign label', { exact: true }).fill('Synthetic Courtyard QR')
     await page.getByRole('combobox', { name: 'Published target node', exact: true }).selectOption({ label: 'outdoor · Courtyard' })
-    await page.getByLabel('Intended installation position', { exact: true }).fill('Simulated sign moved to the invented Courtyard node.')
+    await page.getByRole('textbox', { name: 'Intended installation position', exact: true }).fill('Simulated sign moved to the invented Courtyard node.')
     await page.getByRole('button', { name: 'Save changes and replan', exact: true }).click()
     await expect(page.getByRole('button', { name: /^Synthetic Courtyard QR · planned · v4/ })).toBeVisible()
     await expect(page.getByLabel('Installer', { exact: true })).toHaveValue('')
-    await expect(page.getByLabel('Actual installed position', { exact: true })).toHaveValue('')
+    await expect(page.getByRole('textbox', { name: 'Actual installed position', exact: true })).toHaveValue('')
     await publicPage.goto(`/q/${marker.id}`)
     await expect(publicPage.getByText(/Marker status: planned/)).toBeVisible()
     await activate(page, 'Courtyard')

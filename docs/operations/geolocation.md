@@ -36,7 +36,7 @@ Start-Process http://localhost:5173/
 Start-Process http://localhost:5173/admin
 ```
 
-Expect readiness success and a Use my location button on http://localhost:5173/. Windows polish and location checks are **not owner-reported passed** and remain unverified. Parser/mocked command checks on Linux do not constitute Windows execution.
+Expect readiness success and a Use my location button on http://localhost:5173/. On9October2026 the owner reported Windows Chrome **simulated-browser** checks passed at604ace8:±5m Gate confirmation→Library257m/4min;100m/outside-campus/disconnected Garden/one-way East Exit rejection; override cleared and manual Main Gate→Library257m/4min. This limited report is separate from automated tests and does not verify real-device GPS or a broad Windows polish pass. Other Windows location cases remain unreported; parser/mocked command checks on Linux do not constitute Windows execution. See [evidence](../testing/verification.md).
 
 ## Beginner Chrome simulation: precise coordinates and accuracy
 

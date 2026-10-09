@@ -1,5 +1,20 @@
 # Verification evidence
 
+## Owner-reported Windows Chrome M4C simulation — 9 October 2026
+
+Owner reports the following checks **passed at commit604ace8** (`604ace8edd8c8b57304d8e49a6119a5e2a83911f`) on Windows Chrome. These are manual owner-reported **simulated-browser** results, separate from the automated evidence below; they were not rerun or independently observed by this agent.
+
+| Reported check | Owner-reported result |
+|---|---|
+| Simulated5m accuracy fix at Gate; explicit Gate confirmation → Library | Displayed257m /4min |
+| Simulated100m accuracy fix | Rejected as expected |
+| Simulated outside-campus fix | Rejected as expected |
+| Simulated disconnected Garden fix | Rejected as expected |
+| Simulated one-way East Exit fix | Rejected as expected |
+| Override cleared; manual Main Gate → Library | Displayed257m /4min |
+
+This report does **not** verify real-device GPS acquisition/accuracy, physical landmark/approach/accessibility or a broad Windows polish pass. Other Windows location cases (expiry, revocation, timeout/staleness, connectivity/release/restriction changes and indoor destinations) are not owner-reported here. Existing automated evidence remains unchanged. Application code/data were not changed to record this report.
+
 ## M4C outdoor location — completed verification, 9 October 2026
 
 Delivery: verified completed **f5625bb6b42db36d2a144c13fc81ff0118ca740f** pushed, remote SHA matched and tree clean. Actual PR creation targeting `polish/public-route-planner` returned GitHub GraphQL POST **Forbidden**; no PR/merge. [Prepared body](../reviews/milestone-4c-pr.md), [compare/open PR](https://github.com/shagatron/SCNS/compare/polish%2Fpublic-route-planner...feat%2Fmilestone-4c-geolocation?expand=1). Subsequent receipt commit is documentation only.
@@ -23,7 +38,7 @@ Existing checkout, clean local/remote public-polish parent **0fa84cba5f4bac97c46
 
 Resolved verification interruptions are not claimed passing: initial GPS fixture registration caused11pass/1setup error; explicit fixture imports fixed it, final full207/affected13 passed. A frontend geolocation mock needed the typed third options argument; final static/unit checks passed. Source-browser/build ENOSPC interruption was resolved by pruning **generated Docker builder cache only**; no volume/image/private-data removal. Complete source32/final builds then passed. Existing non-failing Starlette/httpx deprecation and Playwright color notices remain. No required assertions, approval/permission protections or TLS checks bypassed.
 
-Location evidence is **deterministic simulated synthetic Chromium**, not GPS hardware/physical travel. Actual Windows polish/location, real-device acquisition/accuracy/physical approach, Firefox/Safari, human assistive technology, field accessibility/official campus data and large-campus load remain unverified. No owner Windows polish pass is asserted. Stored approach distances do not establish wall/fence reachability; pilot bounds100nearby edges/5suggestions can conservatively decline dense networks; unreopened scheduled restrictions are excluded even before their start. One-shot confirmations expire60seconds; no continuous watch. No real-coordinate persistence/logging/analytics/URLs; abandoned route variables removed with gcTime0. M4D–4F are not started.
+Automated location evidence is **deterministic simulated synthetic Chromium**, not GPS hardware/physical travel. The separate owner-reported Windows Chrome simulation at604ace8 is recorded above; its scope is limited to the listed cases. A broad Windows polish pass, other owner Windows location checks, real-device acquisition/accuracy/physical approach, Firefox/Safari, human assistive technology, field accessibility/official campus data and large-campus load remain unverified. No broad owner Windows polish pass is asserted. Stored approach distances do not establish wall/fence reachability; pilot bounds100nearby edges/5suggestions can conservatively decline dense networks; unreopened scheduled restrictions are excluded even before their start. One-shot confirmations expire60seconds; no continuous watch. No real-coordinate persistence/logging/analytics/URLs; abandoned route variables removed with gcTime0. M4D–4F are not started.
 
 Exact data-preserving Windows update and beginner Chrome Protocol Monitor coordinates/**5m accuracy** plus optional simulated failure steps: [operations](../operations/geolocation.md). Privacy/API/pilot limits: [location contract](../data/location.md); [prepared PR](../reviews/milestone-4c-pr.md). Logs `/tmp/scns-4c-final-static.log`, `...-integration-full.log`, `...-location-affected.log`, `...-browser-final.log`, `...-images.log`, `...-frontend-image-final.log`, `...-container.log`, `...-powershell.log`, `...-local-public.log`; before/after count/hash receipts `...-before.json`/`...-after.json` contain no credentials. Generated dependencies/logs/databases/private uploads are not committed.
 

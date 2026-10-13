@@ -33,14 +33,17 @@ export default function OutdoorMap({ campus, data, places, route, onDestination 
   const [tileFailed, setTileFailed] = useState(false)
   const tileUrl = import.meta.env.VITE_BASEMAP_URL
   const attribution = import.meta.env.VITE_BASEMAP_ATTRIBUTION
+  const first = route?.segments[0], last = route?.segments.at(-1)
+  const start = first?.kind === 'outdoor' ? first.geometry?.coordinates[0] : undefined
+  const end = last?.kind === 'outdoor' ? last.geometry?.coordinates.at(-1) : undefined
   return <section className="map-panel" aria-label="Outdoor campus map">
-    <div className="map-caption"><span className="status-dot" /> Outdoor map <span>Synthetic · not to scale on screen</span></div>
+    <div className="map-caption"><span className="status-dot" /> Outdoor map <span>{campus.is_demo ? 'Synthetic · not to scale on screen' : 'Published geometry'}</span></div>
     <MapContainer center={toLeaflet(campus.center.coordinates as [number, number])} zoom={17} minZoom={14} maxZoom={22}
       scrollWheelZoom={false} className="campus-map">
       {tileUrl && attribution && <TileLayer url={tileUrl} attribution={attribution} eventHandlers={{ tileerror: () => setTileFailed(true) }} />}
       <GeoJSON key={data.release_id} data={data as unknown as FeatureCollection} pointToLayer={(_feature, position) => circleMarker(position, { radius: 5, color: '#64728a', fillOpacity: 0.6 })} style={feature => feature?.properties.layer === 'building'
-        ? { color: '#8fae9d', fillColor: '#dce8df', fillOpacity: 1, weight: 2 }
-        : feature?.properties.layer === 'overlay' ? { color: '#64728a', weight: 2, fillOpacity: 0.15 } : { color: feature?.properties.open ? '#b4c6b4' : '#9d5951', weight: 5, dashArray: feature?.properties.open ? undefined : '5 8' }} />
+        ? { color: '#9c9c8c', fillColor: '#d8d8ca', fillOpacity: 1, weight: 1 }
+        : feature?.properties.layer === 'overlay' ? { color: '#64728a', weight: 2, fillOpacity: 0.15 } : { color: feature?.properties.open ? '#b0b09e' : '#9d5951', weight: 5, dashArray: feature?.properties.open ? undefined : '5 8' }} />
       {places.filter(place => place.point).map(place => <CircleMarker key={place.id} center={toLeaflet(place.point!.coordinates as [number, number])} radius={6}
         pathOptions={{ color: '#153e35', fillColor: '#ffffff', fillOpacity: 1, weight: 2 }}
         eventHandlers={{ click: () => onDestination(place) }}>
@@ -48,11 +51,13 @@ export default function OutdoorMap({ campus, data, places, route, onDestination 
       </CircleMarker>)}
       {route?.segments.filter(segment => segment.kind === 'outdoor' && segment.geometry).map(segment => <Polyline key={segment.edge_id}
         positions={segment.geometry!.coordinates.map(p => toLeaflet(p as [number, number]))}
-        pathOptions={{ color: '#146855', weight: 6, opacity: 1 }} />)}
+        pathOptions={{ color: '#111110', weight: 6, opacity: 1 }} />)}
+      {start && <CircleMarker center={toLeaflet(start as [number, number])} radius={10} pathOptions={{ color: '#111110', fillColor: '#e4fb02', fillOpacity: 1, weight: 3 }}><Tooltip permanent direction="bottom">Route start</Tooltip></CircleMarker>}
+      {end && <CircleMarker center={toLeaflet(end as [number, number])} radius={10} pathOptions={{ color: '#111110', fillColor: '#fff', fillOpacity: 1, weight: 3 }}><Tooltip permanent direction="bottom">Route destination</Tooltip></CircleMarker>}
       <FitView campus={campus} route={route} />
     </MapContainer>
-    <div className="map-legend"><span>● Destination</span><span>━ Walking path</span><span>┄ Closed path</span></div>
-    <p className="map-source">Original synthetic campus geometry · WGS84 coordinates near 0°, 0° · no real campus map</p>
+    <div className="map-legend"><span>● Published place</span><span>━ Selected route</span><span>─ Mapped path</span><span>┄ Closed path</span><span>Yellow: route start · White: destination</span></div>
+    <p className="map-source">{campus.is_demo ? 'Original synthetic campus geometry · WGS84 coordinates near 0°, 0° · no real campus map' : 'Published outdoor geometry · WGS84 coordinates'}</p>
     {[...new Set(data.features.filter(f => f.properties.layer === 'overlay').map(f => String(f.properties.attribution)))].map(text => <p className="map-source" key={text}>{text}</p>)}
     {tileFailed && <p role="status" className="notice">Background tiles are unavailable. Campus paths and text directions remain usable.</p>}
   </section>

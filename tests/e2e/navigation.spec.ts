@@ -13,7 +13,7 @@ test('search → select → computed path and text directions on a small screen'
   expect(result.distance_m).toBeGreaterThan(100)
   await expect(page.getByRole('heading', { name: 'Your route is ready' })).toBeVisible()
   await expect(page.getByText('Arrive at Library.', { exact: true })).toBeVisible()
-  await expect(page.locator('.leaflet-overlay-pane path[stroke="#146855"]')).toHaveCount(result.segments.length)
+  await expect(page.locator('.leaflet-overlay-pane path[stroke="#111110"][stroke-width="6"]')).toHaveCount(result.segments.length)
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy()
   await page.getByRole('button', { name: 'Hide map' }).click()
   await expect(page.getByRole('region', { name: 'Route directions' })).toBeVisible()

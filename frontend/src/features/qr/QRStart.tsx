@@ -23,14 +23,14 @@ export default function QRStart() {
   const value = marker.data
   const receipt = value ? `${value.version}:${value.release_id}` : ''
   const active = value?.state === 'active' && value.label && value.node_label && !marker.error
-  if (active && confirmation === receipt) return <><aside className="notice" role="status">QR start confirmed: {value.label}. This is a fixed marker, not continuous tracking. <button onClick={() => setConfirmation('')}>Confirm location again</button> <a href="/">Choose a manual start</a></aside><App key={receipt} qrStart={value as ConfirmedQR} /></>
-  return <main className="qr-landing"><a href="/">← Choose a manual start</a><h1>Start from a QR marker</h1>
+  if (active && confirmation === receipt) return <App key={receipt} qrStart={value as ConfirmedQR} qrNotice={<aside className="notice" role="status">QR start confirmed: {value.label}. This is a fixed marker, not continuous tracking. <button onClick={() => setConfirmation('')}>Confirm location again</button> <a href="/">Choose a manual start</a></aside>} />
+  return <div className="public-app public-qr"><header className="qr-header"><a className="public-wordmark" href="/">scns<span aria-hidden="true">↗</span></a><a href="/#explorer">← Choose a manual start</a></header><main className="qr-landing"><div><p className="section-index">SCNS / A FIXED START</p><h1>Start from a QR marker</h1><p>One physical landmark.<br />One explicit confirmation.</p><p>Scanning opens this label. It does not establish your position until you confirm. Reloading requires a fresh confirmation.</p></div><div>
     {marker.isPending && <p role="status">Checking the current marker and published map…</p>}
     {marker.error && <div role="alert" className="error-box"><p>{marker.error.message}</p><p>A connection is required to verify this marker. Previous confirmation is not reused.</p></div>}
-    {value && !marker.error && <><p className="demo-banner">{value.is_demo ? 'Synthetic demo: invented locations, not real-world navigation.' : 'Check the readable domain and physical location label on the sign.'}</p><p>{value.message}</p>
+    {value && !marker.error && <div className="qr-marker-card"><p className="demo-banner">{value.is_demo ? 'Synthetic demo: invented locations, not real-world navigation.' : 'Check the readable domain and physical location label on the sign.'}</p><p>{value.message}</p>
       {active && <><h2>{value.label}</h2><p>Campus: {value.campus_name}{value.building_name ? ` · ${value.building_name}` : ''}</p><p>Published node: {value.node_label}{value.floor_label ? ` · ${value.floor_label}` : ''}</p><p>Installation verified: {value.verified_on}</p><button className="primary-button" disabled={marker.isFetching || !navigator.onLine} onClick={() => setConfirmation(receipt)}>I am at this marker now</button></>}
       {!active && <p role="status">Marker status: {value.state.replaceAll('_', ' ')}. It cannot start a route.</p>}
-    </>}
-    <p>Scanning opens this label. It does not establish your position until you confirm. Reloading requires a fresh confirmation.</p><button disabled={marker.isFetching} onClick={() => { setConfirmation(''); void refetch() }}>Check marker again</button>
-  </main>
+    </div>}
+    <button disabled={marker.isFetching} onClick={() => { setConfirmation(''); void refetch() }}>Check marker again</button>
+  </div></main></div>
 }

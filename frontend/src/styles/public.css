@@ -1,100 +1,224 @@
-/* Public planner only: admin and QR confirmation screens retain their styles. */
-.public-app {
-  color: #203e38;
-  background: #f5f7f6;
-  line-height: 1.5;
-  --public-muted: #52675f;
-  --public-border: #d4dfda;
-}
-.public-app h1 { letter-spacing: -1.2px; font-weight: 700; }
-.public-app h2 { letter-spacing: -.5px; }
-.public-app button { border-color: #aebfb6; line-height: 1.45; }
-.public-app button:disabled { opacity: 1; color: #65736d; background: #edf1ef; border-color: #d4dfda; }
-.public-app :focus-visible { outline: 3px solid #9a4b0d; outline-offset: 3px; }
-.public-app input, .public-app select { font-size: 15px; min-height: 48px; border-color: #aebfb6; }
-.public-app label { font-size: 14px; color: #294c40; }
-.public-app .site-header { height: 84px; background: #fff; border-color: var(--public-border); }
-.public-app .brand { font-size: 23px; }
-.public-app main { padding-top: 32px; padding-bottom: 12px; }
-.public-app .eyebrow { font-size: 11px; letter-spacing: 1.4px; color: #49614e; }
-.public-app .page-intro { gap: 24px; }
-.public-app .campus-control { width: 280px; }
-.public-app .connection { font-size: 12px; line-height: 1.5; }
-.public-app .demo-banner { background: #faf3df; border-color: #dfcfaa; color: #594b27; margin: 22px 0 24px; }
-.public-app .demo-banner p { font-size: 13px; }
-.public-app .explorer-grid { grid-template-columns: 370px minmax(0, 1fr); gap: 24px; }
-.public-app .planner-card { padding: 24px; border-color: var(--public-border); border-radius: 16px; box-shadow: 0 4px 16px #203e3808; }
-.public-app .muted { color: var(--public-muted); font-size: 14px; }
-.public-app .planner-card > .muted { margin-bottom: 18px; }
-.public-app .planner-field label { margin: 0 0 8px; }
-.public-app .planner-field + .planner-field { margin-top: 18px; }
-.public-app .swap-row { height: 40px; margin: 4px 0; }
-.public-app .text-button { font-size: 13px; color: #245c48; }
-.public-app .primary-button { min-height: 50px; margin-top: 22px; font-size: 15px; background: #1b4d3e; border-color: #1b4d3e; }
-.public-app .primary-button:hover:not(:disabled) { background: #12392e; }
-.public-app .primary-button:disabled { color: #52675f; background: #e3ebe7; border-color: #c1d1c9; }
-.public-app .secondary-button { min-height: 46px; font-size: 14px; }
-.public-app .notice { padding: 14px; border: 1px solid #dfcfaa; border-radius: 10px; background: #faf3df; color: #594b27; font-size: 13px; overflow-wrap: anywhere; }
-.public-app .restriction-status { margin-bottom: 20px; border-color: #c7d9d1; background: #f0f6f3; color: #294c40; }
-.public-app .restriction-status p { margin-bottom: 10px; line-height: 1.55; }
-.public-app .restriction-status p:last-child { margin-bottom: 0; }
-.public-app .restriction-status button { font-size: 13px; background: white; }
-.public-app .restriction-status p[role="alert"] { color: #7b3822; font-weight: 600; margin-top: 12px; }
-.public-app .loading, .public-app .empty-state { padding: 20px; border: 1px solid var(--public-border); color: var(--public-muted); background: #eef3f0; line-height: 1.6; }
-.public-app .error-box { font-size: 14px; border-left: 4px solid #a04b2b; line-height: 1.6; }
-.public-app .error-box strong { display: block; margin-bottom: 6px; }
-.public-app .planner-hint p { font-size: 13px; }
-.public-app .planner-hint small { font-size: 12px; color: var(--public-muted); }
-.public-app .map-toolbar { gap: 12px; flex-wrap: wrap; margin-bottom: 14px; font-size: 14px; }
-.public-app .view-controls { padding: 14px 16px; background: white; border: 1px solid var(--public-border); border-radius: 12px; margin-bottom: 12px; }
-.public-app .view-controls label { margin-bottom: 8px; }
-.public-app .map-panel { border-color: var(--public-border); }
-.public-app .map-caption { font-size: 12px; flex-wrap: wrap; }
-.public-app .map-caption > span:last-child { font-size: 11px; }
-.public-app .map-legend { font-size: 12px; gap: 16px; }
-.public-app .map-source { font-size: 11px; line-height: 1.6; overflow-wrap: anywhere; }
-.public-app .map-panel > p[role="status"] { padding: 8px 16px; margin: 0; font-size: 13px; }
-.public-app .map-footnote { font-size: 12px; flex-wrap: wrap; }
-.public-app .route-details { margin-top: 24px; padding-top: 24px; overflow-wrap: anywhere; }
-.public-app .route-details h2 { font-size: 22px; }
-.public-app .route-metrics { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; padding: 18px; margin: 18px 0; border: 1px solid #d2e2d8; background: #edf5f0; }
-.public-app .route-metrics strong { font-size: 27px; line-height: 1.25; letter-spacing: -.5px; }
-.public-app .route-metrics strong + strong { border-left: 1px solid #c1d7cb; padding-left: 14px; }
-.public-app .route-metrics small { font-size: 12px; line-height: 1.5; margin-top: 5px; letter-spacing: 0; }
-.public-app .directions { font-size: 14px; line-height: 1.6; padding-left: 24px; margin-bottom: 8px; }
-.public-app .directions li { padding: 12px 0 14px 6px; border-bottom: 1px solid #e1e9e4; }
-.public-app .directions li:last-child { border-bottom: 0; }
-.public-app .directions small { font-size: 12px; color: var(--public-muted); margin-top: 4px; }
+/* Public-only editorial system. Admin continues to use its existing styles. */
+@font-face { font-family: 'SCNS Inter'; src: url('/fonts/InterVariable.woff2') format('woff2'); font-style: normal; font-weight: 100 900; font-display: swap; }
+html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
+.public-app { --ink: #111110; --paper: #f0f0ed; --yellow: #e4fb02; --line: #c9c9c2; --muted: #565650; color: var(--ink); background: var(--ink); font-family: 'SCNS Inter', Arial, sans-serif; font-size: 15px; line-height: 1.5; padding: 24px; min-height: 100vh; }
+.public-app * { min-width: 0; }
+.public-app h1, .public-app h2, .public-app h3 { color: inherit; font-weight: 760; }
+.public-app p { line-height: 1.6; }
+.public-app a, .public-app button, .public-app summary { touch-action: manipulation; transition: background-color 150ms, color 150ms, border-color 150ms; }
+.public-app :focus-visible { outline: 3px solid #3556db; outline-offset: 4px; }
+.public-app [tabindex='-1']:focus { outline: none; }
+.public-app main { max-width: none; padding: 0; margin: 0; }
+.public-app .editorial-section { background: var(--paper); padding: 70px clamp(20px, 4.5vw, 72px); margin: 0 0 18px; scroll-margin-top: 100px; }
+.public-app .display-heading { font-size: clamp(48px, 6.8vw, 100px); line-height: .98; letter-spacing: -.065em; margin: 28px 0; text-wrap: balance; }
+.public-app .section-index, .public-app .eyebrow { color: var(--ink); font-size: 11px; font-weight: 650; letter-spacing: .07em; line-height: 1.5; }
+.public-app .section-description { max-width: 450px; color: var(--muted); }
+.public-app .muted { color: var(--muted); font-size: 13px; }
+.public-app .public-navigation { position: fixed; top: 28px; left: 50%; transform: translateX(-50%); z-index: 1100; width: max-content; max-width: calc(100% - 32px); border-radius: 999px; padding: 6px; background: #fff; border: 1px solid #e1e1dc; }
+.public-app .public-navigation nav { display: flex; align-items: center; gap: 2px; font-size: 12px; }
+.public-app .public-navigation a { min-height: 44px; padding: 8px 14px; border-radius: 999px; display: inline-flex; align-items: center; white-space: nowrap; }
+.public-app .public-navigation a:hover { background: var(--paper); text-decoration: none; }
+.public-app .public-navigation a[aria-current] { background: var(--yellow); color: var(--ink); }
+.public-app .public-navigation a.nav-explore { background: var(--ink); color: #fff; }
+.public-app .public-navigation a.nav-explore[aria-current] { background: var(--yellow); color: var(--ink); }
+.public-app .public-wordmark { font-weight: 850; font-size: 19px; letter-spacing: -.06em; }
+.public-app .public-wordmark span { margin-left: 4px; }
+.public-app .campus-opening { min-height: min(960px, calc(100svh - 48px)); position: relative; display: grid; grid-template-columns: minmax(220px, .75fr) minmax(0, 1.7fr); grid-template-rows: auto 1fr auto; gap: 24px 55px; padding-top: 104px; overflow: hidden; border-radius: 12px 12px 0 0; }
+.public-app .opening-top { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: start; position: relative; z-index: 1; }
+.public-app .opening-top p { font-size: 12px; text-align: right; max-width: 280px; margin-bottom: 0; }
+.public-app .opening-watermark { position: absolute; left: 12%; bottom: 12px; font-weight: 850; font-size: clamp(160px, 34vw, 480px); line-height: 1; letter-spacing: -.09em; color: #e2e2de; pointer-events: none; }
+.public-app .opening-note { background: var(--yellow); align-self: end; padding: 28px; width: 260px; max-width: 100%; min-height: 355px; display: flex; flex-direction: column; z-index: 1; }
+.public-app .opening-note > strong { font-size: 22px; font-weight: 760; line-height: 1.1; letter-spacing: -.04em; margin-bottom: 20px; }
+.public-app .opening-note p { font-size: 12px; line-height: 1.6; }
+.public-app .campus-control { width: 100%; margin: 12px 0; }
+.public-app .campus-control select { background: transparent; border-color: #758300; font-size: 12px; }
+.public-app .opening-note > a { display: flex; justify-content: space-between; min-height: 44px; align-items: center; margin-top: auto; font-size: 12px; font-weight: 700; }
+.public-app .opening-title { position: relative; z-index: 1; text-align: right; align-self: center; }
+.public-app .opening-title h1 { font-size: clamp(80px, 9.3vw, 142px); line-height: .91; letter-spacing: -.075em; margin: 20px 0 40px; font-weight: 800; }
+.public-app .explore-action { display: inline-flex; gap: 16px; align-items: center; font-weight: 650; min-height: 56px; }
+.public-app .arrow-disc { display: grid; place-items: center; width: 56px; height: 56px; background: var(--ink); color: white; border-radius: 50%; font-size: 25px; }
+.public-app .explore-action:hover .arrow-disc { background: var(--yellow); color: var(--ink); }
+.public-app .opening-bottom { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 20px; align-items: end; position: relative; z-index: 1; font-size: 11px; margin-top: 16px; }
+.public-app .connection { color: var(--ink); margin: 0; font-size: 11px; display: flex; gap: 8px; align-items: center; }
+.public-app .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #366300; }
+.public-app .status-dot.offline { background: #aa360f; }
+.public-app .campus-figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 32px; margin: 60px 0 24px; }
+.public-app .campus-figures > div { border-top: 1px solid var(--ink); padding-top: 8px; }
+.public-app .campus-figures strong { display: block; font-size: clamp(68px, 9vw, 130px); font-weight: 760; letter-spacing: -.07em; line-height: 1.15; }
+.public-app .campus-figures h3 { font-size: 15px; margin: 12px 0; letter-spacing: -.02em; }
+.public-app .campus-figures p { color: var(--muted); font-size: 12px; }
+.public-app .navigation-process { display: grid; grid-template-columns: .9fr 1.4fr; gap: 70px; }
+.public-app .process-rows { margin: 26px 0 50px; padding: 0; list-style: none; }
+.public-app .process-rows li { display: grid; grid-template-columns: 30px 1fr 1.6fr 30px; gap: 20px; align-items: start; padding: 22px 0; border-top: 1px solid var(--line); }
+.public-app .process-rows li:last-child { border-bottom: 1px solid var(--line); }
+.public-app .process-rows h3 { font-size: 27px; letter-spacing: -.04em; margin: 0; }
+.public-app .process-rows li > span { font-size: 12px; padding-top: 7px; }
+.public-app .process-rows p { font-size: 12px; color: var(--muted); margin: 0; }
+.public-app .process-rows a { min-height: 44px; min-width: 44px; display: grid; place-items: center; font-size: 20px; margin-top: -7px; }
+.public-app .route-illustration { background: var(--yellow); margin: 0; padding: 25px; }
+.public-app .route-illustration svg { display: block; width: 100%; height: auto; max-height: 190px; }
+.public-app .route-illustration text { font: 13px 'SCNS Inter', Arial, sans-serif; }
+.public-app .route-illustration figcaption { font-size: 11px; padding-top: 12px; }
+.public-app .algorithm-note { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 22px; }
+.public-app .algorithm-note h3 { font-size: 18px; }
+.public-app .algorithm-note p { font-size: 13px; color: var(--muted); }
+.public-app .directory-header { display: flex; align-items: end; justify-content: space-between; gap: 25px; }
+.public-app .directory-header > p { max-width: 300px; }
+.public-app .directory-controls { display: grid; grid-template-columns: minmax(0,1fr) 220px; gap: 20px; border-top: 1px solid var(--line); padding-top: 24px; margin: 20px 0 28px; }
+.public-app label { font-weight: 650; font-size: 12px; color: var(--ink); margin-bottom: 8px; }
+.public-app input, .public-app select { border: 1px solid #9b9b93; border-radius: 2px; background: #fff; color: var(--ink); min-height: 48px; font-size: 14px; padding: 12px; }
+.public-app button { min-height: 44px; border: 1px solid #9b9b93; border-radius: 2px; padding: 10px 14px; color: var(--ink); background: #fff; font-weight: 650; font-size: 13px; max-width: 100%; overflow-wrap: anywhere; }
+.public-app button:hover:not(:disabled) { background: var(--yellow); border-color: var(--ink); }
+.public-app button:disabled { opacity: .6; }
+.public-app .primary-button { width: 100%; background: var(--ink); color: #fff; border-color: var(--ink); min-height: 52px; display: flex; justify-content: space-between; gap: 16px; margin: 20px 0 0; }
+.public-app .primary-button:hover:not(:disabled) { background: var(--yellow); color: var(--ink); }
+.public-app .secondary-button { margin-top: 18px; }
+.public-app .text-button { border: 0; background: transparent; padding: 10px 8px; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.public-app .places-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 28px; }
+.public-app .place-card { display: block; border: 0; border-radius: 0; padding: 0; box-shadow: none; background: transparent; }
+.public-app .destination-graphic { background: #1b1b1a; color: white; aspect-ratio: 1.2; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.public-app .destination-graphic > span:first-child { font-size: clamp(100px, 15vw, 210px); font-weight: 850; line-height: 1; letter-spacing: -.06em; }
+.public-app .destination-graphic small { position: absolute; left: 18px; top: 16px; font-weight: 650; font-size: 11px; }
+.public-app .destination-graphic .tile-arrow { position: absolute; right: 18px; bottom: 12px; font-size: 27px; }
+.public-app .place-card:nth-child(3n + 2) .destination-graphic { background: var(--yellow); color: var(--ink); }
+.public-app .place-card-body { padding: 18px 0; }
+.public-app .place-card h3 { font-size: 22px; letter-spacing: -.04em; }
+.public-app .place-card p { font-size: 13px; color: var(--muted); }
+.public-app .place-card .eyebrow { font-size: 10px; margin-bottom: 6px; color: var(--ink); }
+.public-app .place-card summary { font-size: 13px; }
+.public-app .place-card .text-button { padding-left: 0; padding-right: 16px; }
+.public-app .place-card .unavailable { color: #8b320e; }
+.public-app .pagination { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 30px; border-top: 1px solid var(--line); padding-top: 24px; }
+.public-app .pagination > span { margin-right: auto; color: var(--muted); font-size: 12px; }
+.public-app .explorer-heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 36px; }
+.public-app .explorer-heading h2 { font-size: clamp(44px,5vw,72px); }
+.public-app .explorer-heading > p { font-size: 12px; max-width: 280px; color: var(--muted); }
+.public-app .explorer-grid { display: grid; grid-template-columns: 320px minmax(0,1fr); gap: 30px; align-items: start; }
+.public-app .planner-card { border: 1px solid var(--line); border-radius: 0; background: #fff; padding: 24px; box-shadow: none; }
+.public-app .planner-card h2 { font-size: 28px; letter-spacing: -.045em; margin-top: 14px; }
+.public-app .section-title { display: flex; justify-content: space-between; align-items: start; }
+.public-app .section-title > span:last-child { font-size: 21px; }
+.public-app .planner-card .eyebrow { margin-bottom: 0; }
+.public-app .route-controls > summary { display: flex; justify-content: space-between; border-top: 1px solid var(--line); margin-top: 24px; padding: 14px 0; font-size: 14px; }
+.public-app .route-controls:not([open]) > summary { margin-bottom: 0; }
+.public-app .restriction-status { border-left: 3px solid #606354; background: #f4f4ef; margin: 4px 0 16px; padding: 12px; }
+.public-app .restriction-status p { font-size: 12px; margin-bottom: 12px; }
+.public-app .restriction-status button { font-size: 11px; }
+.public-app .location-start { border: 1px solid var(--line); border-radius: 0; padding: 12px; margin: 16px 0 24px; background: #fff; }
+.public-app .location-start p { font-size: 12px; margin: 12px 0; }
+.public-app .location-start button { margin: 4px 4px 4px 0; text-align: left; }
+.public-app .planner-fields { display: grid; gap: 16px; }
+.public-app .swap-row { display: flex; align-items: center; justify-content: space-between; height: auto; margin: -8px 0; }
+.public-app .connector-line { height: 18px; border-left: 1px solid var(--line); margin-left: 15px; }
+.public-app .planner-fields label[for='profile'] { margin-top: 0; }
+.public-app .planner-hint { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 16px; display: flex; align-items: center; gap: 12px; }
+.public-app .planner-hint p, .public-app .planner-hint small { font-size: 11px; margin: 0; color: var(--muted); }
+.public-app .planner-hint > span { font-size: 24px; }
+.public-app .map-column { position: sticky; top: 105px; }
+.public-app .map-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 14px; }
+.public-app .view-controls { margin-bottom: 18px; }
+.public-app .map-panel { border: 1px solid var(--line); border-radius: 0; background: #e8e8df; overflow: hidden; position: relative; }
+.public-app .map-caption { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px; font-size: 12px; background: #fff; }
+.public-app .map-caption > span:last-child { margin-left: auto; font-size: 10px; color: var(--muted); }
+.public-app .campus-map.leaflet-container { height: clamp(420px,50svh,600px); background-color: #e8e8df; background-image: linear-gradient(#11111008 1px,transparent 1px),linear-gradient(90deg,#11111008 1px,transparent 1px); background-size: 32px 32px; z-index: 0; font-family: inherit; }
+.public-app .leaflet-control-zoom a { min-width: 44px; min-height: 44px; line-height: 44px !important; }
+.public-app .place-label { color: var(--ink); border: 1px solid #b0b0a3; font-size: 10px; background: #fffffff2; font-weight: 550; }
+.public-app .map-fit { position: absolute; bottom: 22px; right: 12px; z-index: 500; box-shadow: none; }
+.public-app .map-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 11px; padding: 14px; }
+.public-app .map-source { font-size: 11px; color: var(--muted); padding: 0 14px 12px; margin: 0; overflow-wrap: anywhere; }
+.public-app .map-panel > p[role='status'] { font-size: 12px; padding: 12px; margin: 0; }
+.public-app .map-footnote { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 11px; color: var(--muted); margin-top: 14px; }
+.public-app .route-results { margin-top: 30px; }
+.public-app .route-details { border-top: 1px solid var(--ink); padding: 30px 0 0; margin: 0; }
+.public-app .route-details h2 { font-size: 34px; letter-spacing: -.05em; }
+.public-app .route-metrics { border-radius: 0; background: var(--yellow); display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; padding: 25px; max-width: 620px; }
+.public-app .route-metrics strong { font-size: clamp(32px,4.5vw,64px); font-weight: 750; line-height: 1.2; letter-spacing: -.055em; }
+.public-app .route-metrics small { font-size: 12px; display: block; margin-top: 8px; font-weight: 500; letter-spacing: 0; }
+.public-app .directions { counter-reset: route-step; padding: 0; list-style: none; margin: 26px 0; }
+.public-app .directions li { counter-increment: route-step; padding: 18px 16px 18px 54px; position: relative; border-top: 1px solid var(--line); font-size: 15px; }
+.public-app .directions li::before { content: counter(route-step,decimal-leading-zero); position: absolute; left: 0; font-size: 12px; font-weight: 650; }
+.public-app .directions small { display: block; margin: 6px 0; color: var(--muted); font-size: 12px; }
 .public-app .direction-views { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-.public-app .direction-views button { max-width: 100%; text-align: left; background: #f4f8f5; color: #245c48; font-size: 13px; overflow-wrap: anywhere; }
-.public-app details { font-size: 14px; line-height: 1.6; }
-.public-app summary { padding-top: 14px; padding-bottom: 14px; }
-.public-app .place-card p { font-size: 13px; color: var(--public-muted); }
-.public-app .place-card h3 { font-size: 17px; line-height: 1.4; }
-.public-app .place-card .eyebrow { font-size: 10px; }
-.public-app .place-card details { font-size: 13px; }
-.public-app .place-card .unavailable { color: #7b4a25; }
-.public-app .pagination > span, .public-app .about > p { font-size: 13px; color: var(--public-muted); }
-.public-app footer { font-size: 12px; }
-@media (max-width: 1100px) {
-  .public-app .explorer-grid { grid-template-columns: 340px minmax(0, 1fr); gap: 20px; }
-  .public-app .planner-card { padding: 22px; }
+.public-app .direction-views button { font-size: 12px; text-align: left; }
+.public-app .about { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; margin-bottom: 0; border-radius: 0 0 12px 12px; }
+.public-app .about > div:last-child { padding-top: 44px; font-size: 13px; color: var(--muted); }
+.public-app details { font-size: 13px; line-height: 1.6; }
+.public-app summary { min-height: 44px; padding: 12px 0; }
+.public-app .error-box { border-radius: 0; border: 1px solid #a65736; border-left: 4px solid #923814; background: #fff2e7; color: #752400; padding: 18px; overflow-wrap: anywhere; }
+.public-app .error-text { color: #8a2a0d; font-size: 13px; margin-top: 12px; }
+.public-app .notice { background: #f4f4e5; border-left: 3px solid #737352; padding: 14px; font-size: 13px; overflow-wrap: anywhere; }
+.public-app .loading, .public-app .empty-state { background: #e8e8df; border-radius: 0; padding: 24px; font-size: 14px; }
+.public-app footer { padding: 30px 0 8px; background: var(--ink); color: #f0f0ed; border: 0; display: flex; justify-content: space-between; align-items: center; gap: 24px; font-size: 12px; }
+.public-app footer p { margin: 0; }
+.public-app footer a { min-height: 44px; display: flex; align-items: center; }
+.public-app .skip-link { position: fixed; top: -120px; left: 16px; background: var(--yellow); color: var(--ink); padding: 14px; z-index: 2000; }
+.public-app .skip-link:focus { top: 20px; }
+.public-app .qr-confirmed { background: var(--paper); padding: 20px clamp(20px,4.5vw,72px); margin-bottom: 18px; }
+.public-app .qr-header { display: flex; justify-content: space-between; gap: 24px; padding: 18px 0 32px; color: white; }
+.public-app .qr-header a { min-height: 44px; display: flex; align-items: center; }
+.public-app .qr-landing { max-width: none; margin: 0; padding: 60px clamp(20px,5vw,72px); background: var(--paper); display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; border-radius: 8px; min-height: 650px; }
+.public-app .qr-landing h1 { font-size: clamp(48px,6vw,92px); line-height: 1; letter-spacing: -.065em; }
+.public-app .qr-marker-card { padding: 30px; background: var(--yellow); }
+.public-app .qr-marker-card h2 { font-size: 32px; letter-spacing: -.05em; }
+.public-app .qr-marker-card .demo-banner { background: transparent; border: 0; border-radius: 0; padding: 0; margin: 0 0 20px; color: var(--ink); font-size: 13px; display: block; }
+.public-app .qr-landing .primary-button { margin-top: 30px; }
+.public-app [data-reveal].revealed { animation: public-reveal 400ms ease-out both; }
+@keyframes public-reveal { from { opacity: .5; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 1050px) {
+  .public-app .campus-opening { gap: 30px; }
+  .public-app .opening-title h1 { font-size: clamp(68px,9vw,98px); }
+  .public-app .navigation-process { grid-template-columns: .85fr 1.2fr; gap: 30px; }
+  .public-app .process-rows li { grid-template-columns: 25px 1fr 30px; gap: 12px; }
+  .public-app .process-rows li p { grid-column: 2; grid-row: 2; }
+  .public-app .process-rows li a { grid-column: 3; grid-row: 1; }
+  .public-app .explorer-grid { grid-template-columns: 290px minmax(0,1fr); gap: 20px; }
+  .public-app .planner-card { padding: 18px; }
+  .public-app .places-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media (max-width: 760px) {
-  .public-app .site-header { height: 78px; gap: 10px; padding: 0 16px; }
-  .public-app .brand { font-size: 20px; gap: 9px; }
-  .public-app .brand-mark { width: 36px; height: 36px; }
-  .public-app main { padding: 26px 16px 0; }
-  .public-app .campus-control { width: 100%; }
+  .public-app { padding: 10px; }
+  .public-app .public-navigation { top: 16px; max-width: calc(100% - 28px); }
+  .public-app .public-navigation a { padding: 8px 11px; font-size: 11px; }
+  .public-app .public-navigation a.nav-secondary { display: none; }
+  .public-app .public-navigation .public-wordmark { font-size: 17px; }
+  .public-app .editorial-section { padding: 40px 20px; margin-bottom: 12px; }
+  .public-app .campus-opening { padding-top: 94px; display: flex; flex-direction: column; gap: 24px; min-height: auto; }
+  .public-app .opening-top { display: block; }
+  .public-app .opening-top p { text-align: left; font-size: 11px; margin-top: 8px; }
+  .public-app .opening-title { order: 1; text-align: left; align-self: stretch; }
+  .public-app .opening-title h1 { font-size: clamp(54px,11.5vw,80px); margin: 0 0 24px; line-height: .98; }
+  .public-app .opening-note { order: 2; align-self: stretch; width: 100%; min-height: auto; padding: 24px; }
+  .public-app .opening-note > strong { font-size: 22px; }
+  .public-app .opening-note > a { margin-top: 12px; }
+  .public-app .opening-bottom { order: 3; display: block; margin-top: 0; }
+  .public-app .opening-bottom > span:last-child { display: block; margin-top: 14px; }
+  .public-app .opening-watermark { bottom: 220px; left: 0; font-size: 190px; }
+  .public-app .display-heading { font-size: clamp(44px,10vw,66px); margin: 22px 0; }
+  .public-app .campus-figures { grid-template-columns: 1fr; gap: 24px; margin-top: 32px; }
+  .public-app .campus-figures strong { font-size: 88px; }
+  .public-app .navigation-process, .public-app .about { grid-template-columns: 1fr; gap: 25px; }
+  .public-app .process-rows { margin-top: 0; margin-bottom: 28px; }
+  .public-app .directory-header, .public-app .explorer-heading { display: block; }
+  .public-app .directory-controls { grid-template-columns: 1fr; }
+  .public-app .places-grid { grid-template-columns: 1fr; gap: 20px; }
+  .public-app .destination-graphic { aspect-ratio: 1.4; }
+  .public-app .destination-graphic > span:first-child { font-size: 160px; }
+  .public-app .explorer-grid { grid-template-columns: 1fr; gap: 24px; }
   .public-app .planner-card { padding: 20px; }
-  .public-app .map-toolbar > span { flex: 1; min-width: 0; }
-  .public-app .route-metrics { padding: 14px; gap: 10px; }
-  .public-app .route-metrics strong { font-size: 24px; }
-  .public-app .route-metrics strong + strong { padding-left: 10px; }
-  .public-app .demo-pill { white-space: normal; text-align: center; max-width: 82px; }
+  .public-app .map-column { position: static; }
+  .public-app .campus-map.leaflet-container { height: 360px; }
+  .public-app .map-toolbar { flex-wrap: wrap; }
+  .public-app .map-caption > span:last-child { margin: 0; }
+  .public-app .route-metrics { gap: 18px; padding: 20px; }
+  .public-app .route-details h2 { font-size: 29px; }
+  .public-app .about > div:last-child { padding-top: 0; }
+  .public-app .qr-landing { grid-template-columns: 1fr; padding: 32px 20px; gap: 25px; min-height: 0; }
+  .public-app .qr-marker-card { padding: 22px; }
+  .public-app footer { flex-wrap: wrap; gap: 14px; }
+  .public-app footer p { width: 100%; order: 3; }
 }
-
-.public-app .location-start { padding: 14px; margin-bottom: 20px; border: 1px solid var(--public-border); border-radius: 10px; background: #fff; overflow-wrap: anywhere; }
-.public-app .location-start p { font-size: 13px; margin: 10px 0; }
-.public-app .location-start button { max-width: 100%; margin: 4px 6px 4px 0; text-align: left; }
-.public-app .location-start select { margin-bottom: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  html:has(.public-app) { scroll-behavior: auto; }
+  .public-app *, .public-app *::before, .public-app *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+.public-app input, .public-app select, .public-app button, .public-app summary { scroll-margin-top: 112px; }

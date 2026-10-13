@@ -23,6 +23,9 @@ test('editorial introduction, real counts and direct explorer work at four width
     const headline = await page.locator('#intro-heading').boundingBox()
     expect(headline!.x).toBeGreaterThanOrEqual(0); expect(headline!.x + headline!.width).toBeLessThanOrEqual(width)
     await page.screenshot({ path: `test-results/redesign/${test.info().project.name}-${width}-homepage.png` })
+    if (width === 1440) {
+      for (const id of ['overview', 'how', 'directory']) await page.locator(`#${id}`).screenshot({ path: `test-results/redesign/${test.info().project.name}-${id}.png` })
+    }
     await page.getByRole('link', { name: 'Explore campus', exact: true }).click()
     await expect(page.getByLabel('Destination', { exact: true })).toBeVisible()
     await expect(page.getByRole('link', { name: 'Explore ↗', exact: true })).toHaveAttribute('aria-current', 'location')
@@ -33,6 +36,7 @@ test('editorial introduction, real counts and direct explorer work at four width
     const route = await (await response).json()
     expect(route.distance_m).toBe(256.88); expect(route.segments).toHaveLength(3)
     await expect(page.getByRole('heading', { name: 'Your route is ready' })).toBeVisible()
+    if ([360, 1440].includes(width)) await page.locator('#explorer').screenshot({ path: `test-results/redesign/${test.info().project.name}-${width}-explorer-controls.png` })
     await page.locator('.route-controls > summary').click()
     await expect(page.getByLabel('Destination', { exact: true })).not.toBeVisible()
     await expect(page.getByText('Arrive at Library.', { exact: true })).toBeVisible()
@@ -103,4 +107,18 @@ test('public styles do not restyle the existing anonymous admin login', async ({
   await expect(page.getByRole('heading', { name: 'Admin sign in' })).toBeVisible()
   await expect(page.locator('.public-app')).toHaveCount(0)
   expect(await page.getByRole('button', { name: 'Sign in', exact: true }).evaluate(el => getComputedStyle(el).borderRadius)).not.toBe(publicStyle)
+})
+
+
+test('failed published-release metadata remains at the direct explorer and recovery preserves that entry', async ({ page }) => {
+  await page.route('**/api/v1/campuses/*/release', r => r.fulfill({ status: 503, json: { error: { code: 'service_unavailable', message: 'Published-release metadata temporarily unavailable.' } } }))
+  await page.goto('/#explorer')
+  await expect(page.locator('#explorer').getByRole('alert')).toContainText('Published-release metadata temporarily unavailable.')
+  await expect(page.getByRole('heading', { name: 'Explorer unavailable' })).toBeVisible()
+  await expect(page.locator('.campus-figures')).toHaveCount(0)
+  await expect.poll(() => page.locator('#explorer').evaluate(el => el.getBoundingClientRect().top)).toBeLessThan(200)
+  await page.unroute('**/api/v1/campuses/*/release')
+  await page.getByRole('button', { name: 'Try again' }).click()
+  await expect(page.getByLabel('Destination', { exact: true })).toBeVisible()
+  await expect.poll(() => page.locator('#explorer').evaluate(el => el.getBoundingClientRect().top)).toBeLessThan(200)
 })

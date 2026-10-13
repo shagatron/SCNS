@@ -51,13 +51,18 @@ export default function CampusExplorer({ campus, online, qrStart, qrNotice }: { 
   }, [refreshRelease])
   const id = release.data?.id
   const initial = useQuery({ queryKey: ['places', campus.id, id], enabled: !!id, retry: false, queryFn: ({ signal }) => api<Search>(`/campuses/${campus.id}/search?limit=100&expected_release_id=${id}`, { signal }) })
+  const plannerReady = !!(!recovering && (!qrStart || qrStart.release_id === release.data?.id) && initial.data && release.data && initial.data.release_id === release.data.id)
+  const unavailable = !!(release.error || initial.error || (qrStart && release.data && qrStart.release_id !== release.data.id))
   return <>
+    <div id={plannerReady ? undefined : 'explorer'} data-explorer-ready={!plannerReady && unavailable ? '' : undefined} tabIndex={-1} className={plannerReady ? 'release-notices' : 'editorial-section explorer-availability'}>
+    {!plannerReady && <h2>{unavailable ? 'Explorer unavailable' : 'Opening the explorer'}</h2>}
     {changed && <p role="status" className="notice">The campus release changed. Previous route results and selections were cleared; choose destinations and calculate a route on the current map.</p>}
     {release.error && <Failure error={release.error} retry={() => void refreshRelease()} />}
     {recovering && <p role="status">Refreshing campus data; previous route results are hidden.</p>}
     {initial.error && !recovering && <Failure error={initial.error} retry={() => void initial.refetch()} />}
-    {!initial.data && !initial.error && <p role="status" className="loading">Loading destinations for the current release…</p>}
+    {!initial.data && !initial.error && !release.error && <p role="status" className="loading">Loading destinations for the current release…</p>}
     {qrStart && release.data && qrStart.release_id !== release.data.id && <p role="status" className="notice">The published map changed. <button onClick={() => window.dispatchEvent(new Event('qr-marker-stale'))}>Recheck and confirm the QR marker</button></p>}
+    </div>
     {!recovering && (!qrStart || qrStart.release_id === release.data?.id) && initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={`${release.data.id}:${epoch}`} campus={campus} initial={initial.data} online={online} release={release.data} qrStart={qrStart?.release_id === release.data.id ? qrStart : undefined} qrNotice={qrNotice} />}
   </>
 }

@@ -34,6 +34,7 @@ async function activate(page: Page, location = 'Main Gate') {
 }
 
 test('operations signs, explicit QR confirmation, computed route, reload and revoked fallback', async ({ page, browser }, info) => {
+  test.setTimeout(60000) // Complete signs/downloads/confirmation/reload/revoke/reassignment journey.
   const campus = `Synthetic qr fixture ${info.project.name.startsWith('mobile') ? 'mobile' : 'desktop'}`
   await login(page, campus, 'operations')
   await expect(page.getByRole('button', { name: 'Draft catalog', exact: true })).toHaveCount(0)

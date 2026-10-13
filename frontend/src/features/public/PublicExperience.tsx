@@ -29,6 +29,7 @@ export function PublicMotion({ direct }: { direct: boolean }) {
     const root = document.querySelector('.public-app main')
     if (!root) return
     let navigated = false
+    let lastTarget: HTMLElement | null = null
     const reveal = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('revealed'); reveal?.unobserve(entry.target) } })
     }, { threshold: .1 })
@@ -37,7 +38,7 @@ export function PublicMotion({ direct }: { direct: boolean }) {
       const id = window.location.hash.slice(1) || (direct ? 'explorer' : '')
       if (!navigated && id) {
         const element = document.getElementById(id)
-        if (element && (id !== 'explorer' || element.hasAttribute('data-explorer-ready'))) { element.scrollIntoView({ behavior: 'instant' }); if (window.location.hash) element.focus({ preventScroll: true }); navigated = true }
+        if (element && element !== lastTarget && (id !== 'explorer' || element.hasAttribute('data-explorer-ready'))) { element.scrollIntoView({ behavior: 'instant' }); if (window.location.hash) element.focus({ preventScroll: true }); lastTarget = element; navigated = id !== 'explorer' || element.classList.contains('explorer-section') }
       }
     }
     observe()

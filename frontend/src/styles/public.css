@@ -1,9 +1,9 @@
 /* Public-only editorial system. Admin continues to use its existing styles. */
 @font-face { font-family: 'SCNS Inter'; src: url('/fonts/InterVariable.woff2') format('woff2'); font-style: normal; font-weight: 100 900; font-display: swap; }
 html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
-.public-app { --ink: #111110; --paper: #f0f0ed; --yellow: #e4fb02; --line: #c9c9c2; --muted: #565650; color: var(--ink); background: var(--ink); font-family: 'SCNS Inter', Arial, sans-serif; font-size: 15px; line-height: 1.5; padding: 24px; min-height: 100vh; }
+.public-app { --ink: #111110; --paper: #f0f0ed; --yellow: #e4fb02; --line: #c9c9c2; --muted: #565650; color: var(--ink); background: var(--ink); font-family: 'SCNS Inter', Arial, sans-serif; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; padding: 24px; min-height: 100vh; }
 .public-app * { min-width: 0; }
-.public-app h1, .public-app h2, .public-app h3 { color: inherit; font-weight: 760; }
+.public-app h1, .public-app h2, .public-app h3 { color: inherit; font-weight: 760; word-spacing: .08em; }
 .public-app p { line-height: 1.6; }
 .public-app a, .public-app button, .public-app summary { touch-action: manipulation; transition: background-color 150ms, color 150ms, border-color 150ms; }
 .public-app :focus-visible { outline: 3px solid #3556db; outline-offset: 4px; }

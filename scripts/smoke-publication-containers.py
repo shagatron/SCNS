@@ -175,6 +175,7 @@ def main():
                 "python",
                 "-m",
                 "tests.browser_runner",
+                "public-experience.spec.ts",
                 "location.spec.ts",
                 "closures.spec.ts",
                 "qr.spec.ts",

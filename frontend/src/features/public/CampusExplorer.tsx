@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { useClosures } from '../closures/useClosures'
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -20,7 +21,7 @@ function Failure({ error, retry }: { error: Error; retry: () => void }) {
   return <div className="error-box" role="alert"><p>{error.message}</p><button onClick={retry}>Try again</button></div>
 }
 
-export default function CampusExplorer({ campus, online, qrStart }: { campus: Campus; online: boolean; qrStart?: ConfirmedQR }) {
+export default function CampusExplorer({ campus, online, qrStart, qrNotice }: { campus: Campus; online: boolean; qrStart?: ConfirmedQR; qrNotice?: ReactNode }) {
   const cache = useQueryClient()
   const release = useQuery({ retry: false, queryKey: ['release', campus.id], queryFn: () => api<Release>(`/campuses/${campus.id}/release`), refetchInterval: online ? 30000 : false })
   const [seen, setSeen] = useState<string | null>(null)
@@ -57,11 +58,11 @@ export default function CampusExplorer({ campus, online, qrStart }: { campus: Ca
     {initial.error && !recovering && <Failure error={initial.error} retry={() => void initial.refetch()} />}
     {!initial.data && !initial.error && <p role="status" className="loading">Loading destinations for the current release…</p>}
     {qrStart && release.data && qrStart.release_id !== release.data.id && <p role="status" className="notice">The published map changed. <button onClick={() => window.dispatchEvent(new Event('qr-marker-stale'))}>Recheck and confirm the QR marker</button></p>}
-    {!recovering && (!qrStart || qrStart.release_id === release.data?.id) && initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={`${release.data.id}:${epoch}`} campus={campus} initial={initial.data} online={online} release={release.data} qrStart={qrStart?.release_id === release.data.id ? qrStart : undefined} />}
+    {!recovering && (!qrStart || qrStart.release_id === release.data?.id) && initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={`${release.data.id}:${epoch}`} campus={campus} initial={initial.data} online={online} release={release.data} qrStart={qrStart?.release_id === release.data.id ? qrStart : undefined} qrNotice={qrNotice} />}
   </>
 }
 
-function Planner({ campus, initial, online, release, qrStart }: { campus: Campus; initial: Search; online: boolean; release: Release; qrStart?: ConfirmedQR }) {
+function Planner({ campus, initial, online, release, qrStart, qrNotice }: { campus: Campus; initial: Search; online: boolean; release: Release; qrStart?: ConfirmedQR; qrNotice?: ReactNode }) {
   const [params] = useState(() => new URLSearchParams(window.location.search))
   const linked = !qrStart && params.get('campus') === campus.id && params.get('release') === release.id
   const qrValue = qrStart ? `qr:${qrStart.id}` : ''
@@ -150,6 +151,7 @@ function Planner({ campus, initial, online, release, qrStart }: { campus: Campus
     </section>
     <section id="explorer" data-explorer-ready tabIndex={-1} className="editorial-section explorer-section" aria-labelledby="explorer-heading">
       <div className="explorer-heading"><div><p className="section-index">04 — THE INTERACTIVE EXPLORER</p><h2 id="explorer-heading" className="display-heading">Your way through.</h2></div><p>{campus.name}{campus.is_demo ? ' · Synthetic data only' : ' · Published campus map'}<br />Choose a known start. Check restrictions before walking.</p></div>
+    {qrNotice && <div className="qr-confirmed">{qrNotice}</div>}
     <div className="explorer-grid">
       <section id="planner" tabIndex={-1} className="planner-card" aria-labelledby="plan-heading">
         <div className="section-title"><span className="eyebrow">ROUTE / START → DESTINATION</span><span aria-hidden="true">↗</span></div><h2 id="plan-heading">Plan your walk</h2><p className="muted">Routes follow eligible stored paths, never straight-line shortcuts.</p>
@@ -174,9 +176,9 @@ function Planner({ campus, initial, online, release, qrStart }: { campus: Campus
         <div className="view-controls"><label htmlFor="public-floor">Building and floor view</label><select id="public-floor" value={view} onChange={e => showView(e.target.value)}><option value="outdoor">Outdoor campus</option>{floors.data?.floors.map(f => <option key={f.id} value={f.id}>{f.building_name} · {f.label} · {f.navigation_mode.replaceAll('_', ' ')}</option>)}</select></div>
         {floors.error && <Failure error={floors.error} retry={() => void floors.refetch()} />}{linkedPlaces.error && <Failure error={linkedPlaces.error} retry={() => void linkedPlaces.refetch()} />}
         {params.get('release') && !linked && <p role="status" className="notice">The shared route belongs to a different release. Choose destinations on the current release; the previous route has not been reused.</p>}
-        {mapVisible && view !== 'outdoor' && floors.data?.floors.find(f => f.id === view) && <Suspense fallback={<p>Loading floor route viewer…</p>}><FloorRouteMap key={view} floor={floors.data.floors.find(f => f.id === view)!} route={visibleRoute} places={choices} /></Suspense>}
+        {mapVisible && view !== 'outdoor' && floors.data?.floors.find(f => f.id === view) && <Suspense fallback={<p className="loading" role="status">Loading floor route viewer…</p>}><FloorRouteMap key={view} floor={floors.data.floors.find(f => f.id === view)!} route={visibleRoute} places={choices} /></Suspense>}
         {mapVisible && view === 'outdoor' && <>{map.error && <Failure error={map.error} retry={() => void map.refetch()} />}
-          {map.data && <Suspense fallback={<p className="loading">Loading map…</p>}><OutdoorMap campus={campus} data={map.data} places={initial.items} route={visibleRoute} onDestination={choose} /></Suspense>}
+          {map.data && <Suspense fallback={<p className="loading" role="status">Loading map…</p>}><OutdoorMap campus={campus} data={map.data} places={initial.items} route={visibleRoute} onDestination={choose} /></Suspense>}
           {map.isPending && <p role="status" className="loading">Loading campus paths…</p>}</>}
         {!mapVisible && <p className="empty-state">Map hidden. Plan your walk and follow the text directions.</p>}
         <div className="map-footnote"><span>↗ Routes follow mapped paths</span><span>{`Published release ${release.version}`}</span></div>

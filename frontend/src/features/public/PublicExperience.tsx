@@ -37,7 +37,7 @@ export function PublicMotion({ direct }: { direct: boolean }) {
       const id = window.location.hash.slice(1) || (direct ? 'explorer' : '')
       if (!navigated && id) {
         const element = document.getElementById(id)
-        if (element && (id !== 'explorer' || element.hasAttribute('data-explorer-ready'))) { element.scrollIntoView({ behavior: 'instant' }); navigated = true }
+        if (element && (id !== 'explorer' || element.hasAttribute('data-explorer-ready'))) { element.scrollIntoView({ behavior: 'instant' }); if (window.location.hash) element.focus({ preventScroll: true }); navigated = true }
       }
     }
     observe()

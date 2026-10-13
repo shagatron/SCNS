@@ -9,7 +9,7 @@ html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .public-app :focus-visible { outline: 3px solid #3556db; outline-offset: 4px; }
 .public-app [tabindex='-1']:focus { outline: none; }
 .public-app main { max-width: none; padding: 0; margin: 0; }
-.public-app .editorial-section { background: var(--paper); padding: 70px clamp(20px, 4.5vw, 72px); margin: 0 0 18px; scroll-margin-top: 100px; }
+.public-app .editorial-section { background: var(--paper); padding: 70px clamp(20px, 4.5vw, 72px); margin: 0 0 18px; scroll-margin-top: 0; }
 .public-app .display-heading { font-size: clamp(48px, 6.8vw, 100px); line-height: .98; letter-spacing: -.065em; margin: 28px 0; text-wrap: balance; }
 .public-app .section-index, .public-app .eyebrow { color: var(--ink); font-size: 11px; font-weight: 650; letter-spacing: .07em; line-height: 1.5; }
 .public-app .section-description { max-width: 450px; color: var(--muted); }
@@ -34,7 +34,7 @@ html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .public-app .campus-control select { background: transparent; border-color: #758300; font-size: 12px; }
 .public-app .opening-note > a { display: flex; justify-content: space-between; min-height: 44px; align-items: center; margin-top: auto; font-size: 12px; font-weight: 700; }
 .public-app .opening-title { position: relative; z-index: 1; text-align: right; align-self: center; }
-.public-app .opening-title h1 { font-size: clamp(80px, 9.3vw, 142px); line-height: .91; letter-spacing: -.075em; margin: 20px 0 40px; font-weight: 800; }
+.public-app .opening-title h1 { font-size: clamp(80px, 9.3vw, 142px); line-height: .91; letter-spacing: -.055em; margin: 20px 0 40px; font-weight: 800; }
 .public-app .explore-action { display: inline-flex; gap: 16px; align-items: center; font-weight: 650; min-height: 56px; }
 .public-app .arrow-disc { display: grid; place-items: center; width: 56px; height: 56px; background: var(--ink); color: white; border-radius: 50%; font-size: 25px; }
 .public-app .explore-action:hover .arrow-disc { background: var(--yellow); color: var(--ink); }
@@ -74,7 +74,7 @@ html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .public-app .primary-button:hover:not(:disabled) { background: var(--yellow); color: var(--ink); }
 .public-app .secondary-button { margin-top: 18px; }
 .public-app .text-button { border: 0; background: transparent; padding: 10px 8px; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
-.public-app .places-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 28px; }
+.public-app .places-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 22px; }
 .public-app .place-card { display: block; border: 0; border-radius: 0; padding: 0; box-shadow: none; background: transparent; }
 .public-app .destination-graphic { background: #1b1b1a; color: white; aspect-ratio: 1.2; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 .public-app .destination-graphic > span:first-child { font-size: clamp(100px, 15vw, 210px); font-weight: 850; line-height: 1; letter-spacing: -.06em; }
@@ -221,4 +221,5 @@ html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
   html:has(.public-app) { scroll-behavior: auto; }
   .public-app *, .public-app *::before, .public-app *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
-.public-app input, .public-app select, .public-app button, .public-app summary { scroll-margin-top: 112px; }
+.public-app input, .public-app select, .public-app button, .public-app summary { scroll-margin-top: 12px; }
+.public-app .planner-card { scroll-margin-top: 0; }

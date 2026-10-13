@@ -12,5 +12,5 @@ const adminRoute = window.location.pathname === '/admin' || window.location.path
 const client = new QueryClient({ defaultOptions: { queries: { retry: 1, staleTime: 15000, refetchOnWindowFocus: false } } })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode><QueryClientProvider client={client}><Suspense fallback={<main><p role="status">Loading campus navigation…</p></main>}>{adminRoute ? <AdminApp /> : qrRoute ? <QRStart /> : <App />}</Suspense></QueryClientProvider></React.StrictMode>,
+  <React.StrictMode><QueryClientProvider client={client}><Suspense fallback={adminRoute ? <main><p role="status">Loading campus navigation…</p></main> : <div className="public-app"><main className="editorial-section"><p className="section-index">SCNS / PLEASE WAIT</p><h1>Opening campus navigation.</h1><p role="status">Loading campus navigation…</p></main></div>}>{adminRoute ? <AdminApp /> : qrRoute ? <QRStart /> : <App />}</Suspense></QueryClientProvider></React.StrictMode>,
 )

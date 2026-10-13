@@ -40,3 +40,22 @@ test('simulated overlay and stale-release changes invalidate confirmation withou
   await page.getByRole('button', { name: 'Find walking route' }).click(); await expect(page.getByText(/campus release changed/)).toBeVisible()
   await expect(page.getByRole('button', { name: 'I am at this landmark now', exact: true })).toHaveCount(0); await expect(page.locator('.route-details')).toHaveCount(0)
 })
+
+test('simulated confirmation expiry keeps the redesigned planner safe and manual fallback available', async ({ page, context }) => {
+  await context.grantPermissions(['geolocation'])
+  await context.setGeolocation({ latitude: .0002, longitude: .00015, accuracy: 5 })
+  await page.route('**/api/v1/outdoor-location-match', async route => {
+    const response = await route.fetch(), body = await response.json()
+    await route.fulfill({ response, json: { ...body, expires_at: new Date(Date.now() + 3000).toISOString() } })
+  })
+  await page.goto('/#explorer')
+  await page.getByRole('button', { name: 'Use my location' }).click()
+  await page.getByRole('button', { name: 'I am at this landmark now' }).click()
+  await expect(page.getByLabel('Starting point')).toHaveValue('__gps__')
+  await expect(page.getByText('Location confirmation ended. Request a fresh fix or choose a manual/QR start.')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Find walking route' })).toBeDisabled()
+  await page.getByLabel('Starting point').selectOption({ label: 'Main Gate' })
+  await page.getByLabel('Destination', { exact: true }).selectOption({ label: 'Library' })
+  await page.getByRole('button', { name: 'Find walking route' }).click()
+  await expect(page.getByText('Arrive at Library.', { exact: true })).toBeVisible()
+})

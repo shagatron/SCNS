@@ -18,13 +18,14 @@ test('editorial introduction, real counts and direct explorer work at four width
     await page.goto('/')
     await expect(page.getByText('Campus service connected')).toBeVisible()
     await page.evaluate(() => document.fonts.ready)
+    expect(await page.evaluate(() => [...document.fonts].some(font => font.family === 'SCNS Inter' && font.status === 'loaded'))).toBeTruthy()
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto')
     const headline = await page.locator('#intro-heading').boundingBox()
     expect(headline!.x).toBeGreaterThanOrEqual(0); expect(headline!.x + headline!.width).toBeLessThanOrEqual(width)
     await page.screenshot({ path: `test-results/redesign/${test.info().project.name}-${width}-homepage.png` })
     if (width === 1440) {
-      for (const id of ['overview', 'how', 'directory']) await page.locator(`#${id}`).screenshot({ path: `test-results/redesign/${test.info().project.name}-${id}.png` })
+      for (const id of ['overview', 'how', 'directory']) await page.locator(`#${id}`).screenshot({ path: `test-results/redesign/${test.info().project.name}-${id}.png`, style: '.public-navigation, .skip-link { visibility: hidden !important; }' })
     }
     await page.getByRole('link', { name: 'Explore campus', exact: true }).click()
     await expect(page.getByLabel('Destination', { exact: true })).toBeVisible()
@@ -56,6 +57,7 @@ test('keyboard skip, directory selection, collapsed controls and reload preserve
   await page.getByLabel('Search destinations').fill('books')
   await page.getByRole('button', { name: 'Route to Library', exact: true }).click()
   await expect(page.getByLabel('Destination', { exact: true })).toBeFocused()
+  expect((await page.getByLabel('Destination', { exact: true }).boundingBox())!.y).toBeGreaterThan(90)
   await page.getByRole('button', { name: 'Find walking route' }).click()
   await expect(page.getByText('Arrive at Library.', { exact: true })).toBeVisible()
   await page.reload()

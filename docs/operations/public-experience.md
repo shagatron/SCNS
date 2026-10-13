@@ -19,13 +19,13 @@ Invoke-ScnsStep { git status --short }
 if (git status --porcelain) {
     throw 'Preserve or commit local changes before switching branches.'
 }
-Invoke-ScnsStep { git fetch origin }
+Invoke-ScnsStep { git fetch origin redesign/public-experience }
 $scnsLocalBranch = git branch --list redesign/public-experience
 if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect local branches.' }
 if ($scnsLocalBranch) {
     Invoke-ScnsStep { git switch redesign/public-experience }
 } else {
-    Invoke-ScnsStep { git switch --track origin/redesign/public-experience }
+    Invoke-ScnsStep { git switch -c redesign/public-experience FETCH_HEAD }
 }
 Invoke-ScnsStep { git pull --ff-only origin redesign/public-experience }
 Invoke-ScnsStep { docker compose build api frontend }

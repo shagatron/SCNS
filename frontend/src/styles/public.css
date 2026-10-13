@@ -26,7 +26,7 @@ html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .public-app .campus-opening { min-height: min(960px, calc(100svh - 48px)); position: relative; display: grid; grid-template-columns: minmax(220px, .75fr) minmax(0, 1.7fr); grid-template-rows: auto 1fr auto; gap: 24px 55px; padding-top: 104px; overflow: hidden; border-radius: 12px 12px 0 0; }
 .public-app .opening-top { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: start; position: relative; z-index: 1; }
 .public-app .opening-top p { font-size: 12px; text-align: right; max-width: 280px; margin-bottom: 0; }
-.public-app .opening-watermark { position: absolute; left: 12%; bottom: 12px; font-weight: 850; font-size: clamp(160px, 34vw, 480px); line-height: 1; letter-spacing: -.09em; color: #e2e2de; pointer-events: none; }
+.public-app .opening-watermark { position: absolute; left: 12%; bottom: 12px; width: 82%; height: clamp(160px, 26vw, 380px); background: url('/scns-watermark.svg') no-repeat left bottom / contain; pointer-events: none; }
 .public-app .opening-note { background: var(--yellow); align-self: end; padding: 28px; width: 260px; max-width: 100%; min-height: 355px; display: flex; flex-direction: column; z-index: 1; }
 .public-app .opening-note > strong { font-size: 22px; font-weight: 760; line-height: 1.1; letter-spacing: -.04em; margin-bottom: 20px; }
 .public-app .opening-note p { font-size: 12px; line-height: 1.6; }

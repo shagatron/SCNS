@@ -52,6 +52,8 @@ test('operations signs, explicit QR confirmation, computed route, reload and rev
     publicPage.on('request', r => { if (r.url().endsWith('/api/v1/routes')) routeRequests++ })
     await publicPage.goto(`/q/${marker.id}`)
     await expect(publicPage.getByRole('heading', { name: 'Synthetic Gate QR', exact: true })).toBeVisible()
+    await publicPage.evaluate(() => document.fonts.ready)
+    await publicPage.screenshot({ path: `test-results/redesign/${info.project.name}-qr.png`, fullPage: true })
     expect(routeRequests).toBe(0)
     await publicPage.getByRole('button', { name: 'I am at this marker now', exact: true }).click()
     await expect(publicPage.getByLabel('Starting point', { exact: true })).toHaveValue(`qr:${marker.id}`)

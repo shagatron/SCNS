@@ -19,7 +19,7 @@ export default function App({ qrStart, qrNotice }: { qrStart?: ConfirmedQR; qrNo
   return <div className="public-app">
     <a className="skip-link" href="#planner">Skip to route planner</a><PublicNavigation />
     <main>
-      <CampusOpening campus={campus} campuses={campuses.data} locked={!!qrStart} onCampus={setCampusId} online={online} connected={health.isSuccess} />
+      <CampusOpening campus={campus} campuses={campuses.data} locked={!!qrStart} onCampus={setCampusId} online={online} connected={health.isSuccess} unavailable={health.isError} />
       {campuses.isPending && <section id="explorer" className="editorial-section" role="status"><h2>Loading campus…</h2><p>The explorer will use the current published map.</p></section>}
       {campuses.error && <section id="explorer" data-explorer-ready className="editorial-section"><div className="error-box" role="alert"><h2>Campus data unavailable</h2><p>{campuses.error.message}</p><button onClick={() => void campuses.refetch()}>Try again</button></div></section>}
       {campuses.data?.length === 0 && <section id="explorer" data-explorer-ready className="editorial-section empty-state"><h2>No published campus yet</h2><p>Prepare an authorized map and verified paths. Counts and destinations appear only when a release is available.</p></section>}

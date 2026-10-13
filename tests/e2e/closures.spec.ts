@@ -74,7 +74,7 @@ test('stale overlay edits retain input, ambiguous-response retries stay duplicat
     await page.unroute('**/api/v1/admin/campuses/*/closures'); await page.getByRole('button', { name: 'Retry unchanged operation', exact: true }).click()
     await expect(page.getByText('Restriction recorded. Routes use the live overlay; drafts were not published.', { exact: true })).toBeVisible()
     await expect(page.getByRole('button', { name: /Courtyard.*West.*closed/ })).toHaveCount(2)
-    await other.getByRole('button', { name: 'Sign out', exact: true }).click(); await login(other, campus, 'reviewer_publisher')
+    await other.getByRole('button', { name: 'Sign out', exact: true }).click(); await expect(other.getByRole('heading', { name: 'Admin sign in', exact: true })).toBeVisible(); await login(other, campus, 'reviewer_publisher')
     await expect(other.getByRole('button', { name: 'Record restriction', exact: true })).toHaveCount(0)
     await expect(other.getByText('Read-only operational history.', { exact: false })).toBeVisible()
   } finally { await context.close() }

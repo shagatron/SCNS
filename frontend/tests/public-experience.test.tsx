@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
-import { expect, it } from 'vitest'
-import { CampusOpening, CampusOverview } from '../src/features/public/PublicExperience'
+import { render, screen, waitFor } from '@testing-library/react'
+import { afterEach, expect, it, vi } from 'vitest'
+import { CampusOpening, CampusOverview, PublicNavigation } from '../src/features/public/PublicExperience'
 import { focusPlanner } from '../src/features/public/focusPlanner'
 import type { Campus, MapData, Search } from '../src/api/client'
 const initial: Search = { items: [], total: 124, release_id: 'published', limit: 100, offset: 0 }
@@ -26,6 +26,8 @@ it('discloses synthetic data only for the selected synthetic campus, with no emp
   expect(screen.queryByText('Synthetic demo.')).not.toBeInTheDocument()
   rerender(<CampusOpening campuses={[]} locked={false} onCampus={() => {}} online connected />)
   expect(screen.getByRole('option', { name: 'No published campus' })).toBeInTheDocument()
+  rerender(<CampusOpening campuses={[]} locked={false} onCampus={() => {}} online connected={false} unavailable />)
+  expect(screen.getByText('Campus service unavailable')).toBeInTheDocument()
 })
 it('opens collapsed controls before choosing a directory route destination', async () => {
   render(<details className="route-controls"><summary>Route controls</summary><select id="destination" aria-label="Destination"><option>Library</option></select></details>)
@@ -34,4 +36,14 @@ it('opens collapsed controls before choosing a directory route destination', asy
   await new Promise(resolve => requestAnimationFrame(resolve))
   expect(document.querySelector('details')?.open).toBe(true)
   expect(screen.getByLabelText('Destination')).toHaveFocus()
+})
+
+afterEach(() => vi.unstubAllGlobals())
+it('groups introduction chapters under mobile Home but keeps desktop active sections precise', async () => {
+  vi.stubGlobal('innerWidth', 360)
+  render(<><PublicNavigation /><section id="intro" /><section id="overview" /><section id="how" /></>)
+  await waitFor(() => expect(screen.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('aria-current', 'location'))
+  vi.stubGlobal('innerWidth', 1440); window.dispatchEvent(new Event('resize'))
+  await waitFor(() => expect(screen.getByRole('link', { name: 'How it works', exact: true })).toHaveAttribute('aria-current', 'location'))
+  expect(screen.getByRole('link', { name: 'Home', exact: true })).not.toHaveAttribute('aria-current')
 })

@@ -18,6 +18,8 @@ test('editorial introduction, real counts and direct explorer work at four width
     await page.goto('/')
     await expect(page.getByText('Campus service connected')).toBeVisible()
     await page.evaluate(() => document.fonts.ready)
+    const fontAsset = await page.request.get('/fonts/InterVariable.woff2')
+    expect(fontAsset.status()).toBe(200); expect((await fontAsset.body()).toString('ascii', 0, 4)).toBe('wOF2')
     expect(await page.evaluate(() => [...document.fonts].some(font => font.family === 'SCNS Inter' && font.status === 'loaded'))).toBeTruthy()
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy()
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto')
@@ -91,6 +93,9 @@ test('native section navigation and visible content survive missing reveal initi
   await page.goto('/')
   await expect(page.getByText('Public destinations', { exact: true })).toBeVisible()
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('smooth')
+  await page.locator('#how').evaluate(el => el.scrollIntoView({ behavior: 'instant' }))
+  const howLabel = page.viewportSize()!.width <= 760 ? 'Home' : 'How it works'
+  await expect(page.getByRole('link', { name: howLabel, exact: true })).toHaveAttribute('aria-current', 'location')
   await page.getByRole('link', { name: 'Places', exact: true }).click()
   await expect(page.getByRole('link', { name: 'Places', exact: true })).toHaveAttribute('aria-current', 'location')
   await expect(page.getByRole('heading', { name: 'Places worth finding.' })).toBeVisible()

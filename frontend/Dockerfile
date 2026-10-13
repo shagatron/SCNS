@@ -16,4 +16,7 @@ RUN npm run build --workspace frontend
 FROM nginx:1.28-alpine
 COPY infra/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/frontend/dist /usr/share/nginx/html
+# Copied public assets may originate from a restrictive checkout umask.
+# Only the public build tree is exposed; private data is excluded from context.
+RUN chmod -R a+rX /usr/share/nginx/html
 EXPOSE 80

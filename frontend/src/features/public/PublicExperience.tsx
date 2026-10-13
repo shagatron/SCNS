@@ -5,6 +5,7 @@ import type { components } from '../../api/generated'
 const sections = ['intro', 'overview', 'how', 'directory', 'explorer'] as const
 export function PublicNavigation() {
   const [active, setActive] = useState<string>('intro')
+  const [compact, setCompact] = useState(() => window.innerWidth <= 760)
   useEffect(() => {
     let frame = 0
     const update = () => {
@@ -12,15 +13,16 @@ export function PublicNavigation() {
       frame = requestAnimationFrame(() => {
         const present = sections.filter(id => document.getElementById(id))
         const passed = present.filter(id => document.getElementById(id)!.getBoundingClientRect().top <= window.innerHeight * .35)
-        setActive(passed.at(-1) ?? present[0] ?? 'intro')
+        setActive(passed.at(-1) ?? present[0] ?? 'intro'); setCompact(window.innerWidth <= 760)
       })
     }
     update()
     window.addEventListener('scroll', update, { passive: true }); window.addEventListener('resize', update); window.addEventListener('hashchange', update)
     return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', update); window.removeEventListener('resize', update); window.removeEventListener('hashchange', update) }
   }, [])
+  const current = compact && ['overview', 'how'].includes(active) ? 'intro' : active
   return <header className="public-navigation"><nav aria-label="Main navigation"><a className="public-wordmark" href="#intro" aria-label="SCNS home">scns<span aria-hidden="true">↗</span></a>
-    {sections.map((id, index) => <a key={id} href={`#${id}`} className={`${id === 'explorer' ? 'nav-explore' : ''} ${['overview', 'how'].includes(id) ? 'nav-secondary' : ''}`} aria-current={active === id ? 'location' : undefined} onClick={() => requestAnimationFrame(() => document.getElementById(id)?.focus({ preventScroll: true }))}>{['Home', 'Campus', 'How it works', 'Places', 'Explore ↗'][index]}</a>)}
+    {sections.map((id, index) => <a key={id} href={`#${id}`} className={`${id === 'explorer' ? 'nav-explore' : ''} ${['overview', 'how'].includes(id) ? 'nav-secondary' : ''}`} aria-current={current === id ? 'location' : undefined} onClick={() => requestAnimationFrame(() => document.getElementById(id)?.focus({ preventScroll: true }))}>{['Home', 'Campus', 'How it works', 'Places', 'Explore ↗'][index]}</a>)}
   </nav></header>
 }
 
@@ -48,7 +50,7 @@ export function PublicMotion({ direct }: { direct: boolean }) {
   return null
 }
 
-export function CampusOpening({ campus, campuses, locked, onCampus, online, connected }: { campus?: Campus; campuses?: Campus[]; locked: boolean; onCampus: (id: string) => void; online: boolean; connected: boolean }) {
+export function CampusOpening({ campus, campuses, locked, onCampus, online, connected, unavailable = false }: { campus?: Campus; campuses?: Campus[]; locked: boolean; onCampus: (id: string) => void; online: boolean; connected: boolean; unavailable?: boolean }) {
   return <section className="campus-opening editorial-section" id="intro" tabIndex={-1} aria-labelledby="intro-heading">
     <div className="opening-top"><span className="section-index">SCNS — SMART CAMPUS NAVIGATION</span><p>{campus?.name ?? 'Campus navigation'}<br />Published places. Connected paths.</p></div>
     <span className="opening-watermark" aria-hidden="true" />
@@ -58,7 +60,7 @@ export function CampusOpening({ campus, campuses, locked, onCampus, online, conn
       <a href="#about">About the data <span aria-hidden="true">↗</span></a>
     </div>
     <div className="opening-title"><h1 id="intro-heading">Find your<br />way across<br />campus.</h1><a className="explore-action" href="#explorer"><span className="arrow-disc" aria-hidden="true">↗</span>Explore campus</a></div>
-    <div className="opening-bottom"><span className="connection"><i className={online && connected ? 'status-dot' : 'status-dot offline'} />{!online ? 'Offline · connection needed for new routes' : connected ? 'Campus service connected' : 'Checking campus service…'}</span><span>01 / A place to begin</span></div>
+    <div className="opening-bottom"><span className="connection"><i className={online && connected ? 'status-dot' : 'status-dot offline'} />{!online ? 'Offline · connection needed for new routes' : connected ? 'Campus service connected' : unavailable ? 'Campus service unavailable' : 'Checking campus service…'}</span><span>01 / A place to begin</span></div>
   </section>
 }
 

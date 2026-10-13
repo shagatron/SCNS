@@ -2,6 +2,8 @@
 
 ## Public experience redesign — verified, 13 October 2026
 
+Delivery: completed **095893945f6ad1e2649754ed71e46de3eaba1014** pushed and remote SHA matched; tree clean,4C parent unchanged. Actual PR creation to4C failed GitHub GraphQL POST **Forbidden**. [Prepared body](../reviews/public-experience-pr.md), [compare/open PR](https://github.com/shagatron/SCNS/compare/feat%2Fmilestone-4c-geolocation...redesign%2Fpublic-experience?expand=1). Subsequent delivery receipt is documentation only; no merge.
+
 Scope: original SCNS public visual/interaction redesign from verified clean origin4C **b4a40f11afc98ef7ea53cb6eb499c6b062602eaf**, independent of unstarted4D. Existing checkout initially main README; restored verified4C in place without reset/worktree/discard, created `redesign/public-experience`. All four supplied visual references inspected. Published-only intro/counts/directory, native active scrolling, licensed self-hosted typography, large map/collapsible controls/independent truthful directions, direct entry and consistent QR/public state screens preserve current feature contracts. Admin/global CSS/algorithms/API/schema/dependencies/lockfiles unchanged. Frontend image public read permissions corrected; no private volume permissions changed.
 
 | Executed check | Actual result |

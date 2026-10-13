@@ -33,3 +33,7 @@ Migration0016_closures adds initially empty operational history/version tables. 
 ## M4C outdoor location update
 
 Use [complete data-preserving Windows commands and precise Chrome simulation inputs](geolocation.md). No new migration; inherited0016 remains. Keep.env/accounts/drafts/releases/QRs/restrictions/uploads/volumes and localhost bindings. Browser location is an explicit opt-in one-shot; the synthetic near0°,0° data requires simulation for positive tests. Actual Windows polish/location/physical-device evidence remains unverified. [GPS privacy and initial-pilot matching contract](../data/location.md).
+
+## Public experience redesign update
+
+Use [the complete error-stopping Windows update/startup and acceptance checklist](public-experience.md) from the existing checkout. No new migration/dependency or4D functionality; all existing data/env/uploads/volumes/QRs/restrictions/drafts/releases stay intact. The cloud retained developer DB on f420e55f937e is deliberately not upgraded or reseeded for visual verification; supported runners use isolated test databases and temporary worker storage. /#explorer enters directly; admin appearance is unchanged. Actual owner redesign/Windows/hardware tests remain unverified until separately reported. Installation/test-start instructions were saved in an unactivated environment draft, not executed through draft saving or published.

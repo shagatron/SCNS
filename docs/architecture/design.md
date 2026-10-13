@@ -38,7 +38,7 @@ M4B adds live closures and dated one-off restrictions with conservative route-wi
 
 ## Interface
 
-Desktop uses a side planner; mobile stacks labelled controls above the map. Routes remain readable when maps are hidden or fail. Search results, validation failures, no-route cases and offline state are explicit. A stale expected-release error invalidates queries and asks the user to retry. Basemaps are optional; synthetic vector geometry and source disclosure always remain visible. There is no automatic geolocation, tracking, cached-route promise or continuous navigation claim.
+The public experience uses an editorial scrolling introduction with actual published counts, numbered graph explanation and directory tiles; /#explorer enters directly. Desktop gives the map a large column beside native collapsible route controls; mobile stacks controls and map. Text results sit outside the controls and remain readable when maps are hidden or fail. The SCNS public theme/font/reveals are scoped; existing admin remains visually unchanged. See docs/design/public-experience.md for reference-informed composition, typography licensing, keyboard/deferred-target handling and reduced-motion defaults. Search results, validation failures, no-route cases and offline state are explicit. A stale expected-release error invalidates queries and asks the user to retry. Basemaps are optional; synthetic vector geometry and source disclosure always remain visible. There is no automatic geolocation, tracking, cached-route promise or continuous navigation claim.
 
 ## Publication/deployment
 

@@ -86,3 +86,14 @@ Statuses: `not_started`, `in_progress`, `implemented`, `verified`, `deferred_ext
 | EXT-01 | Timetable, AI, ML ETA, crowds/sensors, full offline routing | 6 | Master spec section 21 | Not run | deferred_extension | No paid service or external credential requirement introduced |
 
 The complete synthetic pilot dataset in master-spec section 18 spans multiple milestones. Its **outdoor** subset is delivered here; 3A draft floors/calibrated drawings are delivered; 3B same-floor rooms/paths are delivered and verified; 3C connectors and indoor/mixed routing are delivered and verified; QR4A and closures/lift outages4B are delivered and verified; location4C is delivered using the explicitly confirmed-landmark initial-pilot strategy; remaining M4 slices4D–4F are planned and incomplete. They are not silently represented as delivered M1 features.
+
+## Public experience redesign (independent of numbered milestones)
+
+Verified parent4C b4a40f1; branch redesign/public-experience. These entries concern the authorized public UI redesign; they do not complete4D/4E/4F or authorize deployment.
+
+| requirement_id | requirement | implementation_paths | verification | status | limitations |
+|---|---|---|---|---|---|
+| RDX-01 | Reference-informed SCNS editorial intro/figures/process/real directory and direct explorer | PublicExperience, App, CampusExplorer, public.css, licensed self-hosted font | Four supplied references inspected;61frontend units, published-count omission and actual typography/PNG review | verified |54built journeys passed; no fabricated/private counts |
+| RDX-02 | Compact native controls, substantial map, route metrics/directions, floor/QR/location/restriction behavior | Public explorer/QR/maps/RouteDetails; existing API state retained |82distinct source cases with combined passing evidence, final14closure/navigation and12public visual journeys | verified |No single82case run claimed;54built pass; no4D report placeholder |
+| RDX-03 | Native active scrolling/reduced motion,320/360/768/1440px, keyboard/focus/failure/reload and scoped admin | PublicNavigation/PublicMotion/focusPlanner; public CSS | Four viewport capture/overflow/axe, missing reveal initialization, deferred skip/direct failed-release recovery, admin-style isolation | verified |Human AT/physical-phone/Windows redesign remains unverified |
+| RDX-04 | Frozen packaging, contracts, retained data and reviewable visual evidence | Existing container runner extended;15contracts; PNG gallery/operations/design docs | Source82coverage,61units,54built journeys,15no-drift contracts;12PNG files verified nonempty/decoded;23counts/18content hashes retained | verified |Developer schema remainsf420 unchanged; backend/migration evidence reused; no Windows execution claim |

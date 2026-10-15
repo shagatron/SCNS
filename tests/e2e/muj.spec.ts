@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-test.use({ trace: 'off', screenshot: 'off', video: 'off' })
+test.use({ trace: 'off', screenshot: 'off', video: 'off', actionTimeout: 15000 })
 test('real MUJ staged geography, draft route and unpublished isolation', async ({ page }) => {
   test.setTimeout(180000)
   const origin = 'http://127.0.0.1:5174'
@@ -51,8 +51,8 @@ test('real MUJ staged geography, draft route and unpublished isolation', async (
   expect(positions.every(p => p[0] > 75.55 && p[0] < 75.57 && p[1] > 26.83 && p[1] < 26.85)).toBe(true)
   const svg = page.locator('.graph-map .leaflet-overlay-pane svg path')
   expect(await svg.count()).toBeGreaterThan(300)
-  await page.getByLabel('Draft route start',{exact:true}).selectOption({label:'Hostel Entrance'})
-  await page.getByLabel('Draft route destination',{exact:true}).selectOption({label:'GHS Entrance'})
+  await page.getByRole('combobox',{name:'Draft route start',exact:true}).selectOption({label:'Hostel Entrance'})
+  await page.getByRole('combobox',{name:'Draft route destination',exact:true}).selectOption({label:'GHS Entrance'})
   const routeResponse = page.waitForResponse(r=>r.url().includes('/graph/route-test?'))
   await page.getByRole('button',{name:'Compute draft test route'}).click()
   const route = await (await routeResponse).json()

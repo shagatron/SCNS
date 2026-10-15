@@ -4,6 +4,8 @@ A working outdoor and indoor navigation demo built with React, TypeScript, Vite,
 
 **Demo Campus is wholly synthetic.** Its coordinates near (0°, 0°), buildings, paths, access conditions and accessibility evidence are invented. It is not the owner's campus and must not be used for real navigation. Public navigation requires no account, paid services, API keys or external map tiles. Administrator accounts are explicitly provisioned; there is no public deployment.
 
+The separately authorized **MUJ OSM preparation** adds a real, clearly unverified campus through an unpublished staged draft, never through seeding. Use the [data-preserving Windows setup/import and viewing workflow](docs/operations/muj-osm.md) and read [source, coverage, counts, ODbL attribution and review prerequisites](docs/data/muj-osm.md). Demo Campus and its published navigation remain unchanged.
+
 ## What works
 
 - Public directory and search by name, code, category and aliases; place details and pagination.

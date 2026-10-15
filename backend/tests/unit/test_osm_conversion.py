@@ -134,3 +134,24 @@ def test_invalid_campus_and_xml_are_rejected_without_repair():
     root.remove(root.find("way"))
     with pytest.raises(ValueError, match="missing"):
         convert(ET.tostring(root))
+
+
+def test_element_order_does_not_change_import_identities_or_graph():
+    raw = sample(path())
+    root = ET.fromstring(raw)
+    root[:] = list(reversed(root[:]))
+    assert convert(raw)["bundles"] == convert(ET.tostring(root))["bundles"]
+
+
+def test_prepared_manifest_rejects_tampering_and_unlisted_batches(tmp_path):
+    from app.services.muj_setup import prepared
+
+    write_conversion(convert(sample(path())), tmp_path)
+    prepared(tmp_path)
+    (tmp_path / "batch-999.json").write_text("{}")
+    with pytest.raises(ValueError, match="Unlisted"):
+        prepared(tmp_path)
+    (tmp_path / "batch-999.json").unlink()
+    (tmp_path / "batch-001.json").write_text("{}")
+    with pytest.raises(ValueError, match="checksum"):
+        prepared(tmp_path)

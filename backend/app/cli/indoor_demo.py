@@ -67,6 +67,7 @@ class Client:
             with self.opener.open(
                 Request(self.url + path, data=body, method=method, headers=h), timeout=60
             ) as response:
+                self.last_request_id = response.headers.get("X-Request-ID")
                 data = response.read()
                 return data if binary else json.loads(data) if data else None
         except HTTPError as exc:

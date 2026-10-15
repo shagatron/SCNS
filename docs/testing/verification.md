@@ -1,5 +1,12 @@
 # Verification evidence
 
+## Owner-reported Windows MUJ import checks — received 15 October 2026
+
+Owner reports all three pinned MUJ v1 import batches completed and all documented validation/route checks passed. Campus`afcf4f1a-635f-563b-af5b-3d7efd2ed84c`, draft`d1a8bb10-cd34-4fe3-905b-53996334dd40` identify **the owner's separate Windows database**, not an agent-inspected cloud draft. Reported51buildings/55destinations/290nodes/688directed edges/21anchors/29weak components/34unanchored; saved validation0errors/111warnings.
+
+Reported software outcomes: Hostel Entrance→GHS Entrance23.62m/3edges; Hostel Entrance→Faculty Block Entrance163.28m/6edges; University Entrance→Hostel Entrance, Hostel→Central Library, verified-step-free Hostel→GHS all no eligible route. Only Demo Campus appears publicly and its baseline works. These are **owner-reported Windows evidence**, separate from automated results and historical statements that Windows had not yet been run. They do not verify physical paths, authorized access, real GPS, surveyed accessibility, official MUJ approval, or the new connectivity-review update/diagnostic command. No sign-download/printing/scanning confirmation is inferred.
+
+
 ## MUJ OSM preparation — verified software workflow, 15 October 2026
 
 Delivery: implementation/evidence5a6b96bbf22f12ff7ee56f235b779743354b03cb pushed and remote SHA matched; unchanged redesign parent. Actual GitHub PR creation returned GraphQL POST **Forbidden**; [prepared body](../reviews/muj-osm-import-pr.md), [compare/open PR](https://github.com/shagatron/SCNS/compare/redesign%2Fpublic-experience...feat%2Fmuj-osm-import?expand=1). No merge.

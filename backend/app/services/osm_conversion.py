@@ -17,6 +17,7 @@ TIMEZONE = "Asia/Kolkata"
 ATTRIBUTION = "© OpenStreetMap contributors · https://www.openstreetmap.org/copyright · ODbL 1.0"
 RIGHTS = "OpenStreetMap database, ODbL 1.0; attribution and derivative-database share-alike obligations apply. Not official MUJ data or a field survey."
 VERSION = "muj-osm-v1"
+VERSION2 = "muj-osm-v2-covered-source-segments"
 WALK = {
     "path",
     "footway",
@@ -98,7 +99,8 @@ def vertical_reason(t):
     return None
 
 
-def convert(raw: bytes, *, batch_size=400):
+def convert(raw: bytes, *, batch_size=400, covered_segments_v2=False):
+    version = VERSION2 if covered_segments_v2 else VERSION
     if len(raw) > 5 * 1024 * 1024:
         raise ValueError("Only bounded OSM XML without DTD/entities is accepted (5MiB maximum)")
     try:
@@ -136,7 +138,7 @@ def convert(raw: bytes, *, batch_size=400):
     ):
         raise ValueError("Invalid WGS84 node position")
     report = {
-        "converter": VERSION,
+        "converter": version,
         "source_sha256": hashlib.sha256(raw).hexdigest(),
         "raw_counts": {k: len(v) for k, v in elements.items()},
         "decisions": [],
@@ -189,6 +191,10 @@ def convert(raw: bytes, *, batch_size=400):
         "extent": mapping(extent),
         "gap_in_hull_area_fraction": round(1 - coverage.area / extent.area, 6),
     }
+    if covered_segments_v2:
+        report["scope"]["extent_policy"] = (
+            "Exact university polygon union controls each original consecutive source-node segment. Retain maximal fully covered runs without clipping or invented boundary nodes. Exclude crossing/outside pairs; all v1 access/grade/indoor guards remain. Hull is display extent, not ownership/access permission."
+        )
     campus = {
         "code": CODE,
         "name": "Manipal University Jaipur (OSM preparation)",
@@ -390,12 +396,28 @@ def convert(raw: bytes, *, batch_size=400):
             line = LineString([nodes[n] for n in ids])
             if not line.is_valid or line.length == 0:
                 raise ValueError("invalid_line")
-            if not coverage.covers(line):
+            if not coverage.covers(line) and not covered_segments_v2:
                 raise ValueError("path_outside_exact_campus_coverage_or_cross_campus_gap")
             if t.get("oneway:foot", "no") not in {"no", "yes", "1", "true", "-1", "false", "0"}:
                 raise ValueError("unsupported_foot_direction")
-            eligible.append((i, ids, t))
-            uses.update(ids)
+            parts = [ids]
+            if covered_segments_v2 and not coverage.covers(line):
+                parts, current = [], []
+                for a, b in zip(ids, ids[1:], strict=False):
+                    if nodes[a] != nodes[b] and coverage.covers(LineString([nodes[a], nodes[b]])):
+                        if not current:
+                            current = [a]
+                        current.append(b)
+                    elif current:
+                        parts.append(current)
+                        current = []
+                if current:
+                    parts.append(current)
+                if parts != [ids]:
+                    note("way", i, "v2_only_fully_covered_source_segments_retained")
+            for part in parts:
+                eligible.append((i, part, t))
+                uses.update(part)
         except (ValueError, KeyError) as exc:
             note("way", i, str(exc))
     needed = set()
@@ -633,13 +655,13 @@ def write_conversion(result, directory):
             "campus_code": CODE,
             "timezone": TIMEZONE,
             "source_rights": RIGHTS,
-            "provenance": f"Owner supplied OSM export SHA256 {result['report']['source_sha256']}; {VERSION}; no field survey",
+            "provenance": f"Owner supplied OSM export SHA256 {result['report']['source_sha256']}; {result['report']['converter']}; no field survey",
             "policy": "create_only",
         },
     }
     files.update({f"batch-{i:03}.json": b for i, b in enumerate(result["bundles"], 1)})
     manifest = {
-        "converter": VERSION,
+        "converter": result["report"]["converter"],
         "source_sha256": result["report"]["source_sha256"],
         "files": {name: hashlib.sha256(encode(value)).hexdigest() for name, value in files.items()},
     }

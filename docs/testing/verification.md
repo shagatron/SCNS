@@ -1,5 +1,48 @@
 # Verification evidence
 
+## MUJ connectivity review and versioned source-segment correction — 15 October 2026
+
+Branch`feat/muj-connectivity-review` from verified clean local/remote import parent`1cd6533413e09069b0596b4c309458edccc49886`. Owner's newly attached819138byte original matches SHA256`d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de`. Existing checkout preserved, no reset/worktree. The earlier no-correction conclusion in unfinished checkpoints was superseded by final source-pair coverage evidence; it is not the delivered conclusion.
+
+Confirmed improvement: whole-way filtering lost fully covered source runs1159542817/926460863/1164290299. Separate pinned`data/muj-v2/` retains only exact covered consecutive source-node pairs, no clipping or invented coordinates. Original`data/muj/` files/receipts remain byte-identical. Private subway access/grade/road-gap and Library entrance uncertainties stay unresolved; no proximity/crossing/floor flattening, wheelchair promotion or field verification. Draft notices are neutral plus an actual`is_demo` supplement; public preference/QR empty wording corrected without redesign.
+
+V1→v2:51buildings/55places unchanged;290→295nodes,688→700directed edges,21→22anchors;29weak components remain (old C2/C17 join, another legitimate isolated inside run retained);34→33unanchored. Guarded helper proposes20additions/0updates/2explicit replaced-edge deletions in one normal GraphPatch transaction. Original source is unchanged and no approval/publication calls are made. Actor/request/manifest audit evidence and private before-after/versioned previews/receipts preserve traceability. Unexpected affected/endpoint/catalog edits or partial/colliding state fail; unrelated owner work remains. Original v1 helper refuses a corrected original draft and rechecks history before pending-batch application; normal If-Match protects the remaining race.
+
+| Executed check | Actual result |
+|---|---|
+| Final lint/type/format/build |`make check build` passed after final CLI guard. Ruff/format, TS/ESLint, Vite/Python compilation. No dependencies/lock/schema/new API contract.|
+| Backend units |**151passed** in6.10s; source-run coverage/gap/directions/access/grade preservation, pinned reproducibility, diagnostic source-reference/no-overwrite guards, affected owner edits, destination edits, partial/collision/lost-response/stale preview and legacy-worker interposition. Earlier133/137/148/150runs are superseded.|
+| Frontend units |**61passed across13files**; final frontend application code unchanged after this result.|
+| Final affected PostGIS |**53passed in214.52s** in one run: MUJ provision/import/update, existing graph/concurrency/import tests. Includes role/campus/CSRF boundaries, exact counts, explicit replacement/removal,22normal actor audits/request ID, preview version rejection, unrelated owner edit preservation, exact replay no extra writes, late audit failure rollback of rows/version/audits, old-helper refusal and published-release isolation.|
+| Source desktop/mobile |Initial**28passed**; after v2, the**2affected MUJ cases reran/passed1.5m** with new correction/reload/new positive route;26unaffected retained.28distinct cases covered in combination, no final single28-case claim. Synthetic/non-demo label test is a response-metadata simulation, not a published real MUJ campus.|
+| Built desktop/mobile |Full**86passed6.5m** before v2; **2affected final MUJ journeys reran/passed48.2s** on built nginx/API/worker,84unaffected retained. Last subsequent change is CLI-only legacy-helper preflight; no web/API path changed. Do not claim one final86-case invocation.|
+| Frozen image/offline |Final frozen API/frontend built. Networking disabled: exact private original reproduces **both v1/v2 preparations/manifests and all8committed diagnostic files byte-for-byte**. Both comparison figures rendered and inspected over internal HTTP. Direct file:// blocked by cloud Chromium admin policy; no policy bypass.|
+| Final built actual-worker/helper |**Passed on final image**, including concurrent initial provisioning, interrupted worker preview,3normal v1batch applies/replay, guarded22-operation v2transaction,22actor/request audits, explicit replaced-edge removal, retry no-op, new513.0969783921546m/13edge route, original-helper refusal, unapproved source and public-pointer isolation. Test query corrected; final invocation exited0/owned resources cleaned.|
+| Contract/migration boundaries |`make generate-api` and diff against parent show no OpenAPI/TS/template drift. No migrations/models changed; prior passing fresh/retained/downgrade/model-alignment0016rehearsal reused. Dedicated container/browser DBs apply all migrations normally. No retained developer migration/seed/bootstrap.|
+| Retained developer data |**All22non-spatial table counts/content hashes match before/after** (23public tables including spatial_ref_sys). Active pointers/releases/accounts/drafts/audits and old schema remain unchanged. `.env` absent throughout; exact original hash unchanged; retained`scns_postgres-data`/`scns_private-imports` intact. No developer migration/import/bootstrap.|
+
+Observed **computed stored-graph** software results after v2 (PostGIS, not physical walks):
+
+| Case | Result |
+|---|---|
+|University Entrance→Mapped entrance10828149259|**513.0969783921546m/13stored edges**, UI513.10m; v1 had no anchor|
+|Hostel Entrance→GHS Entrance|**23.624997727885383m/3edges**, unchanged|
+|Hostel Entrance→Faculty Block Entrance|**163.28135622236027m/6edges**, unchanged|
+|University Entrance→Hostel Entrance|No eligible route, unchanged|
+|Hostel Entrance→Central Library|No eligible route, unchanged|
+|Verified-step-free Hostel→GHS|No eligible route, unknown remains unknown|
+|Graph validation|**0errors/111warnings**, no acknowledgements|
+|Public synthetic Main Gate→Library|**256.88m/3edges**, UI257m/4min; public release unchanged|
+
+Intermediate failures, not passing evidence: a planner refactor's undefined local model was caught by lint/6unit failures and an already-loaded integration invocation (50pass/3fail); fixed and final151units/53PostGIS passed. First2updated source cases correctly returned403when the test reused CSRF from before UI logout/login; test now reads current authenticated session token and final2pass, no auth relaxation. Initial offline comparisons passed but host temp cleanup failed on root-owned disposable subdirectories; cleanup moved inside the owned container and rerun succeeded. A worker-smoke route query omitted mandatory profile and was refused by the existing LocalClient allowlist; test query corrected, no allowlist relaxation. Disk nearly filled during images; only unused Docker build cache/dangling images pruned, no retained containers/volumes/data deleted. Unchanged FastAPI TestClient/colour warnings are non-failing. A one-off source probe used host Python without Shapely; rerun with the repository's frozen venv, not counted as a test result.
+
+Windows original v1 owner report is recorded separately below. This agent has not inspected that Windows DB or executed the new PowerShell/correction command on Windows. Real device/GPS, physical routes/doors/access permission/accessibility, official/institutional approval, human assistive technology, remoteCI/production/load and sign downloads/printing/physical scans remain unverified. No4D–4F, deployment, public/LAN environment publication, merge or public MUJ release. Independent source/content/audience review and explicit future publication remain separate.
+
+[Findings and exact-ID owner collection list](../data/muj-connectivity-review.md) · [v1 inventory/maps](../data/muj-connectivity/README.md) · [v2 inventory/maps](../data/muj-connectivity-v2/README.md) · [Windows update/preview/APPLY/manual inputs](../operations/muj-connectivity-review.md) · [prepared PR](../reviews/muj-connectivity-review-pr.md).
+
+Current logs:`/tmp/scns-connectivity-final-static.log`, `...-final-units.log`, `...-v2-regression.log`, `...-source-browser.log`, `...-v2-source-final.log`, `...-built-browser.log`, `...-v2-built-final.log`, `...-images-delivery.log`, `...-offline-delivery.log`, `...-v2-worker-delivery.log`. Final worker and data receipts passed; Git delivery/PR receipt follows.
+
+
 ## Owner-reported Windows MUJ import checks — received 15 October 2026
 
 Owner reports all three pinned MUJ v1 import batches completed and all documented validation/route checks passed. Campus`afcf4f1a-635f-563b-af5b-3d7efd2ed84c`, draft`d1a8bb10-cd34-4fe3-905b-53996334dd40` identify **the owner's separate Windows database**, not an agent-inspected cloud draft. Reported51buildings/55destinations/290nodes/688directed edges/21anchors/29weak components/34unanchored; saved validation0errors/111warnings.

@@ -155,3 +155,12 @@ def test_prepared_manifest_rejects_tampering_and_unlisted_batches(tmp_path):
     (tmp_path / "batch-001.json").write_text("{}")
     with pytest.raises(ValueError, match="checksum"):
         prepared(tmp_path)
+
+
+@pytest.mark.parametrize(
+    "raw",
+    [b"<osm", '<!DOCTYPE osm [<!ENTITY x "entity">]><osm/>'.encode("utf-16"), b"\xff\xfe\x00"],
+)
+def test_malformed_or_encoded_xml_cannot_bypass_input_guard(raw):
+    with pytest.raises(ValueError, match="XML"):
+        convert(raw)

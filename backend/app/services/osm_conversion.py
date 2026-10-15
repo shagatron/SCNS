@@ -99,11 +99,22 @@ def vertical_reason(t):
 
 
 def convert(raw: bytes, *, batch_size=400):
-    if len(raw) > 5 * 1024 * 1024 or b"<!DOCTYPE" in raw.upper() or b"<!ENTITY" in raw.upper():
+    if len(raw) > 5 * 1024 * 1024:
         raise ValueError("Only bounded OSM XML without DTD/entities is accepted (5MiB maximum)")
+    try:
+        document = raw.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        raise ValueError("OSM export must be UTF-8 XML") from None
+    if "\x00" in document or "<!DOCTYPE" in document.upper() or "<!ENTITY" in document.upper():
+        raise ValueError("OSM must be UTF-8 XML without NUL, DTD or entities")
     if not 1 <= batch_size <= 500:
         raise ValueError("Use 1–500 rows per batch, below current import limits")
-    root = ET.fromstring(raw)
+    try:
+        root = ET.fromstring(document)
+    except ET.ParseError:
+        raise ValueError(
+            "Malformed OSM XML; correct the source, do not repair geometry silently"
+        ) from None
     if root.tag != "osm":
         raise ValueError("Expected OSM XML")
     elements = {kind: {} for kind in ("node", "way", "relation")}

@@ -7,9 +7,9 @@ import json
 import os
 import time
 from pathlib import Path
-from tempfile import TemporaryDirectory
+from tempfile import NamedTemporaryFile, TemporaryDirectory
 from urllib.parse import urlencode
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from app.cli.indoor_demo import Client, DemoError, prompt_login
 from app.core.config import get_settings
@@ -186,6 +186,33 @@ class LocalClient(Client):
             ) from None
 
 
+def retain_original(raw, target, expected_sha256):
+    """Atomic private copy; an interrupted write never becomes the retained source."""
+    if hashlib.sha256(raw).hexdigest() != expected_sha256:
+        raise DemoError("Original source checksum mismatch; nothing stored")
+    if target.is_symlink():
+        raise DemoError("Retained source must be an ordinary private file, not a symlink")
+    if target.exists():
+        with target.open("rb") as stream:
+            old = stream.read(5 * 1024 * 1024 + 1)
+        if hashlib.sha256(old).hexdigest() == expected_sha256:
+            return
+    with NamedTemporaryFile(
+        dir=target.parent, prefix="muj-source-", suffix=".partial", delete=False
+    ) as stream:
+        temporary = Path(stream.name)
+        try:
+            stream.write(raw)
+            stream.flush()
+            os.fsync(stream.fileno())
+            if target.exists():
+                # Preserve an inconsistent earlier copy for investigation, never discard it.
+                os.replace(target, target.with_name(target.name + ".retained-" + uuid4().hex))
+            os.replace(temporary, target)
+        finally:
+            temporary.unlink(missing_ok=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -214,10 +241,7 @@ def main():
                 raise DemoError(
                     "Source conversion differs from pinned preparation. Stop and review; nothing applied."
                 )
-        if not target.exists():
-            fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-            with os.fdopen(fd, "wb") as stream:
-                stream.write(raw)
+        retain_original(raw, target, manifest["source_sha256"])
         stage(client, ROOT)
     except (DemoError, OSError, ValueError, KeyboardInterrupt) as exc:
         # Never output arbitrary filesystem/HTTP exceptions, which could include local/private details.

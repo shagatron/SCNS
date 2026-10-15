@@ -2,6 +2,8 @@
 
 ## MUJ OSM preparation — verified software workflow, 15 October 2026
 
+Delivery: implementation/evidence5a6b96bbf22f12ff7ee56f235b779743354b03cb pushed and remote SHA matched; unchanged redesign parent. Actual GitHub PR creation returned GraphQL POST **Forbidden**; [prepared body](../reviews/muj-osm-import-pr.md), [compare/open PR](https://github.com/shagatron/SCNS/compare/redesign%2Fpublic-experience...feat%2Fmuj-osm-import?expand=1). No merge.
+
 Scope: separately authorized real OpenStreetMap conversion/additive campus setup/staged draft import from verified redesign parent **487db02e04a991674862621f09932230255dbef6**, branch `feat/muj-osm-import`. This is not official MUJ data, physical route/accessibility verification, a public MUJ release or completion of4D–4F/5. Public redesign/runtime routing, existing permissions and publication guards are preserved. No developer seed/reset/bootstrap/migration/publication occurred.
 
 | Check | Actual result |

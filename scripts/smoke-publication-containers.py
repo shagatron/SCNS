@@ -234,7 +234,9 @@ def main():
                 status = error.code
             assert status == expected, "Built app private/readiness boundary failed"
         print(
-            "Built nginx/API/worker floorplan, publication and public-navigation journeys passed; private boundaries verified."
+            "Built MUJ desktop/mobile draft import/map/route/isolation journeys passed."
+            if args.muj_only
+            else "Built nginx/API/worker floorplan, publication and public-navigation journeys passed; private boundaries verified."
         )
         return 0
     finally:

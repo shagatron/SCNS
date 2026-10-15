@@ -70,3 +70,22 @@ def test_diagnostic_svg_has_no_invented_candidate_connections(tmp_path):
     # Only the one physical source polyline, rather than both directed copies.
     assert figure.count("<polyline") == 1
     assert "no survey, access or accessibility verification" in figure
+
+
+@pytest.mark.parametrize("location", ["root", "inside", "ancestor", "source"])
+def test_diagnostic_cli_refuses_preparation_and_source_destinations(
+    tmp_path, monkeypatch, location
+):
+    from app.cli import muj_diagnostics
+
+    root = tmp_path / "preparation"
+    source = tmp_path / "original.osm"
+    output = {"root": root, "inside": root / "nested", "ancestor": tmp_path, "source": source}[
+        location
+    ]
+    monkeypatch.setattr(muj_diagnostics, "ROOT", root)
+    monkeypatch.setattr("sys.argv", ["muj_diagnostics", str(source), "--output", str(output)])
+    with pytest.raises(SystemExit) as error:
+        muj_diagnostics.main()
+    assert error.value.code == 2
+    assert not root.exists() and not source.exists()

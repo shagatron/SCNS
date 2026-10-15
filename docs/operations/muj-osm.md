@@ -102,3 +102,7 @@ DOCKER_CONFIG=/tmp/scns-docker python scripts/smoke-publication-containers.py
 ```
 
 Only test runners reset their explicitly disposable test databases. Owned built test containers share an owned temporary private directory so the actual worker can read staged files. Cleanup removes only those owned test resources/files, never retained volumes. Normal setup/import touches no test database and never resets your developer dataset. See the verification log for actual counts and failed-run corrections rather than assuming every documented command has passed on every platform.
+
+## Existing imported drafts: connectivity/wording follow-up
+
+If you already completed the three batches, use [the connectivity-review update](muj-connectivity-review.md). It preserves this exact v1 preparation and existing draft: **no setup-helper rerun, correction import, deletion/upsert, review approval or publication**. Read the [exact-ID source gap report](../data/muj-connectivity-review.md) before changing access/boundary/floor assumptions. The owner's completed Windows import/validation/routes are recorded separately from automated evidence; the UUIDs identify that Windows database, not the cloud developer database.

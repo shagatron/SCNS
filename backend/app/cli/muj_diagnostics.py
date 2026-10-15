@@ -18,6 +18,7 @@ def main():
         output == args.source.resolve()
         or output == ROOT.resolve()
         or output in ROOT.resolve().parents
+        or ROOT.resolve() in output.parents
     ):
         parser.error(
             "Use a separate diagnostic output directory, never the preparation/root/source"

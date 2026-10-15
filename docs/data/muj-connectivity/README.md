@@ -74,3 +74,39 @@ Containment is descriptive only; it does not establish a usable door.
 | Block B8 | osm-way-1568303891 | osm-way-1568303891 |
 | Block B9 | osm-way-1568303897 | osm-way-1568303897 |
 | Block B10 | osm-way-1568303899 | osm-way-1568303899 |
+
+## Excluded source references per component
+
+These are candidates for evidence review, not connections to apply. No touching reference means no rejected highway shares an original node with this component.
+
+| Component | Excluded way IDs touching original retained references |
+|---|---|
+| C1 | 926460863, 926463927, 1154145270, 1158509500, 1163582909, 1163582910, 1245026708, 1245026711, 1247085145, 1249393741, 1271244213 |
+| C2 | 1159542817, 1244943100, 1245026709, 1245274146, 1568303898 |
+| C3 | 926463927, 1158055386, 1247085145 |
+| C4 | 1158509500 |
+| C5 | 1158509500 |
+| C6 | None — missing or independently mapped topology |
+| C7 | 1158509500 |
+| C8 | None — missing or independently mapped topology |
+| C9 | 1158509500 |
+| C10 | 1158509500 |
+| C11 | 1158509500 |
+| C12 | None — missing or independently mapped topology |
+| C13 | 1158509500 |
+| C14 | 1158509500 |
+| C15 | 1158055386 |
+| C16 | None — missing or independently mapped topology |
+| C17 | 1159542817 |
+| C18 | 1158055386, 1245556384, 1247085145 |
+| C19 | 1245556383, 1247085145 |
+| C20 | 1247150897, 1247150898, 1247150902 |
+| C21 | 1245556383, 1247085145 |
+| C22 | 1158055386 |
+| C23 | 1158055386 |
+| C24 | 1158055386 |
+| C25 | 1158055386 |
+| C26 | 1158055386 |
+| C27 | 1247085145 |
+| C28 | 1247085145 |
+| C29 | 1247085145 |

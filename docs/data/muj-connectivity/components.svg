@@ -395,5 +395,36 @@
 <circle cx="336.5" cy="500.3" r="4" fill="#111"/><text x="342.5" y="515.3" font-family="sans-serif" font-size="12">Subway Entrance</text>
 <circle cx="378.2" cy="475.7" r="4" fill="#111"/><text x="384.2" y="490.7" font-family="sans-serif" font-size="12">AB1 footway</text>
 <circle cx="462.2" cy="519.9" r="4" fill="#111"/><text x="468.2" y="534.9" font-family="sans-serif" font-size="12">Central Library</text>
-</g><text x="30" y="810" font-family="sans-serif" font-size="14">WGS84 [longitude, latitude] · visual latitude correction only · no survey, access or accessibility verification</text>
+</g>
+<text x="760" y="116" font-family="sans-serif" font-size="16" font-weight="bold">Component · nodes · anchored places</text>
+<text x="760" y="144" font-family="sans-serif" font-size="14" fill="hsl(137,65%,32%)">C1 · 114 nodes · 4 anchored places</text>
+<text x="760" y="165" font-family="sans-serif" font-size="14" fill="hsl(274,65%,32%)">C2 · 66 nodes · 3 anchored places</text>
+<text x="760" y="186" font-family="sans-serif" font-size="14" fill="hsl(51,65%,32%)">C3 · 21 nodes · 0 anchored places</text>
+<text x="760" y="207" font-family="sans-serif" font-size="14" fill="hsl(188,65%,32%)">C4 · 10 nodes · 2 anchored places</text>
+<text x="760" y="228" font-family="sans-serif" font-size="14" fill="hsl(325,65%,32%)">C5 · 10 nodes · 0 anchored places</text>
+<text x="760" y="249" font-family="sans-serif" font-size="14" fill="hsl(102,65%,32%)">C6 · 6 nodes · 0 anchored places</text>
+<text x="760" y="270" font-family="sans-serif" font-size="14" fill="hsl(239,65%,32%)">C7 · 6 nodes · 2 anchored places</text>
+<text x="760" y="291" font-family="sans-serif" font-size="14" fill="hsl(16,65%,32%)">C8 · 5 nodes · 0 anchored places</text>
+<text x="760" y="312" font-family="sans-serif" font-size="14" fill="hsl(153,65%,32%)">C9 · 5 nodes · 1 anchored places</text>
+<text x="760" y="333" font-family="sans-serif" font-size="14" fill="hsl(290,65%,32%)">C10 · 4 nodes · 1 anchored places</text>
+<text x="760" y="354" font-family="sans-serif" font-size="14" fill="hsl(67,65%,32%)">C11 · 4 nodes · 1 anchored places</text>
+<text x="760" y="375" font-family="sans-serif" font-size="14" fill="hsl(204,65%,32%)">C12 · 3 nodes · 1 anchored places</text>
+<text x="760" y="396" font-family="sans-serif" font-size="14" fill="hsl(341,65%,32%)">C13 · 3 nodes · 1 anchored places</text>
+<text x="760" y="417" font-family="sans-serif" font-size="14" fill="hsl(118,65%,32%)">C14 · 3 nodes · 1 anchored places</text>
+<text x="760" y="438" font-family="sans-serif" font-size="14" fill="hsl(255,65%,32%)">C15 · 2 nodes · 0 anchored places</text>
+<text x="760" y="459" font-family="sans-serif" font-size="14" fill="hsl(32,65%,32%)">C16 · 2 nodes · 0 anchored places</text>
+<text x="760" y="480" font-family="sans-serif" font-size="14" fill="hsl(169,65%,32%)">C17 · 2 nodes · 0 anchored places</text>
+<text x="760" y="501" font-family="sans-serif" font-size="14" fill="hsl(306,65%,32%)">C18 · 2 nodes · 1 anchored places</text>
+<text x="760" y="522" font-family="sans-serif" font-size="14" fill="hsl(83,65%,32%)">C19 · 2 nodes · 1 anchored places</text>
+<text x="760" y="543" font-family="sans-serif" font-size="14" fill="hsl(220,65%,32%)">C20 · 2 nodes · 1 anchored places</text>
+<text x="760" y="564" font-family="sans-serif" font-size="14" fill="hsl(357,65%,32%)">C21 · 2 nodes · 1 anchored places</text>
+<text x="760" y="585" font-family="sans-serif" font-size="14" fill="hsl(134,65%,32%)">C22 · 2 nodes · 0 anchored places</text>
+<text x="760" y="606" font-family="sans-serif" font-size="14" fill="hsl(271,65%,32%)">C23 · 2 nodes · 0 anchored places</text>
+<text x="760" y="627" font-family="sans-serif" font-size="14" fill="hsl(48,65%,32%)">C24 · 2 nodes · 0 anchored places</text>
+<text x="760" y="648" font-family="sans-serif" font-size="14" fill="hsl(185,65%,32%)">C25 · 2 nodes · 0 anchored places</text>
+<text x="760" y="669" font-family="sans-serif" font-size="14" fill="hsl(322,65%,32%)">C26 · 2 nodes · 0 anchored places</text>
+<text x="760" y="690" font-family="sans-serif" font-size="14" fill="hsl(99,65%,32%)">C27 · 2 nodes · 0 anchored places</text>
+<text x="760" y="711" font-family="sans-serif" font-size="14" fill="hsl(236,65%,32%)">C28 · 2 nodes · 0 anchored places</text>
+<text x="760" y="732" font-family="sans-serif" font-size="14" fill="hsl(13,65%,32%)">C29 · 2 nodes · 0 anchored places</text>
+<text x="30" y="810" font-family="sans-serif" font-size="14">WGS84 [longitude, latitude] · visual latitude correction only · no survey, access or accessibility verification</text>
 <text x="30" y="838" font-family="sans-serif" font-size="13">© OpenStreetMap contributors · ODbL 1.0 · https://www.openstreetmap.org/copyright</text></svg>

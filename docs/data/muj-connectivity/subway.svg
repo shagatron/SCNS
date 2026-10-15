@@ -402,9 +402,10 @@
 <circle cx="620.3" cy="400.2" r="4" fill="#111"/><text x="626.3" y="415.2" font-family="sans-serif" font-size="12">10733816254</text>
 <circle cx="550.0" cy="249.9" r="4" fill="#111"/><text x="556.0" y="264.9" font-family="sans-serif" font-size="12">10733816255</text>
 <circle cx="221.0" cy="405.4" r="4" fill="#111"/><text x="227.0" y="420.4" font-family="sans-serif" font-size="12">10733816256</text>
-<circle cx="327.4" cy="607.1" r="4" fill="#111"/><text x="333.4" y="622.1" font-family="sans-serif" font-size="12">10733816257</text>
-<circle cx="299.5" cy="622.3" r="4" fill="#111"/><text x="305.5" y="637.3" font-family="sans-serif" font-size="12">10778271605</text>
+<circle cx="327.4" cy="607.1" r="4" fill="#111"/><text x="333.4" y="632.1" font-family="sans-serif" font-size="12">10733816257</text>
+<circle cx="299.5" cy="622.3" r="4" fill="#111"/><text x="305.5" y="670.3" font-family="sans-serif" font-size="12">10778271605 · access=private</text>
 <circle cx="856.9" cy="294.4" r="4" fill="#111"/><text x="862.9" y="309.4" font-family="sans-serif" font-size="12">10769840689</text>
 <circle cx="1978.6" cy="884.1" r="4" fill="#111"/><text x="1984.6" y="899.1" font-family="sans-serif" font-size="12">12585506492</text>
-</g><text x="30" y="810" font-family="sans-serif" font-size="14">WGS84 [longitude, latitude] · visual latitude correction only · no survey, access or accessibility verification</text>
+</g>
+<text x="30" y="810" font-family="sans-serif" font-size="14">WGS84 [longitude, latitude] · visual latitude correction only · no survey, access or accessibility verification</text>
 <text x="30" y="838" font-family="sans-serif" font-size="13">© OpenStreetMap contributors · ODbL 1.0 · https://www.openstreetmap.org/copyright</text></svg>

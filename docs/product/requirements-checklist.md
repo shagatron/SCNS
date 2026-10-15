@@ -106,3 +106,11 @@ Verified parent4C b4a40f1; branch redesign/public-experience. These entries conc
 | MUJ-02 | Exact academic/hostel coverage, robust geometry/holes, conservative shared-node walking/access/direction/level handling | data/muj/report.json; converter unit/PostGIS tests | verified software workflow | Hull is display extent only; subway/indoor/grade gaps quarantined;29weak components;34unanchored destinations |
 | MUJ-03 | Authenticated, audited, idempotent unpublished Windows setup and normal staged preview/apply/resume | scripts/setup-muj-osm.ps1, app.cli.muj; docs/operations/muj-osm.md | verified software workflow | Existing system admin required; no default account, automatic approvals, warning acknowledgements or publication |
 | MUJ-04 | Real-coordinate map/software route evidence, synthetic regression and data preservation | docs/testing/verification.md | verified software workflow | Actual Windows/device/field/accessibility verification and institutional/publication review remain separate |
+
+### MUJ source-connectivity review (separate authorized follow-up)
+
+| ID | Scope | Delivery | Status / limits |
+|---|---|---|---|
+| MUJ-05 | Trace weak components, original node references, excluded geometry and important destination gaps | `services/muj_diagnostics.py`, offline CLI, `docs/data/muj-connectivity-review.md`, reproducible exact-ID inventory/JSON/SVGs | Implemented; verification in progress. v1 unchanged:29components/34unanchored; private subway access, exact coverage and ambiguous floors/doors require evidence, not proximity joins. No safe source-proven data correction established. |
+| MUJ-06 | Correct universal synthetic disclosures without losing Demo qualification | Draft route neutral review notice + `is_demo` supplement; public step-free metadata label; QR empty state neutral | Implemented; affected API/browser and regression verification in progress. No source/publication/schema/algorithm changes; no claim MUJ is approved/surveyed. |
+| MUJ-07 | Preserve existing Windows import/receipts and report evidence accurately | Data-preserving update guide; no changed preparation/updater; owner-reported Windows three batches/routes/0errors111warnings recorded separately | Owner report recorded; actual Windows DB/physical paths/GPS/accessibility not agent-verified. No draft correction apply step, MUJ unpublished. |

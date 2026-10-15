@@ -183,6 +183,10 @@ def diagnose(raw, preparation):
                 "note": "Containment/display points do not establish entrance access or routing anchors.",
             }
         )
+    for component in components:
+        component["excluded_way_ids_touching"] = [
+            e["way"] for e in excluded if component["component"] in e["retained_components_touched"]
+        ]
     return {
         "format": "scns-muj-connectivity-diagnostic-v1",
         "source_sha256": manifest["source_sha256"],
@@ -270,11 +274,31 @@ def diagnostic_svg(report, *, subway=False):
     for n in report["selected_source_nodes"]:
         x, y = xy(n["point"])
         label = str(n["node"]) if subway else n["tags"].get("name", "")
-        chunks.append(
-            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="#111"/><text x="{x + 6:.1f}" y="{y + 15:.1f}" font-family="sans-serif" font-size="12">{html.escape(label)}</text>'
+        label_y = y + (
+            48
+            if subway and n["node"] == 10778271605
+            else 25
+            if subway and n["node"] == 10733816257
+            else 15
         )
+        if subway and n["node"] == 10778271605:
+            label += " · access=private"
+        chunks.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="#111"/><text x="{x + 6:.1f}" y="{label_y:.1f}" font-family="sans-serif" font-size="12">{html.escape(label)}</text>'
+        )
+    chunks.append("</g>")
+    if not subway:
+        chunks.append(
+            '<text x="760" y="116" font-family="sans-serif" font-size="16" font-weight="bold">Component · nodes · anchored places</text>'
+        )
+        for index, component in enumerate(report["components"]):
+            colour = f"hsl({component['component'] * 137 % 360},65%,32%)"
+            label = f"C{component['component']} · {component['node_count']} nodes · {len(component['destinations'])} anchored places"
+            chunks.append(
+                f'<text x="760" y="{144 + index * 21}" font-family="sans-serif" font-size="14" fill="{colour}">{label}</text>'
+            )
     chunks += [
-        '</g><text x="30" y="810" font-family="sans-serif" font-size="14">WGS84 [longitude, latitude] · visual latitude correction only · no survey, access or accessibility verification</text>',
+        '<text x="30" y="810" font-family="sans-serif" font-size="14">WGS84 [longitude, latitude] · visual latitude correction only · no survey, access or accessibility verification</text>',
         '<text x="30" y="838" font-family="sans-serif" font-size="13">© OpenStreetMap contributors · ODbL 1.0 · https://www.openstreetmap.org/copyright</text></svg>',
     ]
     return "\n".join(chunks) + "\n"
@@ -308,5 +332,15 @@ def write_diagnostics(report, output):
     for p in report["unanchored_destinations"]:
         rows.append(
             f"| {p['name']} | {p['id']} | {', '.join(p['footprint_containment_only']) or 'None'} |"
+        )
+    rows += [
+        "\n## Excluded source references per component\n",
+        "These are candidates for evidence review, not connections to apply. No touching reference means no rejected highway shares an original node with this component.\n",
+        "| Component | Excluded way IDs touching original retained references |",
+        "|---|---|",
+    ]
+    for c in report["components"]:
+        rows.append(
+            f"| C{c['component']} | {', '.join(map(str, c['excluded_way_ids_touching'])) or 'None — missing or independently mapped topology'} |"
         )
     (output / "README.md").write_text("\n".join(rows) + "\n", encoding="utf-8")

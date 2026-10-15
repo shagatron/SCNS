@@ -135,6 +135,8 @@ def test_real_batches_replay_connectivity_lengths_stale_write_and_public_isolati
     route = client.get(base + "/route-test", params={"source": str(start), "target": str(target)})
     assert route.status_code == 200, route.text
     assert route.json()["distance_m"] > 0 and route.json()["edge_ids"]
+    assert "synthetic" not in route.json()["notice"].lower()
+    assert "source and field-verification status must be reviewed" in route.json()["notice"]
     # A real concurrent edit invalidates the prepared preview (and its validation).
     revision.edit_version += 1
     db.flush()

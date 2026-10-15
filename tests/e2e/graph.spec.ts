@@ -55,6 +55,7 @@ test('visual node editing, movement, undo, recovery, validation and public relea
   await page.getByRole('combobox',{name:'Draft route start'}).selectOption({label:'Main Gate'})
   await page.getByRole('combobox',{name:'Draft route destination'}).selectOption({label:'Library'})
   await page.getByRole('button',{name:'Compute draft test route'}).click();await expect(page.getByLabel('Graph quality')).toContainText('256.88m · 3 stored edges')
+  await expect(page.getByLabel('Graph quality')).toContainText('Synthetic campus; invented data')
   expect(await(await page.request.get(`/api/v1/campuses/${campus.id}/release`)).json()).toEqual(before)
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true)
   expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([])

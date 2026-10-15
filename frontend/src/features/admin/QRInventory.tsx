@@ -46,7 +46,7 @@ export function QRInventory({ path, session, editable }: { path: string; session
   if (!data) return <><ErrorMessage error={inventory.error} /><button onClick={() => void inventory.refetch()}>Retry QR inventory</button></>
   return <section className="admin-card"><h2>QR markers and printable signs</h2><p>Operational inventory uses published public nodes, never drafts. Moving or relabelling a sign requires explicit installation re-verification. This is a fixed confirmed start, not continuous indoor positioning.</p><p>Canonical origin: <strong>{data.canonical_origin}</strong>. Check the readable domain before scanning. Local HTTP links are for this computer’s demo only.</p>
     <button disabled={busy} onClick={() => void inventory.refetch()}>Refresh inventory</button>{editable && <button disabled={busy} onClick={() => open(null)}>New marker</button>}
-    <ErrorMessage error={inventory.error} />{data.items.length === 0 && <p>No QR markers yet. Create a clearly labelled synthetic sign for a published node.</p>}
+    <ErrorMessage error={inventory.error} />{data.items.length === 0 && <p>No QR markers yet. Create a sign for an eligible published node. Label simulated installations explicitly.</p>}
     <div className="qr-inventory">{data.items.map(marker => <button key={marker.id} disabled={busy} aria-pressed={selected?.id === marker.id} onClick={() => open(marker)}>{marker.label} · {marker.state.replaceAll('_', ' ')} · v{marker.version}</button>)}</div>
     {data.targets_truncated && <p role="alert">Target inventory exceeds 5,000 nodes. Only the first 5,000 are shown; contact the system administrator before planning further signs.</p>}
     {(editable || selected) && <>

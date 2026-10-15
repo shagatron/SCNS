@@ -4,6 +4,7 @@ import AxeBuilder from '@axe-core/playwright'
 test('search → select → computed path and text directions on a small screen', async ({ page }) => {
   await page.goto('/')
   await expect(page.getByText('Campus service connected')).toBeVisible()
+  await expect(page.getByRole('option', { name: 'Step-free · synthetic verification only', exact: true })).toHaveCount(1)
   await page.getByLabel('Search destinations').fill('books')
   await page.getByRole('button', { name: 'Route to Library', exact: true }).click()
   const responsePromise = page.waitForResponse(response => response.url().endsWith('/api/v1/routes'))
@@ -71,4 +72,17 @@ test('map failure preserves text-only navigation and offline disables new reques
   await expect(page.getByText('Offline · connection needed for new routes')).toBeVisible()
   await expect(page.getByRole('button', { name: 'Find walking route' })).toBeDisabled()
   await context.setOffline(false)
+})
+
+test('route preference and disclosures use dataset metadata rather than campus names', async ({ page }) => {
+  // Response simulation only: no non-demo release is created or published.
+  await page.route('**/api/v1/campuses', async route => {
+    const response = await route.fetch()
+    const campuses = await response.json()
+    await route.fulfill({ response, json: campuses.map((c: object) => ({ ...c, is_demo: false })) })
+  })
+  await page.goto('/')
+  await expect(page.getByRole('option', { name: 'Step-free · verified access only', exact: true })).toHaveCount(1)
+  await expect(page.getByRole('option', { name: 'Step-free · synthetic verification only', exact: true })).toHaveCount(0)
+  await expect(page.locator('.synthetic-disclosure')).toHaveCount(0)
 })

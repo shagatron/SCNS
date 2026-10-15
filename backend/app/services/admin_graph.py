@@ -617,5 +617,10 @@ def route_test(db, revision, source, target, profile):
         "distance_m": path.distance_m if path else None,
         "edge_ids": path.edges if path else [],
         "node_ids": path.nodes if path else [],
-        "notice": "Draft-only computed Dijkstra preview; unverified synthetic data, never published.",
+        "notice": "Draft-only computed Dijkstra preview. Not published; source and field-verification status must be reviewed."
+        + (
+            " Synthetic campus; invented data, not for real-world navigation."
+            if db.get(Campus, revision.campus_id).is_demo
+            else ""
+        ),
     }

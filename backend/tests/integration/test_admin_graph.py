@@ -334,6 +334,8 @@ def test_validation_route_preview_and_frozen_rejection(client, bundle, identity,
     assert response.status_code == 200
     assert response.json()["found"] and len(response.json()["edge_ids"]) == 3
     assert round(response.json()["distance_m"], 2) == 256.88
+    assert "Synthetic campus; invented data" in response.json()["notice"]
+    assert "source and field-verification status must be reviewed" in response.json()["notice"]
     assert (
         client.get(
             path + "/route-test", params={"source": str(uuid4()), "target": places["LIB"]}

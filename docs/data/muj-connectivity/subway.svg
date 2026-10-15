@@ -1,0 +1,410 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="860" viewBox="0 0 1200 860" role="img"><title>MUJ source connectivity diagnostic</title><desc>Numbered coloured components are prepared paths. Dashed red paths are excluded raw OSM geometry requiring review, not routable proposals. No basemap or proximity joins.</desc><rect width="1200" height="860" fill="white"/>
+<text x="30" y="30" font-family="sans-serif" font-size="22">MUJ — UNPUBLISHED SOURCE DIAGNOSTIC</text>
+<text x="30" y="58" font-family="sans-serif" font-size="14">Colour + C number: retained component · red dashed: EXCLUDED source path, review only · north ↑</text>
+<defs><clipPath id="plot"><rect x="30" y="90" width="1140" height="690"/></clipPath></defs><g clip-path="url(#plot)">
+<polygon points="-1205.39,3736.80 -1391.07,3318.70 -1606.19,2421.20 -1431.04,1768.90 -1942.57,1675.60 -1982.01,1649.40 -2052.94,1353.70 -2080.34,1234.00 -2167.15,296.80 -2350.42,-184.20 -2445.54,-479.70 -2465.16,-567.80 -2456.78,-975.40 -2614.62,-1426.20 -2673.60,-1594.60 -2909.15,-2305.30 -2994.90,-2590.10 -3077.16,-2904.80 -3103.22,-3004.30 -3257.67,-3940.60 -2851.51,-3870.50 -1686.58,-3568.60 -1142.22,-3427.50 -833.94,-3347.60 -788.80,-3032.60 -692.08,-2357.50 -648.98,-2027.50 -626.23,-1853.70 -528.08,-1408.60 -480.25,-1346.40 -293.59,-764.80 -146.37,-472.90 -14.14,-195.30 490.52,874.80 437.88,893.70 469.55,974.90 571.54,1237.00 676.91,1200.00 1080.12,2095.10 1293.82,2591.40 1605.13,3321.70 1044.16,3504.50 211.87,3616.40 -137.45,3626.00 -401.29,3897.20 -922.54,4089.30 -1205.39,3736.80" fill="#f4f5ee" stroke="#a7ada3"/>
+<polygon points="1844.25,3110.80 1285.97,1944.30 705.37,755.90 233.19,-248.20 321.08,-266.20 406.11,-407.30 476.42,-585.30 529.51,-761.30 590.18,-1124.20 619.45,-1607.90 327.33,-1678.50 367.39,-1975.20 -407.36,-2263.00 -511.30,-2981.00 -596.60,-3569.90 -602.05,-3615.40 -713.76,-4545.50 -479.72,-4450.20 -374.88,-4410.30 10.31,-4263.80 430.74,-4126.20 1370.55,-4011.50 1832.38,-4125.80 2416.81,-4090.30 2514.42,-4084.40 2653.70,-4588.20 2915.94,-4560.60 2853.84,-4312.20 2826.18,-3967.10 2836.26,-3700.20 2840.01,-3601.30 3892.87,-3320.40 3679.17,-2680.60 3670.79,-2617.10 3725.39,-2504.80 4728.11,-2137.90 4363.09,-1456.80 4234.24,-1209.70 4052.14,-785.00 3754.39,9.00 3582.27,431.80 3429.07,717.80 2871.86,1920.90 2396.38,2898.00 2013.69,3566.60 1844.25,3110.80" fill="#f4f5ee" stroke="#a7ada3"/>
+<polyline points="505.60,2309.00 438.23,2126.70" fill="none" stroke="hsl(102,65%,32%)" stroke-width="2.4"><title>C6 OSM way 1141643441</title></polyline>
+<polyline points="233.82,2417.30 163.51,2232.00" fill="none" stroke="hsl(102,65%,32%)" stroke-width="2.4"><title>C6 OSM way 1141643442</title></polyline>
+<polyline points="505.60,2309.00 233.82,2417.30" fill="none" stroke="hsl(102,65%,32%)" stroke-width="2.4"><title>C6 OSM way 1141643443</title></polyline>
+<polyline points="505.60,2309.00 815.75,2185.40" fill="none" stroke="hsl(102,65%,32%)" stroke-width="2.4"><title>C6 OSM way 1141643443</title></polyline>
+<polyline points="438.23,2126.70 163.51,2232.00" fill="none" stroke="hsl(102,65%,32%)" stroke-width="2.4"><title>C6 OSM way 1141643443</title></polyline>
+<polyline points="438.23,2126.70 722.33,2017.90 766.05,2024.50 806.11,2049.60 828.24,2090.30 831.27,2132.20 826.45,2169.30 815.75,2185.40" fill="none" stroke="hsl(102,65%,32%)" stroke-width="2.4"><title>C6 OSM way 1141643443</title></polyline>
+<polyline points="233.82,2417.30 -44.65,2528.30 -90.70,2521.70 -121.83,2506.10 -149.32,2473.20 -163.15,2437.30 -161.90,2385.30 -116.48,2339.20" fill="none" stroke="hsl(102,65%,32%)" stroke-width="2.4"><title>C6 OSM way 1141643443</title></polyline>
+<polyline points="163.51,2232.00 -116.48,2339.20" fill="none" stroke="hsl(102,65%,32%)" stroke-width="2.4"><title>C6 OSM way 1141643443</title></polyline>
+<polyline points="-1124.19,2282.50 -956.54,2697.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154143679</title></polyline>
+<polyline points="-1124.19,2282.50 -1533.29,2427.70 -1559.62,2355.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154143680</title></polyline>
+<polyline points="-1124.19,2282.50 -1291.58,1822.20" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154143680</title></polyline>
+<polyline points="-1559.62,2355.90 -1425.60,1867.70 -1291.58,1822.20" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154143680</title></polyline>
+<polyline points="-132.19,1395.90 -186.43,1254.30" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145948</title></polyline>
+<polyline points="-491.23,1523.70 -547.80,1393.10" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145949</title></polyline>
+<polyline points="-938.43,1800.60 -493.46,1630.10" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145950</title></polyline>
+<polyline points="-938.43,1800.60 -797.36,2193.20 -780.59,2219.50 -753.11,2229.10" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145950</title></polyline>
+<polyline points="-493.46,1630.10 -346.24,2056.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145950</title></polyline>
+<polyline points="-346.24,2056.70 -753.11,2229.10" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145950</title></polyline>
+<polyline points="-1291.58,1822.20 -976.17,1697.20" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-1291.58,1822.20 -1325.04,1820.70 -1351.72,1791.40 -1364.21,1752.80" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-132.19,1395.90 -491.23,1523.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-132.19,1395.90 161.10,1279.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-186.43,1254.30 -493.01,1372.20" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-186.43,1254.30 -139.14,1237.60" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-491.23,1523.70 -976.17,1697.20" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-547.80,1393.10 -880.52,1519.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-547.80,1393.10 -493.01,1372.20" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-1018.73,1572.40 -880.52,1519.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-1018.73,1572.40 -1341.82,1695.40 -1351.09,1709.10" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="441.00,1018.30 471.16,1086.70 493.20,1146.40" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="441.00,1018.30 423.69,1024.80 108.28,1143.30" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="493.20,1146.40 161.10,1279.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-1364.21,1752.80 -1361.27,1724.10 -1351.09,1709.10" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-1364.21,1752.80 -1642.15,1702.60 -1837.20,1150.90 -1666.06,1095.30 -1644.56,1088.10 -1620.65,1091.10 -1599.05,1103.10 -1585.94,1115.00 -1412.39,1639.20 -1395.62,1679.80 -1383.66,1695.40 -1351.09,1709.10" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="-139.14,1237.60 108.28,1143.30" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1154145951</title></polyline>
+<polyline points="1757.17,-349.20 1792.94,-374.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055388</title></polyline>
+<polyline points="1815.34,-392.00 1792.94,-374.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055388</title></polyline>
+<polyline points="3149.35,-42.30 3226.44,-67.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="3637.24,-433.40 3285.60,-285.60 3226.44,-67.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="3637.24,-433.40 3557.83,-626.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="856.88,294.40 966.72,570.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="856.88,294.40 784.07,116.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="2107.82,-1200.30 1599.95,-1002.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="2107.82,-1200.30 2619.26,-1401.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="1599.95,-1002.20 545.04,-568.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="3197.80,60.40 3247.50,175.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="1674.27,651.80 1627.25,530.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="1674.27,651.80 1669.37,831.80 1695.15,1025.30 1717.46,1094.20 1768.41,1134.40 1871.28,1140.70 2120.67,1112.90 2378.18,1086.00 2476.77,1320.20 3015.25,1101.00 2923.88,872.60 3459.41,454.30 3247.50,175.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="1627.25,530.40 1051.48,766.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="1051.48,766.10 1043.36,749.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="545.04,-568.60 566.45,-507.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="966.72,570.70 1043.36,749.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="784.07,116.50 566.45,-507.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="3407.66,-1013.70 3557.83,-626.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="3407.66,-1013.70 3171.30,-1618.70 2619.26,-1401.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055389</title></polyline>
+<polyline points="2557.70,-102.60 2370.14,-27.00 2195.00,43.90 2014.49,117.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055391</title></polyline>
+<polyline points="1599.95,-1002.20 1627.16,-919.90" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055392</title></polyline>
+<polyline points="1599.95,-1002.20 1516.08,-1144.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055392</title></polyline>
+<polyline points="1029.80,-2366.90 1516.08,-1144.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055392</title></polyline>
+<polyline points="1627.16,-919.90 1815.34,-392.00" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055392</title></polyline>
+<polyline points="2107.82,-1200.30 1587.28,-2570.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055393</title></polyline>
+<polyline points="2107.82,-1200.30 2142.98,-1121.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055393</title></polyline>
+<polyline points="2557.70,-102.60 2629.35,68.90" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055393</title></polyline>
+<polyline points="2557.70,-102.60 2516.03,-202.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055393</title></polyline>
+<polyline points="2661.91,141.60 2629.35,68.90" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055393</title></polyline>
+<polyline points="2142.98,-1121.40 2191.16,-1004.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055393</title></polyline>
+<polyline points="2351.14,-611.60 2458.48,-343.60 2496.93,-248.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055393</title></polyline>
+<polyline points="2351.14,-611.60 2191.16,-1004.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055393</title></polyline>
+<polyline points="2516.03,-202.80 2496.93,-248.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055393</title></polyline>
+<polyline points="2566.35,182.20 2610.52,300.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055394</title></polyline>
+<polyline points="2215.34,443.00 2168.41,331.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158055395</title></polyline>
+<polyline points="1627.16,-919.90 1553.55,-891.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158056668</title></polyline>
+<polyline points="620.88,-526.90 836.27,94.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158056668</title></polyline>
+<polyline points="620.88,-526.90 701.00,-560.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158056668</title></polyline>
+<polyline points="701.00,-560.70 1553.55,-891.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158056668</title></polyline>
+<polyline points="1590.31,-3618.10 2562.69,-3659.40" fill="none" stroke="hsl(16,65%,32%)" stroke-width="2.4"><title>C8 OSM way 1158191367</title></polyline>
+<polyline points="2562.69,-3659.40 2586.07,-3190.90" fill="none" stroke="hsl(16,65%,32%)" stroke-width="2.4"><title>C8 OSM way 1158191368</title></polyline>
+<polyline points="2586.07,-3190.90 1817.66,-3166.70" fill="none" stroke="hsl(16,65%,32%)" stroke-width="2.4"><title>C8 OSM way 1158191368</title></polyline>
+<polyline points="2142.98,-1121.40 2649.78,-1327.00" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158191369</title></polyline>
+<polyline points="3358.67,-995.20 3197.98,-1397.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158191369</title></polyline>
+<polyline points="3197.98,-1397.30 3148.82,-1530.20 2649.78,-1327.00" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158191369</title></polyline>
+<polyline points="3029.79,-416.80 3077.08,-295.50 3059.77,-276.40 3120.09,-126.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158191370</title></polyline>
+<polyline points="3120.09,-126.50 2629.35,68.90" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158191371</title></polyline>
+<polyline points="3358.67,-995.20 3513.57,-608.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158191372</title></polyline>
+<polyline points="3120.09,-126.50 3183.52,-153.40 3251.51,-325.70 3569.60,-465.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158191372</title></polyline>
+<polyline points="3569.60,-465.20 3513.57,-608.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158191372</title></polyline>
+<polyline points="-1717.54,663.90 -1663.65,817.10" fill="none" stroke="hsl(32,65%,32%)" stroke-width="2.4"><title>C16 OSM way 1158192973</title></polyline>
+<polyline points="1369.21,1624.60 1122.59,1004.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158512121</title></polyline>
+<polyline points="1051.48,766.10 1089.67,898.90 1122.59,1004.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158512121</title></polyline>
+<polyline points="1674.27,651.80 1817.30,753.40 1989.51,738.10 2354.26,703.20 2366.49,667.50 2406.46,611.30 2453.84,577.80 2502.02,548.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158512122</title></polyline>
+<polyline points="3247.50,175.70 2741.06,549.00 2649.15,533.20 2559.12,534.70 2502.02,548.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1158512122</title></polyline>
+<polyline points="-976.17,1697.20 -1018.73,1572.40" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1158552747</title></polyline>
+<polyline points="-976.17,1697.20 -952.88,1758.80 -938.43,1800.60" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1158552747</title></polyline>
+<polyline points="-493.46,1630.10 -78.74,1462.00 -1.02,1642.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1158552748</title></polyline>
+<polyline points="-346.24,2056.70 -89.00,1951.50 -188.31,1707.40 -1.02,1642.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1158552748</title></polyline>
+<polyline points="-346.24,2056.70 -303.14,2152.50 -280.39,2224.30 -251.75,2232.70 -221.77,2225.50 113.27,2091.50 136.47,2075.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1158552748</title></polyline>
+<polyline points="-1.02,1642.70 163.60,2025.70 153.96,2063.90 136.47,2075.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1158552748</title></polyline>
+<polyline points="2041.53,372.60 2003.70,288.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013787</title></polyline>
+<polyline points="2003.70,288.80 1958.73,178.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013787</title></polyline>
+<polyline points="1116.35,508.70 1019.63,547.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013788</title></polyline>
+<polyline points="966.72,570.70 1019.63,547.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013788</title></polyline>
+<polyline points="856.88,294.40 904.97,274.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013789</title></polyline>
+<polyline points="904.97,274.60 1012.22,234.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013789</title></polyline>
+<polyline points="1627.25,530.40 1601.73,457.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013790</title></polyline>
+<polyline points="1552.13,339.10 1601.73,457.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013790</title></polyline>
+<polyline points="836.27,94.80 904.97,274.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013791</title></polyline>
+<polyline points="2003.70,288.80 1601.73,457.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013791</title></polyline>
+<polyline points="2003.70,288.80 2072.93,257.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013791</title></polyline>
+<polyline points="1019.63,547.70 904.97,274.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013791</title></polyline>
+<polyline points="1019.63,547.70 1069.42,674.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013791</title></polyline>
+<polyline points="1601.73,457.70 1164.08,634.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013791</title></polyline>
+<polyline points="1069.42,674.30 1164.08,634.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159013791</title></polyline>
+<polyline points="-880.52,1519.50 -999.46,1200.60" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159177706</title></polyline>
+<polyline points="-1077.44,908.10 -1195.75,607.10" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159177706</title></polyline>
+<polyline points="-1077.44,908.10 -1105.19,917.00 -999.46,1200.60" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159177706</title></polyline>
+<polyline points="-1400.44,105.10 -1321.38,299.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159177706</title></polyline>
+<polyline points="-1400.44,105.10 -1473.60,132.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159177706</title></polyline>
+<polyline points="-2110.05,373.10 -1473.60,132.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159177706</title></polyline>
+<polyline points="-1195.75,607.10 -1321.38,299.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159177706</title></polyline>
+<polyline points="-1400.44,105.10 -1024.98,-36.30" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159216082</title></polyline>
+<polyline points="-765.06,-134.20 -820.02,-113.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159216082</title></polyline>
+<polyline points="-1024.98,-36.30 -820.02,-113.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159216082</title></polyline>
+<polyline points="1069.42,674.30 1043.36,749.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159217178</title></polyline>
+<polyline points="790.14,853.70 1043.36,749.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1159217178</title></polyline>
+<polyline points="-1448.89,985.20 -1461.47,963.70 -1494.39,955.90 -1530.26,964.80 -1863.25,1075.00" fill="none" stroke="hsl(169,65%,32%)" stroke-width="2.4"><title>C17 OSM way 1159542818</title></polyline>
+<polyline points="-1195.75,607.10 -963.14,514.20 -990.89,437.00 -822.79,377.20" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998051</title></polyline>
+<polyline points="-493.01,1372.20 -655.58,943.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998052</title></polyline>
+<polyline points="-723.48,773.70 -655.58,943.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998052</title></polyline>
+<polyline points="-1077.44,908.10 -723.48,773.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998053</title></polyline>
+<polyline points="-723.48,773.70 -664.77,751.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998053</title></polyline>
+<polyline points="-664.77,751.50 -496.58,687.60 -531.65,595.30 -513.71,588.60" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998053</title></polyline>
+<polyline points="-513.71,588.60 -401.56,546.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998053</title></polyline>
+<polyline points="-376.40,612.50 -401.56,546.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998053</title></polyline>
+<polyline points="-376.40,612.50 -302.87,811.30" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998053</title></polyline>
+<polyline points="-139.14,1237.60 -302.87,811.30" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998053</title></polyline>
+<polyline points="441.00,1018.30 442.43,983.80" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998433</title></polyline>
+<polyline points="-37.87,-47.50 3.79,76.40" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998433</title></polyline>
+<polyline points="442.43,983.80 438.77,972.30 384.43,860.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998433</title></polyline>
+<polyline points="3.79,76.40 175.29,430.20" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998433</title></polyline>
+<polyline points="175.29,430.20 274.68,634.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998433</title></polyline>
+<polyline points="274.68,634.70 384.43,860.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1159998433</title></polyline>
+<polyline points="-465.17,258.30 3.79,76.40" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162173987</title></polyline>
+<polyline points="175.29,430.20 26.01,489.30 16.91,466.20" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162173988</title></polyline>
+<polyline points="16.91,466.20 -18.24,377.40 -41.89,386.80 -80.88,288.30 -405.48,416.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162173988</title></polyline>
+<polyline points="-401.56,546.00 -446.26,433.10 -405.48,416.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162173988</title></polyline>
+<polyline points="16.91,466.20 -376.40,612.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162173989</title></polyline>
+<polyline points="-822.79,377.20 -664.77,751.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162174580</title></polyline>
+<polyline points="-822.79,377.20 -916.12,139.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162174580</title></polyline>
+<polyline points="-513.71,588.60 -723.93,60.90 -916.12,139.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162174581</title></polyline>
+<polyline points="-1321.38,299.00 -958.77,155.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162174581</title></polyline>
+<polyline points="-958.77,155.90 -916.12,139.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1162174581</title></polyline>
+<polyline points="3226.44,-67.20 3507.41,354.00 3532.58,404.80 3531.42,445.50 3512.86,494.00 3492.25,524.20 3449.42,561.50 2994.81,899.00 3090.73,1150.10 2974.92,1190.90 2945.11,1302.90 3023.72,1535.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1164247364</title></polyline>
+<polyline points="1122.59,1004.10 1593.44,827.80 1621.63,1083.90 1641.89,1106.20 1677.04,1160.20 1709.61,1186.30 1741.02,1205.10 1825.60,1211.50 2316.70,1145.00 2433.76,1409.20 2556.27,1354.60 2654.15,1409.20 2746.77,1640.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1164247365</title></polyline>
+<polyline points="-302.87,811.30 -456.16,870.90 -655.58,943.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1164502064</title></polyline>
+<polyline points="-302.87,811.30 -152.80,762.10" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1164502064</title></polyline>
+<polyline points="161.10,1279.00 108.28,1143.30" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1164502067</title></polyline>
+<polyline points="2586.07,-3190.90 2808.69,-3234.40 3625.64,-3174.70" fill="none" stroke="hsl(16,65%,32%)" stroke-width="2.4"><title>C8 OSM way 1164590129</title></polyline>
+<polyline points="1121.88,491.30 1290.69,428.20 1365.73,394.80 1410.35,382.40 1444.25,369.40 1516.79,341.00 1625.83,295.40 1768.76,239.50 1945.07,170.00 1909.92,83.40 1885.29,16.80 1873.60,-12.90 1862.54,-42.30 1835.59,-108.40 1809.72,-184.30 1777.87,-271.00 1789.47,-275.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1165313085</title></polyline>
+<polyline points="1121.88,491.30 1088.06,385.60 1008.74,191.10 976.80,126.90 961.10,132.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1165313085</title></polyline>
+<polyline points="1584.96,-771.50 1596.11,-739.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1165313085</title></polyline>
+<polyline points="1584.96,-771.50 1557.66,-847.10 1402.32,-789.10 1374.30,-778.00 1305.15,-750.60 1238.05,-724.20 1171.58,-698.30 1098.06,-669.30 1009.90,-634.60 932.45,-604.10 903.37,-592.70 768.55,-539.60 808.52,-432.30 835.64,-359.60 923.89,-125.80 954.49,-40.60 906.40,-24.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1165313085</title></polyline>
+<polyline points="1596.11,-739.70 1626.90,-655.00 1660.89,-567.40 1687.66,-495.00 1714.60,-424.70 1730.58,-430.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1165313085</title></polyline>
+<polyline points="1792.94,-374.20 1765.46,-446.30 1730.58,-430.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1165313085</title></polyline>
+<polyline points="1792.94,-374.20 1825.51,-288.90 1789.47,-275.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1165313085</title></polyline>
+<polyline points="916.48,62.80 887.04,-17.80 906.40,-24.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1165313085</title></polyline>
+<polyline points="916.48,62.80 944.14,137.80 961.10,132.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1165313085</title></polyline>
+<polyline points="-1024.98,-36.30 -958.77,155.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1166283920</title></polyline>
+<polyline points="-655.58,943.90 -815.21,1000.70 -775.14,1114.60 -999.46,1200.60" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1198234116</title></polyline>
+<polyline points="-465.17,258.30 -405.48,416.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1198234117</title></polyline>
+<polyline points="2014.49,117.70 1953.37,-31.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244691727</title></polyline>
+<polyline points="2014.49,117.70 2027.96,148.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244691727</title></polyline>
+<polyline points="2125.31,349.60 2072.93,257.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244691727</title></polyline>
+<polyline points="2072.93,257.40 2027.96,148.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244691727</title></polyline>
+<polyline points="1815.34,-392.00 1915.99,-123.30 1932.85,-81.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244691727</title></polyline>
+<polyline points="1932.85,-81.80 1953.37,-31.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244691727</title></polyline>
+<polyline points="2351.14,-611.60 1815.34,-392.00" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244691728</title></polyline>
+<polyline points="2351.14,-611.60 2466.69,-662.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244691728</title></polyline>
+<polyline points="916.48,62.80 836.27,94.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244691730</title></polyline>
+<polyline points="545.04,-568.60 602.68,-791.60 817.09,-874.00" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244851613</title></polyline>
+<polyline points="817.09,-874.00 677.36,-1274.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244851613</title></polyline>
+<polyline points="677.36,-1274.10 1107.07,-1439.90" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244851614</title></polyline>
+<polyline points="817.09,-874.00 1516.08,-1144.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244851615</title></polyline>
+<polyline points="1958.73,178.40 1552.13,339.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244851617</title></polyline>
+<polyline points="1958.73,178.40 2027.96,148.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244851617</title></polyline>
+<polyline points="1552.13,339.10 1116.35,508.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244851617</title></polyline>
+<polyline points="2432.34,364.70 2502.02,548.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244851618</title></polyline>
+<polyline points="2516.03,-202.80 2618.82,-245.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244943101</title></polyline>
+<polyline points="2718.30,-286.40 2685.47,-272.90 2664.68,-264.40 2643.80,-255.90 2618.82,-245.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244943102</title></polyline>
+<polyline points="2466.69,-662.40 2480.87,-668.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244943103</title></polyline>
+<polyline points="2502.38,-677.00 2480.87,-668.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1244943103</title></polyline>
+<polyline points="442.43,983.80 469.55,974.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1245026710</title></polyline>
+<polyline points="3023.72,1535.80 2886.76,1593.10 2746.77,1640.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245026712</title></polyline>
+<polyline points="4211.14,-1479.30 3933.73,-971.30 3782.23,-480.60 3637.24,-433.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245026713</title></polyline>
+<polyline points="493.20,1146.40 848.85,1832.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1245026714</title></polyline>
+<polyline points="1006.51,2136.00 848.85,1832.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1245026714</title></polyline>
+<polyline points="836.27,94.80 784.07,116.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245266126</title></polyline>
+<polyline points="3359.21,-547.40 3387.14,-558.80 3456.55,-586.00 3513.57,-608.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245266127</title></polyline>
+<polyline points="3358.67,-995.20 3268.74,-958.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245266128</title></polyline>
+<polyline points="428.60,842.20 384.43,860.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1245274147</title></polyline>
+<polyline points="1116.35,508.70 1012.22,234.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245278033</title></polyline>
+<polyline points="701.00,-560.70 906.40,-24.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245278033</title></polyline>
+<polyline points="1012.22,234.50 961.10,132.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245278033</title></polyline>
+<polyline points="906.40,-24.30 937.81,53.50 961.10,132.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245278033</title></polyline>
+<polyline points="1174.79,-117.70 1097.97,-327.30 1215.39,-370.30" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1245278034</title></polyline>
+<polyline points="1127.77,-599.00 1164.17,-510.20" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1245278034</title></polyline>
+<polyline points="1215.39,-370.30 1164.17,-510.20" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1245278034</title></polyline>
+<polyline points="3149.35,-42.30 3120.09,-126.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245278035</title></polyline>
+<polyline points="1757.17,-349.20 1730.58,-430.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245556385</title></polyline>
+<polyline points="1757.17,-349.20 1789.47,-275.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245556385</title></polyline>
+<polyline points="1958.73,178.40 1869.41,-55.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245556385</title></polyline>
+<polyline points="1553.55,-891.80 1730.58,-430.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245556385</title></polyline>
+<polyline points="1869.41,-55.40 1796.07,-262.20 1789.47,-275.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245556385</title></polyline>
+<polyline points="1869.41,-55.40 1932.85,-81.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245556386</title></polyline>
+<polyline points="1953.37,-31.60 2496.93,-248.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1245556387</title></polyline>
+<polyline points="2680.11,-748.20 2650.67,-737.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1246099085</title></polyline>
+<polyline points="2502.38,-677.00 2551.09,-696.40 2650.67,-737.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1246099085</title></polyline>
+<polyline points="3009.98,-958.20 2998.47,-985.30" fill="none" stroke="hsl(325,65%,32%)" stroke-width="2.4"><title>C5 OSM way 1246099086</title></polyline>
+<polyline points="2883.19,-1273.40 2998.47,-985.30" fill="none" stroke="hsl(325,65%,32%)" stroke-width="2.4"><title>C5 OSM way 1246099086</title></polyline>
+<polyline points="3074.40,-796.10 3084.66,-771.90" fill="none" stroke="hsl(325,65%,32%)" stroke-width="2.4"><title>C5 OSM way 1246099087</title></polyline>
+<polyline points="3200.83,-484.80 3084.66,-771.90" fill="none" stroke="hsl(325,65%,32%)" stroke-width="2.4"><title>C5 OSM way 1246099087</title></polyline>
+<polyline points="3052.99,-880.80 3106.97,-902.20" fill="none" stroke="hsl(188,65%,32%)" stroke-width="2.4"><title>C4 OSM way 1246099088</title></polyline>
+<polyline points="2680.11,-748.20 2653.70,-814.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1246099089</title></polyline>
+<polyline points="2680.11,-748.20 2714.29,-665.00" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1246099089</title></polyline>
+<polyline points="2519.15,-1131.80 2653.70,-814.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1246099089</title></polyline>
+<polyline points="2844.29,-338.90 2714.29,-665.00" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1246099089</title></polyline>
+<polyline points="1160.34,-611.50 1168.81,-591.30" fill="none" stroke="hsl(357,65%,32%)" stroke-width="2.4"><title>C21 OSM way 1247085147</title></polyline>
+<polyline points="940.66,-525.00 931.74,-520.60 891.23,-505.00 868.39,-496.80" fill="none" stroke="hsl(255,65%,32%)" stroke-width="2.4"><title>C15 OSM way 1247085148</title></polyline>
+<polyline points="1429.80,-715.30 1500.82,-739.60 1584.96,-771.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1247085156</title></polyline>
+<polyline points="1567.38,-170.90 1587.01,-77.60" fill="none" stroke="hsl(220,65%,32%)" stroke-width="2.4"><title>C20 OSM way 1247150899</title></polyline>
+<polyline points="1544.72,223.10 1539.01,210.20" fill="none" stroke="hsl(306,65%,32%)" stroke-width="2.4"><title>C18 OSM way 1247150900</title></polyline>
+<polyline points="1116.35,508.70 1164.08,634.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1247150903</title></polyline>
+<polyline points="3358.67,-995.20 3407.66,-1013.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1247150904</title></polyline>
+<polyline points="3513.57,-608.60 3557.83,-626.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1247150905</title></polyline>
+<polyline points="3637.24,-433.40 3569.60,-465.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1247150906</title></polyline>
+<polyline points="1241.71,-643.20 1273.38,-551.70" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191571</title></polyline>
+<polyline points="1320.94,-411.10 1273.38,-551.70" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191571</title></polyline>
+<polyline points="1320.94,-411.10 1368.32,-429.20 1409.99,-310.10" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191571</title></polyline>
+<polyline points="1409.99,-310.10 1457.99,-159.90 1529.55,34.00" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191571</title></polyline>
+<polyline points="1529.55,34.00 1685.25,-25.60" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191571</title></polyline>
+<polyline points="1273.38,-551.70 1413.02,-600.70 1395.09,-651.70" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191572</title></polyline>
+<polyline points="1395.09,-651.70 1377.42,-694.40" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191572</title></polyline>
+<polyline points="1447.55,-671.40 1395.09,-651.70" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191573</title></polyline>
+<polyline points="1215.39,-370.30 1320.94,-411.10" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191574</title></polyline>
+<polyline points="1273.38,-551.70 1164.17,-510.20" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191575</title></polyline>
+<polyline points="1569.43,-345.10 1409.99,-310.10" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247191576</title></polyline>
+<polyline points="620.88,-526.90 566.45,-507.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1247191577</title></polyline>
+<polyline points="1529.55,34.00 1502.78,44.50" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247352962</title></polyline>
+<polyline points="1502.78,44.50 1569.52,213.00" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247352962</title></polyline>
+<polyline points="1502.78,44.50 1406.42,80.70" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247352963</title></polyline>
+<polyline points="1406.42,80.70 1471.20,252.60" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247352963</title></polyline>
+<polyline points="1406.42,80.70 1343.61,-63.70" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247352966</title></polyline>
+<polyline points="1202.54,-48.00 1343.61,-63.70" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247352966</title></polyline>
+<polyline points="1343.61,-63.70 1317.37,-139.00" fill="none" stroke="hsl(51,65%,32%)" stroke-width="2.4"><title>C3 OSM way 1247352967</title></polyline>
+<polyline points="1182.20,51.70 1245.37,27.80 1255.00,52.90" fill="none" stroke="hsl(204,65%,32%)" stroke-width="2.4"><title>C12 OSM way 1247657280</title></polyline>
+<polyline points="1182.20,51.70 1191.65,77.20" fill="none" stroke="hsl(204,65%,32%)" stroke-width="2.4"><title>C12 OSM way 1247657280</title></polyline>
+<polyline points="1255.00,52.90 1191.65,77.20" fill="none" stroke="hsl(204,65%,32%)" stroke-width="2.4"><title>C12 OSM way 1247657280</title></polyline>
+<polyline points="3197.98,-1397.30 3151.40,-1377.30 3126.78,-1367.20 3101.97,-1357.60 3074.31,-1346.70 3043.89,-1335.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249393734</title></polyline>
+<polyline points="2998.47,-985.30 2926.82,-954.60 2905.77,-907.70" fill="none" stroke="hsl(325,65%,32%)" stroke-width="2.4"><title>C5 OSM way 1249393735</title></polyline>
+<polyline points="2905.77,-907.70 2958.50,-769.90" fill="none" stroke="hsl(325,65%,32%)" stroke-width="2.4"><title>C5 OSM way 1249393735</title></polyline>
+<polyline points="2958.50,-769.90 3014.00,-746.90 3084.66,-771.90" fill="none" stroke="hsl(325,65%,32%)" stroke-width="2.4"><title>C5 OSM way 1249393735</title></polyline>
+<polyline points="2950.20,-1298.30 3004.81,-1160.40 3066.64,-1004.10" fill="none" stroke="hsl(188,65%,32%)" stroke-width="2.4"><title>C4 OSM way 1249393736</title></polyline>
+<polyline points="3106.97,-902.20 3066.64,-1004.10" fill="none" stroke="hsl(188,65%,32%)" stroke-width="2.4"><title>C4 OSM way 1249393736</title></polyline>
+<polyline points="3106.97,-902.20 3181.56,-717.90" fill="none" stroke="hsl(188,65%,32%)" stroke-width="2.4"><title>C4 OSM way 1249393736</title></polyline>
+<polyline points="3262.85,-509.10 3217.34,-624.80 3181.56,-717.90" fill="none" stroke="hsl(188,65%,32%)" stroke-width="2.4"><title>C4 OSM way 1249393736</title></polyline>
+<polyline points="3159.26,-1037.70 3071.37,-1006.20 3066.64,-1004.10" fill="none" stroke="hsl(188,65%,32%)" stroke-width="2.4"><title>C4 OSM way 1249393738</title></polyline>
+<polyline points="3278.28,-758.10 3253.39,-747.60" fill="none" stroke="hsl(188,65%,32%)" stroke-width="2.4"><title>C4 OSM way 1249393739</title></polyline>
+<polyline points="3181.56,-717.90 3214.31,-731.40 3253.39,-747.60" fill="none" stroke="hsl(188,65%,32%)" stroke-width="2.4"><title>C4 OSM way 1249393739</title></polyline>
+<polyline points="2325.98,-1053.00 2301.26,-1044.10 2191.16,-1004.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398685</title></polyline>
+<polyline points="3039.07,-348.20 3028.99,-344.30 3044.33,-305.10" fill="none" stroke="hsl(341,65%,32%)" stroke-width="2.4"><title>C13 OSM way 1249398694</title></polyline>
+<polyline points="3039.07,-348.20 3053.88,-308.90 3044.33,-305.10" fill="none" stroke="hsl(341,65%,32%)" stroke-width="2.4"><title>C13 OSM way 1249398694</title></polyline>
+<polyline points="3039.07,-348.20 3014.26,-410.70" fill="none" stroke="hsl(341,65%,32%)" stroke-width="2.4"><title>C13 OSM way 1249398695</title></polyline>
+<polyline points="2779.60,-341.50 2814.13,-355.80 2819.84,-341.90" fill="none" stroke="hsl(153,65%,32%)" stroke-width="2.4"><title>C9 OSM way 1249398696</title></polyline>
+<polyline points="2779.60,-341.50 2784.87,-328.50 2819.84,-341.90" fill="none" stroke="hsl(153,65%,32%)" stroke-width="2.4"><title>C9 OSM way 1249398696</title></polyline>
+<polyline points="2779.60,-341.50 2759.26,-333.50" fill="none" stroke="hsl(153,65%,32%)" stroke-width="2.4"><title>C9 OSM way 1249398697</title></polyline>
+<polyline points="2706.97,-313.10 2759.26,-333.50" fill="none" stroke="hsl(153,65%,32%)" stroke-width="2.4"><title>C9 OSM way 1249398697</title></polyline>
+<polyline points="2759.26,-333.50 2770.86,-308.30" fill="none" stroke="hsl(153,65%,32%)" stroke-width="2.4"><title>C9 OSM way 1249398698</title></polyline>
+<polyline points="2703.40,-645.10 2684.66,-636.90 2697.60,-606.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398704</title></polyline>
+<polyline points="2703.40,-645.10 2715.72,-614.20 2697.60,-606.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398704</title></polyline>
+<polyline points="2631.75,-826.00 2613.11,-869.60 2591.51,-860.50" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398705</title></polyline>
+<polyline points="2631.75,-826.00 2608.64,-816.90" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398705</title></polyline>
+<polyline points="2591.51,-860.50 2608.64,-816.90" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398705</title></polyline>
+<polyline points="2433.85,-789.00 2480.87,-668.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398707</title></polyline>
+<polyline points="2608.64,-816.90 2650.67,-737.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398708</title></polyline>
+<polyline points="2608.64,-816.90 2562.43,-797.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398708</title></polyline>
+<polyline points="2517.37,-779.00 2562.43,-797.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398708</title></polyline>
+<polyline points="2703.40,-645.10 2650.67,-737.10" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249398711</title></polyline>
+<polyline points="2653.70,-814.10 2693.50,-829.20 2710.72,-786.20 2775.85,-814.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249585729</title></polyline>
+<polyline points="2714.29,-665.00 2747.12,-678.00 2732.76,-717.20 2803.69,-743.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1249585730</title></polyline>
+<polyline points="2851.25,-887.70 2905.77,-907.70" fill="none" stroke="hsl(325,65%,32%)" stroke-width="2.4"><title>C5 OSM way 1249585731</title></polyline>
+<polyline points="2911.57,-746.00 2958.50,-769.90" fill="none" stroke="hsl(325,65%,32%)" stroke-width="2.4"><title>C5 OSM way 1249585732</title></polyline>
+<polyline points="2656.83,-1308.10 2649.78,-1327.00" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1254788393</title></polyline>
+<polyline points="2619.26,-1401.50 2649.78,-1327.00" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1254788393</title></polyline>
+<polyline points="2665.30,-1258.80 2649.42,-1252.50 2634.16,-1289.90" fill="none" stroke="hsl(118,65%,32%)" stroke-width="2.4"><title>C14 OSM way 1254788396</title></polyline>
+<polyline points="2665.30,-1258.80 2650.40,-1296.50 2634.16,-1289.90" fill="none" stroke="hsl(118,65%,32%)" stroke-width="2.4"><title>C14 OSM way 1254788396</title></polyline>
+<polyline points="2665.30,-1258.80 2688.59,-1197.60" fill="none" stroke="hsl(118,65%,32%)" stroke-width="2.4"><title>C14 OSM way 1254788397</title></polyline>
+<polyline points="2656.83,-1308.10 2698.58,-1201.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 1254788398</title></polyline>
+<polyline points="2472.84,-1097.00 2481.41,-1075.90 2524.51,-1092.70" fill="none" stroke="hsl(239,65%,32%)" stroke-width="2.4"><title>C7 OSM way 1254788402</title></polyline>
+<polyline points="2472.84,-1097.00 2515.94,-1114.20 2524.51,-1092.70" fill="none" stroke="hsl(239,65%,32%)" stroke-width="2.4"><title>C7 OSM way 1254788402</title></polyline>
+<polyline points="2472.84,-1097.00 2448.57,-1087.60" fill="none" stroke="hsl(239,65%,32%)" stroke-width="2.4"><title>C7 OSM way 1254788403</title></polyline>
+<polyline points="2330.53,-1041.10 2448.57,-1087.60" fill="none" stroke="hsl(239,65%,32%)" stroke-width="2.4"><title>C7 OSM way 1254788403</title></polyline>
+<polyline points="2448.57,-1087.60 2460.44,-1058.60" fill="none" stroke="hsl(239,65%,32%)" stroke-width="2.4"><title>C7 OSM way 1254788404</title></polyline>
+<polyline points="2443.40,-1101.70 2448.57,-1087.60" fill="none" stroke="hsl(239,65%,32%)" stroke-width="2.4"><title>C7 OSM way 1254788405</title></polyline>
+<polyline points="3348.32,-788.20 3365.63,-794.70 3361.53,-804.70" fill="none" stroke="hsl(290,65%,32%)" stroke-width="2.4"><title>C10 OSM way 1254788411</title></polyline>
+<polyline points="3348.32,-788.20 3344.31,-797.80" fill="none" stroke="hsl(290,65%,32%)" stroke-width="2.4"><title>C10 OSM way 1254788411</title></polyline>
+<polyline points="3361.53,-804.70 3344.31,-797.80" fill="none" stroke="hsl(290,65%,32%)" stroke-width="2.4"><title>C10 OSM way 1254788411</title></polyline>
+<polyline points="3344.31,-797.80 3334.76,-793.90" fill="none" stroke="hsl(290,65%,32%)" stroke-width="2.4"><title>C10 OSM way 1254788412</title></polyline>
+<polyline points="3219.75,-1106.90 3239.83,-1114.80 3235.54,-1125.60" fill="none" stroke="hsl(67,65%,32%)" stroke-width="2.4"><title>C11 OSM way 1254788417</title></polyline>
+<polyline points="3219.75,-1106.90 3215.20,-1117.70" fill="none" stroke="hsl(67,65%,32%)" stroke-width="2.4"><title>C11 OSM way 1254788417</title></polyline>
+<polyline points="3235.54,-1125.60 3215.20,-1117.70" fill="none" stroke="hsl(67,65%,32%)" stroke-width="2.4"><title>C11 OSM way 1254788417</title></polyline>
+<polyline points="3215.20,-1117.70 3139.27,-1090.60" fill="none" stroke="hsl(67,65%,32%)" stroke-width="2.4"><title>C11 OSM way 1254788418</title></polyline>
+<polyline points="3241.88,-770.60 3253.39,-747.60" fill="none" stroke="hsl(188,65%,32%)" stroke-width="2.4"><title>C4 OSM way 1254788420</title></polyline>
+<polyline points="1740.93,-159.10 1699.08,-143.50 1656.34,-126.90 1646.08,-122.90" fill="none" stroke="hsl(99,65%,32%)" stroke-width="2.4"><title>C27 OSM way 1271152918</title></polyline>
+<polyline points="1631.80,-475.80 1611.10,-468.90 1541.42,-442.50 1532.32,-439.20" fill="none" stroke="hsl(236,65%,32%)" stroke-width="2.4"><title>C28 OSM way 1271152923</title></polyline>
+<polyline points="1560.69,-628.10 1487.53,-601.30 1475.21,-595.60" fill="none" stroke="hsl(13,65%,32%)" stroke-width="2.4"><title>C29 OSM way 1271152931</title></polyline>
+<polyline points="1481.10,248.80 1500.20,298.00" fill="none" stroke="hsl(322,65%,32%)" stroke-width="2.4"><title>C26 OSM way 1271669884</title></polyline>
+<polyline points="980.99,-412.80 904.97,-385.00" fill="none" stroke="hsl(134,65%,32%)" stroke-width="2.4"><title>C22 OSM way 1271669898</title></polyline>
+<polyline points="1009.63,-336.90 934.95,-309.50" fill="none" stroke="hsl(271,65%,32%)" stroke-width="2.4"><title>C23 OSM way 1271669899</title></polyline>
+<polyline points="1036.40,-261.20 963.59,-233.50" fill="none" stroke="hsl(48,65%,32%)" stroke-width="2.4"><title>C24 OSM way 1271669900</title></polyline>
+<polyline points="1068.43,-181.70 991.34,-154.50" fill="none" stroke="hsl(185,65%,32%)" stroke-width="2.4"><title>C25 OSM way 1271669901</title></polyline>
+<polyline points="1176.49,-594.20 1168.37,-615.00" fill="none" stroke="hsl(83,65%,32%)" stroke-width="2.4"><title>C19 OSM way 1271670518</title></polyline>
+<polyline points="1006.51,2136.00 1242.42,2622.40 888.11,2778.90 745.44,2381.80" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1365893470</title></polyline>
+<polyline points="-765.06,-134.20 -433.14,-251.90 -384.07,-123.80 -113.63,-236.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303892</title></polyline>
+<polyline points="-37.87,-47.50 -113.63,-236.00" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303892</title></polyline>
+<polyline points="-113.63,-236.00 -211.33,-451.40 -287.35,-618.90" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303894</title></polyline>
+<polyline points="-287.35,-618.90 -735.17,-453.40" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303894</title></polyline>
+<polyline points="-922.46,-379.20 -820.02,-113.50" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303894</title></polyline>
+<polyline points="-922.46,-379.20 -735.17,-453.40" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303894</title></polyline>
+<polyline points="-922.46,-379.20 -1346.01,-226.20 -1485.74,-556.80" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303895</title></polyline>
+<polyline points="-1485.74,-556.80 -1713.71,-474.90 -1473.60,132.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303895</title></polyline>
+<polyline points="-287.35,-618.90 -627.39,-1368.60 -837.51,-1285.90 -1030.33,-1219.50 -970.37,-1059.20 -887.12,-825.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303896</title></polyline>
+<polyline points="-735.17,-453.40 -811.28,-651.90 -887.12,-825.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303896</title></polyline>
+<polyline points="848.85,1832.00 496.32,1982.00 306.36,2040.90 136.47,2075.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303900</title></polyline>
+<polyline points="-1485.74,-556.80 -887.12,-825.70" fill="none" stroke="hsl(274,65%,32%)" stroke-width="2.4"><title>C2 OSM way 1568303901</title></polyline>
+<polyline points="3149.35,-42.30 2661.91,141.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="3149.35,-42.30 3197.80,60.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="2125.31,349.60 2168.41,331.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="2125.31,349.60 2041.53,372.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="2661.91,141.60 2566.35,182.20" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="2566.35,182.20 2168.41,331.30" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="2610.52,300.50 3197.80,60.40" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="2610.52,300.50 2432.34,364.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="2215.34,443.00 1674.27,651.80" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="2215.34,443.00 2432.34,364.70" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="1627.25,530.40 2041.53,372.60" fill="none" stroke="hsl(137,65%,32%)" stroke-width="2.4"><title>C1 OSM way 926664392</title></polyline>
+<polyline points="916.48,62.80 937.81,53.50 1129.11,-19.50 1202.54,-48.00 1174.79,-117.70 1317.37,-139.00 1457.99,-159.90 1514.29,-175.60 1598.43,-249.90 1757.17,-349.20" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 926463927: indoor_or_room</title></polyline>
+<text x="1317.4" y="-146.0" font-size="12" fill="#8a1111">926463927</text>
+<polyline points="327.42,607.10 274.24,500.50 220.97,405.40" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1154145269: unsupported_level_or_layer</title></polyline>
+<text x="274.2" y="493.5" font-size="12" fill="#8a1111">1154145269</text>
+<polyline points="620.25,400.20 856.88,294.40" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1154145270: grade_separated_requires_review</title></polyline>
+<text x="856.9" y="287.4" font-size="12" fill="#8a1111">1154145270</text>
+<polyline points="550.03,249.90 620.25,400.20" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1154145273: unsupported_level_or_layer</title></polyline>
+<text x="620.3" y="393.2" font-size="12" fill="#8a1111">1154145273</text>
+<polyline points="2325.98,-1053.00 2343.02,-1059.70 2443.40,-1101.70 2480.87,-1115.70 2519.15,-1131.80 2542.35,-1139.90 2583.48,-1155.70 2666.28,-1189.00 2688.59,-1197.60 2698.58,-1201.40 2778.62,-1232.50 2793.79,-1238.50 2883.19,-1273.40 2950.20,-1298.30 3043.89,-1335.10 3052.18,-1311.70 3097.51,-1195.40 3121.51,-1137.30 3133.83,-1104.70 3139.27,-1090.60 3159.26,-1037.70 3230.19,-1063.40 3237.95,-1044.60 3268.74,-958.40 3316.56,-841.30 3332.09,-800.90 3334.76,-793.90 3339.31,-782.10 3278.28,-758.10 3309.87,-675.50 3314.51,-663.60 3345.47,-584.30 3355.11,-559.40 3359.21,-547.40 3323.34,-533.20 3262.85,-509.10 3230.10,-495.30 3211.72,-488.70 3200.83,-484.80 3190.48,-480.70 3128.74,-456.40 3091.09,-440.80 3047.28,-423.30 3029.79,-416.80 3014.26,-410.70 3000.08,-405.10 2929.59,-376.20 2885.33,-356.90 2844.29,-338.90 2770.86,-308.30 2718.30,-286.40 2706.97,-313.10 2670.83,-397.20 2631.93,-497.40 2619.80,-528.60 2590.00,-602.00 2583.48,-618.20 2551.09,-696.40 2517.37,-779.00 2433.85,-789.00 2411.37,-843.90 2370.68,-943.60 2342.40,-1012.90 2330.53,-1041.10 2325.98,-1053.00" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1158509500: indoor_or_room</title></polyline>
+<text x="3355.1" y="-566.4" font-size="12" fill="#8a1111">1158509500</text>
+<polyline points="299.49,622.30 327.42,607.10" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1159217177: blocked_or_level_node_segment</title></polyline>
+<text x="327.4" y="600.1" font-size="12" fill="#8a1111">1159217177</text>
+<polyline points="-1837.20,1150.90 -1863.25,1075.00 -1880.65,1025.40 -2110.05,373.10 -2435.54,-563.80 -2421.18,-973.00 -2526.46,-1248.30 -2564.74,-1378.70 -2534.85,-1491.20 -2484.53,-1634.80 -2372.10,-1795.10 -2029.83,-2235.40 -1959.26,-2271.30 -1901.79,-2274.90 -1791.69,-2260.60 -1469.85,-2163.60 -1207.80,-2096.60 -1016.32,-2050.00 -867.94,-2006.90 -780.59,-1990.10 -607.76,-2007.10 -520.58,-2015.60" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1159542817: path_outside_exact_campus_coverage_or_cross_campus_gap</title></polyline>
+<text x="-2029.8" y="-2242.4" font-size="12" fill="#8a1111">1159542817</text>
+<polyline points="274.68,634.70 299.49,622.30" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1245274146: blocked_or_level_node_segment</title></polyline>
+<text x="299.5" y="615.3" font-size="12" fill="#8a1111">1245274146</text>
+<polyline points="220.97,405.40 550.03,249.90" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1246099090: unsupported_level_or_layer</title></polyline>
+<text x="550.0" y="242.9" font-size="12" fill="#8a1111">1246099090</text>
+<polyline points="1915.99,-123.30 2035.19,-171.70 2458.48,-343.60" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1271244213: indoor_or_room</title></polyline>
+<text x="2035.2" y="-178.7" font-size="12" fill="#8a1111">1271244213</text>
+<polyline points="-211.33,-451.40 -433.95,-355.30 -433.14,-251.90" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED 1568303898: unsupported_level_or_layer</title></polyline>
+<text x="-433.9" y="-362.3" font-size="12" fill="#8a1111">1568303898</text>
+<text x="1757.2" y="-353.2" font-family="sans-serif" font-size="12" font-weight="bold">C1</text>
+<text x="-1124.2" y="2278.5" font-family="sans-serif" font-size="12" font-weight="bold">C2</text>
+<text x="1174.8" y="-121.7" font-family="sans-serif" font-size="12" font-weight="bold">C3</text>
+<text x="3053.0" y="-884.8" font-family="sans-serif" font-size="12" font-weight="bold">C4</text>
+<text x="3010.0" y="-962.2" font-family="sans-serif" font-size="12" font-weight="bold">C5</text>
+<text x="505.6" y="2305.0" font-family="sans-serif" font-size="12" font-weight="bold">C6</text>
+<text x="2472.8" y="-1101.0" font-family="sans-serif" font-size="12" font-weight="bold">C7</text>
+<text x="1590.3" y="-3622.1" font-family="sans-serif" font-size="12" font-weight="bold">C8</text>
+<text x="2779.6" y="-345.5" font-family="sans-serif" font-size="12" font-weight="bold">C9</text>
+<text x="3348.3" y="-792.2" font-family="sans-serif" font-size="12" font-weight="bold">C10</text>
+<text x="3219.8" y="-1110.9" font-family="sans-serif" font-size="12" font-weight="bold">C11</text>
+<text x="1182.2" y="47.7" font-family="sans-serif" font-size="12" font-weight="bold">C12</text>
+<text x="3039.1" y="-352.2" font-family="sans-serif" font-size="12" font-weight="bold">C13</text>
+<text x="2665.3" y="-1262.8" font-family="sans-serif" font-size="12" font-weight="bold">C14</text>
+<text x="940.7" y="-529.0" font-family="sans-serif" font-size="12" font-weight="bold">C15</text>
+<text x="-1717.5" y="659.9" font-family="sans-serif" font-size="12" font-weight="bold">C16</text>
+<text x="-1448.9" y="981.2" font-family="sans-serif" font-size="12" font-weight="bold">C17</text>
+<text x="1544.7" y="219.1" font-family="sans-serif" font-size="12" font-weight="bold">C18</text>
+<text x="1176.5" y="-598.2" font-family="sans-serif" font-size="12" font-weight="bold">C19</text>
+<text x="1567.4" y="-174.9" font-family="sans-serif" font-size="12" font-weight="bold">C20</text>
+<text x="1160.3" y="-615.5" font-family="sans-serif" font-size="12" font-weight="bold">C21</text>
+<text x="981.0" y="-416.8" font-family="sans-serif" font-size="12" font-weight="bold">C22</text>
+<text x="1009.6" y="-340.9" font-family="sans-serif" font-size="12" font-weight="bold">C23</text>
+<text x="1036.4" y="-265.2" font-family="sans-serif" font-size="12" font-weight="bold">C24</text>
+<text x="1068.4" y="-185.7" font-family="sans-serif" font-size="12" font-weight="bold">C25</text>
+<text x="1481.1" y="244.8" font-family="sans-serif" font-size="12" font-weight="bold">C26</text>
+<text x="1740.9" y="-163.1" font-family="sans-serif" font-size="12" font-weight="bold">C27</text>
+<text x="1631.8" y="-479.8" font-family="sans-serif" font-size="12" font-weight="bold">C28</text>
+<text x="1560.7" y="-632.1" font-family="sans-serif" font-size="12" font-weight="bold">C29</text>
+<circle cx="620.3" cy="400.2" r="4" fill="#111"/><text x="626.3" y="415.2" font-family="sans-serif" font-size="12">10733816254</text>
+<circle cx="550.0" cy="249.9" r="4" fill="#111"/><text x="556.0" y="264.9" font-family="sans-serif" font-size="12">10733816255</text>
+<circle cx="221.0" cy="405.4" r="4" fill="#111"/><text x="227.0" y="420.4" font-family="sans-serif" font-size="12">10733816256</text>
+<circle cx="327.4" cy="607.1" r="4" fill="#111"/><text x="333.4" y="622.1" font-family="sans-serif" font-size="12">10733816257</text>
+<circle cx="299.5" cy="622.3" r="4" fill="#111"/><text x="305.5" y="637.3" font-family="sans-serif" font-size="12">10778271605</text>
+<circle cx="856.9" cy="294.4" r="4" fill="#111"/><text x="862.9" y="309.4" font-family="sans-serif" font-size="12">10769840689</text>
+<circle cx="1978.6" cy="884.1" r="4" fill="#111"/><text x="1984.6" y="899.1" font-family="sans-serif" font-size="12">12585506492</text>
+</g><text x="30" y="810" font-family="sans-serif" font-size="14">WGS84 [longitude, latitude] · visual latitude correction only · no survey, access or accessibility verification</text>
+<text x="30" y="838" font-family="sans-serif" font-size="13">© OpenStreetMap contributors · ODbL 1.0 · https://www.openstreetmap.org/copyright</text></svg>

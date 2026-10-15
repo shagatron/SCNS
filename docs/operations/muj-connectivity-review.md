@@ -38,6 +38,35 @@ Start-Process 'http://localhost:5173/admin'
 
 Do not use `down -v`, seed/reset/bootstrap, discard local changes, or remove a volume. API/frontend are briefly stopped for the normal migration/start sequence; no new database tables, automatic imports, source approvals or publications occur. If a command fails, stop and keep its output; existing data remains, and later commands should not be run blindly.
 
+## Recover the already-applied Windows correction (receipt bug)
+
+The owner reported that APPLY committed, then `client.session["user"]["id"]` raised `KeyError: 'user'`. A subsequent owner-run `--plan-only` verified **already_applied, draft version6,20additions/2deletions**. This is owner-reported Windows evidence, not an inspection of that database by the agent. **Preserve that committed correction. Do not type APPLY again, rerun setup or reimport bundles.**
+
+The actual authenticated login/session JSON has top-level `user_id`, `username`, `display_name`, `csrf_token`, `expires_at`, `grants`; there is no nested `user`. The fixed CLI validates the authenticated identity before any graph write. The full update block above rebuilds/restarts services without replacing data; this fix adds no migration. After that update, run this **read-only graph recovery** from the same repository PowerShell:
+
+```powershell
+$scnsMujDraft = 'd1a8bb10-cd34-4fe3-905b-53996334dd40'
+Invoke-ScnsStep { docker compose run --rm --no-deps api python -m app.cli.muj_update --draft $scnsMujDraft --recover-receipt }
+```
+
+Enter the existing MUJ owner/editor username and hidden password. Do not use `-T`, pipe credentials or put passwords in arguments. Recovery never prompts APPLY and sends **no graph POST**. Normal login/logout still create/revoke a session; recovery creates only private local preview/verification files. It verifies all correction records/deletions, affected dependencies, pinned manifest and saved draft version. On the reported unchanged Windows state expect:
+
+- `Correction already_applied: {'add': 20, 'update': 0, 'delete': 2}`. These counts describe the correction already present; **zero new graph operations** occur.
+- `Verified already_applied at draft version 6; no graph writes.` Version6 stays6 unless a separate legitimate edit has occurred.
+- A private `verification-v6-<manifest-prefix>.json` under `/app/storage/private/muj-updates/d1a8bb10-cd34-4fe3-905b-53996334dd40/`. Reruns safely refresh this verification file; existing application receipts/import jobs remain untouched.
+
+The receipt has `receipt_type: state_verification`, `verified_by` (the current verifier), `graph_writes_this_run: 0`, saved version and manifest/record evidence. It deliberately has **no `requested_by` or `audit_request_id`**: recovery cannot establish the original application actor/request from current graph state. The original server audits remain authoritative; no new application audit or reconstructed evidence is inserted. A successful new application receipt separately uses the actual session `user_id` and POST response request ID.
+
+If the correction is absent, partially applied, changed at an affected record/dependency, or source pins differ, recovery stops rather than repairing/overwriting anything. Unrelated owner edits are preserved and can legitimately advance the verified version. If private storage is unwritable, fix disk space/permissions without deleting retained files, then repeat **only `--recover-receipt`**. A failed receipt save after a successful graph transaction explicitly says the graph succeeded. An interrupted API response may also have committed: verify using the same read-only recovery command before any further decision. `--plan-only` remains preview-and-exit and does not save a verification receipt.
+
+Optional receipt summary (no credential values printed):
+
+```powershell
+Invoke-ScnsStep { docker compose exec -T api python -c "from pathlib import Path; import json; p=max(Path('/app/storage/private/muj-updates/$scnsMujDraft').glob('verification-*.json'),key=lambda p:p.stat().st_mtime_ns); r=json.loads(p.read_text()); print(p.name); print({k:r[k] for k in ('receipt_type','state','revision_version','counts','graph_writes_this_run','evidence_limit')})" }
+```
+
+Reload the existing MUJ draft in admin: unchanged preparation has295nodes/700directed edges/22anchors, unpublished. Recovery neither approves sources nor publishes releases. The reported version6 is preserved; the cloud test fixtures use separate disposable versions, not this Windows draft.
+
 ## Exact manual checks
 
 1. Before applying the optional correction below, sign in with your existing owner account. Under **Assigned campus**, select **Manipal University Jaipur (OSM preparation)**. Under **Selected draft**, select the existing reported draft`d1a8bb10-cd34-4fe3-905b-53996334dd40`, verifying it is yours and still editable. If absent, stop and inspect; do not recreate/import to force this test.
@@ -49,6 +78,8 @@ Do not use `down -v`, seed/reset/bootstrap, discard local changes, or remove a v
 7. Compare `docs/data/muj-connectivity/README.md` (preserved v1) with `docs/data/muj-connectivity-v2/README.md` and their SVGs. Both inventories list29components; unanchored places decrease34→33. Solid coloured paths are current preparation. Dashed red subway/corridor lines are **excluded OSM review candidates, not newly applied paths**. Read [the evidence collection list](../data/muj-connectivity-review.md#prioritized-owner-evidence-collection) before collecting anything. No sign printing/scanning/physical GPS/accessibility is verified by these checks.
 
 ## Preview and apply the source-supported v2 draft correction
+
+**For a v1 draft that has not yet received the correction only. The owner-reported version6 is already corrected: use read-only recovery above instead.**
 
 Close/save any unrelated unsaved editor input first. This workflow does not touch other drafts/releases and never resets your data. It preserves unrelated owner edits; changed affected edges, existing endpoints, the new anchor's destination, ID collisions or manual partial changes stop for reconciliation. Do not undo your survey/edit merely to force a match. A frozen/submitted draft must follow normal review controls; this helper cannot unfreeze it.
 
@@ -71,7 +102,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Preview unavailable; do not apply.' }
 
 Match the filename/version to the first terminal's printed preview. Inspect every before/after geometry, the two explicit removals and dependencies. These are OSM/source records, not passwords; keep receipts/private notes out of public issues. If another operator generated a different preview, inspect the exact printed file instead of assuming the newest is yours. Then return to the first terminal and type **APPLY** only after review. Any other input stops without a write. `--plan-only` can be appended to the helper command for preview-and-exit; a subsequent run creates/rechecks a fresh preview and must be reviewed again.
 
-The helper sends exactly that versioned patch through the normal graph API. Server permissions, Origin/CSRF, draft-wide If-Match, full combined-state validation, ordered deletes/creates, transaction and audits remain enforced. Source/content/independent approval and publication are untouched. The final response/receipt records the server audit request ID and requesting actor; every newly created graph audit carries the v2 manifest marker. Private preview/receipt files use restrictive permissions under the retained private volume; credentials are never written there. If the network/receipt write is interrupted, rerun: exact target state reports`already_applied` with no additional writes/version/audits. Other partial/manual differences stop. A different version before application requires a new preview/review, not automatic overwrite. The original v1 helper is refused on the corrected original draft and rechecks immutable correction history immediately before each pending-batch apply; If-Match protects a concurrent change after that check.
+The helper sends exactly that versioned patch through the normal graph API. Server permissions, Origin/CSRF, draft-wide If-Match, full combined-state validation, ordered deletes/creates, transaction and audits remain enforced. Source/content/independent approval and publication are untouched. The final response/receipt records the server audit request ID and requesting actor; every newly created graph audit carries the v2 manifest marker. Private preview/receipt files use restrictive permissions under the retained private volume; credentials are never written there. If the network/receipt write is interrupted, use `--recover-receipt` above: exact target state reports`already_applied` with no additional graph writes/version/audits and a verification-only receipt; original application audit evidence is not reconstructed. Other partial/manual differences stop. A different version before application requires a new preview/review, not automatic overwrite. The original v1 helper is refused on the corrected original draft and rechecks immutable correction history immediately before each pending-batch apply; If-Match protects a concurrent change after that check.
 
 Expected otherwise unchanged result:51buildings/55destinations/**295nodes/700directed edges/22anchors**,29weak components/33unanchored; one edit-version increment (clean v1 version5→6),22normal actor audit events, no public MUJ release. Old C2/C17 join but another independent source run is retained; a lower component count is not the acceptance target. Original three import jobs/receipts stay unchanged, source remains unapproved and warnings unacknowledged.
 

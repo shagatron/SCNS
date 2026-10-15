@@ -1,26 +1,30 @@
 """Actual built helper/API/import worker, owned disposable DB; no developer writes."""
 
+import json
 import os
 import secrets
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from unittest.mock import patch
 from uuid import UUID
 
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session
 
+from app.cli import muj_update as updater
 from app.cli.admin import bootstrap
 from app.cli.dataset import read_bundle, seed_bundle
 from app.cli.indoor_demo import DemoError
 from app.cli.muj import LocalClient, stage
+from app.core.config import get_settings
 from app.models import ActiveRelease, Campus, Edge, Place, Revision
 from app.models.admin import AuditEvent
 from app.models.imports import ImportJob
 from app.models.publication import SourceAsset
 from app.services.imports import stable_id
 from app.services.muj_setup import CAMPUS_ID, ROOT
-from app.services.muj_update import apply_reviewed, plan
+from app.services.muj_update import plan
 
 
 def main():
@@ -114,9 +118,78 @@ def main():
         path = f"/api/v1/admin/campuses/{CAMPUS_ID}/drafts/{state['draft_id']}/graph"
         preview = plan(client.request("GET", path), state["draft_id"])
         assert preview["counts"] == {"add": 20, "update": 0, "delete": 2}
-        receipt = apply_reviewed(client, preview)
-        assert receipt["state"] == "applied"
-        assert apply_reviewed(client, preview)["state"] == "already_applied"
+        # Exercise the actual CLI and HTTP session response, not just service functions.
+        # Prompt boundary supplies random ephemeral credentials in RAM; auth/CSRF stay real.
+        posts = []
+        base_client = updater.Client
+        real_persist = updater.persist
+
+        class TrackedClient(base_client):
+            def request(self, method, request_path, *args, **kwargs):
+                response = super().request(method, request_path, *args, **kwargs)
+                if method == "POST" and request_path == path:
+                    posts.append(self.last_request_id)
+                return response
+
+        def login(c, _):
+            session = c.login("muj-test-owner", password)
+            assert "user_id" in session and "user" not in session
+            assert c.request("GET", "/api/v1/admin/session") == session
+            print("Actual built authenticated session keys:", sorted(session))
+
+        def fail_receipt(target, document):
+            if target.name.startswith("receipt-"):
+                raise OSError("Injected receipt save failure after committed graph")
+            real_persist(target, document)
+
+        argv = ["muj_update", "--draft", state["draft_id"]]
+        with (
+            patch.object(updater, "Client", TrackedClient),
+            patch.object(updater, "prompt_login", login),
+            patch("sys.argv", argv),
+            patch("builtins.input", return_value="APPLY"),
+            patch.object(updater, "persist", fail_receipt),
+        ):
+            try:
+                updater.main()
+            except SystemExit as error:
+                assert "Graph application succeeded, but receipt saving failed" in str(error)
+            else:
+                raise AssertionError("Expected post-commit receipt failure")
+        folder = Path(get_settings().storage_root) / "private/muj-updates" / state["draft_id"]
+        assert not list(folder.glob("receipt-*.json"))
+        with Session(engine) as db:
+            original_audits = list(
+                db.scalars(select(AuditEvent.id).where(AuditEvent.campus_id == CAMPUS_ID))
+            )
+        with (
+            patch.object(updater, "Client", TrackedClient),
+            patch.object(updater, "prompt_login", login),
+            patch("sys.argv", [*argv, "--recover-receipt"]),
+            patch("builtins.input", side_effect=AssertionError("Recovery must never ask APPLY")),
+        ):
+            updater.main()
+            updater.main()
+        assert len(posts) == 1
+        files = list(folder.glob("verification-*.json"))
+        assert len(files) == 1
+        verified = json.loads(files[0].read_text())
+        assert verified["state"] == "already_applied" and verified["revision_version"] == v + 1
+        assert (
+            verified["receipt_type"] == "state_verification"
+            and verified["graph_writes_this_run"] == 0
+        )
+        assert "audit_request_id" not in verified and "requested_by" not in verified
+        assert password not in files[0].read_text() and "csrf_token" not in files[0].read_text()
+        assert files[0].stat().st_mode & 0o777 == 0o600
+        with Session(engine) as db:
+            assert (
+                list(db.scalars(select(AuditEvent.id).where(AuditEvent.campus_id == CAMPUS_ID)))
+                == original_audits
+            )
+        print(
+            "PASS built actual CLI: real top-level user_id session, committed graph + failed receipt, two read-only recoveries, one graph POST, unchanged audits/version, truthful private receipt."
+        )
         corrected = client.request("GET", path)
         assert (len(corrected["nodes"]), len(corrected["edges"]), len(corrected["anchors"])) == (
             295,
@@ -129,7 +202,7 @@ def main():
                 db.scalar(
                     select(func.count())
                     .select_from(AuditEvent)
-                    .where(AuditEvent.request_id == receipt["audit_request_id"])
+                    .where(AuditEvent.request_id == posts[0])
                 )
                 == 22
             )

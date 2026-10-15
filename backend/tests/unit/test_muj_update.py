@@ -99,3 +99,47 @@ def test_owner_edit_to_newly_anchored_destination_is_not_silently_reinterpreted(
     current["places"][anchor["place_id"]]["point"]["coordinates"][0] += 0.0001
     with pytest.raises(DemoError, match="destination was edited"):
         plan(current, uuid4())
+
+
+@pytest.mark.parametrize("kind", ["not_applied", "partial", "tampered", "bad_session"])
+def test_cli_recovery_refuses_unverified_state_before_writes(kind, tmp_path, monkeypatch):
+    import sys
+    from types import SimpleNamespace
+
+    from app.cli import muj_update as cli
+
+    current = state()
+    preview = plan(current, uuid4())
+    if kind in {"partial", "tampered"}:
+        current = completed(current, preview)
+        change = next(c for c in preview["changes"] if c["entity"] == "nodes" and c["data"])
+        if kind == "partial":
+            del current["nodes"][change["id"]]
+        else:
+            current["nodes"][change["id"]]["label"] = "Owner correction: do not overwrite"
+    before = deepcopy(current)
+
+    class Client:
+        session = (
+            {"user_id": str(uuid4())} if kind != "bad_session" else {"user": {"id": str(uuid4())}}
+        )
+
+        def request(self, method, *args, **kwargs):
+            assert method == "GET", "Recovery must never POST a graph change"
+            return current
+
+        def logout(self):
+            pass
+
+    monkeypatch.setattr(cli, "Client", lambda **kw: Client())
+    monkeypatch.setattr(cli, "prompt_login", lambda *a: None)
+    monkeypatch.setattr(cli, "get_settings", lambda: SimpleNamespace(storage_root=str(tmp_path)))
+    monkeypatch.setattr(
+        sys, "argv", ["muj_update", "--draft", preview["draft_id"], "--recover-receipt"]
+    )
+    monkeypatch.setattr("builtins.input", lambda _: pytest.fail("Recovery cannot prompt APPLY"))
+    with pytest.raises(SystemExit):
+        cli.main()
+    assert current == before
+    assert not list(tmp_path.rglob("verification-*.json"))
+    assert not list(tmp_path.rglob("receipt-*.json"))

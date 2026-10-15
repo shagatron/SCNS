@@ -200,3 +200,126 @@ def test_late_failure_rolls_back_replaced_edges_new_records_version_and_audits(
         apply_reviewed(adapter, preview)
     assert adapter.request("GET", path) == initial
     assert db.scalar(select(func.count()).select_from(AuditEvent)) == audits
+
+
+@pytest.mark.parametrize("fail_receipt", [False, True])
+def test_cli_real_session_application_and_read_only_receipt_recovery(
+    client, db, bundle, identity, tmp_path, monkeypatch, capsys, fail_receipt
+):
+    import json
+    import sys
+    from uuid import UUID
+
+    from app.cli import muj_update as cli
+    from app.core.config import get_settings
+    from tests.integration.test_admin import ORIGIN
+
+    adapter, result, path = setup(client, db, bundle, identity)
+    initial = adapter.request("GET", path)
+    monkeypatch.setenv("STORAGE_ROOT", str(tmp_path))
+    get_settings.cache_clear()
+    adapters = []
+
+    class CLIAdapter(Adapter):
+        session = None
+
+        def login(self, username, password):
+            response = client.post(
+                "/api/v1/admin/login",
+                json={"username": username, "password": password},
+                headers=ORIGIN,
+            )
+            assert response.status_code == 200
+            self.session = response.json()
+            assert "user" not in self.session
+            assert self.session["user_id"] == str(identity[0].id)
+            assert set(self.session) == {
+                "user_id",
+                "username",
+                "display_name",
+                "csrf_token",
+                "expires_at",
+                "grants",
+            }
+            self.headers = {**ORIGIN, "X-CSRF-Token": self.session["csrf_token"]}
+            # Inspect the actual authenticated GET response too, without logging secrets.
+            session = client.get("/api/v1/admin/session")
+            assert session.status_code == 200 and session.json() == self.session
+
+        def logout(self):
+            if self.session:
+                assert client.post("/api/v1/admin/logout", headers=self.headers).status_code == 204
+                self.session = None
+
+    def make_client(**kwargs):
+        instance = CLIAdapter(client, {})
+        adapters.append(instance)
+        return instance
+
+    monkeypatch.setattr(cli, "Client", make_client)
+    monkeypatch.setattr(
+        cli, "prompt_login", lambda c, _: c.login(identity[0].username, identity[1])
+    )
+    monkeypatch.setattr("builtins.input", lambda _: "APPLY")
+    monkeypatch.setattr(sys, "argv", ["muj_update", "--draft", result["draft_id"]])
+    persist = cli.persist
+
+    def failed_save(target, document):
+        if target.name.startswith("receipt-"):
+            raise OSError("Injected disk failure; do not echo arbitrary OS details")
+        persist(target, document)
+
+    if fail_receipt:
+        monkeypatch.setattr(cli, "persist", failed_save)
+        with pytest.raises(SystemExit, match="Graph application succeeded.*receipt saving failed"):
+            cli.main()
+    else:
+        cli.main()
+    folder = tmp_path / "private/muj-updates" / result["draft_id"]
+    applications = list(folder.glob("receipt-*.json"))
+    assert len(applications) == (0 if fail_receipt else 1)
+    db.expire_all()
+    graph_audits = list(db.scalars(select(AuditEvent).where(AuditEvent.campus_id == CAMPUS_ID)))
+    originals = [a for a in graph_audits if a.action.startswith("graph.")]
+    assert len(originals) == 22 and all(a.actor_id == identity[0].id for a in originals)
+    if applications:
+        saved = json.loads(applications[0].read_text())
+        assert saved["requested_by"] == str(identity[0].id)
+        assert saved["receipt_type"] == "application" and saved["graph_writes_this_run"] == 1
+        assert {a.request_id for a in originals} == {saved["audit_request_id"]}
+    # Fresh real session on each invocation; no fake auth or bypass of graph service.
+    monkeypatch.setattr(cli, "persist", persist)
+    monkeypatch.setattr(
+        sys, "argv", ["muj_update", "--draft", result["draft_id"], "--recover-receipt"]
+    )
+    monkeypatch.setattr("builtins.input", lambda _: pytest.fail("Recovery must never ask APPLY"))
+    for _ in range(2):
+        cli.main()
+    assert sum(a.posts for a in adapters) == 1  # only original graph POST, no duplicate writes
+    # Login again only to read the graph; prior CLI sessions really logged out.
+    inspection = make_client()
+    inspection.login(identity[0].username, identity[1])
+    current = inspection.request("GET", path)
+    assert current["revision_version"] == initial["revision_version"] + 1
+    assert plan(current, UUID(result["draft_id"]))["state"] == "already_applied"
+    assert [
+        a.id for a in db.scalars(select(AuditEvent).where(AuditEvent.campus_id == CAMPUS_ID))
+    ] == [a.id for a in graph_audits]
+    inspection.logout()
+    files = list(folder.glob("verification-*.json"))
+    assert len(files) == 1  # repeated verification safely refreshes its own file, retains receipts
+    verified = json.loads(files[0].read_text())
+    assert verified["state"] == "already_applied"
+    assert verified["revision_version"] == current["revision_version"]
+    assert verified["verified_by"] == str(identity[0].id)
+    assert verified["receipt_type"] == "state_verification"
+    assert verified["graph_writes_this_run"] == 0
+    assert "audit_request_id" not in verified and "requested_by" not in verified
+    assert "not recovered" in verified["evidence_limit"]
+    for file in folder.glob("*.json"):
+        assert file.stat().st_mode & 0o777 == 0o600
+        text = file.read_text()
+        assert identity[1] not in text and "csrf_token" not in text
+    output = capsys.readouterr().out
+    assert "no graph writes" in output and identity[1] not in output
+    get_settings.cache_clear()

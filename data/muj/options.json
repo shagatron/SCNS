@@ -1,0 +1,8 @@
+{
+  "campus_code": "MUJ",
+  "format": "json",
+  "policy": "create_only",
+  "provenance": "Owner supplied OSM export SHA256 d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de; muj-osm-v1; no field survey",
+  "source_rights": "OpenStreetMap database, ODbL 1.0; attribution and derivative-database share-alike obligations apply. Not official MUJ data or a field survey.",
+  "timezone": "Asia/Kolkata"
+}

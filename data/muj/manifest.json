@@ -1,0 +1,13 @@
+{
+  "converter": "muj-osm-v1",
+  "files": {
+    "batch-001.json": "2fe2c71fd0a337290723dea880134660026d075e576a1392dc12092bd50b8763",
+    "batch-002.json": "33793d64dedbb34bfc835e666718374c55a7f7013d3bf207889109107f65e2d2",
+    "batch-003.json": "6cb857528d605d46b76ae80567119f9d3809f413c4457c37e1ba191ddebc65e6",
+    "campus.json": "053f2ad75bbf07f6dab3dbb0f987b27e50c723e48ccc45092b4595e518ae443d",
+    "coverage.geojson": "9018da3f00a768625c9f4cfe68f2c5781833c3fb541b779b8e4e951c6c834b70",
+    "options.json": "6772fd0eca2544ae7a68913ff5c3c5a1aac96262702d006a1ecc4878f9e2ee6b",
+    "report.json": "8ab001a83204e788e364aa3af69371248c0a155edb8b4791f8a48c5596ebee36"
+  },
+  "source_sha256": "d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de"
+}

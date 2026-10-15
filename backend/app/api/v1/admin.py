@@ -445,3 +445,13 @@ def replace_role(campus_id: UUID, user_id: UUID, payload: RoleInput, request: Re
         after={"roles": [payload.role]},
     )
     return user_output(db, db.get(User, user_id), campus_id)
+
+
+@router.post("/campuses/{campus_id}/muj-setup", status_code=201)
+def setup_muj(campus_id: UUID, request: Request, db: DB):
+    # Scoped system administrators can explicitly provision this one pinned, separate campus.
+    # No arbitrary campus/role payload, account bootstrap, overwrite, approval or publication.
+    from app.services.muj_setup import provision
+
+    actor = authorize(db, request, campus_id, "user_admin")
+    return provision(db, actor, request.state.request_id)

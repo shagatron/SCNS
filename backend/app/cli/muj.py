@@ -98,9 +98,14 @@ def stage(client, preparation, *, confirm=input, sleep=time.sleep):
         client.request("POST", base + "/apply", headers={"If-Match": f'"{job["preview_version"]}"'})
         print(f"{path.name}: applied transactionally to draft only.")
     diagnostics = client.request("GET", draft + "/graph/validation")
+    print(
+        f"Draft graph: {diagnostics['errors']} errors, {diagnostics['warnings']} warnings; truncated={diagnostics['truncated']}."
+    )
     evidence = []
     for source_id, target_id, profile in [
         ("10780185181", "11573265515", "shortest"),
+        ("10780185181", "11573972967", "shortest"),
+        ("10780185181", "12585506492", "shortest"),
         ("10780185180", "10780185181", "shortest"),
         ("10780185181", "11573265515", "step_free"),
     ]:

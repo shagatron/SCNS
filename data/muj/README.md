@@ -10,7 +10,7 @@ Not official MUJ data, a field survey, a verified accessible map or a published 
 - `campus.json`: additive MUJ setup metadata; extent is the display hull, not ownership.
 - `coverage.geojson`: the two exact university polygons, no inferred bridge between them.
 - `report.json`: eligible records' source IDs/tags, excluded/surrounding features, missing members, indoor quarantine, components, unanchored destinations and reasons.
-- `options.json` and `batch-001..003.json`: current import-v1 create-only batches400/400/249rows. Dependencies precede dependents across batches.
+- `options.json` and `batch-001..003.json`: current import-v1 create-only batches400/400/306rows. Dependencies precede dependents across batches.
 
 Original XML is private/ignored, not in Git or images. Contributor usernames and UIDs are absent from these derivatives. No floorplans/rooms/QRs/accessibility verification are transplanted from synthetic data. Never use a seed command to apply these files.
 

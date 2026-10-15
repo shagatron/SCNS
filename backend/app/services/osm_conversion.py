@@ -388,14 +388,14 @@ def convert(raw: bytes, *, batch_size=400):
         try:
             ids = refs(e)
             line = LineString([nodes[n] for n in ids])
-            if not line.is_valid or not line.is_simple or line.length == 0:
+            if not line.is_valid or line.length == 0:
                 raise ValueError("invalid_line")
             if not coverage.covers(line):
                 raise ValueError("path_outside_exact_campus_coverage_or_cross_campus_gap")
             if t.get("oneway:foot", "no") not in {"no", "yes", "1", "true", "-1", "false", "0"}:
                 raise ValueError("unsupported_foot_direction")
             eligible.append((i, ids, t))
-            uses.update(set(ids))
+            uses.update(ids)
         except (ValueError, KeyError) as exc:
             note("way", i, str(exc))
     needed = set()
@@ -416,6 +416,12 @@ def convert(raw: bytes, *, batch_size=400):
         )
         # Bound full polylines without dropping vertices; stable OSM endpoint IDs.
         cuts.update(range(0, len(ids), 499))
+        ordered = sorted(cuts)
+        for left, right in zip(ordered, ordered[1:], strict=False):
+            if ids[left] == ids[right] and right - left > 1:
+                candidates = [j for j in range(left + 1, right) if ids[j] != ids[left]]
+                if candidates:
+                    cuts.add(min(candidates, key=lambda j: abs(j - (left + right) / 2)))
         last = 0
         for end in sorted(cuts)[1:]:
             part = ids[last : end + 1]
@@ -433,6 +439,9 @@ def convert(raw: bytes, *, batch_size=400):
                 note("way", i, "blocked_or_level_node_segment")
                 continue
             points = [nodes[n] for n in part]
+            if not LineString(points).is_simple:
+                note("way", i, "non_simple_segment_requires_review")
+                continue
             if any(a == b for a, b in zip(points, points[1:], strict=False)):
                 note("way", i, "repeated_position_segment")
                 continue
@@ -453,6 +462,7 @@ def convert(raw: bytes, *, batch_size=400):
             f"node/{n}",
             t,
         )
+    emitted_edges = set()
     for i, ids, t in segments:
         direction = t.get("oneway:foot", "no")
         for reverse in (
@@ -463,11 +473,18 @@ def convert(raw: bytes, *, batch_size=400):
             else [False, True]
         ):
             path = list(reversed(ids)) if reverse else ids
-            ext = f"osm-way-{i}-{ids[0]}-{ids[-1]}"
+            canonical_refs = min(tuple(ids), tuple(reversed(ids)))
+            signature = hashlib.sha256(encode(canonical_refs)).hexdigest()[:32]
+            ext = f"osm-way-{i}-{canonical_refs[0]}-{canonical_refs[-1]}-{signature}"
+            directed_id = ext + ("-forward" if tuple(path) == canonical_refs else "-reverse")
+            if directed_id in emitted_edges:
+                note("way", i, "duplicate_directed_way_segment")
+                continue
+            emitted_edges.add(directed_id)
             points = [nodes[n] for n in path]
             add(
                 "edges",
-                ext + ("-reverse" if reverse else "-forward"),
+                directed_id,
                 {
                     "frame_id": "osm-outdoor-wgs84",
                     "from_node_id": f"osm-node-{path[0]}",

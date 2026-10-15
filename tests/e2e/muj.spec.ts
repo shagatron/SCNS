@@ -47,7 +47,7 @@ test('real MUJ staged geography, draft route and unpublished isolation', async (
   await expect(page.getByLabel('Visual outdoor draft graph')).toBeVisible()
   const graph = await (await page.request.get(`${path}/graph`)).json()
   const positions = Object.values(graph.nodes).map((n: unknown) => (n as {point:{coordinates:number[]}}).point.coordinates)
-  expect(positions.length).toBe(283)
+  expect(positions.length).toBe(290)
   expect(positions.every(p => p[0] > 75.55 && p[0] < 75.57 && p[1] > 26.83 && p[1] < 26.85)).toBe(true)
   const svg = page.locator('.graph-map .leaflet-overlay-pane svg path')
   expect(await svg.count()).toBeGreaterThan(300)

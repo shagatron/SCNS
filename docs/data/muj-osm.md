@@ -20,7 +20,7 @@ git diff --exit-code -- data/muj
 
 `app.cli.osm` is offline and never opens a database. Input is bounded to5MiB/100,000elements, XML DTD/entities refused; current source is well below those bounds. Robust Shapely validity/coverage/holes are used without make-valid, buffering, simplification, snapping or invented geography. Bad features are reported/quarantined; invalid/missing required university polygons stop conversion. Use a separate output directory when investigating a different export. Setup pins both source and preparation checksums and refuses silently replacing an existing MUJ campus with changed preparation.
 
-External identities: `osm-node-ID`, `osm-way-ID`, `osm-relation-ID-part-N`; directed segments include their source way and original endpoint node IDs plus forward/reverse. Relation parts are sorted deterministically by geometry; existing v1 is pinned, so a changed source/conversion requires explicit new preparation review, not blind in-place upsert. Logical UUIDs use the existing import-v1 campus/entity/external-ID convention. Separate entities can reference the same OSM element without confusing buildings, places and nodes. Create-only policy is deliberate: identical content is unchanged; different existing content conflicts rather than overwriting an editor/survey. Job identity binds exact draft+batch checksum and existing uploader; committed replay does not increment versions/audits. Original actor must resume; changing uploader is a separately audited attempt, not permission to replace data.
+External identities: `osm-node-ID`, `osm-way-ID`, `osm-relation-ID-part-N`; directed segments include their source way and original endpoint node IDs plus a canonical ordered-node-reference hash and forward/reverse (preventing identity collisions between different loop arcs with the same endpoints). Relation parts are sorted deterministically by geometry; existing v1 is pinned, so a changed source/conversion requires explicit new preparation review, not blind in-place upsert. Logical UUIDs use the existing import-v1 campus/entity/external-ID convention. Separate entities can reference the same OSM element without confusing buildings, places and nodes. Create-only policy is deliberate: identical content is unchanged; different existing content conflicts rather than overwriting an editor/survey. Job identity binds exact draft+batch checksum and existing uploader; committed replay does not increment versions/audits. Original actor must resume; changing uploader is a separately audited attempt, not permission to replace data.
 
 ## Coverage and counts
 
@@ -37,15 +37,15 @@ Raw export: **3,193 nodes,517 ways,9 relations;167 building-tagged ways,243 high
 | Outdoor WGS84 frame | 1 |
 | Building footprint records | 51 |
 | Named destinations and explicitly labelled mapped entrances | 55 |
-| Outdoor graph nodes | 283 |
-| Directed stored edges | 638 |
+| Outdoor graph nodes | 290 |
+| Directed stored edges | 688 |
 | Mapped entrance anchors | 21 |
-| Source highway ways represented by at least one accepted segment | 154 |
-| Weak graph components | 35 |
+| Source highway ways represented by at least one accepted segment | 156 |
+| Weak graph components | 29 |
 | Anchored entrance destinations | 21 |
 | Unanchored destinations | 34 |
 
-Three coherent import bundles contain **400,400,249 records**, below the existing2,000row/5MiB defaults. Dependencies precede dependents across bundles; each batch is transactional, the entire three-batch preparation is resumable rather than globally atomic. Do not publish a partial draft. Distances are computed from full polylines by PostGIS geography on application, `estimated`, never claimed surveyed. Accessibility stays unknown except mapped steps explicitly not-step-free. `wheelchair=yes` does not create verified accessibility.
+Three coherent import bundles contain **400,400,306 records**, below the existing2,000row/5MiB defaults. Dependencies precede dependents across bundles; each batch is transactional, the entire three-batch preparation is resumable rather than globally atomic. Do not publish a partial draft. Distances are computed from full polylines by PostGIS geography on application, `estimated`, never claimed surveyed. Accessibility stays unknown except mapped steps explicitly not-step-free. `wheelchair=yes` does not create verified accessibility.
 
 `report.json` enumerates all exclusions with OSM IDs and tags, missing relation members, surrounding features, quarantined indoor features, full included provenance, component examples and named anchored/unanchored destinations. Major decisions:
 
@@ -53,12 +53,11 @@ Three coherent import bundles contain **400,400,249 records**, below the existin
 | --- | ---: |
 | Room/level-tagged or numeric room-like building ways quarantined | 88 |
 | Building ways outside exact coverage | 30 |
-| Highway ways outside exact coverage/cross-campus gap | 56 |
+| Highway ways outside exact coverage/cross-campus gap | 57 |
 | Unsupported level/layer highway ways | 17 |
 | Indoor/corridor highway ways | 5 |
 | Additional grade-separated path | 1 |
 | Unsupported highway types | 5 |
-| Invalid/non-simple path geometry | 3 |
 | Blocked/level-tagged node segments | 2 |
 | Indoor catalog preparation-only ways | 20 |
 | Bus relations excluded | 2 |
@@ -66,9 +65,9 @@ Three coherent import bundles contain **400,400,249 records**, below the existin
 | Outside-coverage multipolygon | 1 |
 | Other unsupported relations | 2 |
 
-Anchor presence is not a guarantee of reachability from a chosen start. The21anchors span15components: only10destinations have another anchored destination in the same component;11anchored destinations have no other anchored destination in their component. The other34places have no anchor at all. `report.json` distinguishes these counts rather than calling all21globally routable. The inspected Hostel Entrance component contains GHS Entrance, but not University Entrance or Faculty Block Entrance. No proximity connection is added to improve these counts.
+Anchor presence is not a guarantee of reachability from a chosen start. The21anchors span14components: only11destinations have another anchored destination in the same component;10anchored destinations have no other anchored destination in their component. The other34places have no anchor at all. `report.json` distinguishes these counts rather than calling all21globally routable. Repeated node references within the same mapped way are actual junctions: source loops split at those existing nodes (and existing loop vertices when needed), preserving every retained curve. Geometric crossings without shared references remain disconnected. The inspected Hostel Entrance component contains GHS Entrance, and Faculty Block Entrance, but not University Entrance. No proximity connection is added to improve these counts.
 
-These are decisions at different pipeline stages, not additive percentages of all517ways. Rejected relation members never fall back to filled independent building polygons. Complete multipolygon rings are assembled without snapping; holes remain holes; multiple valid outer components become separate identified footprint records. Unsupported/missing rings and duplicate identities are diagnosed, not repaired. Incomplete external bus relations have no walking/topology role. Indoor catalog preparation retains **106 node/way source descriptors** with room/level/indoor tags; no floors, floorplans, calibration, lifts, room completeness or cross-floor links are invented.
+These are decisions at different pipeline stages, not additive percentages of all517ways. Rejected multipolygon members never fall back to filled independent building polygons. Complete multipolygon rings are assembled without snapping; holes remain holes; multiple valid outer components become separate identified footprint records. Unsupported/missing rings and duplicate identities are diagnosed, not repaired. Incomplete external bus relations have no walking/topology role. Indoor catalog preparation retains **106 node/way source descriptors** with room/level/indoor tags; no floors, floorplans, calibration, lifts, room completeness or cross-floor links are invented.
 
 Named included examples: Central Library (OSM node12585506492), Academic Block -3, Lecture Hall Complex (LHC), Administrative Block, B1/B2/B3/B6 and G1–G4 hostel buildings, University Entrance and Hostel Entrance. Library's display point is not an entrance. All building representative points are for catalog display only. Only an entrance-tagged OSM node that is already part of accepted outdoor topology receives an anchor; no centroid/proximity/crossing connection is invented. Buildings remain unanchored until evidence ties a mapped entrance to the destination.
 

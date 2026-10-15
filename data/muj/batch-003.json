@@ -5,6 +5,1650 @@
       "data": {
         "accessibility_status": "unknown",
         "distance_status": "estimated",
+        "evidence": "OSM way/1245278033; {\"highway\": \"path\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10778271610",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5642227,
+              26.8419013
+            ],
+            [
+              75.564106,
+              26.8421755
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245278033-10778271610-11576731865-91148868c0b936868fcb5a0dad3ba668",
+        "surface": null,
+        "to_node_id": "osm-node-11576731865"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245278033-10778271610-11576731865-91148868c0b936868fcb5a0dad3ba668-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245278034; {\"highway\": \"footway\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11576731867",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5642355,
+              26.843009
+            ],
+            [
+              75.5642763,
+              26.8429202
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245278034-11576731867-11594340529-e527844f6f7ccf2e546da5e3370b7875",
+        "surface": null,
+        "to_node_id": "osm-node-11594340529"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245278034-11576731867-11594340529-e527844f6f7ccf2e546da5e3370b7875-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245278034; {\"highway\": \"footway\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11594340529",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5642763,
+              26.8429202
+            ],
+            [
+              75.5642355,
+              26.843009
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245278034-11576731867-11594340529-e527844f6f7ccf2e546da5e3370b7875",
+        "surface": null,
+        "to_node_id": "osm-node-11576731867"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245278034-11576731867-11594340529-e527844f6f7ccf2e546da5e3370b7875-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245278034; {\"highway\": \"footway\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11594340529",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5642763,
+              26.8429202
+            ],
+            [
+              75.5643337,
+              26.8427803
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245278034-11576731868-11594340529-264261751fc76537866f529affbc5465",
+        "surface": null,
+        "to_node_id": "osm-node-11576731868"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245278034-11576731868-11594340529-264261751fc76537866f529affbc5465-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245278034; {\"highway\": \"footway\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11576731868",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5643337,
+              26.8427803
+            ],
+            [
+              75.5642763,
+              26.8429202
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245278034-11576731868-11594340529-264261751fc76537866f529affbc5465",
+        "surface": null,
+        "to_node_id": "osm-node-11594340529"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245278034-11576731868-11594340529-264261751fc76537866f529affbc5465-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245278034; {\"highway\": \"footway\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11576731868",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5643337,
+              26.8427803
+            ],
+            [
+              75.5642021,
+              26.8427373
+            ],
+            [
+              75.5642882,
+              26.8425277
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245278034-10769840688-11576731868-6decc96a5a82820064294339f7474379",
+        "surface": null,
+        "to_node_id": "osm-node-10769840688"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245278034-10769840688-11576731868-6decc96a5a82820064294339f7474379-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245278034; {\"highway\": \"footway\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10769840688",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5642882,
+              26.8425277
+            ],
+            [
+              75.5642021,
+              26.8427373
+            ],
+            [
+              75.5643337,
+              26.8427803
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245278034-10769840688-11576731868-6decc96a5a82820064294339f7474379",
+        "surface": null,
+        "to_node_id": "osm-node-11576731868"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245278034-10769840688-11576731868-6decc96a5a82820064294339f7474379-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245278035; {\"highway\": \"path\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10770949043",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5664684,
+              26.8425365
+            ],
+            [
+              75.5665012,
+              26.8424523
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245278035-10769840678-10770949043-cbc4d665f53cbc0950594a1f84eacd10",
+        "surface": null,
+        "to_node_id": "osm-node-10769840678"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245278035-10769840678-10770949043-cbc4d665f53cbc0950594a1f84eacd10-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245278035; {\"highway\": \"path\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10769840678",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5665012,
+              26.8424523
+            ],
+            [
+              75.5664684,
+              26.8425365
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245278035-10769840678-10770949043-cbc4d665f53cbc0950594a1f84eacd10",
+        "surface": null,
+        "to_node_id": "osm-node-10770949043"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245278035-10769840678-10770949043-cbc4d665f53cbc0950594a1f84eacd10-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11579137924",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5647127,
+              26.8433018
+            ],
+            [
+              75.5649111,
+              26.8428401
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-11579137924-13566350126-267c97b122c313d61a612e04930254c1",
+        "surface": null,
+        "to_node_id": "osm-node-13566350126"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-11579137924-13566350126-267c97b122c313d61a612e04930254c1-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-13566350126",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5649111,
+              26.8428401
+            ],
+            [
+              75.5647127,
+              26.8433018
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-11579137924-13566350126-267c97b122c313d61a612e04930254c1",
+        "surface": null,
+        "to_node_id": "osm-node-11579137924"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-11579137924-13566350126-267c97b122c313d61a612e04930254c1-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-13566350126",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5649111,
+              26.8428401
+            ],
+            [
+              75.5649409,
+              26.8427592
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-10769840687-13566350126-eb6ee79255e5b77217f8151bfa0c2e96",
+        "surface": null,
+        "to_node_id": "osm-node-10769840687"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-10769840687-13566350126-eb6ee79255e5b77217f8151bfa0c2e96-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10769840687",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5649409,
+              26.8427592
+            ],
+            [
+              75.5649111,
+              26.8428401
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-10769840687-13566350126-eb6ee79255e5b77217f8151bfa0c2e96",
+        "surface": null,
+        "to_node_id": "osm-node-13566350126"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-10769840687-13566350126-eb6ee79255e5b77217f8151bfa0c2e96-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10769840687",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5649409,
+              26.8427592
+            ],
+            [
+              75.5649771,
+              26.8426852
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-10769840687-13566350128-32a2557b33effa74d86c3c3e966db01a",
+        "surface": null,
+        "to_node_id": "osm-node-13566350128"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-10769840687-13566350128-32a2557b33effa74d86c3c3e966db01a-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-13566350128",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5649771,
+              26.8426852
+            ],
+            [
+              75.5649409,
+              26.8427592
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-10769840687-13566350128-32a2557b33effa74d86c3c3e966db01a",
+        "surface": null,
+        "to_node_id": "osm-node-10769840687"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-10769840687-13566350128-32a2557b33effa74d86c3c3e966db01a-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-13566350128",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5649771,
+              26.8426852
+            ],
+            [
+              75.5649845,
+              26.8426722
+            ],
+            [
+              75.5650667,
+              26.8424654
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-11579137926-13566350128-c9cfdc364eceddf0b5ad5c8adcb6f3ae",
+        "surface": null,
+        "to_node_id": "osm-node-11579137926"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-11579137926-13566350128-c9cfdc364eceddf0b5ad5c8adcb6f3ae-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11579137926",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5650667,
+              26.8424654
+            ],
+            [
+              75.5649845,
+              26.8426722
+            ],
+            [
+              75.5649771,
+              26.8426852
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-11579137926-13566350128-c9cfdc364eceddf0b5ad5c8adcb6f3ae",
+        "surface": null,
+        "to_node_id": "osm-node-13566350128"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-11579137926-13566350128-c9cfdc364eceddf0b5ad5c8adcb6f3ae-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11579137926",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5650667,
+              26.8424654
+            ],
+            [
+              75.5651668,
+              26.8422316
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-10778271608-11579137926-e4e278a895611ca47e579e2238f6825c",
+        "surface": null,
+        "to_node_id": "osm-node-10778271608"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-10778271608-11579137926-e4e278a895611ca47e579e2238f6825c-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556385; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10778271608",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5651668,
+              26.8422316
+            ],
+            [
+              75.5650667,
+              26.8424654
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556385-10778271608-11579137926-e4e278a895611ca47e579e2238f6825c",
+        "surface": null,
+        "to_node_id": "osm-node-11579137926"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556385-10778271608-11579137926-e4e278a895611ca47e579e2238f6825c-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556386; {\"highway\": \"path\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11579137926",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5650667,
+              26.8424654
+            ],
+            [
+              75.5651378,
+              26.8424918
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556386-11579137926-11579137928-8075e1f2eaf026a6d200dd4e2403f7e8",
+        "surface": null,
+        "to_node_id": "osm-node-11579137928"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556386-11579137926-11579137928-8075e1f2eaf026a6d200dd4e2403f7e8-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556386; {\"highway\": \"path\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11579137928",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5651378,
+              26.8424918
+            ],
+            [
+              75.5650667,
+              26.8424654
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556386-11579137926-11579137928-8075e1f2eaf026a6d200dd4e2403f7e8",
+        "surface": null,
+        "to_node_id": "osm-node-11579137926"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556386-11579137926-11579137928-8075e1f2eaf026a6d200dd4e2403f7e8-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556387; {\"highway\": \"path\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11579137929",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5651608,
+              26.8424416
+            ],
+            [
+              75.56577,
+              26.8426588
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556387-11579137929-11579137930-cfa8db1d2309f467cc0a9832e4dd0fdc",
+        "surface": null,
+        "to_node_id": "osm-node-11579137930"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556387-11579137929-11579137930-cfa8db1d2309f467cc0a9832e4dd0fdc-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1245556387; {\"highway\": \"path\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11579137930",
+        "geometry": {
+          "coordinates": [
+            [
+              75.56577,
+              26.8426588
+            ],
+            [
+              75.5651608,
+              26.8424416
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1245556387-11579137929-11579137930-cfa8db1d2309f467cc0a9832e4dd0fdc",
+        "surface": null,
+        "to_node_id": "osm-node-11579137929"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1245556387-11579137929-11579137930-cfa8db1d2309f467cc0a9832e4dd0fdc-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099085; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11612773102",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5657761,
+              26.843087
+            ],
+            [
+              75.5658307,
+              26.8431064
+            ],
+            [
+              75.5659423,
+              26.8431471
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099085-11612773102-11612773113-62de77d0230830baed06b2fda62b91b2",
+        "surface": null,
+        "to_node_id": "osm-node-11612773113"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099085-11612773102-11612773113-62de77d0230830baed06b2fda62b91b2-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099085; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11612773113",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5659423,
+              26.8431471
+            ],
+            [
+              75.5658307,
+              26.8431064
+            ],
+            [
+              75.5657761,
+              26.843087
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099085-11612773102-11612773113-62de77d0230830baed06b2fda62b91b2",
+        "surface": null,
+        "to_node_id": "osm-node-11612773102"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099085-11612773102-11612773113-62de77d0230830baed06b2fda62b91b2-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099085; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11612773113",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5659423,
+              26.8431471
+            ],
+            [
+              75.5659753,
+              26.8431582
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099085-11584636871-11612773113-6e9af36a628831bbfcf937b2a1c86289",
+        "surface": null,
+        "to_node_id": "osm-node-11584636871"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099085-11584636871-11612773113-6e9af36a628831bbfcf937b2a1c86289-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099085; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11584636871",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5659753,
+              26.8431582
+            ],
+            [
+              75.5659423,
+              26.8431471
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099085-11584636871-11612773113-6e9af36a628831bbfcf937b2a1c86289",
+        "surface": null,
+        "to_node_id": "osm-node-11612773113"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099085-11584636871-11612773113-6e9af36a628831bbfcf937b2a1c86289-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099086; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11584636872",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5662029,
+              26.8436834
+            ],
+            [
+              75.5663321,
+              26.8433953
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099086-11584636872-11612692532-6b25980656d7b9a08b20e549801e5d5e",
+        "surface": null,
+        "to_node_id": "osm-node-11612692532"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099086-11584636872-11612692532-6b25980656d7b9a08b20e549801e5d5e-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099086; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11612692532",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5663321,
+              26.8433953
+            ],
+            [
+              75.5662029,
+              26.8436834
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099086-11584636872-11612692532-6b25980656d7b9a08b20e549801e5d5e",
+        "surface": null,
+        "to_node_id": "osm-node-11584636872"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099086-11584636872-11612692532-6b25980656d7b9a08b20e549801e5d5e-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099086; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11612692532",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5663321,
+              26.8433953
+            ],
+            [
+              75.566345,
+              26.8433682
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099086-11584567868-11612692532-59af936d1875aa699d3cb89858bcc399",
+        "surface": null,
+        "to_node_id": "osm-node-11584567868"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099086-11584567868-11612692532-59af936d1875aa699d3cb89858bcc399-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099086; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11584567868",
+        "geometry": {
+          "coordinates": [
+            [
+              75.566345,
+              26.8433682
+            ],
+            [
+              75.5663321,
+              26.8433953
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099086-11584567868-11612692532-59af936d1875aa699d3cb89858bcc399",
+        "surface": null,
+        "to_node_id": "osm-node-11612692532"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099086-11584567868-11612692532-59af936d1875aa699d3cb89858bcc399-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099087; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11612692515",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5665589,
+              26.8428948
+            ],
+            [
+              75.5664287,
+              26.8431819
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099087-11612692515-11612692537-357980fec58df5e4c1e1055a9d638806",
+        "surface": null,
+        "to_node_id": "osm-node-11612692537"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099087-11612692515-11612692537-357980fec58df5e4c1e1055a9d638806-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099087; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11612692537",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5664287,
+              26.8431819
+            ],
+            [
+              75.5665589,
+              26.8428948
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099087-11612692515-11612692537-357980fec58df5e4c1e1055a9d638806",
+        "surface": null,
+        "to_node_id": "osm-node-11612692515"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099087-11612692515-11612692537-357980fec58df5e4c1e1055a9d638806-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099087; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11612692537",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5664287,
+              26.8431819
+            ],
+            [
+              75.5664172,
+              26.8432061
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099087-11584636869-11612692537-ec85d9126b80581962ad1663e1891bc4",
+        "surface": null,
+        "to_node_id": "osm-node-11584636869"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099087-11584636869-11612692537-ec85d9126b80581962ad1663e1891bc4-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099087; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11584636869",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5664172,
+              26.8432061
+            ],
+            [
+              75.5664287,
+              26.8431819
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099087-11584636869-11612692537-ec85d9126b80581962ad1663e1891bc4",
+        "surface": null,
+        "to_node_id": "osm-node-11612692537"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099087-11584636869-11612692537-ec85d9126b80581962ad1663e1891bc4-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099088; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11584636874",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5663932,
+              26.8432908
+            ],
+            [
+              75.5664537,
+              26.8433122
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099088-11584636874-11612692530-28377fe13605457bf6b93f77c94cf85a",
+        "surface": null,
+        "to_node_id": "osm-node-11612692530"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099088-11584636874-11612692530-28377fe13605457bf6b93f77c94cf85a-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099088; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11612692530",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5664537,
+              26.8433122
+            ],
+            [
+              75.5663932,
+              26.8432908
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099088-11584636874-11612692530-28377fe13605457bf6b93f77c94cf85a",
+        "surface": null,
+        "to_node_id": "osm-node-11584636874"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099088-11584636874-11612692530-28377fe13605457bf6b93f77c94cf85a-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099089; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11584636876",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5657949,
+              26.8435418
+            ],
+            [
+              75.5659457,
+              26.8432241
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099089-11584636876-11615178729-541a499b30371f778d25e5df4434328d",
+        "surface": null,
+        "to_node_id": "osm-node-11615178729"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099089-11584636876-11615178729-541a499b30371f778d25e5df4434328d-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099089; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11615178729",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5659457,
+              26.8432241
+            ],
+            [
+              75.5657949,
+              26.8435418
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099089-11584636876-11615178729-541a499b30371f778d25e5df4434328d",
+        "surface": null,
+        "to_node_id": "osm-node-11584636876"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099089-11584636876-11615178729-541a499b30371f778d25e5df4434328d-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099089; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11615178729",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5659457,
+              26.8432241
+            ],
+            [
+              75.5659753,
+              26.8431582
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099089-11584636871-11615178729-2fa7fc5731d2145db93d887cdbc51513",
+        "surface": null,
+        "to_node_id": "osm-node-11584636871"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099089-11584636871-11615178729-2fa7fc5731d2145db93d887cdbc51513-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099089; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11584636871",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5659753,
+              26.8431582
+            ],
+            [
+              75.5659457,
+              26.8432241
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099089-11584636871-11615178729-2fa7fc5731d2145db93d887cdbc51513",
+        "surface": null,
+        "to_node_id": "osm-node-11615178729"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099089-11584636871-11615178729-2fa7fc5731d2145db93d887cdbc51513-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099089; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11584636871",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5659753,
+              26.8431582
+            ],
+            [
+              75.5660136,
+              26.843075
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099089-11584636871-11615178733-e79185ad28e9b636c043123d67df28b4",
+        "surface": null,
+        "to_node_id": "osm-node-11615178733"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099089-11584636871-11615178733-e79185ad28e9b636c043123d67df28b4-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099089; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11615178733",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5660136,
+              26.843075
+            ],
+            [
+              75.5659753,
+              26.8431582
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099089-11584636871-11615178733-e79185ad28e9b636c043123d67df28b4",
+        "surface": null,
+        "to_node_id": "osm-node-11584636871"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099089-11584636871-11615178733-e79185ad28e9b636c043123d67df28b4-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099089; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11615178733",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5660136,
+              26.843075
+            ],
+            [
+              75.5661593,
+              26.8427489
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099089-11584636877-11615178733-542c50196af652c9f5b418c177dbcdca",
+        "surface": null,
+        "to_node_id": "osm-node-11584636877"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099089-11584636877-11615178733-542c50196af652c9f5b418c177dbcdca-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1246099089; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11584636877",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5661593,
+              26.8427489
+            ],
+            [
+              75.5660136,
+              26.843075
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1246099089-11584636877-11615178733-542c50196af652c9f5b418c177dbcdca",
+        "surface": null,
+        "to_node_id": "osm-node-11615178733"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1246099089-11584636877-11615178733-542c50196af652c9f5b418c177dbcdca-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247085147; {\"highway\": \"path\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11594340527",
+        "geometry": {
+          "coordinates": [
+            [
+              75.564272,
+              26.8430215
+            ],
+            [
+              75.5642815,
+              26.8430013
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247085147-11594340527-11809063446-4f78d1a75db39e1c2f954429555452ee",
+        "surface": null,
+        "to_node_id": "osm-node-11809063446"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247085147-11594340527-11809063446-4f78d1a75db39e1c2f954429555452ee-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247085147; {\"highway\": \"path\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11809063446",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5642815,
+              26.8430013
+            ],
+            [
+              75.564272,
+              26.8430215
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247085147-11594340527-11809063446-4f78d1a75db39e1c2f954429555452ee",
+        "surface": null,
+        "to_node_id": "osm-node-11594340527"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247085147-11594340527-11809063446-4f78d1a75db39e1c2f954429555452ee-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247085148; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10769840672",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5640258,
+              26.842935
+            ],
+            [
+              75.5640158,
+              26.8429306
+            ],
+            [
+              75.5639704,
+              26.842915
+            ],
+            [
+              75.5639448,
+              26.8429068
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247085148-10769840672-11593739321-501c22e24e0bc6aeed7802edb849debd",
+        "surface": null,
+        "to_node_id": "osm-node-11593739321"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247085148-10769840672-11593739321-501c22e24e0bc6aeed7802edb849debd-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247085148; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11593739321",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5639448,
+              26.8429068
+            ],
+            [
+              75.5639704,
+              26.842915
+            ],
+            [
+              75.5640158,
+              26.8429306
+            ],
+            [
+              75.5640258,
+              26.842935
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247085148-10769840672-11593739321-501c22e24e0bc6aeed7802edb849debd",
+        "surface": null,
+        "to_node_id": "osm-node-10769840672"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247085148-10769840672-11593739321-501c22e24e0bc6aeed7802edb849debd-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247085156; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10769840671",
+        "geometry": {
+          "coordinates": [
+            [
+              75.564574,
+              26.8431253
+            ],
+            [
+              75.5646536,
+              26.8431496
+            ],
+            [
+              75.5647479,
+              26.8431815
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247085156-10769840671-11593739336-b511bb8d7b200028167bb8f0bf93aa2a",
+        "surface": null,
+        "to_node_id": "osm-node-11593739336"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247085156-10769840671-11593739336-b511bb8d7b200028167bb8f0bf93aa2a-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247085156; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11593739336",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5647479,
+              26.8431815
+            ],
+            [
+              75.5646536,
+              26.8431496
+            ],
+            [
+              75.564574,
+              26.8431253
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247085156-10769840671-11593739336-b511bb8d7b200028167bb8f0bf93aa2a",
+        "surface": null,
+        "to_node_id": "osm-node-10769840671"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247085156-10769840671-11593739336-b511bb8d7b200028167bb8f0bf93aa2a-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247150899; {\"highway\": \"path\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11594245180",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5647282,
+              26.8425809
+            ],
+            [
+              75.5647502,
+              26.8424876
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247150899-11594245180-11594245182-2d0fbd6ec5961f0a55a0a2739cf772a4",
+        "surface": null,
+        "to_node_id": "osm-node-11594245182"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247150899-11594245180-11594245182-2d0fbd6ec5961f0a55a0a2739cf772a4-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247150899; {\"highway\": \"path\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11594245182",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5647502,
+              26.8424876
+            ],
+            [
+              75.5647282,
+              26.8425809
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247150899-11594245180-11594245182-2d0fbd6ec5961f0a55a0a2739cf772a4",
+        "surface": null,
+        "to_node_id": "osm-node-11594245180"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247150899-11594245180-11594245182-2d0fbd6ec5961f0a55a0a2739cf772a4-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247150900; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11579137920",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5647028,
+              26.8421869
+            ],
+            [
+              75.5646964,
+              26.8421998
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247150900-11579137920-11594245187-d63bc47a9712cb8704db5c22dc97fffd",
+        "surface": null,
+        "to_node_id": "osm-node-11594245187"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247150900-11579137920-11594245187-d63bc47a9712cb8704db5c22dc97fffd-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247150900; {\"highway\": \"footway\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11594245187",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5646964,
+              26.8421998
+            ],
+            [
+              75.5647028,
+              26.8421869
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247150900-11579137920-11594245187-d63bc47a9712cb8704db5c22dc97fffd",
+        "surface": null,
+        "to_node_id": "osm-node-11579137920"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247150900-11579137920-11594245187-d63bc47a9712cb8704db5c22dc97fffd-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247150903; {\"highway\": \"path\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-10778271610",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5642227,
+              26.8419013
+            ],
+            [
+              75.5642762,
+              26.8417757
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247150903-10778271610-11594245197-caf35e63a51adf04ab0a3801565205a8",
+        "surface": null,
+        "to_node_id": "osm-node-11594245197"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247150903-10778271610-11594245197-caf35e63a51adf04ab0a3801565205a8-forward"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
+        "evidence": "OSM way/1247150903; {\"highway\": \"path\", \"layer\": \"0\", \"level\": \"0\"}; ODbL; no field/accessibility verification.",
+        "frame_id": "osm-outdoor-wgs84",
+        "from_node_id": "osm-node-11594245197",
+        "geometry": {
+          "coordinates": [
+            [
+              75.5642762,
+              26.8417757
+            ],
+            [
+              75.5642227,
+              26.8419013
+            ]
+          ],
+          "type": "LineString"
+        },
+        "kind": "walkway",
+        "physical_path_id": "osm-way-1247150903-10778271610-11594245197-caf35e63a51adf04ab0a3801565205a8",
+        "surface": null,
+        "to_node_id": "osm-node-10778271610"
+      },
+      "entity": "edges",
+      "external_id": "osm-way-1247150903-10778271610-11594245197-caf35e63a51adf04ab0a3801565205a8-reverse"
+    },
+    {
+      "data": {
+        "accessibility_status": "unknown",
+        "distance_status": "estimated",
         "evidence": "OSM way/1247150904; {\"highway\": \"path\"}; ODbL; no field/accessibility verification.",
         "frame_id": "osm-outdoor-wgs84",
         "from_node_id": "osm-node-10770949039",
@@ -22,12 +1666,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247150904-10770949039-11594245198",
+        "physical_path_id": "osm-way-1247150904-10770949039-11594245198-5862584a946725da37a4640676b12731",
         "surface": null,
         "to_node_id": "osm-node-11594245198"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247150904-10770949039-11594245198-forward"
+      "external_id": "osm-way-1247150904-10770949039-11594245198-5862584a946725da37a4640676b12731-forward"
     },
     {
       "data": {
@@ -50,12 +1694,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247150904-10770949039-11594245198",
+        "physical_path_id": "osm-way-1247150904-10770949039-11594245198-5862584a946725da37a4640676b12731",
         "surface": null,
         "to_node_id": "osm-node-10770949039"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247150904-10770949039-11594245198-reverse"
+      "external_id": "osm-way-1247150904-10770949039-11594245198-5862584a946725da37a4640676b12731-reverse"
     },
     {
       "data": {
@@ -78,12 +1722,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247150905-11576585092-11594245199",
+        "physical_path_id": "osm-way-1247150905-11576585092-11594245199-660cbd2d3cdbefd0406d7e42ed1da3d0",
         "surface": null,
         "to_node_id": "osm-node-11594245199"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247150905-11576585092-11594245199-forward"
+      "external_id": "osm-way-1247150905-11576585092-11594245199-660cbd2d3cdbefd0406d7e42ed1da3d0-forward"
     },
     {
       "data": {
@@ -106,12 +1750,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247150905-11576585092-11594245199",
+        "physical_path_id": "osm-way-1247150905-11576585092-11594245199-660cbd2d3cdbefd0406d7e42ed1da3d0",
         "surface": null,
         "to_node_id": "osm-node-11576585092"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247150905-11576585092-11594245199-reverse"
+      "external_id": "osm-way-1247150905-11576585092-11594245199-660cbd2d3cdbefd0406d7e42ed1da3d0-reverse"
     },
     {
       "data": {
@@ -134,12 +1778,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247150906-10770949045-10769840680",
+        "physical_path_id": "osm-way-1247150906-10769840680-10770949045-d98f5af11e7eedb1f3c47428beee0d57",
         "surface": null,
         "to_node_id": "osm-node-10769840680"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247150906-10770949045-10769840680-forward"
+      "external_id": "osm-way-1247150906-10769840680-10770949045-d98f5af11e7eedb1f3c47428beee0d57-reverse"
     },
     {
       "data": {
@@ -162,12 +1806,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247150906-10770949045-10769840680",
+        "physical_path_id": "osm-way-1247150906-10769840680-10770949045-d98f5af11e7eedb1f3c47428beee0d57",
         "surface": null,
         "to_node_id": "osm-node-10770949045"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247150906-10770949045-10769840680-reverse"
+      "external_id": "osm-way-1247150906-10769840680-10770949045-d98f5af11e7eedb1f3c47428beee0d57-forward"
     },
     {
       "data": {
@@ -190,12 +1834,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11594340518-11594340524",
+        "physical_path_id": "osm-way-1247191571-11594340518-11594340524-dd73021c51743fc3cb68d823ad257787",
         "surface": null,
         "to_node_id": "osm-node-11594340524"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11594340518-11594340524-forward"
+      "external_id": "osm-way-1247191571-11594340518-11594340524-dd73021c51743fc3cb68d823ad257787-forward"
     },
     {
       "data": {
@@ -218,12 +1862,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11594340518-11594340524",
+        "physical_path_id": "osm-way-1247191571-11594340518-11594340524-dd73021c51743fc3cb68d823ad257787",
         "surface": null,
         "to_node_id": "osm-node-11594340518"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11594340518-11594340524-reverse"
+      "external_id": "osm-way-1247191571-11594340518-11594340524-dd73021c51743fc3cb68d823ad257787-reverse"
     },
     {
       "data": {
@@ -246,12 +1890,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11594340524-11594340519",
+        "physical_path_id": "osm-way-1247191571-11594340519-11594340524-6f969ebc120e3633c669982dafb15e2a",
         "surface": null,
         "to_node_id": "osm-node-11594340519"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11594340524-11594340519-forward"
+      "external_id": "osm-way-1247191571-11594340519-11594340524-6f969ebc120e3633c669982dafb15e2a-reverse"
     },
     {
       "data": {
@@ -274,12 +1918,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11594340524-11594340519",
+        "physical_path_id": "osm-way-1247191571-11594340519-11594340524-6f969ebc120e3633c669982dafb15e2a",
         "surface": null,
         "to_node_id": "osm-node-11594340524"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11594340524-11594340519-reverse"
+      "external_id": "osm-way-1247191571-11594340519-11594340524-6f969ebc120e3633c669982dafb15e2a-forward"
     },
     {
       "data": {
@@ -306,12 +1950,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11594340519-11594340531",
+        "physical_path_id": "osm-way-1247191571-11594340519-11594340531-4016955abb3061c8c97c1dae8dcc2976",
         "surface": null,
         "to_node_id": "osm-node-11594340531"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11594340519-11594340531-forward"
+      "external_id": "osm-way-1247191571-11594340519-11594340531-4016955abb3061c8c97c1dae8dcc2976-forward"
     },
     {
       "data": {
@@ -338,12 +1982,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11594340519-11594340531",
+        "physical_path_id": "osm-way-1247191571-11594340519-11594340531-4016955abb3061c8c97c1dae8dcc2976",
         "surface": null,
         "to_node_id": "osm-node-11594340519"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11594340519-11594340531-reverse"
+      "external_id": "osm-way-1247191571-11594340519-11594340531-4016955abb3061c8c97c1dae8dcc2976-reverse"
     },
     {
       "data": {
@@ -370,12 +2014,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11594340531-11595648709",
+        "physical_path_id": "osm-way-1247191571-11594340531-11595648709-5d869b55d1ffa5b3522740b4c6bdcc95",
         "surface": null,
         "to_node_id": "osm-node-11595648709"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11594340531-11595648709-forward"
+      "external_id": "osm-way-1247191571-11594340531-11595648709-5d869b55d1ffa5b3522740b4c6bdcc95-forward"
     },
     {
       "data": {
@@ -402,12 +2046,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11594340531-11595648709",
+        "physical_path_id": "osm-way-1247191571-11594340531-11595648709-5d869b55d1ffa5b3522740b4c6bdcc95",
         "surface": null,
         "to_node_id": "osm-node-11594340531"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11594340531-11595648709-reverse"
+      "external_id": "osm-way-1247191571-11594340531-11595648709-5d869b55d1ffa5b3522740b4c6bdcc95-reverse"
     },
     {
       "data": {
@@ -430,12 +2074,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11595648709-11595648710",
+        "physical_path_id": "osm-way-1247191571-11595648709-11595648710-b9d7d17732b5f8f8616d3244b59ebade",
         "surface": null,
         "to_node_id": "osm-node-11595648710"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11595648709-11595648710-forward"
+      "external_id": "osm-way-1247191571-11595648709-11595648710-b9d7d17732b5f8f8616d3244b59ebade-forward"
     },
     {
       "data": {
@@ -458,12 +2102,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191571-11595648709-11595648710",
+        "physical_path_id": "osm-way-1247191571-11595648709-11595648710-b9d7d17732b5f8f8616d3244b59ebade",
         "surface": null,
         "to_node_id": "osm-node-11595648709"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191571-11595648709-11595648710-reverse"
+      "external_id": "osm-way-1247191571-11595648709-11595648710-b9d7d17732b5f8f8616d3244b59ebade-reverse"
     },
     {
       "data": {
@@ -486,12 +2130,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191572-11804697576-11594340526",
+        "physical_path_id": "osm-way-1247191572-11594340526-11804697576-cfa60c21d4ad57c38be53c5758ca6c64",
         "surface": null,
         "to_node_id": "osm-node-11594340526"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191572-11804697576-11594340526-forward"
+      "external_id": "osm-way-1247191572-11594340526-11804697576-cfa60c21d4ad57c38be53c5758ca6c64-reverse"
     },
     {
       "data": {
@@ -514,12 +2158,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191572-11804697576-11594340526",
+        "physical_path_id": "osm-way-1247191572-11594340526-11804697576-cfa60c21d4ad57c38be53c5758ca6c64",
         "surface": null,
         "to_node_id": "osm-node-11804697576"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191572-11804697576-11594340526-reverse"
+      "external_id": "osm-way-1247191572-11594340526-11804697576-cfa60c21d4ad57c38be53c5758ca6c64-forward"
     },
     {
       "data": {
@@ -546,12 +2190,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191572-11594340526-11594340524",
+        "physical_path_id": "osm-way-1247191572-11594340524-11594340526-8c0ff04ab728d8685afe3e3ddbac04cf",
         "surface": null,
         "to_node_id": "osm-node-11594340524"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191572-11594340526-11594340524-forward"
+      "external_id": "osm-way-1247191572-11594340524-11594340526-8c0ff04ab728d8685afe3e3ddbac04cf-reverse"
     },
     {
       "data": {
@@ -578,12 +2222,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191572-11594340526-11594340524",
+        "physical_path_id": "osm-way-1247191572-11594340524-11594340526-8c0ff04ab728d8685afe3e3ddbac04cf",
         "surface": null,
         "to_node_id": "osm-node-11594340526"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191572-11594340526-11594340524-reverse"
+      "external_id": "osm-way-1247191572-11594340524-11594340526-8c0ff04ab728d8685afe3e3ddbac04cf-forward"
     },
     {
       "data": {
@@ -606,12 +2250,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191573-11594340525-11594340526",
+        "physical_path_id": "osm-way-1247191573-11594340525-11594340526-70b762c7e84d07c12be38c5237c34dcc",
         "surface": null,
         "to_node_id": "osm-node-11594340526"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191573-11594340525-11594340526-forward"
+      "external_id": "osm-way-1247191573-11594340525-11594340526-70b762c7e84d07c12be38c5237c34dcc-forward"
     },
     {
       "data": {
@@ -634,12 +2278,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191573-11594340525-11594340526",
+        "physical_path_id": "osm-way-1247191573-11594340525-11594340526-70b762c7e84d07c12be38c5237c34dcc",
         "surface": null,
         "to_node_id": "osm-node-11594340525"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191573-11594340525-11594340526-reverse"
+      "external_id": "osm-way-1247191573-11594340525-11594340526-70b762c7e84d07c12be38c5237c34dcc-reverse"
     },
     {
       "data": {
@@ -662,12 +2306,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191574-11576731868-11594340519",
+        "physical_path_id": "osm-way-1247191574-11576731868-11594340519-631750cab5154fb65f4d783947989b6a",
         "surface": null,
         "to_node_id": "osm-node-11594340519"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191574-11576731868-11594340519-forward"
+      "external_id": "osm-way-1247191574-11576731868-11594340519-631750cab5154fb65f4d783947989b6a-forward"
     },
     {
       "data": {
@@ -690,12 +2334,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191574-11576731868-11594340519",
+        "physical_path_id": "osm-way-1247191574-11576731868-11594340519-631750cab5154fb65f4d783947989b6a",
         "surface": null,
         "to_node_id": "osm-node-11576731868"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191574-11576731868-11594340519-reverse"
+      "external_id": "osm-way-1247191574-11576731868-11594340519-631750cab5154fb65f4d783947989b6a-reverse"
     },
     {
       "data": {
@@ -718,12 +2362,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191575-11594340524-11594340529",
+        "physical_path_id": "osm-way-1247191575-11594340524-11594340529-1a90244f8cff97d7806ec2ddfe627f19",
         "surface": null,
         "to_node_id": "osm-node-11594340529"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191575-11594340524-11594340529-forward"
+      "external_id": "osm-way-1247191575-11594340524-11594340529-1a90244f8cff97d7806ec2ddfe627f19-forward"
     },
     {
       "data": {
@@ -746,12 +2390,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191575-11594340524-11594340529",
+        "physical_path_id": "osm-way-1247191575-11594340524-11594340529-1a90244f8cff97d7806ec2ddfe627f19",
         "surface": null,
         "to_node_id": "osm-node-11594340524"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191575-11594340524-11594340529-reverse"
+      "external_id": "osm-way-1247191575-11594340524-11594340529-1a90244f8cff97d7806ec2ddfe627f19-reverse"
     },
     {
       "data": {
@@ -774,12 +2418,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191576-11594340530-11594340531",
+        "physical_path_id": "osm-way-1247191576-11594340530-11594340531-dae1ba5e1459e6b7eea6387bb89f4ff5",
         "surface": null,
         "to_node_id": "osm-node-11594340531"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191576-11594340530-11594340531-forward"
+      "external_id": "osm-way-1247191576-11594340530-11594340531-dae1ba5e1459e6b7eea6387bb89f4ff5-forward"
     },
     {
       "data": {
@@ -802,12 +2446,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191576-11594340530-11594340531",
+        "physical_path_id": "osm-way-1247191576-11594340530-11594340531-dae1ba5e1459e6b7eea6387bb89f4ff5",
         "surface": null,
         "to_node_id": "osm-node-11594340530"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191576-11594340530-11594340531-reverse"
+      "external_id": "osm-way-1247191576-11594340530-11594340531-dae1ba5e1459e6b7eea6387bb89f4ff5-reverse"
     },
     {
       "data": {
@@ -830,12 +2474,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191577-10769848854-11594340532",
+        "physical_path_id": "osm-way-1247191577-10769848854-11594340532-1d38346a7797fa6d857a1c50ac985ae9",
         "surface": null,
         "to_node_id": "osm-node-11594340532"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191577-10769848854-11594340532-forward"
+      "external_id": "osm-way-1247191577-10769848854-11594340532-1d38346a7797fa6d857a1c50ac985ae9-forward"
     },
     {
       "data": {
@@ -858,12 +2502,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247191577-10769848854-11594340532",
+        "physical_path_id": "osm-way-1247191577-10769848854-11594340532-1d38346a7797fa6d857a1c50ac985ae9",
         "surface": null,
         "to_node_id": "osm-node-10769848854"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247191577-10769848854-11594340532-reverse"
+      "external_id": "osm-way-1247191577-10769848854-11594340532-1d38346a7797fa6d857a1c50ac985ae9-reverse"
     },
     {
       "data": {
@@ -886,12 +2530,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352962-11595648709-11595648711",
+        "physical_path_id": "osm-way-1247352962-11595648709-11595648711-6efb24d842402d7a20118368ea0af9aa",
         "surface": null,
         "to_node_id": "osm-node-11595648711"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352962-11595648709-11595648711-forward"
+      "external_id": "osm-way-1247352962-11595648709-11595648711-6efb24d842402d7a20118368ea0af9aa-forward"
     },
     {
       "data": {
@@ -914,12 +2558,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352962-11595648709-11595648711",
+        "physical_path_id": "osm-way-1247352962-11595648709-11595648711-6efb24d842402d7a20118368ea0af9aa",
         "surface": null,
         "to_node_id": "osm-node-11595648709"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352962-11595648709-11595648711-reverse"
+      "external_id": "osm-way-1247352962-11595648709-11595648711-6efb24d842402d7a20118368ea0af9aa-reverse"
     },
     {
       "data": {
@@ -942,12 +2586,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352962-11595648711-11595648712",
+        "physical_path_id": "osm-way-1247352962-11595648711-11595648712-9e083da2979cd0b5565dd7713007e6e6",
         "surface": null,
         "to_node_id": "osm-node-11595648712"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352962-11595648711-11595648712-forward"
+      "external_id": "osm-way-1247352962-11595648711-11595648712-9e083da2979cd0b5565dd7713007e6e6-forward"
     },
     {
       "data": {
@@ -970,12 +2614,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352962-11595648711-11595648712",
+        "physical_path_id": "osm-way-1247352962-11595648711-11595648712-9e083da2979cd0b5565dd7713007e6e6",
         "surface": null,
         "to_node_id": "osm-node-11595648711"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352962-11595648711-11595648712-reverse"
+      "external_id": "osm-way-1247352962-11595648711-11595648712-9e083da2979cd0b5565dd7713007e6e6-reverse"
     },
     {
       "data": {
@@ -998,12 +2642,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352963-11595648711-11595648713",
+        "physical_path_id": "osm-way-1247352963-11595648711-11595648713-eaf2b96fc41de3bc776b205eb06325c4",
         "surface": null,
         "to_node_id": "osm-node-11595648713"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352963-11595648711-11595648713-forward"
+      "external_id": "osm-way-1247352963-11595648711-11595648713-eaf2b96fc41de3bc776b205eb06325c4-forward"
     },
     {
       "data": {
@@ -1026,12 +2670,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352963-11595648711-11595648713",
+        "physical_path_id": "osm-way-1247352963-11595648711-11595648713-eaf2b96fc41de3bc776b205eb06325c4",
         "surface": null,
         "to_node_id": "osm-node-11595648711"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352963-11595648711-11595648713-reverse"
+      "external_id": "osm-way-1247352963-11595648711-11595648713-eaf2b96fc41de3bc776b205eb06325c4-reverse"
     },
     {
       "data": {
@@ -1054,12 +2698,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352963-11595648713-11595648714",
+        "physical_path_id": "osm-way-1247352963-11595648713-11595648714-e58371df7c3b9f8e014d34208db081be",
         "surface": null,
         "to_node_id": "osm-node-11595648714"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352963-11595648713-11595648714-forward"
+      "external_id": "osm-way-1247352963-11595648713-11595648714-e58371df7c3b9f8e014d34208db081be-forward"
     },
     {
       "data": {
@@ -1082,12 +2726,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352963-11595648713-11595648714",
+        "physical_path_id": "osm-way-1247352963-11595648713-11595648714-e58371df7c3b9f8e014d34208db081be",
         "surface": null,
         "to_node_id": "osm-node-11595648713"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352963-11595648713-11595648714-reverse"
+      "external_id": "osm-way-1247352963-11595648713-11595648714-e58371df7c3b9f8e014d34208db081be-reverse"
     },
     {
       "data": {
@@ -1110,12 +2754,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352966-8597438060-11595648721",
+        "physical_path_id": "osm-way-1247352966-8597438060-11595648721-e3611e5e22f7e0939ead441efeadee72",
         "surface": null,
         "to_node_id": "osm-node-11595648721"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352966-8597438060-11595648721-forward"
+      "external_id": "osm-way-1247352966-8597438060-11595648721-e3611e5e22f7e0939ead441efeadee72-forward"
     },
     {
       "data": {
@@ -1138,12 +2782,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352966-8597438060-11595648721",
+        "physical_path_id": "osm-way-1247352966-8597438060-11595648721-e3611e5e22f7e0939ead441efeadee72",
         "surface": null,
         "to_node_id": "osm-node-8597438060"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352966-8597438060-11595648721-reverse"
+      "external_id": "osm-way-1247352966-8597438060-11595648721-e3611e5e22f7e0939ead441efeadee72-reverse"
     },
     {
       "data": {
@@ -1166,12 +2810,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352966-11595648721-11595648713",
+        "physical_path_id": "osm-way-1247352966-11595648713-11595648721-e679f50f5375abe6788fffa478413792",
         "surface": null,
         "to_node_id": "osm-node-11595648713"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352966-11595648721-11595648713-forward"
+      "external_id": "osm-way-1247352966-11595648713-11595648721-e679f50f5375abe6788fffa478413792-reverse"
     },
     {
       "data": {
@@ -1194,12 +2838,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352966-11595648721-11595648713",
+        "physical_path_id": "osm-way-1247352966-11595648713-11595648721-e679f50f5375abe6788fffa478413792",
         "surface": null,
         "to_node_id": "osm-node-11595648721"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352966-11595648721-11595648713-reverse"
+      "external_id": "osm-way-1247352966-11595648713-11595648721-e679f50f5375abe6788fffa478413792-forward"
     },
     {
       "data": {
@@ -1222,12 +2866,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352967-11595648721-11595648722",
+        "physical_path_id": "osm-way-1247352967-11595648721-11595648722-10eb8b48eb029bd222b2f4d57d03d926",
         "surface": null,
         "to_node_id": "osm-node-11595648722"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352967-11595648721-11595648722-forward"
+      "external_id": "osm-way-1247352967-11595648721-11595648722-10eb8b48eb029bd222b2f4d57d03d926-forward"
     },
     {
       "data": {
@@ -1250,12 +2894,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1247352967-11595648721-11595648722",
+        "physical_path_id": "osm-way-1247352967-11595648721-11595648722-10eb8b48eb029bd222b2f4d57d03d926",
         "surface": null,
         "to_node_id": "osm-node-11595648721"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247352967-11595648721-11595648722-reverse"
+      "external_id": "osm-way-1247352967-11595648721-11595648722-10eb8b48eb029bd222b2f4d57d03d926-reverse"
     },
     {
       "data": {
@@ -1282,12 +2926,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1247657280-11598364400-11598364402",
+        "physical_path_id": "osm-way-1247657280-11598364400-11598364402-c40a2229504fe4fa09d4ec834a295972",
         "surface": null,
         "to_node_id": "osm-node-11598364402"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247657280-11598364400-11598364402-forward"
+      "external_id": "osm-way-1247657280-11598364400-11598364402-c40a2229504fe4fa09d4ec834a295972-forward"
     },
     {
       "data": {
@@ -1314,12 +2958,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1247657280-11598364400-11598364402",
+        "physical_path_id": "osm-way-1247657280-11598364400-11598364402-c40a2229504fe4fa09d4ec834a295972",
         "surface": null,
         "to_node_id": "osm-node-11598364400"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247657280-11598364400-11598364402-reverse"
+      "external_id": "osm-way-1247657280-11598364400-11598364402-c40a2229504fe4fa09d4ec834a295972-reverse"
     },
     {
       "data": {
@@ -1342,12 +2986,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1247657280-11598364402-11598364403",
+        "physical_path_id": "osm-way-1247657280-11598364402-11598364403-db9f169528f6365446d5081199199ca7",
         "surface": null,
         "to_node_id": "osm-node-11598364403"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247657280-11598364402-11598364403-forward"
+      "external_id": "osm-way-1247657280-11598364402-11598364403-db9f169528f6365446d5081199199ca7-forward"
     },
     {
       "data": {
@@ -1370,12 +3014,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1247657280-11598364402-11598364403",
+        "physical_path_id": "osm-way-1247657280-11598364402-11598364403-db9f169528f6365446d5081199199ca7",
         "surface": null,
         "to_node_id": "osm-node-11598364402"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247657280-11598364402-11598364403-reverse"
+      "external_id": "osm-way-1247657280-11598364402-11598364403-db9f169528f6365446d5081199199ca7-reverse"
     },
     {
       "data": {
@@ -1398,12 +3042,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1247657280-11598364403-11598364400",
+        "physical_path_id": "osm-way-1247657280-11598364400-11598364403-7716e848f9623598685f59b71dd58788",
         "surface": null,
         "to_node_id": "osm-node-11598364400"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247657280-11598364403-11598364400-forward"
+      "external_id": "osm-way-1247657280-11598364400-11598364403-7716e848f9623598685f59b71dd58788-reverse"
     },
     {
       "data": {
@@ -1426,12 +3070,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1247657280-11598364403-11598364400",
+        "physical_path_id": "osm-way-1247657280-11598364400-11598364403-7716e848f9623598685f59b71dd58788",
         "surface": null,
         "to_node_id": "osm-node-11598364403"
       },
       "entity": "edges",
-      "external_id": "osm-way-1247657280-11598364403-11598364400-reverse"
+      "external_id": "osm-way-1247657280-11598364400-11598364403-7716e848f9623598685f59b71dd58788-forward"
     },
     {
       "data": {
@@ -1470,12 +3114,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393734-11664524156-11612692531",
+        "physical_path_id": "osm-way-1249393734-11612692531-11664524156-8b60daef3a8ec7781cc5de834963f2f9",
         "surface": null,
         "to_node_id": "osm-node-11612692531"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393734-11664524156-11612692531-forward"
+      "external_id": "osm-way-1249393734-11612692531-11664524156-8b60daef3a8ec7781cc5de834963f2f9-reverse"
     },
     {
       "data": {
@@ -1514,12 +3158,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393734-11664524156-11612692531",
+        "physical_path_id": "osm-way-1249393734-11612692531-11664524156-8b60daef3a8ec7781cc5de834963f2f9",
         "surface": null,
         "to_node_id": "osm-node-11664524156"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393734-11664524156-11612692531-reverse"
+      "external_id": "osm-way-1249393734-11612692531-11664524156-8b60daef3a8ec7781cc5de834963f2f9-forward"
     },
     {
       "data": {
@@ -1546,12 +3190,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393735-11612692532-11612692534",
+        "physical_path_id": "osm-way-1249393735-11612692532-11612692534-219fb16fb39457f7842650f7f6a5c3de",
         "surface": null,
         "to_node_id": "osm-node-11612692534"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393735-11612692532-11612692534-forward"
+      "external_id": "osm-way-1249393735-11612692532-11612692534-219fb16fb39457f7842650f7f6a5c3de-forward"
     },
     {
       "data": {
@@ -1578,12 +3222,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393735-11612692532-11612692534",
+        "physical_path_id": "osm-way-1249393735-11612692532-11612692534-219fb16fb39457f7842650f7f6a5c3de",
         "surface": null,
         "to_node_id": "osm-node-11612692532"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393735-11612692532-11612692534-reverse"
+      "external_id": "osm-way-1249393735-11612692532-11612692534-219fb16fb39457f7842650f7f6a5c3de-reverse"
     },
     {
       "data": {
@@ -1606,12 +3250,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393735-11612692534-11612692535",
+        "physical_path_id": "osm-way-1249393735-11612692534-11612692535-07fd02be9664897f7a1744f8e498f61c",
         "surface": null,
         "to_node_id": "osm-node-11612692535"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393735-11612692534-11612692535-forward"
+      "external_id": "osm-way-1249393735-11612692534-11612692535-07fd02be9664897f7a1744f8e498f61c-forward"
     },
     {
       "data": {
@@ -1634,12 +3278,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393735-11612692534-11612692535",
+        "physical_path_id": "osm-way-1249393735-11612692534-11612692535-07fd02be9664897f7a1744f8e498f61c",
         "surface": null,
         "to_node_id": "osm-node-11612692534"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393735-11612692534-11612692535-reverse"
+      "external_id": "osm-way-1249393735-11612692534-11612692535-07fd02be9664897f7a1744f8e498f61c-reverse"
     },
     {
       "data": {
@@ -1666,12 +3310,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393735-11612692535-11612692537",
+        "physical_path_id": "osm-way-1249393735-11612692535-11612692537-9c577d917a495ee8d9fb0596ed01968d",
         "surface": null,
         "to_node_id": "osm-node-11612692537"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393735-11612692535-11612692537-forward"
+      "external_id": "osm-way-1249393735-11612692535-11612692537-9c577d917a495ee8d9fb0596ed01968d-forward"
     },
     {
       "data": {
@@ -1698,12 +3342,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393735-11612692535-11612692537",
+        "physical_path_id": "osm-way-1249393735-11612692535-11612692537-9c577d917a495ee8d9fb0596ed01968d",
         "surface": null,
         "to_node_id": "osm-node-11612692535"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393735-11612692535-11612692537-reverse"
+      "external_id": "osm-way-1249393735-11612692535-11612692537-9c577d917a495ee8d9fb0596ed01968d-reverse"
     },
     {
       "data": {
@@ -1730,12 +3374,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393736-10773902924-11612692540",
+        "physical_path_id": "osm-way-1249393736-10773902924-11612692540-519ccb84a4c8579a3859385e09fe08ab",
         "surface": null,
         "to_node_id": "osm-node-11612692540"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393736-10773902924-11612692540-forward"
+      "external_id": "osm-way-1249393736-10773902924-11612692540-519ccb84a4c8579a3859385e09fe08ab-forward"
     },
     {
       "data": {
@@ -1762,12 +3406,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393736-10773902924-11612692540",
+        "physical_path_id": "osm-way-1249393736-10773902924-11612692540-519ccb84a4c8579a3859385e09fe08ab",
         "surface": null,
         "to_node_id": "osm-node-10773902924"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393736-10773902924-11612692540-reverse"
+      "external_id": "osm-way-1249393736-10773902924-11612692540-519ccb84a4c8579a3859385e09fe08ab-reverse"
     },
     {
       "data": {
@@ -1790,12 +3434,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393736-11612692540-11612692530",
+        "physical_path_id": "osm-way-1249393736-11612692530-11612692540-554df1cc930672e3c92d0ce3e2985de8",
         "surface": null,
         "to_node_id": "osm-node-11612692530"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393736-11612692540-11612692530-forward"
+      "external_id": "osm-way-1249393736-11612692530-11612692540-554df1cc930672e3c92d0ce3e2985de8-reverse"
     },
     {
       "data": {
@@ -1818,12 +3462,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393736-11612692540-11612692530",
+        "physical_path_id": "osm-way-1249393736-11612692530-11612692540-554df1cc930672e3c92d0ce3e2985de8",
         "surface": null,
         "to_node_id": "osm-node-11612692540"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393736-11612692540-11612692530-reverse"
+      "external_id": "osm-way-1249393736-11612692530-11612692540-554df1cc930672e3c92d0ce3e2985de8-forward"
     },
     {
       "data": {
@@ -1846,12 +3490,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393736-11612692530-11612692547",
+        "physical_path_id": "osm-way-1249393736-11612692530-11612692547-21e4c26f9dd71c4db15b11ff54829205",
         "surface": null,
         "to_node_id": "osm-node-11612692547"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393736-11612692530-11612692547-forward"
+      "external_id": "osm-way-1249393736-11612692530-11612692547-21e4c26f9dd71c4db15b11ff54829205-forward"
     },
     {
       "data": {
@@ -1874,12 +3518,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393736-11612692530-11612692547",
+        "physical_path_id": "osm-way-1249393736-11612692530-11612692547-21e4c26f9dd71c4db15b11ff54829205",
         "surface": null,
         "to_node_id": "osm-node-11612692530"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393736-11612692530-11612692547-reverse"
+      "external_id": "osm-way-1249393736-11612692530-11612692547-21e4c26f9dd71c4db15b11ff54829205-reverse"
     },
     {
       "data": {
@@ -1906,12 +3550,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393736-11612692547-11612692539",
+        "physical_path_id": "osm-way-1249393736-11612692539-11612692547-4f36b0f5753ffc52cf8c5378f2ff09f1",
         "surface": null,
         "to_node_id": "osm-node-11612692539"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393736-11612692547-11612692539-forward"
+      "external_id": "osm-way-1249393736-11612692539-11612692547-4f36b0f5753ffc52cf8c5378f2ff09f1-reverse"
     },
     {
       "data": {
@@ -1938,12 +3582,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393736-11612692547-11612692539",
+        "physical_path_id": "osm-way-1249393736-11612692539-11612692547-4f36b0f5753ffc52cf8c5378f2ff09f1",
         "surface": null,
         "to_node_id": "osm-node-11612692547"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393736-11612692547-11612692539-reverse"
+      "external_id": "osm-way-1249393736-11612692539-11612692547-4f36b0f5753ffc52cf8c5378f2ff09f1-forward"
     },
     {
       "data": {
@@ -1970,12 +3614,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393738-10773902923-11612692540",
+        "physical_path_id": "osm-way-1249393738-10773902923-11612692540-c0f1a31f8d027192a3637d0451f65a56",
         "surface": null,
         "to_node_id": "osm-node-11612692540"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393738-10773902923-11612692540-forward"
+      "external_id": "osm-way-1249393738-10773902923-11612692540-c0f1a31f8d027192a3637d0451f65a56-forward"
     },
     {
       "data": {
@@ -2002,12 +3646,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393738-10773902923-11612692540",
+        "physical_path_id": "osm-way-1249393738-10773902923-11612692540-c0f1a31f8d027192a3637d0451f65a56",
         "surface": null,
         "to_node_id": "osm-node-10773902923"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393738-10773902923-11612692540-reverse"
+      "external_id": "osm-way-1249393738-10773902923-11612692540-c0f1a31f8d027192a3637d0451f65a56-reverse"
     },
     {
       "data": {
@@ -2030,12 +3674,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393739-10773902920-11664524408",
+        "physical_path_id": "osm-way-1249393739-10773902920-11664524408-7bc3586cb0ab21ddcb899b93624ff434",
         "surface": null,
         "to_node_id": "osm-node-11664524408"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393739-10773902920-11664524408-forward"
+      "external_id": "osm-way-1249393739-10773902920-11664524408-7bc3586cb0ab21ddcb899b93624ff434-forward"
     },
     {
       "data": {
@@ -2058,12 +3702,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393739-10773902920-11664524408",
+        "physical_path_id": "osm-way-1249393739-10773902920-11664524408-7bc3586cb0ab21ddcb899b93624ff434",
         "surface": null,
         "to_node_id": "osm-node-10773902920"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393739-10773902920-11664524408-reverse"
+      "external_id": "osm-way-1249393739-10773902920-11664524408-7bc3586cb0ab21ddcb899b93624ff434-reverse"
     },
     {
       "data": {
@@ -2090,12 +3734,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393739-11664524408-11612692547",
+        "physical_path_id": "osm-way-1249393739-11612692547-11664524408-e27131b3f219276399c9855634a1da89",
         "surface": null,
         "to_node_id": "osm-node-11612692547"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393739-11664524408-11612692547-forward"
+      "external_id": "osm-way-1249393739-11612692547-11664524408-e27131b3f219276399c9855634a1da89-reverse"
     },
     {
       "data": {
@@ -2122,12 +3766,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249393739-11664524408-11612692547",
+        "physical_path_id": "osm-way-1249393739-11612692547-11664524408-e27131b3f219276399c9855634a1da89",
         "surface": null,
         "to_node_id": "osm-node-11664524408"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249393739-11664524408-11612692547-reverse"
+      "external_id": "osm-way-1249393739-11612692547-11664524408-e27131b3f219276399c9855634a1da89-forward"
     },
     {
       "data": {
@@ -2154,12 +3798,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398685-10773902925-11612768348",
+        "physical_path_id": "osm-way-1249398685-10773902925-11612768348-69912ec62aecb5949db0dbc515d1fad5",
         "surface": null,
         "to_node_id": "osm-node-11612768348"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398685-10773902925-11612768348-forward"
+      "external_id": "osm-way-1249398685-10773902925-11612768348-69912ec62aecb5949db0dbc515d1fad5-forward"
     },
     {
       "data": {
@@ -2186,12 +3830,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398685-10773902925-11612768348",
+        "physical_path_id": "osm-way-1249398685-10773902925-11612768348-69912ec62aecb5949db0dbc515d1fad5",
         "surface": null,
         "to_node_id": "osm-node-10773902925"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398685-10773902925-11612768348-reverse"
+      "external_id": "osm-way-1249398685-10773902925-11612768348-69912ec62aecb5949db0dbc515d1fad5-reverse"
     },
     {
       "data": {
@@ -2218,12 +3862,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398694-11612768365-11612768367",
+        "physical_path_id": "osm-way-1249398694-11612768365-11612768367-f06b870165640302791a09c34f98ccfa",
         "surface": null,
         "to_node_id": "osm-node-11612768367"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398694-11612768365-11612768367-forward"
+      "external_id": "osm-way-1249398694-11612768365-11612768367-f06b870165640302791a09c34f98ccfa-forward"
     },
     {
       "data": {
@@ -2250,12 +3894,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398694-11612768365-11612768367",
+        "physical_path_id": "osm-way-1249398694-11612768365-11612768367-f06b870165640302791a09c34f98ccfa",
         "surface": null,
         "to_node_id": "osm-node-11612768365"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398694-11612768365-11612768367-reverse"
+      "external_id": "osm-way-1249398694-11612768365-11612768367-f06b870165640302791a09c34f98ccfa-reverse"
     },
     {
       "data": {
@@ -2282,12 +3926,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398694-11612768367-11612768365",
+        "physical_path_id": "osm-way-1249398694-11612768365-11612768367-830c4e06548437a50559961609f59722",
         "surface": null,
         "to_node_id": "osm-node-11612768365"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398694-11612768367-11612768365-forward"
+      "external_id": "osm-way-1249398694-11612768365-11612768367-830c4e06548437a50559961609f59722-reverse"
     },
     {
       "data": {
@@ -2314,12 +3958,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398694-11612768367-11612768365",
+        "physical_path_id": "osm-way-1249398694-11612768365-11612768367-830c4e06548437a50559961609f59722",
         "surface": null,
         "to_node_id": "osm-node-11612768367"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398694-11612768367-11612768365-reverse"
+      "external_id": "osm-way-1249398694-11612768365-11612768367-830c4e06548437a50559961609f59722-forward"
     },
     {
       "data": {
@@ -2342,12 +3986,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398695-11612768365-11612773069",
+        "physical_path_id": "osm-way-1249398695-11612768365-11612773069-1d6e9274528f85bfbd9a58a2d3311fea",
         "surface": null,
         "to_node_id": "osm-node-11612773069"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398695-11612768365-11612773069-forward"
+      "external_id": "osm-way-1249398695-11612768365-11612773069-1d6e9274528f85bfbd9a58a2d3311fea-forward"
     },
     {
       "data": {
@@ -2370,12 +4014,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398695-11612768365-11612773069",
+        "physical_path_id": "osm-way-1249398695-11612768365-11612773069-1d6e9274528f85bfbd9a58a2d3311fea",
         "surface": null,
         "to_node_id": "osm-node-11612768365"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398695-11612768365-11612773069-reverse"
+      "external_id": "osm-way-1249398695-11612768365-11612773069-1d6e9274528f85bfbd9a58a2d3311fea-reverse"
     },
     {
       "data": {
@@ -2402,12 +4046,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398696-11612773070-11612773072",
+        "physical_path_id": "osm-way-1249398696-11612773070-11612773072-145c8ace13ca8571ef42b8193090cab6",
         "surface": null,
         "to_node_id": "osm-node-11612773072"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398696-11612773070-11612773072-forward"
+      "external_id": "osm-way-1249398696-11612773070-11612773072-145c8ace13ca8571ef42b8193090cab6-forward"
     },
     {
       "data": {
@@ -2434,12 +4078,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398696-11612773070-11612773072",
+        "physical_path_id": "osm-way-1249398696-11612773070-11612773072-145c8ace13ca8571ef42b8193090cab6",
         "surface": null,
         "to_node_id": "osm-node-11612773070"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398696-11612773070-11612773072-reverse"
+      "external_id": "osm-way-1249398696-11612773070-11612773072-145c8ace13ca8571ef42b8193090cab6-reverse"
     },
     {
       "data": {
@@ -2466,12 +4110,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398696-11612773072-11612773070",
+        "physical_path_id": "osm-way-1249398696-11612773070-11612773072-2dcd16a31ceb93b9ce78da53bbaa79cc",
         "surface": null,
         "to_node_id": "osm-node-11612773070"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398696-11612773072-11612773070-forward"
+      "external_id": "osm-way-1249398696-11612773070-11612773072-2dcd16a31ceb93b9ce78da53bbaa79cc-reverse"
     },
     {
       "data": {
@@ -2498,12 +4142,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398696-11612773072-11612773070",
+        "physical_path_id": "osm-way-1249398696-11612773070-11612773072-2dcd16a31ceb93b9ce78da53bbaa79cc",
         "surface": null,
         "to_node_id": "osm-node-11612773072"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398696-11612773072-11612773070-reverse"
+      "external_id": "osm-way-1249398696-11612773070-11612773072-2dcd16a31ceb93b9ce78da53bbaa79cc-forward"
     },
     {
       "data": {
@@ -2526,12 +4170,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398697-11612773070-11612773075",
+        "physical_path_id": "osm-way-1249398697-11612773070-11612773075-539930fc92f258bbcd9d70e92b693246",
         "surface": null,
         "to_node_id": "osm-node-11612773075"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398697-11612773070-11612773075-forward"
+      "external_id": "osm-way-1249398697-11612773070-11612773075-539930fc92f258bbcd9d70e92b693246-forward"
     },
     {
       "data": {
@@ -2554,12 +4198,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398697-11612773070-11612773075",
+        "physical_path_id": "osm-way-1249398697-11612773070-11612773075-539930fc92f258bbcd9d70e92b693246",
         "surface": null,
         "to_node_id": "osm-node-11612773070"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398697-11612773070-11612773075-reverse"
+      "external_id": "osm-way-1249398697-11612773070-11612773075-539930fc92f258bbcd9d70e92b693246-reverse"
     },
     {
       "data": {
@@ -2582,12 +4226,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398697-11612773075-11612773074",
+        "physical_path_id": "osm-way-1249398697-11612773074-11612773075-47fa25ff9ae5a7129cefcc18d200ab72",
         "surface": null,
         "to_node_id": "osm-node-11612773074"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398697-11612773075-11612773074-forward"
+      "external_id": "osm-way-1249398697-11612773074-11612773075-47fa25ff9ae5a7129cefcc18d200ab72-reverse"
     },
     {
       "data": {
@@ -2610,12 +4254,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398697-11612773075-11612773074",
+        "physical_path_id": "osm-way-1249398697-11612773074-11612773075-47fa25ff9ae5a7129cefcc18d200ab72",
         "surface": null,
         "to_node_id": "osm-node-11612773075"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398697-11612773075-11612773074-reverse"
+      "external_id": "osm-way-1249398697-11612773074-11612773075-47fa25ff9ae5a7129cefcc18d200ab72-forward"
     },
     {
       "data": {
@@ -2638,12 +4282,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398698-11612773075-11612773076",
+        "physical_path_id": "osm-way-1249398698-11612773075-11612773076-e5f80d65dbc340993d455b666cd69884",
         "surface": null,
         "to_node_id": "osm-node-11612773076"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398698-11612773075-11612773076-forward"
+      "external_id": "osm-way-1249398698-11612773075-11612773076-e5f80d65dbc340993d455b666cd69884-forward"
     },
     {
       "data": {
@@ -2666,12 +4310,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398698-11612773075-11612773076",
+        "physical_path_id": "osm-way-1249398698-11612773075-11612773076-e5f80d65dbc340993d455b666cd69884",
         "surface": null,
         "to_node_id": "osm-node-11612773075"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398698-11612773075-11612773076-reverse"
+      "external_id": "osm-way-1249398698-11612773075-11612773076-e5f80d65dbc340993d455b666cd69884-reverse"
     },
     {
       "data": {
@@ -2698,12 +4342,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398704-11612773094-11612773096",
+        "physical_path_id": "osm-way-1249398704-11612773094-11612773096-3f0bbeab6b0c710a7c9af9be70704a65",
         "surface": null,
         "to_node_id": "osm-node-11612773096"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398704-11612773094-11612773096-forward"
+      "external_id": "osm-way-1249398704-11612773094-11612773096-3f0bbeab6b0c710a7c9af9be70704a65-forward"
     },
     {
       "data": {
@@ -2730,12 +4374,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398704-11612773094-11612773096",
+        "physical_path_id": "osm-way-1249398704-11612773094-11612773096-3f0bbeab6b0c710a7c9af9be70704a65",
         "surface": null,
         "to_node_id": "osm-node-11612773094"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398704-11612773094-11612773096-reverse"
+      "external_id": "osm-way-1249398704-11612773094-11612773096-3f0bbeab6b0c710a7c9af9be70704a65-reverse"
     },
     {
       "data": {
@@ -2762,12 +4406,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398704-11612773096-11612773094",
+        "physical_path_id": "osm-way-1249398704-11612773094-11612773096-0ea80122b3bca2a4ad21c4ef0c10bbfc",
         "surface": null,
         "to_node_id": "osm-node-11612773094"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398704-11612773096-11612773094-forward"
+      "external_id": "osm-way-1249398704-11612773094-11612773096-0ea80122b3bca2a4ad21c4ef0c10bbfc-reverse"
     },
     {
       "data": {
@@ -2794,12 +4438,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398704-11612773096-11612773094",
+        "physical_path_id": "osm-way-1249398704-11612773094-11612773096-0ea80122b3bca2a4ad21c4ef0c10bbfc",
         "surface": null,
         "to_node_id": "osm-node-11612773096"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398704-11612773096-11612773094-reverse"
+      "external_id": "osm-way-1249398704-11612773094-11612773096-0ea80122b3bca2a4ad21c4ef0c10bbfc-forward"
     },
     {
       "data": {
@@ -2826,12 +4470,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398705-11612773098-11612773100",
+        "physical_path_id": "osm-way-1249398705-11612773098-11612773100-f8aa040501f40aa8e5f19274e87573fe",
         "surface": null,
         "to_node_id": "osm-node-11612773100"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398705-11612773098-11612773100-forward"
+      "external_id": "osm-way-1249398705-11612773098-11612773100-f8aa040501f40aa8e5f19274e87573fe-forward"
     },
     {
       "data": {
@@ -2858,12 +4502,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398705-11612773098-11612773100",
+        "physical_path_id": "osm-way-1249398705-11612773098-11612773100-f8aa040501f40aa8e5f19274e87573fe",
         "surface": null,
         "to_node_id": "osm-node-11612773098"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398705-11612773098-11612773100-reverse"
+      "external_id": "osm-way-1249398705-11612773098-11612773100-f8aa040501f40aa8e5f19274e87573fe-reverse"
     },
     {
       "data": {
@@ -2886,12 +4530,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398705-11612773100-11612773101",
+        "physical_path_id": "osm-way-1249398705-11612773100-11612773101-2296c3a7a0540e94d980603e3db618f6",
         "surface": null,
         "to_node_id": "osm-node-11612773101"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398705-11612773100-11612773101-forward"
+      "external_id": "osm-way-1249398705-11612773100-11612773101-2296c3a7a0540e94d980603e3db618f6-forward"
     },
     {
       "data": {
@@ -2914,12 +4558,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398705-11612773100-11612773101",
+        "physical_path_id": "osm-way-1249398705-11612773100-11612773101-2296c3a7a0540e94d980603e3db618f6",
         "surface": null,
         "to_node_id": "osm-node-11612773100"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398705-11612773100-11612773101-reverse"
+      "external_id": "osm-way-1249398705-11612773100-11612773101-2296c3a7a0540e94d980603e3db618f6-reverse"
     },
     {
       "data": {
@@ -2942,12 +4586,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398705-11612773101-11612773098",
+        "physical_path_id": "osm-way-1249398705-11612773098-11612773101-48c5a76830ce435be56ee2e5c7000db2",
         "surface": null,
         "to_node_id": "osm-node-11612773098"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398705-11612773101-11612773098-forward"
+      "external_id": "osm-way-1249398705-11612773098-11612773101-48c5a76830ce435be56ee2e5c7000db2-reverse"
     },
     {
       "data": {
@@ -2970,12 +4614,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1249398705-11612773101-11612773098",
+        "physical_path_id": "osm-way-1249398705-11612773098-11612773101-48c5a76830ce435be56ee2e5c7000db2",
         "surface": null,
         "to_node_id": "osm-node-11612773101"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398705-11612773101-11612773098-reverse"
+      "external_id": "osm-way-1249398705-11612773098-11612773101-48c5a76830ce435be56ee2e5c7000db2-forward"
     },
     {
       "data": {
@@ -2998,12 +4642,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398707-11612773103-11612773111",
+        "physical_path_id": "osm-way-1249398707-11612773103-11612773111-1a0b96685f54f5683b209ad5e11baec3",
         "surface": null,
         "to_node_id": "osm-node-11612773111"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398707-11612773103-11612773111-forward"
+      "external_id": "osm-way-1249398707-11612773103-11612773111-1a0b96685f54f5683b209ad5e11baec3-forward"
     },
     {
       "data": {
@@ -3026,12 +4670,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398707-11612773103-11612773111",
+        "physical_path_id": "osm-way-1249398707-11612773103-11612773111-1a0b96685f54f5683b209ad5e11baec3",
         "surface": null,
         "to_node_id": "osm-node-11612773103"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398707-11612773103-11612773111-reverse"
+      "external_id": "osm-way-1249398707-11612773103-11612773111-1a0b96685f54f5683b209ad5e11baec3-reverse"
     },
     {
       "data": {
@@ -3054,12 +4698,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398708-11612773106-11612773115",
+        "physical_path_id": "osm-way-1249398708-11612773106-11612773115-34444d8c55908de44c9af378336b7913",
         "surface": null,
         "to_node_id": "osm-node-11612773115"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398708-11612773106-11612773115-forward"
+      "external_id": "osm-way-1249398708-11612773106-11612773115-34444d8c55908de44c9af378336b7913-forward"
     },
     {
       "data": {
@@ -3082,12 +4726,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398708-11612773106-11612773115",
+        "physical_path_id": "osm-way-1249398708-11612773106-11612773115-34444d8c55908de44c9af378336b7913",
         "surface": null,
         "to_node_id": "osm-node-11612773106"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398708-11612773106-11612773115-reverse"
+      "external_id": "osm-way-1249398708-11612773106-11612773115-34444d8c55908de44c9af378336b7913-reverse"
     },
     {
       "data": {
@@ -3110,12 +4754,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398708-11612773115-11612773101",
+        "physical_path_id": "osm-way-1249398708-11612773101-11612773115-b8933543124719cdaca4036d91e61ada",
         "surface": null,
         "to_node_id": "osm-node-11612773101"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398708-11612773115-11612773101-forward"
+      "external_id": "osm-way-1249398708-11612773101-11612773115-b8933543124719cdaca4036d91e61ada-reverse"
     },
     {
       "data": {
@@ -3138,12 +4782,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398708-11612773115-11612773101",
+        "physical_path_id": "osm-way-1249398708-11612773101-11612773115-b8933543124719cdaca4036d91e61ada",
         "surface": null,
         "to_node_id": "osm-node-11612773115"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398708-11612773115-11612773101-reverse"
+      "external_id": "osm-way-1249398708-11612773101-11612773115-b8933543124719cdaca4036d91e61ada-forward"
     },
     {
       "data": {
@@ -3166,12 +4810,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398708-11612773101-11612773113",
+        "physical_path_id": "osm-way-1249398708-11612773101-11612773113-5673c6d445e47c209ad7581c7442d9dd",
         "surface": null,
         "to_node_id": "osm-node-11612773113"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398708-11612773101-11612773113-forward"
+      "external_id": "osm-way-1249398708-11612773101-11612773113-5673c6d445e47c209ad7581c7442d9dd-forward"
     },
     {
       "data": {
@@ -3194,12 +4838,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398708-11612773101-11612773113",
+        "physical_path_id": "osm-way-1249398708-11612773101-11612773113-5673c6d445e47c209ad7581c7442d9dd",
         "surface": null,
         "to_node_id": "osm-node-11612773101"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398708-11612773101-11612773113-reverse"
+      "external_id": "osm-way-1249398708-11612773101-11612773113-5673c6d445e47c209ad7581c7442d9dd-reverse"
     },
     {
       "data": {
@@ -3222,12 +4866,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398711-11612773094-11612773113",
+        "physical_path_id": "osm-way-1249398711-11612773094-11612773113-63dfa146bcaf715646180b7d9148b51e",
         "surface": null,
         "to_node_id": "osm-node-11612773113"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398711-11612773094-11612773113-forward"
+      "external_id": "osm-way-1249398711-11612773094-11612773113-63dfa146bcaf715646180b7d9148b51e-forward"
     },
     {
       "data": {
@@ -3250,12 +4894,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249398711-11612773094-11612773113",
+        "physical_path_id": "osm-way-1249398711-11612773094-11612773113-63dfa146bcaf715646180b7d9148b51e",
         "surface": null,
         "to_node_id": "osm-node-11612773094"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249398711-11612773094-11612773113-reverse"
+      "external_id": "osm-way-1249398711-11612773094-11612773113-63dfa146bcaf715646180b7d9148b51e-reverse"
     },
     {
       "data": {
@@ -3286,12 +4930,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249585729-11615178729-11615178732",
+        "physical_path_id": "osm-way-1249585729-11615178729-11615178732-50f51e60258c0fc51eec4169597c5aec",
         "surface": null,
         "to_node_id": "osm-node-11615178732"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249585729-11615178729-11615178732-forward"
+      "external_id": "osm-way-1249585729-11615178729-11615178732-50f51e60258c0fc51eec4169597c5aec-forward"
     },
     {
       "data": {
@@ -3322,12 +4966,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249585729-11615178729-11615178732",
+        "physical_path_id": "osm-way-1249585729-11615178729-11615178732-50f51e60258c0fc51eec4169597c5aec",
         "surface": null,
         "to_node_id": "osm-node-11615178729"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249585729-11615178729-11615178732-reverse"
+      "external_id": "osm-way-1249585729-11615178729-11615178732-50f51e60258c0fc51eec4169597c5aec-reverse"
     },
     {
       "data": {
@@ -3358,12 +5002,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249585730-11615178733-11615178736",
+        "physical_path_id": "osm-way-1249585730-11615178733-11615178736-fbcf37484ae7559e7968b53b9cf29173",
         "surface": null,
         "to_node_id": "osm-node-11615178736"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249585730-11615178733-11615178736-forward"
+      "external_id": "osm-way-1249585730-11615178733-11615178736-fbcf37484ae7559e7968b53b9cf29173-forward"
     },
     {
       "data": {
@@ -3394,12 +5038,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249585730-11615178733-11615178736",
+        "physical_path_id": "osm-way-1249585730-11615178733-11615178736-fbcf37484ae7559e7968b53b9cf29173",
         "surface": null,
         "to_node_id": "osm-node-11615178733"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249585730-11615178733-11615178736-reverse"
+      "external_id": "osm-way-1249585730-11615178733-11615178736-fbcf37484ae7559e7968b53b9cf29173-reverse"
     },
     {
       "data": {
@@ -3422,12 +5066,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249585731-11612692522-11612692534",
+        "physical_path_id": "osm-way-1249585731-11612692522-11612692534-b41ff0bc17d0d19b62ae05e36ed8e61f",
         "surface": null,
         "to_node_id": "osm-node-11612692534"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249585731-11612692522-11612692534-forward"
+      "external_id": "osm-way-1249585731-11612692522-11612692534-b41ff0bc17d0d19b62ae05e36ed8e61f-forward"
     },
     {
       "data": {
@@ -3450,12 +5094,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249585731-11612692522-11612692534",
+        "physical_path_id": "osm-way-1249585731-11612692522-11612692534-b41ff0bc17d0d19b62ae05e36ed8e61f",
         "surface": null,
         "to_node_id": "osm-node-11612692522"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249585731-11612692522-11612692534-reverse"
+      "external_id": "osm-way-1249585731-11612692522-11612692534-b41ff0bc17d0d19b62ae05e36ed8e61f-reverse"
     },
     {
       "data": {
@@ -3478,12 +5122,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249585732-11612692521-11612692535",
+        "physical_path_id": "osm-way-1249585732-11612692521-11612692535-b3319f7dae3a20def326fa62cdaf1ea4",
         "surface": null,
         "to_node_id": "osm-node-11612692535"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249585732-11612692521-11612692535-forward"
+      "external_id": "osm-way-1249585732-11612692521-11612692535-b3319f7dae3a20def326fa62cdaf1ea4-forward"
     },
     {
       "data": {
@@ -3506,12 +5150,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1249585732-11612692521-11612692535",
+        "physical_path_id": "osm-way-1249585732-11612692521-11612692535-b3319f7dae3a20def326fa62cdaf1ea4",
         "surface": null,
         "to_node_id": "osm-node-11612692521"
       },
       "entity": "edges",
-      "external_id": "osm-way-1249585732-11612692521-11612692535-reverse"
+      "external_id": "osm-way-1249585732-11612692521-11612692535-b3319f7dae3a20def326fa62cdaf1ea4-reverse"
     },
     {
       "data": {
@@ -3534,12 +5178,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788393-11664524145-11664524146",
+        "physical_path_id": "osm-way-1254788393-11664524145-11664524146-ebf35006de7009ab43a9a863b8b04acf",
         "surface": null,
         "to_node_id": "osm-node-11664524146"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788393-11664524145-11664524146-forward"
+      "external_id": "osm-way-1254788393-11664524145-11664524146-ebf35006de7009ab43a9a863b8b04acf-forward"
     },
     {
       "data": {
@@ -3562,12 +5206,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788393-11664524145-11664524146",
+        "physical_path_id": "osm-way-1254788393-11664524145-11664524146-ebf35006de7009ab43a9a863b8b04acf",
         "surface": null,
         "to_node_id": "osm-node-11664524145"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788393-11664524145-11664524146-reverse"
+      "external_id": "osm-way-1254788393-11664524145-11664524146-ebf35006de7009ab43a9a863b8b04acf-reverse"
     },
     {
       "data": {
@@ -3590,12 +5234,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788393-11664524146-11612768346",
+        "physical_path_id": "osm-way-1254788393-11612768346-11664524146-4f4ebf2987308fa367dba9135f7e47f9",
         "surface": null,
         "to_node_id": "osm-node-11612768346"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788393-11664524146-11612768346-forward"
+      "external_id": "osm-way-1254788393-11612768346-11664524146-4f4ebf2987308fa367dba9135f7e47f9-reverse"
     },
     {
       "data": {
@@ -3618,12 +5262,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788393-11664524146-11612768346",
+        "physical_path_id": "osm-way-1254788393-11612768346-11664524146-4f4ebf2987308fa367dba9135f7e47f9",
         "surface": null,
         "to_node_id": "osm-node-11664524146"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788393-11664524146-11612768346-reverse"
+      "external_id": "osm-way-1254788393-11612768346-11664524146-4f4ebf2987308fa367dba9135f7e47f9-forward"
     },
     {
       "data": {
@@ -3650,12 +5294,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788396-11664524151-11664524153",
+        "physical_path_id": "osm-way-1254788396-11664524151-11664524153-ac43d027a71ecc7c8da42ae6b33164e0",
         "surface": null,
         "to_node_id": "osm-node-11664524153"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788396-11664524151-11664524153-forward"
+      "external_id": "osm-way-1254788396-11664524151-11664524153-ac43d027a71ecc7c8da42ae6b33164e0-forward"
     },
     {
       "data": {
@@ -3682,12 +5326,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788396-11664524151-11664524153",
+        "physical_path_id": "osm-way-1254788396-11664524151-11664524153-ac43d027a71ecc7c8da42ae6b33164e0",
         "surface": null,
         "to_node_id": "osm-node-11664524151"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788396-11664524151-11664524153-reverse"
+      "external_id": "osm-way-1254788396-11664524151-11664524153-ac43d027a71ecc7c8da42ae6b33164e0-reverse"
     },
     {
       "data": {
@@ -3714,12 +5358,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788396-11664524153-11664524151",
+        "physical_path_id": "osm-way-1254788396-11664524151-11664524153-2f489f36681dca136bc91dcea0ff6702",
         "surface": null,
         "to_node_id": "osm-node-11664524151"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788396-11664524153-11664524151-forward"
+      "external_id": "osm-way-1254788396-11664524151-11664524153-2f489f36681dca136bc91dcea0ff6702-reverse"
     },
     {
       "data": {
@@ -3746,12 +5390,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788396-11664524153-11664524151",
+        "physical_path_id": "osm-way-1254788396-11664524151-11664524153-2f489f36681dca136bc91dcea0ff6702",
         "surface": null,
         "to_node_id": "osm-node-11664524153"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788396-11664524153-11664524151-reverse"
+      "external_id": "osm-way-1254788396-11664524151-11664524153-2f489f36681dca136bc91dcea0ff6702-forward"
     },
     {
       "data": {
@@ -3774,12 +5418,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788397-11664524151-11664524155",
+        "physical_path_id": "osm-way-1254788397-11664524151-11664524155-aa3672d57c773be48d453fc5557d2ee7",
         "surface": null,
         "to_node_id": "osm-node-11664524155"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788397-11664524151-11664524155-forward"
+      "external_id": "osm-way-1254788397-11664524151-11664524155-aa3672d57c773be48d453fc5557d2ee7-forward"
     },
     {
       "data": {
@@ -3802,12 +5446,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788397-11664524151-11664524155",
+        "physical_path_id": "osm-way-1254788397-11664524151-11664524155-aa3672d57c773be48d453fc5557d2ee7",
         "surface": null,
         "to_node_id": "osm-node-11664524151"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788397-11664524151-11664524155-reverse"
+      "external_id": "osm-way-1254788397-11664524151-11664524155-aa3672d57c773be48d453fc5557d2ee7-reverse"
     },
     {
       "data": {
@@ -3830,12 +5474,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788398-11612768346-11612768347",
+        "physical_path_id": "osm-way-1254788398-11612768346-11612768347-efdd143a61cf5e16ed2f07edea7b5273",
         "surface": null,
         "to_node_id": "osm-node-11612768347"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788398-11612768346-11612768347-forward"
+      "external_id": "osm-way-1254788398-11612768346-11612768347-efdd143a61cf5e16ed2f07edea7b5273-forward"
     },
     {
       "data": {
@@ -3858,12 +5502,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788398-11612768346-11612768347",
+        "physical_path_id": "osm-way-1254788398-11612768346-11612768347-efdd143a61cf5e16ed2f07edea7b5273",
         "surface": null,
         "to_node_id": "osm-node-11612768346"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788398-11612768346-11612768347-reverse"
+      "external_id": "osm-way-1254788398-11612768346-11612768347-efdd143a61cf5e16ed2f07edea7b5273-reverse"
     },
     {
       "data": {
@@ -3890,12 +5534,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788402-11664524161-11664524163",
+        "physical_path_id": "osm-way-1254788402-11664524161-11664524163-c2cc51990b6966d40505e5049fcaad96",
         "surface": null,
         "to_node_id": "osm-node-11664524163"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788402-11664524161-11664524163-forward"
+      "external_id": "osm-way-1254788402-11664524161-11664524163-c2cc51990b6966d40505e5049fcaad96-forward"
     },
     {
       "data": {
@@ -3922,12 +5566,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788402-11664524161-11664524163",
+        "physical_path_id": "osm-way-1254788402-11664524161-11664524163-c2cc51990b6966d40505e5049fcaad96",
         "surface": null,
         "to_node_id": "osm-node-11664524161"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788402-11664524161-11664524163-reverse"
+      "external_id": "osm-way-1254788402-11664524161-11664524163-c2cc51990b6966d40505e5049fcaad96-reverse"
     },
     {
       "data": {
@@ -3954,12 +5598,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788402-11664524163-11664524161",
+        "physical_path_id": "osm-way-1254788402-11664524161-11664524163-a9fa30f16f2caba16aff3a4a5bde0a1b",
         "surface": null,
         "to_node_id": "osm-node-11664524161"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788402-11664524163-11664524161-forward"
+      "external_id": "osm-way-1254788402-11664524161-11664524163-a9fa30f16f2caba16aff3a4a5bde0a1b-reverse"
     },
     {
       "data": {
@@ -3986,12 +5630,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788402-11664524163-11664524161",
+        "physical_path_id": "osm-way-1254788402-11664524161-11664524163-a9fa30f16f2caba16aff3a4a5bde0a1b",
         "surface": null,
         "to_node_id": "osm-node-11664524163"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788402-11664524163-11664524161-reverse"
+      "external_id": "osm-way-1254788402-11664524161-11664524163-a9fa30f16f2caba16aff3a4a5bde0a1b-forward"
     },
     {
       "data": {
@@ -4014,12 +5658,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788403-11664524161-11664524166",
+        "physical_path_id": "osm-way-1254788403-11664524161-11664524166-50e79057ded53551f3b4e397a441000a",
         "surface": null,
         "to_node_id": "osm-node-11664524166"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788403-11664524161-11664524166-forward"
+      "external_id": "osm-way-1254788403-11664524161-11664524166-50e79057ded53551f3b4e397a441000a-forward"
     },
     {
       "data": {
@@ -4042,12 +5686,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788403-11664524161-11664524166",
+        "physical_path_id": "osm-way-1254788403-11664524161-11664524166-50e79057ded53551f3b4e397a441000a",
         "surface": null,
         "to_node_id": "osm-node-11664524161"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788403-11664524161-11664524166-reverse"
+      "external_id": "osm-way-1254788403-11664524161-11664524166-50e79057ded53551f3b4e397a441000a-reverse"
     },
     {
       "data": {
@@ -4070,12 +5714,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788403-11664524166-11664524165",
+        "physical_path_id": "osm-way-1254788403-11664524165-11664524166-b3de82539daee361f82a3534575ff4d5",
         "surface": null,
         "to_node_id": "osm-node-11664524165"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788403-11664524166-11664524165-forward"
+      "external_id": "osm-way-1254788403-11664524165-11664524166-b3de82539daee361f82a3534575ff4d5-reverse"
     },
     {
       "data": {
@@ -4098,12 +5742,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788403-11664524166-11664524165",
+        "physical_path_id": "osm-way-1254788403-11664524165-11664524166-b3de82539daee361f82a3534575ff4d5",
         "surface": null,
         "to_node_id": "osm-node-11664524166"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788403-11664524166-11664524165-reverse"
+      "external_id": "osm-way-1254788403-11664524165-11664524166-b3de82539daee361f82a3534575ff4d5-forward"
     },
     {
       "data": {
@@ -4126,12 +5770,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788404-11664524166-11664524167",
+        "physical_path_id": "osm-way-1254788404-11664524166-11664524167-ad6edd73fdaf3aebd79b93cb43c7c5e4",
         "surface": null,
         "to_node_id": "osm-node-11664524167"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788404-11664524166-11664524167-forward"
+      "external_id": "osm-way-1254788404-11664524166-11664524167-ad6edd73fdaf3aebd79b93cb43c7c5e4-forward"
     },
     {
       "data": {
@@ -4154,12 +5798,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788404-11664524166-11664524167",
+        "physical_path_id": "osm-way-1254788404-11664524166-11664524167-ad6edd73fdaf3aebd79b93cb43c7c5e4",
         "surface": null,
         "to_node_id": "osm-node-11664524166"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788404-11664524166-11664524167-reverse"
+      "external_id": "osm-way-1254788404-11664524166-11664524167-ad6edd73fdaf3aebd79b93cb43c7c5e4-reverse"
     },
     {
       "data": {
@@ -4182,12 +5826,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788405-11664524166-11664524143",
+        "physical_path_id": "osm-way-1254788405-11664524143-11664524166-8853982dabd49b4c75c7dcb824e94d91",
         "surface": null,
         "to_node_id": "osm-node-11664524143"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788405-11664524166-11664524143-forward"
+      "external_id": "osm-way-1254788405-11664524143-11664524166-8853982dabd49b4c75c7dcb824e94d91-reverse"
     },
     {
       "data": {
@@ -4210,12 +5854,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788405-11664524166-11664524143",
+        "physical_path_id": "osm-way-1254788405-11664524143-11664524166-8853982dabd49b4c75c7dcb824e94d91",
         "surface": null,
         "to_node_id": "osm-node-11664524166"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788405-11664524166-11664524143-reverse"
+      "external_id": "osm-way-1254788405-11664524143-11664524166-8853982dabd49b4c75c7dcb824e94d91-forward"
     },
     {
       "data": {
@@ -4242,12 +5886,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788411-11664524381-11664524383",
+        "physical_path_id": "osm-way-1254788411-11664524381-11664524383-406594a1f3c7c388eb1c01656aa80388",
         "surface": null,
         "to_node_id": "osm-node-11664524383"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788411-11664524381-11664524383-forward"
+      "external_id": "osm-way-1254788411-11664524381-11664524383-406594a1f3c7c388eb1c01656aa80388-forward"
     },
     {
       "data": {
@@ -4274,12 +5918,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788411-11664524381-11664524383",
+        "physical_path_id": "osm-way-1254788411-11664524381-11664524383-406594a1f3c7c388eb1c01656aa80388",
         "surface": null,
         "to_node_id": "osm-node-11664524381"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788411-11664524381-11664524383-reverse"
+      "external_id": "osm-way-1254788411-11664524381-11664524383-406594a1f3c7c388eb1c01656aa80388-reverse"
     },
     {
       "data": {
@@ -4302,12 +5946,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788411-11664524383-11664524384",
+        "physical_path_id": "osm-way-1254788411-11664524383-11664524384-79e9e1100c3267862a9531d4f5a89def",
         "surface": null,
         "to_node_id": "osm-node-11664524384"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788411-11664524383-11664524384-forward"
+      "external_id": "osm-way-1254788411-11664524383-11664524384-79e9e1100c3267862a9531d4f5a89def-forward"
     },
     {
       "data": {
@@ -4330,12 +5974,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788411-11664524383-11664524384",
+        "physical_path_id": "osm-way-1254788411-11664524383-11664524384-79e9e1100c3267862a9531d4f5a89def",
         "surface": null,
         "to_node_id": "osm-node-11664524383"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788411-11664524383-11664524384-reverse"
+      "external_id": "osm-way-1254788411-11664524383-11664524384-79e9e1100c3267862a9531d4f5a89def-reverse"
     },
     {
       "data": {
@@ -4358,12 +6002,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788411-11664524384-11664524381",
+        "physical_path_id": "osm-way-1254788411-11664524381-11664524384-c301ec2d357722b9cf54885e2ac2cc57",
         "surface": null,
         "to_node_id": "osm-node-11664524381"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788411-11664524384-11664524381-forward"
+      "external_id": "osm-way-1254788411-11664524381-11664524384-c301ec2d357722b9cf54885e2ac2cc57-reverse"
     },
     {
       "data": {
@@ -4386,12 +6030,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788411-11664524384-11664524381",
+        "physical_path_id": "osm-way-1254788411-11664524381-11664524384-c301ec2d357722b9cf54885e2ac2cc57",
         "surface": null,
         "to_node_id": "osm-node-11664524384"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788411-11664524384-11664524381-reverse"
+      "external_id": "osm-way-1254788411-11664524381-11664524384-c301ec2d357722b9cf54885e2ac2cc57-forward"
     },
     {
       "data": {
@@ -4414,12 +6058,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788412-11664524384-11664524385",
+        "physical_path_id": "osm-way-1254788412-11664524384-11664524385-8a35d8bf57f727ba2fbfe680b04ce192",
         "surface": null,
         "to_node_id": "osm-node-11664524385"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788412-11664524384-11664524385-forward"
+      "external_id": "osm-way-1254788412-11664524384-11664524385-8a35d8bf57f727ba2fbfe680b04ce192-forward"
     },
     {
       "data": {
@@ -4442,12 +6086,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788412-11664524384-11664524385",
+        "physical_path_id": "osm-way-1254788412-11664524384-11664524385-8a35d8bf57f727ba2fbfe680b04ce192",
         "surface": null,
         "to_node_id": "osm-node-11664524384"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788412-11664524384-11664524385-reverse"
+      "external_id": "osm-way-1254788412-11664524384-11664524385-8a35d8bf57f727ba2fbfe680b04ce192-reverse"
     },
     {
       "data": {
@@ -4474,12 +6118,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788417-11664524399-11664524401",
+        "physical_path_id": "osm-way-1254788417-11664524399-11664524401-400851ebf7c479a4b5c14f53f6721aa7",
         "surface": null,
         "to_node_id": "osm-node-11664524401"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788417-11664524399-11664524401-forward"
+      "external_id": "osm-way-1254788417-11664524399-11664524401-400851ebf7c479a4b5c14f53f6721aa7-forward"
     },
     {
       "data": {
@@ -4506,12 +6150,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788417-11664524399-11664524401",
+        "physical_path_id": "osm-way-1254788417-11664524399-11664524401-400851ebf7c479a4b5c14f53f6721aa7",
         "surface": null,
         "to_node_id": "osm-node-11664524399"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788417-11664524399-11664524401-reverse"
+      "external_id": "osm-way-1254788417-11664524399-11664524401-400851ebf7c479a4b5c14f53f6721aa7-reverse"
     },
     {
       "data": {
@@ -4534,12 +6178,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788417-11664524401-11664524402",
+        "physical_path_id": "osm-way-1254788417-11664524401-11664524402-5c974c32201f0a70da78c42f0c1d461e",
         "surface": null,
         "to_node_id": "osm-node-11664524402"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788417-11664524401-11664524402-forward"
+      "external_id": "osm-way-1254788417-11664524401-11664524402-5c974c32201f0a70da78c42f0c1d461e-forward"
     },
     {
       "data": {
@@ -4562,12 +6206,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788417-11664524401-11664524402",
+        "physical_path_id": "osm-way-1254788417-11664524401-11664524402-5c974c32201f0a70da78c42f0c1d461e",
         "surface": null,
         "to_node_id": "osm-node-11664524401"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788417-11664524401-11664524402-reverse"
+      "external_id": "osm-way-1254788417-11664524401-11664524402-5c974c32201f0a70da78c42f0c1d461e-reverse"
     },
     {
       "data": {
@@ -4590,12 +6234,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788417-11664524402-11664524399",
+        "physical_path_id": "osm-way-1254788417-11664524399-11664524402-1d412a364ccb0e2c1301a7b052274f30",
         "surface": null,
         "to_node_id": "osm-node-11664524399"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788417-11664524402-11664524399-forward"
+      "external_id": "osm-way-1254788417-11664524399-11664524402-1d412a364ccb0e2c1301a7b052274f30-reverse"
     },
     {
       "data": {
@@ -4618,12 +6262,12 @@
           "type": "LineString"
         },
         "kind": "stairs",
-        "physical_path_id": "osm-way-1254788417-11664524402-11664524399",
+        "physical_path_id": "osm-way-1254788417-11664524399-11664524402-1d412a364ccb0e2c1301a7b052274f30",
         "surface": null,
         "to_node_id": "osm-node-11664524402"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788417-11664524402-11664524399-reverse"
+      "external_id": "osm-way-1254788417-11664524399-11664524402-1d412a364ccb0e2c1301a7b052274f30-forward"
     },
     {
       "data": {
@@ -4646,12 +6290,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788418-11664524402-11664524403",
+        "physical_path_id": "osm-way-1254788418-11664524402-11664524403-0b6507564ee66e9f9b0b684b2ae9239c",
         "surface": null,
         "to_node_id": "osm-node-11664524403"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788418-11664524402-11664524403-forward"
+      "external_id": "osm-way-1254788418-11664524402-11664524403-0b6507564ee66e9f9b0b684b2ae9239c-forward"
     },
     {
       "data": {
@@ -4674,12 +6318,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788418-11664524402-11664524403",
+        "physical_path_id": "osm-way-1254788418-11664524402-11664524403-0b6507564ee66e9f9b0b684b2ae9239c",
         "surface": null,
         "to_node_id": "osm-node-11664524402"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788418-11664524402-11664524403-reverse"
+      "external_id": "osm-way-1254788418-11664524402-11664524403-0b6507564ee66e9f9b0b684b2ae9239c-reverse"
     },
     {
       "data": {
@@ -4702,12 +6346,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788420-11664524407-11664524408",
+        "physical_path_id": "osm-way-1254788420-11664524407-11664524408-172345fdf89dce2cab2b8671a578a182",
         "surface": null,
         "to_node_id": "osm-node-11664524408"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788420-11664524407-11664524408-forward"
+      "external_id": "osm-way-1254788420-11664524407-11664524408-172345fdf89dce2cab2b8671a578a182-forward"
     },
     {
       "data": {
@@ -4730,12 +6374,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1254788420-11664524407-11664524408",
+        "physical_path_id": "osm-way-1254788420-11664524407-11664524408-172345fdf89dce2cab2b8671a578a182",
         "surface": null,
         "to_node_id": "osm-node-11664524407"
       },
       "entity": "edges",
-      "external_id": "osm-way-1254788420-11664524407-11664524408-reverse"
+      "external_id": "osm-way-1254788420-11664524407-11664524408-172345fdf89dce2cab2b8671a578a182-reverse"
     },
     {
       "data": {
@@ -4766,12 +6410,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271152918-11804678752-11804678745",
+        "physical_path_id": "osm-way-1271152918-11804678745-11804678752-19c7bf899ec46909f6c6df08a129a838",
         "surface": null,
         "to_node_id": "osm-node-11804678745"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271152918-11804678752-11804678745-forward"
+      "external_id": "osm-way-1271152918-11804678745-11804678752-19c7bf899ec46909f6c6df08a129a838-reverse"
     },
     {
       "data": {
@@ -4802,12 +6446,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271152918-11804678752-11804678745",
+        "physical_path_id": "osm-way-1271152918-11804678745-11804678752-19c7bf899ec46909f6c6df08a129a838",
         "surface": null,
         "to_node_id": "osm-node-11804678752"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271152918-11804678752-11804678745-reverse"
+      "external_id": "osm-way-1271152918-11804678745-11804678752-19c7bf899ec46909f6c6df08a129a838-forward"
     },
     {
       "data": {
@@ -4838,12 +6482,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271152923-11804678758-11804678757",
+        "physical_path_id": "osm-way-1271152923-11804678757-11804678758-d57eb0b938e2b3b9786d9997fe8b162b",
         "surface": null,
         "to_node_id": "osm-node-11804678757"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271152923-11804678758-11804678757-forward"
+      "external_id": "osm-way-1271152923-11804678757-11804678758-d57eb0b938e2b3b9786d9997fe8b162b-reverse"
     },
     {
       "data": {
@@ -4874,12 +6518,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271152923-11804678758-11804678757",
+        "physical_path_id": "osm-way-1271152923-11804678757-11804678758-d57eb0b938e2b3b9786d9997fe8b162b",
         "surface": null,
         "to_node_id": "osm-node-11804678758"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271152923-11804678758-11804678757-reverse"
+      "external_id": "osm-way-1271152923-11804678757-11804678758-d57eb0b938e2b3b9786d9997fe8b162b-forward"
     },
     {
       "data": {
@@ -4906,12 +6550,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271152931-11804697573-11804697569",
+        "physical_path_id": "osm-way-1271152931-11804697569-11804697573-b18b9654b77765db3175829c26f4a907",
         "surface": null,
         "to_node_id": "osm-node-11804697569"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271152931-11804697573-11804697569-forward"
+      "external_id": "osm-way-1271152931-11804697569-11804697573-b18b9654b77765db3175829c26f4a907-reverse"
     },
     {
       "data": {
@@ -4938,12 +6582,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271152931-11804697573-11804697569",
+        "physical_path_id": "osm-way-1271152931-11804697569-11804697573-b18b9654b77765db3175829c26f4a907",
         "surface": null,
         "to_node_id": "osm-node-11804697573"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271152931-11804697573-11804697569-reverse"
+      "external_id": "osm-way-1271152931-11804697569-11804697573-b18b9654b77765db3175829c26f4a907-forward"
     },
     {
       "data": {
@@ -4966,12 +6610,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669884-11804678738-11809043891",
+        "physical_path_id": "osm-way-1271669884-11804678738-11809043891-96eb5c2b0899ac97378a028331616d1f",
         "surface": null,
         "to_node_id": "osm-node-11809043891"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669884-11804678738-11809043891-forward"
+      "external_id": "osm-way-1271669884-11804678738-11809043891-96eb5c2b0899ac97378a028331616d1f-forward"
     },
     {
       "data": {
@@ -4994,12 +6638,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669884-11804678738-11809043891",
+        "physical_path_id": "osm-way-1271669884-11804678738-11809043891-96eb5c2b0899ac97378a028331616d1f",
         "surface": null,
         "to_node_id": "osm-node-11804678738"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669884-11804678738-11809043891-reverse"
+      "external_id": "osm-way-1271669884-11804678738-11809043891-96eb5c2b0899ac97378a028331616d1f-reverse"
     },
     {
       "data": {
@@ -5022,12 +6666,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669898-11598364391-11809043901",
+        "physical_path_id": "osm-way-1271669898-11598364391-11809043901-2dc0e305c61058d29f61e932f35c52ae",
         "surface": null,
         "to_node_id": "osm-node-11809043901"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669898-11598364391-11809043901-forward"
+      "external_id": "osm-way-1271669898-11598364391-11809043901-2dc0e305c61058d29f61e932f35c52ae-forward"
     },
     {
       "data": {
@@ -5050,12 +6694,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669898-11598364391-11809043901",
+        "physical_path_id": "osm-way-1271669898-11598364391-11809043901-2dc0e305c61058d29f61e932f35c52ae",
         "surface": null,
         "to_node_id": "osm-node-11598364391"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669898-11598364391-11809043901-reverse"
+      "external_id": "osm-way-1271669898-11598364391-11809043901-2dc0e305c61058d29f61e932f35c52ae-reverse"
     },
     {
       "data": {
@@ -5078,12 +6722,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669899-11598364393-11809043902",
+        "physical_path_id": "osm-way-1271669899-11598364393-11809043902-6c51d5645ecd274103f08086bab9b91b",
         "surface": null,
         "to_node_id": "osm-node-11809043902"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669899-11598364393-11809043902-forward"
+      "external_id": "osm-way-1271669899-11598364393-11809043902-6c51d5645ecd274103f08086bab9b91b-forward"
     },
     {
       "data": {
@@ -5106,12 +6750,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669899-11598364393-11809043902",
+        "physical_path_id": "osm-way-1271669899-11598364393-11809043902-6c51d5645ecd274103f08086bab9b91b",
         "surface": null,
         "to_node_id": "osm-node-11598364393"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669899-11598364393-11809043902-reverse"
+      "external_id": "osm-way-1271669899-11598364393-11809043902-6c51d5645ecd274103f08086bab9b91b-reverse"
     },
     {
       "data": {
@@ -5134,12 +6778,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669900-11598364395-11809043903",
+        "physical_path_id": "osm-way-1271669900-11598364395-11809043903-31865e2029fb349a511ad2fd492730fd",
         "surface": null,
         "to_node_id": "osm-node-11809043903"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669900-11598364395-11809043903-forward"
+      "external_id": "osm-way-1271669900-11598364395-11809043903-31865e2029fb349a511ad2fd492730fd-forward"
     },
     {
       "data": {
@@ -5162,12 +6806,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669900-11598364395-11809043903",
+        "physical_path_id": "osm-way-1271669900-11598364395-11809043903-31865e2029fb349a511ad2fd492730fd",
         "surface": null,
         "to_node_id": "osm-node-11598364395"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669900-11598364395-11809043903-reverse"
+      "external_id": "osm-way-1271669900-11598364395-11809043903-31865e2029fb349a511ad2fd492730fd-reverse"
     },
     {
       "data": {
@@ -5190,12 +6834,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669901-11598364397-11809043905",
+        "physical_path_id": "osm-way-1271669901-11598364397-11809043905-f4715d9f47ec41a20ee776866a6b474f",
         "surface": null,
         "to_node_id": "osm-node-11809043905"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669901-11598364397-11809043905-forward"
+      "external_id": "osm-way-1271669901-11598364397-11809043905-f4715d9f47ec41a20ee776866a6b474f-forward"
     },
     {
       "data": {
@@ -5218,12 +6862,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271669901-11598364397-11809043905",
+        "physical_path_id": "osm-way-1271669901-11598364397-11809043905-f4715d9f47ec41a20ee776866a6b474f",
         "surface": null,
         "to_node_id": "osm-node-11598364397"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271669901-11598364397-11809043905-reverse"
+      "external_id": "osm-way-1271669901-11598364397-11809043905-f4715d9f47ec41a20ee776866a6b474f-reverse"
     },
     {
       "data": {
@@ -5246,12 +6890,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271670518-11593739317-11809063447",
+        "physical_path_id": "osm-way-1271670518-11593739317-11809063447-0375a92855d34e4189786913188d7152",
         "surface": null,
         "to_node_id": "osm-node-11809063447"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271670518-11593739317-11809063447-forward"
+      "external_id": "osm-way-1271670518-11593739317-11809063447-0375a92855d34e4189786913188d7152-forward"
     },
     {
       "data": {
@@ -5274,12 +6918,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1271670518-11593739317-11809063447",
+        "physical_path_id": "osm-way-1271670518-11593739317-11809063447-0375a92855d34e4189786913188d7152",
         "surface": null,
         "to_node_id": "osm-node-11593739317"
       },
       "entity": "edges",
-      "external_id": "osm-way-1271670518-11593739317-11809063447-reverse"
+      "external_id": "osm-way-1271670518-11593739317-11809063447-0375a92855d34e4189786913188d7152-reverse"
     },
     {
       "data": {
@@ -5310,12 +6954,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1365893470-12649140394-11573972967",
+        "physical_path_id": "osm-way-1365893470-11573972967-12649140394-fda6fe4fbbae1067d97680c812dc37c9",
         "surface": null,
         "to_node_id": "osm-node-11573972967"
       },
       "entity": "edges",
-      "external_id": "osm-way-1365893470-12649140394-11573972967-forward"
+      "external_id": "osm-way-1365893470-11573972967-12649140394-fda6fe4fbbae1067d97680c812dc37c9-reverse"
     },
     {
       "data": {
@@ -5346,12 +6990,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1365893470-12649140394-11573972967",
+        "physical_path_id": "osm-way-1365893470-11573972967-12649140394-fda6fe4fbbae1067d97680c812dc37c9",
         "surface": null,
         "to_node_id": "osm-node-12649140394"
       },
       "entity": "edges",
-      "external_id": "osm-way-1365893470-12649140394-11573972967-reverse"
+      "external_id": "osm-way-1365893470-11573972967-12649140394-fda6fe4fbbae1067d97680c812dc37c9-forward"
     },
     {
       "data": {
@@ -5382,12 +7026,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303892-10780122960-14284275499",
+        "physical_path_id": "osm-way-1568303892-10780122960-14284275499-cabdd99842789d4d2d218c9f076c0dc4",
         "surface": "asphalt",
         "to_node_id": "osm-node-14284275499"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303892-10780122960-14284275499-forward"
+      "external_id": "osm-way-1568303892-10780122960-14284275499-cabdd99842789d4d2d218c9f076c0dc4-forward"
     },
     {
       "data": {
@@ -5418,12 +7062,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303892-10780122960-14284275499",
+        "physical_path_id": "osm-way-1568303892-10780122960-14284275499-cabdd99842789d4d2d218c9f076c0dc4",
         "surface": "asphalt",
         "to_node_id": "osm-node-10780122960"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303892-10780122960-14284275499-reverse"
+      "external_id": "osm-way-1568303892-10780122960-14284275499-cabdd99842789d4d2d218c9f076c0dc4-reverse"
     },
     {
       "data": {
@@ -5446,12 +7090,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303892-14284275499-10788334696",
+        "physical_path_id": "osm-way-1568303892-10788334696-14284275499-01c31af65c934dd5ec0ea4bab2fad5fe",
         "surface": "asphalt",
         "to_node_id": "osm-node-10788334696"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303892-14284275499-10788334696-forward"
+      "external_id": "osm-way-1568303892-10788334696-14284275499-01c31af65c934dd5ec0ea4bab2fad5fe-reverse"
     },
     {
       "data": {
@@ -5474,12 +7118,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303892-14284275499-10788334696",
+        "physical_path_id": "osm-way-1568303892-10788334696-14284275499-01c31af65c934dd5ec0ea4bab2fad5fe",
         "surface": "asphalt",
         "to_node_id": "osm-node-14284275499"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303892-14284275499-10788334696-reverse"
+      "external_id": "osm-way-1568303892-10788334696-14284275499-01c31af65c934dd5ec0ea4bab2fad5fe-forward"
     },
     {
       "data": {
@@ -5506,12 +7150,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303894-14284275499-14284287704",
+        "physical_path_id": "osm-way-1568303894-14284275499-14284287704-4e55be5a1ce18d4d3cfd32825363507d",
         "surface": null,
         "to_node_id": "osm-node-14284287704"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303894-14284275499-14284287704-forward"
+      "external_id": "osm-way-1568303894-14284275499-14284287704-4e55be5a1ce18d4d3cfd32825363507d-forward"
     },
     {
       "data": {
@@ -5538,12 +7182,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303894-14284275499-14284287704",
+        "physical_path_id": "osm-way-1568303894-14284275499-14284287704-4e55be5a1ce18d4d3cfd32825363507d",
         "surface": null,
         "to_node_id": "osm-node-14284275499"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303894-14284275499-14284287704-reverse"
+      "external_id": "osm-way-1568303894-14284275499-14284287704-4e55be5a1ce18d4d3cfd32825363507d-reverse"
     },
     {
       "data": {
@@ -5566,12 +7210,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303894-14284287704-14284287713",
+        "physical_path_id": "osm-way-1568303894-14284287704-14284287713-6c6addfe2ad667d6938829285bd2e8cd",
         "surface": null,
         "to_node_id": "osm-node-14284287713"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303894-14284287704-14284287713-forward"
+      "external_id": "osm-way-1568303894-14284287704-14284287713-6c6addfe2ad667d6938829285bd2e8cd-forward"
     },
     {
       "data": {
@@ -5594,12 +7238,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303894-14284287704-14284287713",
+        "physical_path_id": "osm-way-1568303894-14284287704-14284287713-6c6addfe2ad667d6938829285bd2e8cd",
         "surface": null,
         "to_node_id": "osm-node-14284287704"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303894-14284287704-14284287713-reverse"
+      "external_id": "osm-way-1568303894-14284287704-14284287713-6c6addfe2ad667d6938829285bd2e8cd-reverse"
     },
     {
       "data": {
@@ -5622,12 +7266,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303894-14284287713-14284287705",
+        "physical_path_id": "osm-way-1568303894-14284287705-14284287713-eefe66cfbca173f7edf65f8809093920",
         "surface": null,
         "to_node_id": "osm-node-14284287705"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303894-14284287713-14284287705-forward"
+      "external_id": "osm-way-1568303894-14284287705-14284287713-eefe66cfbca173f7edf65f8809093920-reverse"
     },
     {
       "data": {
@@ -5650,12 +7294,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303894-14284287713-14284287705",
+        "physical_path_id": "osm-way-1568303894-14284287705-14284287713-eefe66cfbca173f7edf65f8809093920",
         "surface": null,
         "to_node_id": "osm-node-14284287713"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303894-14284287713-14284287705-reverse"
+      "external_id": "osm-way-1568303894-14284287705-14284287713-eefe66cfbca173f7edf65f8809093920-forward"
     },
     {
       "data": {
@@ -5678,12 +7322,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303894-14284287705-14284287706",
+        "physical_path_id": "osm-way-1568303894-14284287705-14284287706-038cdf8da05643e672f251cbe575ecf3",
         "surface": null,
         "to_node_id": "osm-node-14284287706"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303894-14284287705-14284287706-forward"
+      "external_id": "osm-way-1568303894-14284287705-14284287706-038cdf8da05643e672f251cbe575ecf3-forward"
     },
     {
       "data": {
@@ -5706,12 +7350,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303894-14284287705-14284287706",
+        "physical_path_id": "osm-way-1568303894-14284287705-14284287706-038cdf8da05643e672f251cbe575ecf3",
         "surface": null,
         "to_node_id": "osm-node-14284287705"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303894-14284287705-14284287706-reverse"
+      "external_id": "osm-way-1568303894-14284287705-14284287706-038cdf8da05643e672f251cbe575ecf3-reverse"
     },
     {
       "data": {
@@ -5738,12 +7382,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303895-14284287705-14284287708",
+        "physical_path_id": "osm-way-1568303895-14284287705-14284287708-3ebfa4e359e7d5d56674d56b59c8c2d6",
         "surface": null,
         "to_node_id": "osm-node-14284287708"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303895-14284287705-14284287708-forward"
+      "external_id": "osm-way-1568303895-14284287705-14284287708-3ebfa4e359e7d5d56674d56b59c8c2d6-forward"
     },
     {
       "data": {
@@ -5770,12 +7414,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303895-14284287705-14284287708",
+        "physical_path_id": "osm-way-1568303895-14284287705-14284287708-3ebfa4e359e7d5d56674d56b59c8c2d6",
         "surface": null,
         "to_node_id": "osm-node-14284287705"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303895-14284287705-14284287708-reverse"
+      "external_id": "osm-way-1568303895-14284287705-14284287708-3ebfa4e359e7d5d56674d56b59c8c2d6-reverse"
     },
     {
       "data": {
@@ -5802,12 +7446,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303895-14284287708-14284287710",
+        "physical_path_id": "osm-way-1568303895-14284287708-14284287710-beea236beef4ae939c631650aee79c21",
         "surface": null,
         "to_node_id": "osm-node-14284287710"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303895-14284287708-14284287710-forward"
+      "external_id": "osm-way-1568303895-14284287708-14284287710-beea236beef4ae939c631650aee79c21-forward"
     },
     {
       "data": {
@@ -5834,12 +7478,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303895-14284287708-14284287710",
+        "physical_path_id": "osm-way-1568303895-14284287708-14284287710-beea236beef4ae939c631650aee79c21",
         "surface": null,
         "to_node_id": "osm-node-14284287708"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303895-14284287708-14284287710-reverse"
+      "external_id": "osm-way-1568303895-14284287708-14284287710-beea236beef4ae939c631650aee79c21-reverse"
     },
     {
       "data": {
@@ -5878,12 +7522,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303896-14284287704-14284287724",
+        "physical_path_id": "osm-way-1568303896-14284287704-14284287724-418794797a179c2fcb296276fc764eaf",
         "surface": null,
         "to_node_id": "osm-node-14284287724"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303896-14284287704-14284287724-forward"
+      "external_id": "osm-way-1568303896-14284287704-14284287724-418794797a179c2fcb296276fc764eaf-forward"
     },
     {
       "data": {
@@ -5922,12 +7566,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303896-14284287704-14284287724",
+        "physical_path_id": "osm-way-1568303896-14284287704-14284287724-418794797a179c2fcb296276fc764eaf",
         "surface": null,
         "to_node_id": "osm-node-14284287704"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303896-14284287704-14284287724-reverse"
+      "external_id": "osm-way-1568303896-14284287704-14284287724-418794797a179c2fcb296276fc764eaf-reverse"
     },
     {
       "data": {
@@ -5954,12 +7598,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303896-14284287724-14284287713",
+        "physical_path_id": "osm-way-1568303896-14284287713-14284287724-161b2e11bec926ac2bfc84a6b424664f",
         "surface": null,
         "to_node_id": "osm-node-14284287713"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303896-14284287724-14284287713-forward"
+      "external_id": "osm-way-1568303896-14284287713-14284287724-161b2e11bec926ac2bfc84a6b424664f-reverse"
     },
     {
       "data": {
@@ -5986,12 +7630,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303896-14284287724-14284287713",
+        "physical_path_id": "osm-way-1568303896-14284287713-14284287724-161b2e11bec926ac2bfc84a6b424664f",
         "surface": null,
         "to_node_id": "osm-node-14284287724"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303896-14284287724-14284287713-reverse"
+      "external_id": "osm-way-1568303896-14284287713-14284287724-161b2e11bec926ac2bfc84a6b424664f-forward"
     },
     {
       "data": {
@@ -6022,12 +7666,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303900-14284287738-14284287739",
+        "physical_path_id": "osm-way-1568303900-14284287738-14284287739-b8028f266b5a9cf8ff5992977cb3ba22",
         "surface": "unpaved",
         "to_node_id": "osm-node-14284287739"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303900-14284287738-14284287739-forward"
+      "external_id": "osm-way-1568303900-14284287738-14284287739-b8028f266b5a9cf8ff5992977cb3ba22-forward"
     },
     {
       "data": {
@@ -6058,12 +7702,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303900-14284287738-14284287739",
+        "physical_path_id": "osm-way-1568303900-14284287738-14284287739-b8028f266b5a9cf8ff5992977cb3ba22",
         "surface": "unpaved",
         "to_node_id": "osm-node-14284287738"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303900-14284287738-14284287739-reverse"
+      "external_id": "osm-way-1568303900-14284287738-14284287739-b8028f266b5a9cf8ff5992977cb3ba22-reverse"
     },
     {
       "data": {
@@ -6086,12 +7730,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303901-14284287724-14284287708",
+        "physical_path_id": "osm-way-1568303901-14284287708-14284287724-208e93d04de6ecc67608c6f7c73536ea",
         "surface": null,
         "to_node_id": "osm-node-14284287708"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303901-14284287724-14284287708-forward"
+      "external_id": "osm-way-1568303901-14284287708-14284287724-208e93d04de6ecc67608c6f7c73536ea-reverse"
     },
     {
       "data": {
@@ -6114,12 +7758,12 @@
           "type": "LineString"
         },
         "kind": "walkway",
-        "physical_path_id": "osm-way-1568303901-14284287724-14284287708",
+        "physical_path_id": "osm-way-1568303901-14284287708-14284287724-208e93d04de6ecc67608c6f7c73536ea",
         "surface": null,
         "to_node_id": "osm-node-14284287724"
       },
       "entity": "edges",
-      "external_id": "osm-way-1568303901-14284287724-14284287708-reverse"
+      "external_id": "osm-way-1568303901-14284287708-14284287724-208e93d04de6ecc67608c6f7c73536ea-forward"
     },
     {
       "data": {

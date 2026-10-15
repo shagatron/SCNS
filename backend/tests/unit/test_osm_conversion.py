@@ -164,3 +164,18 @@ def test_prepared_manifest_rejects_tampering_and_unlisted_batches(tmp_path):
 def test_malformed_or_encoded_xml_cannot_bypass_input_guard(raw):
     with pytest.raises(ValueError, match="XML"):
         convert(raw)
+
+
+def test_mapped_repeated_node_loops_split_without_inventing_crossings_or_losing_curves():
+    # One OSM way explicitly revisits its junction; both arcs of its loop are real geometry.
+    result = convert(sample(path(refs=(10, 11, 12, 10))))
+    edges = records(result, "edges")
+    assert len(edges) == 4
+    assert len({e["external_id"] for e in edges}) == 4
+    assert len(records(result, "nodes")) == 2
+    assert sum(len(e["data"]["geometry"]["coordinates"]) - 1 for e in edges) == 6
+    # Repeated tracing of the same mapped physical segment must not duplicate import identities.
+    repeated = convert(sample(path(refs=(10, 11, 12, 10, 11))))
+    all_ids = [(r["entity"], r["external_id"]) for b in repeated["bundles"] for r in b["records"]]
+    assert len(all_ids) == len(set(all_ids))
+    assert repeated["report"]["exclusion_reason_counts"]["duplicate_directed_way_segment"] > 0

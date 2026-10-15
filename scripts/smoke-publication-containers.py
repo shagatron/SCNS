@@ -5,6 +5,7 @@ Run after building both images and completing source browser checks (port 5174).
 Requires existing Compose db; owns/removes only uniquely named test resources.
 """
 
+import argparse
 import os
 import subprocess
 import sys
@@ -30,6 +31,13 @@ def run(args, env=None):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--muj-only",
+        action="store_true",
+        help="Rerun just the affected MUJ desktop/mobile cases after a converter-only change",
+    )
+    args = parser.parse_args()
     private = tempfile.TemporaryDirectory(prefix="scns-owned-built-")
     token = uuid4().hex[:12]
     network = f"scns-publication-smoke-{token}"
@@ -185,19 +193,25 @@ def main():
                 "python",
                 "-m",
                 "tests.browser_runner",
-                "public-experience.spec.ts",
-                "muj.spec.ts",
-                "imports.spec.ts",
-                "admin.spec.ts",
-                "graph.spec.ts",
-                "location.spec.ts",
-                "closures.spec.ts",
-                "qr.spec.ts",
-                "floorplans.spec.ts",
-                "indoor.spec.ts",
-                "indoor-routing.spec.ts",
-                "publication.spec.ts",
-                "navigation.spec.ts",
+                *(
+                    ["muj.spec.ts"]
+                    if args.muj_only
+                    else [
+                        "public-experience.spec.ts",
+                        "muj.spec.ts",
+                        "imports.spec.ts",
+                        "admin.spec.ts",
+                        "graph.spec.ts",
+                        "location.spec.ts",
+                        "closures.spec.ts",
+                        "qr.spec.ts",
+                        "floorplans.spec.ts",
+                        "indoor.spec.ts",
+                        "indoor-routing.spec.ts",
+                        "publication.spec.ts",
+                        "navigation.spec.ts",
+                    ]
+                ),
             ],
             cwd=ROOT / "backend",
             env=test_env,

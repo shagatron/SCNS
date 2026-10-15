@@ -83,7 +83,7 @@ def main():
             )
             assert (
                 counts["import_jobs"] == 3
-                and counts["navigation_edges"] == 638
+                and counts["navigation_edges"] == 688
                 and counts["places"] == 55
             )
             audits = db.scalar(

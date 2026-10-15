@@ -1,13 +1,13 @@
 {
   "converter": "muj-osm-v1",
   "files": {
-    "batch-001.json": "f75b1caa3ef172e2646125b9eca03e0d8d9b6359e25a0456966c498804f6bd58",
-    "batch-002.json": "33793d64dedbb34bfc835e666718374c55a7f7013d3bf207889109107f65e2d2",
-    "batch-003.json": "220d2b4e690fddafa1caa7cc725381e6ff3721f2a1896f3df3067c13339cde10",
+    "batch-001.json": "791f0051e3ac137246c972ee3876c8c9e29013730dc02f21b0cfd0f3595ede79",
+    "batch-002.json": "0e68f65d1636970c6b7f145f92ba83feb8ef2a4625c7d89e6428e8ad82b54caa",
+    "batch-003.json": "a3d65973bf0f14fd24c85bef58aa2b4a4d0558e69a3899c19f84beadd50ac1de",
     "campus.json": "053f2ad75bbf07f6dab3dbb0f987b27e50c723e48ccc45092b4595e518ae443d",
     "coverage.geojson": "9018da3f00a768625c9f4cfe68f2c5781833c3fb541b779b8e4e951c6c834b70",
     "options.json": "6772fd0eca2544ae7a68913ff5c3c5a1aac96262702d006a1ecc4878f9e2ee6b",
-    "report.json": "e717cbb9db10c4b4ae8bce02a02959e99073aef3d9f7e80e079e9aa894e7b2aa"
+    "report.json": "cc423cb083f68a127a2e70c91a5b8871049bc90d328a6090f1d2adaf50984022"
   },
   "source_sha256": "d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de"
 }

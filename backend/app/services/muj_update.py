@@ -2,10 +2,9 @@
 
 import hashlib
 import json
-from pathlib import Path
 
 from app.cli.indoor_demo import DemoError
-from app.schemas.admin import AnchorFields
+from app.schemas.admin import AnchorFields, PlaceFields
 from app.schemas.graph import GraphNodeFields, GraphPatch
 from app.schemas.imports import EdgeFields
 from app.services.imports import stable_id
@@ -21,26 +20,28 @@ REFS = {
     "physical_path_id": "physical_paths",
     "place_id": "places",
     "node_id": "nodes",
+    "building_id": "buildings",
 }
 MARKER = f"MUJ source-segment correction {VERSION2}"
 
 
 def graph_records(root):
     manifest, _ = prepared(root)
-    result = {entity: {} for entity in FIELDS}
+    models = {**FIELDS, "places": PlaceFields}
+    result = {entity: {} for entity in models}
     for filename in sorted(manifest["files"]):
         if not filename.startswith("batch-"):
             continue
         for row in json.loads((root / filename).read_bytes())["records"]:
             entity = row["entity"]
-            if entity not in FIELDS:
+            if entity not in models:
                 continue
             data = {
-                k: str(stable_id(CAMPUS_ID, REFS[k], v)) if k in REFS else v
+                k: str(stable_id(CAMPUS_ID, REFS[k], v)) if k in REFS and v is not None else v
                 for k, v in row["data"].items()
             }
             result[entity][str(stable_id(CAMPUS_ID, entity, row["external_id"]))] = (
-                FIELDS[entity].model_validate(data).model_dump(mode="json")
+                models[entity].model_validate(data).model_dump(mode="json")
             )
     return manifest, result
 
@@ -83,10 +84,9 @@ def comparable(entity, row):
     if row is None:
         return None
     # Reject unexpected coordinate/attribute changes, but ignore server-computed distance.
-    return (
-        FIELDS[entity]
-        .model_validate({k: row[k] for k in FIELDS[entity].model_fields if k in row})
-        .model_dump(mode="json")
+    model = PlaceFields if entity == "places" else FIELDS[entity]
+    return model.model_validate({k: row[k] for k in model.model_fields if k in row}).model_dump(
+        mode="json"
     )
 
 
@@ -119,8 +119,12 @@ def plan(current, draft_id):
                 f"Owner edit, collision or partial/manual correction at {c['entity']}/{c['id']}; nothing applied."
             )
     added_anchors = [c["data"] for c in changes if c["entity"] == "anchors" and c["data"]]
-    if any(a["place_id"] not in current["places"] for a in added_anchors):
-        raise DemoError("Required existing catalog destination is missing; nothing applied.")
+    if any(
+        comparable("places", current["places"].get(a["place_id"]))
+        != baseline["places"].get(a["place_id"])
+        for a in added_anchors
+    ):
+        raise DemoError("Required entrance destination was edited or is missing; nothing applied.")
     return {
         **patch,
         "draft_id": str(draft_id),
@@ -135,6 +139,11 @@ def plan(current, draft_id):
             ),
             "delete": sum(c["data"] is None for c in changes),
         },
+        "before_records": [
+            {"entity": c["entity"], "id": c["id"], "data": baseline[c["entity"]].get(c["id"])}
+            for c in changes
+        ],
+        "dependency_order": "Delete replaced edges, create source nodes, create replacement/additional edges, create explicit source entrance anchor; all in one server transaction.",
         "qualification": "Draft only. No access, source approval, accessibility verification or publication inferred.",
     }
 

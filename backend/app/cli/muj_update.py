@@ -49,7 +49,7 @@ def main():
         receipt = apply_reviewed(client, preview)
         persist(
             folder / f"receipt-{uuid4()}.json",
-            {**receipt, "actor_id": client.session["user"]["id"]},
+            {**receipt, "requested_by": client.session["user"]["id"]},
         )
         print(
             f"Correction {receipt['state']}. Normal server validation/CAS/audits enforced; MUJ remains unpublished."

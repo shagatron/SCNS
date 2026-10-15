@@ -57,7 +57,7 @@ def test_diagnostics_refuse_changed_converter_without_mutating_pinned_data(tmp_p
     write_conversion(convert(raw), tmp_path)
     changed = convert(raw)
     changed["bundles"][0]["records"].pop()
-    monkeypatch.setattr(muj_diagnostics, "convert", lambda raw: changed)
+    monkeypatch.setattr(muj_diagnostics, "convert", lambda raw, **kwargs: changed)
     with pytest.raises(ValueError, match="version separately"):
         diagnose(raw, tmp_path)
 

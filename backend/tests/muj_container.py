@@ -18,7 +18,9 @@ from app.models import ActiveRelease, Campus, Edge, Place, Revision
 from app.models.admin import AuditEvent
 from app.models.imports import ImportJob
 from app.models.publication import SourceAsset
+from app.services.imports import stable_id
 from app.services.muj_setup import CAMPUS_ID, ROOT
+from app.services.muj_update import apply_reviewed, plan
 
 
 def main():
@@ -109,6 +111,54 @@ def main():
                 )
                 == audits
             )
+        path = f"/api/v1/admin/campuses/{CAMPUS_ID}/drafts/{state['draft_id']}/graph"
+        preview = plan(client.request("GET", path), state["draft_id"])
+        assert preview["counts"] == {"add": 20, "update": 0, "delete": 2}
+        receipt = apply_reviewed(client, preview)
+        assert receipt["state"] == "applied"
+        assert apply_reviewed(client, preview)["state"] == "already_applied"
+        corrected = client.request("GET", path)
+        assert (len(corrected["nodes"]), len(corrected["edges"]), len(corrected["anchors"])) == (
+            295,
+            700,
+            22,
+        )
+        with Session(engine) as db:
+            assert db.get(Revision, UUID(state["draft_id"])).edit_version == v + 1
+            assert (
+                db.scalar(
+                    select(func.count())
+                    .select_from(AuditEvent)
+                    .where(AuditEvent.request_id == receipt["audit_request_id"])
+                )
+                == 22
+            )
+            assert db.get(ActiveRelease, (CAMPUS_ID, "public")) is None
+            assert str(db.get(ActiveRelease, (bundle.campus.id, "public")).release_id) == before
+            assert all(
+                s.approved_by is None
+                for s in db.scalars(select(SourceAsset).where(SourceAsset.campus_id == CAMPUS_ID))
+            )
+        target = str(stable_id(CAMPUS_ID, "places", "osm-node-10828149259"))
+        source = str(stable_id(CAMPUS_ID, "places", "osm-node-10780185180"))
+        new_route = client.request("GET", path + f"/route-test?source={source}&target={target}")
+        assert new_route["found"] and new_route["distance_m"] > 0
+        print(
+            "V2 built computed University Entrance -> mapped entrance10828149259:",
+            new_route["distance_m"],
+            "metres,",
+            len(new_route["edge_ids"]),
+            "stored edges",
+        )
+        try:
+            stage(client, ROOT, confirm=lambda _: "APPLY")
+        except DemoError as error:
+            assert "409" in str(error)
+        else:
+            raise AssertionError("Original v1 helper must not replay after correction")
+        print(
+            "PASS built v2 correction: exact preview, one atomic graph POST, 22 actor audits, explicit replaced-edge removal, retry no-op, old-helper guard, unapproved source/public release isolation."
+        )
         print(
             "PASS built MUJ helper: interrupted preview resumed; three real-worker batches applied; replay unchanged; draft/source/audit/public isolation; route evidence prepared."
         )

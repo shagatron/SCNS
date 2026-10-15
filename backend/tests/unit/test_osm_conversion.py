@@ -179,3 +179,42 @@ def test_mapped_repeated_node_loops_split_without_inventing_crossings_or_losing_
     all_ids = [(r["entity"], r["external_id"]) for b in repeated["bundles"] for r in b["records"]]
     assert len(all_ids) == len(set(all_ids))
     assert repeated["report"]["exclusion_reason_counts"]["duplicate_directed_way_segment"] > 0
+
+
+def test_v2_retains_only_covered_source_runs_without_changing_v1_or_inventing_clipping():
+    raw = sample(path(refs=(10, 11, 12, 20)), '<node id="20" lon="75.57" lat="26.848"/>')
+    assert not records(convert(raw), "edges")
+    v2 = convert(raw, covered_segments_v2=True)
+    edges = records(v2, "edges")
+    assert len(edges) == 2
+    assert all(len(e["data"]["geometry"]["coordinates"]) == 3 for e in edges)
+    assert {n["external_id"] for n in records(v2, "nodes")} == {"osm-node-10", "osm-node-12"}
+    assert all(e["data"]["accessibility_status"] == "unknown" for e in edges)
+    assert v2["report"]["converter"] != convert(raw)["report"]["converter"]
+    # Both campus endpoints are real, but the pair between them crosses the gap.
+    gap = convert(sample(path(refs=(2, 5))), covered_segments_v2=True)
+    assert not records(gap, "edges")
+
+
+@pytest.mark.parametrize(
+    "tag",
+    [
+        '<tag k="tunnel" v="yes"/>',
+        '<tag k="layer" v="-1"/>',
+        '<tag k="access" v="private"/>',
+        '<tag k="indoor" v="yes"/>',
+    ],
+)
+def test_v2_does_not_weaken_access_or_grade_guards(tag):
+    assert not records(convert(sample(path(tags=tag)), covered_segments_v2=True), "edges")
+
+
+def test_v2_covered_run_respects_explicit_reverse_pedestrian_direction():
+    raw = sample(
+        path(refs=(10, 11, 12, 20), tags='<tag k="oneway:foot" v="-1"/>'),
+        '<node id="20" lon="75.57" lat="26.848"/>',
+    )
+    edges = records(convert(raw, covered_segments_v2=True), "edges")
+    assert len(edges) == 1
+    assert edges[0]["data"]["from_node_id"] == "osm-node-12"
+    assert edges[0]["data"]["to_node_id"] == "osm-node-10"

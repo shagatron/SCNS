@@ -15,7 +15,7 @@ from app.schemas.api import Point, Polygon
 from app.schemas.publication import SourceInput
 from app.services.admin_auth import audit
 from app.services.admin_catalog import create_draft
-from app.services.osm_conversion import ATTRIBUTION, VERSION, encode
+from app.services.osm_conversion import ATTRIBUTION, VERSION, VERSION2, encode
 from app.services.publication import add_source
 
 ROOT = Path(__file__).resolve().parents[3] / "data/muj"
@@ -73,6 +73,24 @@ def provision(db, actor, request_id):
             raise DomainError(
                 "conflict",
                 "The prepared MUJ draft is no longer editable. Do not rerun over reviewed or released data.",
+                409,
+            )
+        corrected = db.scalar(
+            select(AuditEvent.id)
+            .where(
+                AuditEvent.campus_id == CAMPUS_ID,
+                AuditEvent.revision_id == revision.id,
+                AuditEvent.action.like("graph.%"),
+                AuditEvent.after["evidence"].astext.contains(
+                    f"MUJ source-segment correction {VERSION2}"
+                ),
+            )
+            .limit(1)
+        )
+        if corrected:
+            raise DomainError(
+                "conflict",
+                "This draft has the reviewed v2 source-segment correction. Do not replay the original v1 import helper; use the versioned correction workflow.",
                 409,
             )
         return {

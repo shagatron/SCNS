@@ -82,7 +82,15 @@ def main():
                 db.add(RoleAssignment(user_id=user.id, campus_id=campus_id, role=role))
     engine.dispose()
     # Ephemeral credentials only in child environment, never argv, files, traces or output.
-    env = {**os.environ, "SCNS_E2E_PASSWORD": password}
+    import json
+
+    from app.services.muj_update import correction
+
+    env = {
+        **os.environ,
+        "SCNS_E2E_PASSWORD": password,
+        "SCNS_E2E_MUJ_PATCH": json.dumps(correction()[0]),
+    }
     with tempfile.TemporaryDirectory(prefix="scns-import-browser-") as storage:
         env["STORAGE_ROOT"] = storage
         worker_name = env.get("SCNS_E2E_BUILT_WORKER_CONTAINER")

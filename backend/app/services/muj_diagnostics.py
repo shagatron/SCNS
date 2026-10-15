@@ -10,7 +10,7 @@ from pathlib import Path
 
 from shapely.geometry import LineString, shape
 
-from app.services.osm_conversion import convert, encode, tags
+from app.services.osm_conversion import VERSION, VERSION2, convert, encode, tags
 
 HIGHLIGHTS = {
     1154145269,
@@ -38,7 +38,11 @@ def diagnose(raw, preparation):
             or hashlib.sha256((preparation / name).read_bytes()).hexdigest() != digest
         ):
             raise ValueError("Pinned derivative checksum mismatch")
-    converted = convert(raw)  # Bounded UTF-8/XML guards, before parsing source ourselves.
+    if manifest["converter"] not in {VERSION, VERSION2}:
+        raise ValueError("Unknown pinned preparation version")
+    converted = convert(
+        raw, covered_segments_v2=manifest["converter"] == VERSION2
+    )  # Bounded UTF-8/XML guards, before parsing source ourselves.
     batches = [
         json.loads((preparation / name).read_bytes())
         for name in sorted(manifest["files"])
@@ -79,6 +83,7 @@ def diagnose(raw, preparation):
     node_component = {n: i for i, g in enumerate(groups, 1) for n in g}
     source_components = defaultdict(set)
     edges = []
+    retained_pairs = defaultdict(set)
     for identity, edge in sorted(entities["edges"].items()):
         way = int(identity.split("-")[2])
         component = node_component[edge["from_node_id"]]
@@ -99,6 +104,9 @@ def diagnose(raw, preparation):
                 ):
                     for n in part:
                         source_components[n].add(component)
+                    retained_pairs[way].update(
+                        tuple(sorted((a, b))) for a, b in zip(part, part[1:], strict=False)
+                    )
                     matched = True
         if not matched:
             raise ValueError("Cannot trace prepared segment back to original references")
@@ -141,12 +149,24 @@ def diagnose(raw, preparation):
             if len(rr) > 1 and all(n in positions for n in rr)
             else None
         )
+        rejected_runs, run = [], []
+        for a, b in zip(rr, rr[1:], strict=False):
+            if a in positions and b in positions and tuple(sorted((a, b))) not in retained_pairs[i]:
+                if not run:
+                    run = [positions[a]]
+                run.append(positions[b])
+            elif run:
+                rejected_runs.append(run)
+                run = []
+        if run:
+            rejected_runs.append(run)
         excluded.append(
             {
                 "way": i,
                 "tags": t,
                 "reasons": sorted(set(decisions[f"osm-way-{i}"])),
                 "node_refs": rr,
+                "excluded_geometry": {"type": "MultiLineString", "coordinates": rejected_runs},
                 "retained_components_touched": sorted(
                     {c for n in rr for c in source_components[n]}
                 ),
@@ -189,6 +209,7 @@ def diagnose(raw, preparation):
         ]
     return {
         "format": "scns-muj-connectivity-diagnostic-v1",
+        "preparation_version": manifest["converter"],
         "source_sha256": manifest["source_sha256"],
         "preparation_manifest_sha256": hashlib.sha256(encode(manifest)).hexdigest(),
         "status": "Diagnostic only. No changes to preparation, drafts, access, approval or publication.",
@@ -256,15 +277,15 @@ def diagnostic_svg(report, *, subway=False):
     for e in report["excluded_highways"]:
         if e["way"] not in HIGHLIGHTS or not e["geometry"]:
             continue
-        pts = e["geometry"]["coordinates"]
-        chunks.append(
-            f'<polyline points="{line(pts)}" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED {e["way"]}: {html.escape(", ".join(e["reasons"]))}</title></polyline>'
-        )
-        if subway:
-            x, y = xy(pts[len(pts) // 2])
+        for pts in e["excluded_geometry"]["coordinates"]:
             chunks.append(
-                f'<text x="{x:.1f}" y="{y - 7:.1f}" font-size="12" fill="#8a1111">{e["way"]}</text>'
+                f'<polyline points="{line(pts)}" fill="none" stroke="#b52828" stroke-width="2" stroke-dasharray="6 4"><title>EXCLUDED {e["way"]}: {html.escape(", ".join(e["reasons"]))}</title></polyline>'
             )
+            if subway:
+                x, y = xy(pts[len(pts) // 2])
+                chunks.append(
+                    f'<text x="{x:.1f}" y="{y - 7:.1f}" font-size="12" fill="#8a1111">{e["way"]}</text>'
+                )
     for c in report["components"]:
         edge = next(e for e in report["edges"] if e["component"] == c["component"])
         x, y = xy(edge["geometry"]["coordinates"][0])

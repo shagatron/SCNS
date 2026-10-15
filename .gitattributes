@@ -1,3 +1,6 @@
 # Pinned derivative hashes must survive Windows core.autocrlf=true checkouts.
 data/muj/*.json text eol=lf
 data/muj/*.geojson text eol=lf
+
+data/muj-v2/*.json text eol=lf
+data/muj-v2/*.geojson text eol=lf

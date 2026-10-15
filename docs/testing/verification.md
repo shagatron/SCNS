@@ -40,7 +40,7 @@ Windows original v1 owner report is recorded separately below. This agent has no
 
 [Findings and exact-ID owner collection list](../data/muj-connectivity-review.md) · [v1 inventory/maps](../data/muj-connectivity/README.md) · [v2 inventory/maps](../data/muj-connectivity-v2/README.md) · [Windows update/preview/APPLY/manual inputs](../operations/muj-connectivity-review.md) · [prepared PR](../reviews/muj-connectivity-review-pr.md).
 
-Current logs:`/tmp/scns-connectivity-final-static.log`, `...-final-units.log`, `...-v2-regression.log`, `...-source-browser.log`, `...-v2-source-final.log`, `...-built-browser.log`, `...-v2-built-final.log`, `...-images-delivery.log`, `...-offline-delivery.log`, `...-v2-worker-delivery.log`. Final worker and data receipts passed; Git delivery/PR receipt follows.
+Current logs:`/tmp/scns-connectivity-final-static.log`, `...-final-units.log`, `...-v2-regression.log`, `...-source-browser.log`, `...-v2-source-final.log`, `...-built-browser.log`, `...-v2-built-final.log`, `...-images-delivery.log`, `...-offline-delivery.log`, `...-v2-worker-delivery.log`. Final worker/data receipts passed. Completion153cf478010298ac162271bec5cecbfebd427ed3 pushed and exact remote SHA verified; tree clean, parent unchanged. Actual GitHub PR creation returned`Post "https://api.github.com/graphql": Forbidden`; no PR/merge. Prepared body and compare link remain available. Subsequent receipt is documentation only.
 
 
 ## Owner-reported Windows MUJ import checks — received 15 October 2026

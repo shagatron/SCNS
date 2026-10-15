@@ -2,23 +2,24 @@
 
 Reviewed 15 October 2026. **MUJ stays unpublished.** This is an OSM source/topology investigation, not a campus survey. The newly supplied export and retained original both contain819138bytes, SHA256`d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de`. No contributor identities are reproduced. Derivatives retain © OpenStreetMap contributors / ODbL1.0 attribution.
 
-The complete export (3193nodes/517ways/9relations), all prepared records, rejected ways, quarantined indoor descriptors and relation decisions were inspected. **No source-proven graph correction is applied.** The confirmed application defect is misleading synthetic wording. Exclusion policy is deliberately conservative; this conclusion does not certify every excluded path inaccessible or every retained path correct.
+The complete export (3193nodes/517ways/9relations), all prepared records, rejected ways, quarantined indoor descriptors and relation decisions were inspected. **Source-supported covered-run correction is delivered separately as v2.** The wording defect is also corrected. Exclusion policy is deliberately conservative; this conclusion does not certify every excluded path inaccessible or every retained path correct.
 
 ## Evidence and figures
 
 - [Component inventory, sizes, anchored names, all34unanchored names and excluded references](muj-connectivity/README.md).
 - [Standalone component map](muj-connectivity/components.svg), [subway detail](muj-connectivity/subway.svg).
+- [Versioned v2 inventory/maps](muj-connectivity-v2/README.md): compare retained covered runs with the preserved v1 figures.
 - [Machine-readable diagnostic](muj-connectivity/diagnostic.json): all290stored node IDs,688directed edges, original internal node memberships, source way tags, all exclusions/relation decisions, exact coverage and building containment. Component identifiers C1–C29 are diagnostic labels only, not new database IDs.
 
 Coloured solid lines are existing prepared graph geometry; numbers identify weak components. **Red dashed lines are excluded original OSM geometry selected for review, not applied connections, approved access or newly invented paths.** No basemap, proximity snapping or crossing joins. The coverage polygons are OSM mapping, not surveyed legal boundaries. Overview labels may overlap at this scale; zoom the SVG or use the exact-ID inventory. North is up; longitude is visually corrected by cos(latitude), not a metric survey. No distances are measured from these figures.
 
-The diagnostic CLI first checks the original hash, every manifest file and re-converted bundle bytes. It matches canonical source-reference hashes back to each stored edge, so internal source vertices are accounted for even when not stored junctions. It cannot silently accept a modified converter or substitute a similarly positioned node. It only writes to a separate diagnostic directory, never opens a database or alters v1.
+The diagnostic CLI first checks the original hash, every manifest file and re-converted bundle bytes. It matches canonical source-reference hashes back to each stored edge, so internal source vertices are accounted for even when not stored junctions. It selects the pinned v1/v2 conversion explicitly, cannot silently accept another converter or similarly positioned node, and only writes to a separate diagnostic directory. It never opens a database or alters either preparation. Partial-way maps draw only actually excluded source pairs as dashed geometry.
 
 ## Findings by category
 
 ### 1. Confirmed defects
 
-No eligible source-supported path was found silently lost by repeated-node segmentation, directionality, multipolygon processing or identity collisions in the completed v1. The prior repeated-reference loop correction already retains GHS Hostel Main Road1154145951 and G3 footway1158552748; excluded1164716027 is outside exact coverage. Do not redo that work.
+A final segment-level audit found that the v1 whole-way boundary rule unnecessarily loses valid fully covered source runs. This is corrected opt-in in v2; the original strict v1 remains reproducible. No additional defects were found in repeated-node segmentation, directionality, multipolygon processing or identity collisions. The prior repeated-reference loop correction already retains GHS Hostel Main Road1154145951 and G3 footway1158552748; excluded1164716027 is outside exact coverage. Do not redo that work.
 
 The draft route API universally described results as synthetic. It now returns a neutral unpublished/source-and-field-review notice, adding invented-data disclosure only when the actual campus `is_demo` flag is true. Public step-free wording uses that same metadata. QR empty-state wording now asks for an eligible published node and explicit labelling of simulations. Names are never used to decide provenance. Source rights choices and clearly labelled fixture instructions remain choices/instructions, not assertions that MUJ is synthetic. Existing imported source, per-feature provenance, OSM attribution and unknown accessibility remain visible through normal admin/source controls; no source approval is implied.
 
@@ -46,7 +47,7 @@ The existing outdoor graph can store a tunnel's **horizontal** WGS84 polyline, e
 
 Explicit indoor multi-floor ways1158055386 and1247085145 (`indoor=yes`,`level=0;1;2;3`) touch respectively C3/C15/C18/C22–C26 and C1/C3/C18/C19/C21/C27–C29. Flattening them would falsely connect rooms/floors. Steps1245556383 touch C19/C21;1245556384 and1247150898 are also multi-floor. C20 touches upper-floor paths1247150897/1247150902 and1247150898; it must not become ground-level merely to connect. Old Mess corridor1271244213 has only `highway=path` and a name; its indoor/outdoor role needs evidence. Grand Staircase1163582909/1163582910 useslayer1;1568303898 useslayer-1 without a tunnel tag. None is silently normalized to ground.
 
-**Boundary:** v1 rejects whole ways not covered by the exact academic495716022/hostel1158554635 union; it does not clip or retain only inside segments.57highway ways encounter this rule. That loses usable in-bound portions as a consequence of the chosen all-or-nothing policy; it is not evidence that their external portions are permissible. MUJ Hostel Road1159542817 touches C2/C17 but goes outside exact coverage. A revised policy could split at existing source boundary nodes or explicitly review an approach corridor. Cutting arbitrary new nodes, adopting the operational convex hull as access permission, or applying a new source policy via old create-only bundles would be incorrect. Full rejected geometry/tags are in the diagnostic.
+**Boundary correction:** v1 rejects whole ways not covered by the exact academic495716022/hostel1158554635 union; it does not clip or retain only inside segments.57highway ways encounter this rule. That loses usable in-bound portions as a consequence of the chosen all-or-nothing policy; it is not evidence that their external portions are permissible. MUJ Hostel Road1159542817 touches C2/C17; its source run10783309690→10783309696→10788316688→10779778404 and onward through10830815903 is fully covered. Only the final two vertices11573265520/10830815902 are outside. V2 retains the fully covered run and stops at the last inside source vertex, without inventing a boundary node. Source ways926460863 and1164290299 likewise contribute fully covered runs; the former reaches the already catalogued explicit entrance10828149259. Cutting arbitrary new nodes, adopting the operational convex hull as access permission, or applying a new source policy via old create-only bundles would be incorrect. Full rejected geometry/tags are in the diagnostic.
 
 ### 3. Missing or ambiguous source evidence
 
@@ -60,21 +61,26 @@ C6/C8/C12/C16 have **no excluded highway sharing a retained original node**. The
 
 ## Before / after and safe update decision
 
-All preparation bytes, stable import IDs, source/preparation checksum receipts and existing frozen-draft/release rules are unchanged. There is **no v2 preparation, correction import or draft mutation to preview/apply**. Do not rerun the setup helper for this wording/report update. No deletions, upserts, owner-edit reconciliation or migration is needed. The Windows draftUUID is owner-reported only; this checkout has not inspected it.
+The original v1 source/preparation files, stable IDs and receipts stay byte-identical. **Separate `data/muj-v2/`** pins the corrected preparation. `app.cli.muj_update` previews and applies only the graph difference through the normal authenticated editor. No automatic upsert of full bundles. The exact22operations add5nodes/14directed edges/1anchor and explicitly delete2superseded directions of way1154145951. The replacement arcs preserve its original full geometry and split at the newly accepted shared source node10783309690. All common records stay unchanged; catalog/source/frames are not rewritten.
 
-| Measure / stored-graph software case | Before | After this review |
+The helper checks exact expected affected v1 records, referenced existing nodes and the newly anchored place. Unrelated owner edits remain; affected edits/collisions/manual partial changes fail without overwrite. The saved private preview includes original records, replacements, dependencies, source/manifest hashes and draft edit version. Explicit APPLY sends that exact patch with If-Match; normal server permissions, validation, transaction, ordered deletes/creates and per-record actor audits apply. The v2 marker/checksum is in new-record audit evidence; receipt records the server request ID. A late failure rolls back the whole patch. Lost-response/receipt retries recognize the exact target state without another write. A changed version requires a new reviewed preview, never automatic reconciliation. Frozen drafts remain blocked. The original provisioning helper refuses v1 replay on its corrected draft, using immutable audit evidence.
+
+No source rights approval, warning acknowledgement, review submission, public-pointer update or publication occurs. The unchanged original source remains unapproved. Source/content/field review is still required before any future release. The owner's Windows draft is not inspected by cloud tests.
+
+| Measure / stored-graph software case | Before v1 | After v2 |
 |---|---|---|
-|Buildings / places / nodes / directed edges / anchors|51/55/290/688/21|Unchanged|
-|Weak components / unanchored destinations|29/34|Unchanged|
-|Saved graph validation|0errors/111warnings|Unchanged preparation; affected isolated tests rerun, see verification|
-|Hostel Entrance→GHS Entrance|23.624997727885383m/3edges|Unchanged stored graph; not a fabricated new distance|
-|Hostel Entrance→Faculty Block Entrance|163.28135622236027m/6edges|Unchanged|
-|University Entrance→Hostel Entrance|No eligible route|Unchanged, deliberate access/coverage/grade policy|
+|Buildings / places / nodes / directed edges / anchors|51/55/290/688/21|51/55/295/700/22|
+|Weak components / unanchored destinations|29/34|29/33; old C2/C17 join, separate valid inside run retained|
+|Saved graph validation|0errors/111warnings|0errors/111warnings in isolated PostGIS; no warnings acknowledged|
+|Hostel Entrance→GHS Entrance|23.624997727885383m/3edges|Unchanged computed result|
+|Hostel Entrance→Faculty Block Entrance|163.28135622236027m/6edges|Unchanged computed result|
+|University Entrance→Hostel Entrance|No eligible route|Unchanged, private access/coverage/grade policy|
 |Hostel Entrance→Central Library|No eligible route|Unchanged, missing anchor|
-|Verified step-free Hostel→GHS|No eligible route|Unchanged; unknown accessibility is not verified|
-|Public Demo Main Gate→Library|256.88m/3edges;UI257m/4min|Retained baseline|
+|Verified step-free Hostel→GHS|No eligible route|Unchanged; unknown stays unknown|
+|University Entrance→Mapped entrance10828149259|No eligible route (unanchored)|Computed513.0969783921546m/13edges (UI513.10m); mapping estimate, not a field measurement|
+|Public Demo Main Gate→Library|256.88m/3edges;UI257m/4min|Unchanged published baseline|
 
-If later evidence supports corrections, first archive this v1 pin and receipts, define a new preparation version and exact add/change/remove plan with reference order, diff against the actual owner's draft (not this diagnostic), stop on owner edits/unexpected content, preview with existing imports, delete replaced edges explicitly through normal graph editing, and use normal permissions, If-Match, transactions/audits and independent reviews. Test interruption/replay/conflict/rollback before delivering that separate updater. Import upsert never deletes obsolete edges. Do not substitute a changed manifest and ask the owner to rerun the old helper.
+Preview/apply and complete Windows commands: [operations](../operations/muj-connectivity-review.md). Do not manually replace manifests, reimport all v2 bundles or delete owner records to force the preview to pass. Keep v1 receipts and all prior correction previews/receipts. Any future changed source/preparation needs a new explicit version and tested update plan. No imported/released dataset is mutated outside normal draft editing.
 
 ## Prioritized owner evidence collection
 

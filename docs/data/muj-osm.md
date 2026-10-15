@@ -6,7 +6,7 @@ This is a real **OpenStreetMap-derived preparation**, not official Manipal Unive
 
 Owner-supplied `map (1).osm`: **819,138 bytes**, SHA-256 `d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de`. Original retained in ignored `data/raw/muj/source.osm` in the cloud checkout. It is deliberately excluded from Git/images because it contains unnecessary contributor account metadata. Keep the downloaded original for first Windows setup; that helper verifies the checksum and retains an exact mode0600 copy under the existing private storage volume, `private/muj/<sha256>.osm`. It never serves that directory. No cloud copy changes the Windows database.
 
-Committed `data/muj/` contains only reproducible derivative import-v1 JSON, geographic coverage, a detailed preparation report, options and checksummed manifest. Contributor usernames/UIDs/changesets are omitted from derivatives; useful feature IDs/tags remain in the preparation report and import evidence. JSON values are data, never code. No OSM URLs are fetched during conversion/import.
+Repository attributes pin JSON/GeoJSON line endings to LF, including Windows automatic-CRLF checkouts. Committed `data/muj/` contains only reproducible derivative import-v1 JSON, geographic coverage, a detailed preparation report, options and checksummed manifest. Contributor usernames/UIDs/changesets are omitted from derivatives; useful feature IDs/tags remain in the preparation report and import evidence. JSON values are data, never code. No OSM URLs are fetched during conversion/import.
 
 From the repository root, with the downloaded original copied to the ignored source path:
 
@@ -65,6 +65,8 @@ Three coherent import bundles contain **400,400,249 records**, below the existin
 | Non-building/indoor multipolygon relations | 2 |
 | Outside-coverage multipolygon | 1 |
 | Other unsupported relations | 2 |
+
+Anchor presence is not a guarantee of reachability from a chosen start. The21anchors span15components: only10destinations have another anchored destination in the same component;11anchored destinations have no other anchored destination in their component. The other34places have no anchor at all. `report.json` distinguishes these counts rather than calling all21globally routable. The inspected Hostel Entrance component contains GHS Entrance, but not University Entrance or Faculty Block Entrance. No proximity connection is added to improve these counts.
 
 These are decisions at different pipeline stages, not additive percentages of all517ways. Rejected relation members never fall back to filled independent building polygons. Complete multipolygon rings are assembled without snapping; holes remain holes; multiple valid outer components become separate identified footprint records. Unsupported/missing rings and duplicate identities are diagnosed, not repaired. Incomplete external bus relations have no walking/topology role. Indoor catalog preparation retains **106 node/way source descriptors** with room/level/indoor tags; no floors, floorplans, calibration, lifts, room completeness or cross-floor links are invented.
 

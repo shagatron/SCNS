@@ -567,7 +567,14 @@ def convert(raw: bytes, *, batch_size=400):
     report["exclusion_reason_counts"] = dict(
         sorted(Counter(d["reason"] for d in decisions).items())
     )
-    report["routable_entrance_count"] = sum(p["anchored"] for p in catalog.values())
+    report["anchored_destination_count"] = sum(p["anchored"] for p in catalog.values())
+    report["anchor_bearing_component_count"] = sum(bool(c["entrances"]) for c in components)
+    report["destinations_with_another_anchor_in_component"] = sum(
+        len(c["entrances"]) for c in components if len(c["entrances"]) > 1
+    )
+    report["isolated_anchored_destination_count"] = sum(
+        len(c["entrances"]) == 1 for c in components
+    )
     report["unanchored_destination_count"] = sum(not p["anchored"] for p in catalog.values())
     overlay = {
         "type": "FeatureCollection",

@@ -1,4 +1,6 @@
 {
+  "anchor_bearing_component_count": 15,
+  "anchored_destination_count": 21,
   "attribution": "© OpenStreetMap contributors · https://www.openstreetmap.org/copyright · ODbL 1.0",
   "components": [
     {
@@ -3309,6 +3311,7 @@
       "name": "Block B10"
     }
   },
+  "destinations_with_another_anchor_in_component": 10,
   "exclusion_reason_counts": {
     "blocked_or_level_node_segment": 2,
     "building_outside_exact_campus_coverage": 30,
@@ -3334,6 +3337,7 @@
     "places": 55
   },
   "included_highway_ways": 154,
+  "isolated_anchored_destination_count": 11,
   "length_policy": "PostGIS geography full polyline; estimated mapping distances, not surveyed",
   "provenance": {
     "anchors:osm-node-10773902923": {
@@ -12524,7 +12528,6 @@
     "highway": 243,
     "indoor": 22
   },
-  "routable_entrance_count": 21,
   "scope": {
     "academic_way": 495716022,
     "coverage": {

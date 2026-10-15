@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Built helper workflow; owns only unique test DB/network/containers, no volumes."""
 
+import argparse
 import os
 import subprocess
+import tempfile
 from pathlib import Path
 from uuid import uuid4
 
@@ -22,6 +24,14 @@ def run(args, env=None):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--muj",
+        action="store_true",
+        help="Exercise the MUJ staged helper instead of the synthetic 3C helper",
+    )
+    args = parser.parse_args()
+    private = tempfile.TemporaryDirectory(prefix="scns-owned-muj-")
     token = uuid4().hex[:12]
     network = f"scns-demo-smoke-{token}"
     database = f"scns_demo_{token}_e2e_test"
@@ -78,8 +88,8 @@ def main():
                 network,
                 "--network-alias",
                 "api",
-                "--tmpfs",
-                "/app/storage",
+                "--mount",
+                f"type=bind,source={private.name},target=/app/storage",
                 "--mount",
                 f"type=bind,source={ROOT / 'backend/tests'},target=/app/backend/tests,readonly",
                 *options,
@@ -98,8 +108,8 @@ def main():
                 worker,
                 "--network",
                 network,
-                "--tmpfs",
-                "/app/storage",
+                "--mount",
+                f"type=bind,source={private.name},target=/app/storage",
                 *options,
                 "scns-api",
                 "python",
@@ -110,7 +120,18 @@ def main():
             env,
         )
         containers.append(worker)
-        print(run(["docker", "exec", api, "python", "-m", "tests.demo_container"]))
+        print(
+            run(
+                [
+                    "docker",
+                    "exec",
+                    api,
+                    "python",
+                    "-m",
+                    "tests.muj_container" if args.muj else "tests.demo_container",
+                ]
+            )
+        )
     finally:
         for container in reversed(containers):
             run(["docker", "rm", "-f", container])
@@ -138,6 +159,7 @@ def main():
                     f'DROP DATABASE "{database}" WITH (FORCE)',
                 ]
             )
+        private.cleanup()
         print(
             "Removed only owned disposable smoke resources; developer volumes/data untouched."
         )

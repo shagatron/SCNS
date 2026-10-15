@@ -8,6 +8,7 @@ Requires existing Compose db; owns/removes only uniquely named test resources.
 import os
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.request
 from pathlib import Path
@@ -17,21 +18,28 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def run(args, env=None):
-    result = subprocess.run(args, cwd=ROOT, env=env, capture_output=True, text=True, check=False)
+    result = subprocess.run(
+        args, cwd=ROOT, env=env, capture_output=True, text=True, check=False
+    )
     if result.returncode:
         # Never emit environment/credentials, command argv or private upload content.
-        raise RuntimeError(f"Container smoke command failed ({args[0]}), exit {result.returncode}")
+        raise RuntimeError(
+            f"Container smoke command failed ({args[0]}), exit {result.returncode}"
+        )
     return result.stdout.strip()
 
 
 def main():
+    private = tempfile.TemporaryDirectory(prefix="scns-owned-built-")
     token = uuid4().hex[:12]
     network = f"scns-publication-smoke-{token}"
     database = f"scns_built_{token}_e2e_test"
     api, frontend = f"{network}-api", f"{network}-frontend"
     db_id = run(["docker", "compose", "ps", "-q", "db"])
     if not db_id:
-        raise RuntimeError("Start the existing Compose db first; no volumes will be deleted.")
+        raise RuntimeError(
+            "Start the existing Compose db first; no volumes will be deleted."
+        )
     created_db = created_network = connected = False
     containers = []
     try:
@@ -78,8 +86,8 @@ def main():
                 network,
                 "--network-alias",
                 "api",
-                "--tmpfs",
-                "/app/storage",
+                "--mount",
+                f"type=bind,source={private.name},target=/app/storage",
                 *[
                     part
                     for key in (
@@ -115,7 +123,9 @@ def main():
         deadline = time.monotonic() + 60
         while True:
             try:
-                with urllib.request.urlopen("http://127.0.0.1:5174/admin", timeout=2) as response:
+                with urllib.request.urlopen(
+                    "http://127.0.0.1:5174/admin", timeout=2
+                ) as response:
                     assert response.status == 200
                 break
             except (OSError, AssertionError):
@@ -131,8 +141,8 @@ def main():
                 worker_name,
                 "--network",
                 network,
-                "--tmpfs",
-                "/app/storage",
+                "--mount",
+                f"type=bind,source={private.name},target=/app/storage",
                 *[
                     part
                     for key in (
@@ -176,6 +186,10 @@ def main():
                 "-m",
                 "tests.browser_runner",
                 "public-experience.spec.ts",
+                "muj.spec.ts",
+                "imports.spec.ts",
+                "admin.spec.ts",
+                "graph.spec.ts",
                 "location.spec.ts",
                 "closures.spec.ts",
                 "qr.spec.ts",
@@ -198,7 +212,9 @@ def main():
             ("/data/raw/source.geojson", 404),
         ):
             try:
-                with urllib.request.urlopen("http://127.0.0.1:5174" + path, timeout=5) as response:
+                with urllib.request.urlopen(
+                    "http://127.0.0.1:5174" + path, timeout=5
+                ) as response:
                     status = response.status
             except urllib.error.HTTPError as error:
                 status = error.code
@@ -235,6 +251,7 @@ def main():
                     f'DROP DATABASE "{database}" WITH (FORCE)',
                 ]
             )
+        private.cleanup()
         print(
             "Removed only owned smoke containers/network/disposable DB; development volumes/data preserved."
         )

@@ -139,7 +139,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "G-1 Block"
+        "name": "G-1 Block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-relation-15765627-part-0"
@@ -157,7 +158,8 @@
             26.840801900000002
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-relation-15765627-part-0"
@@ -218,7 +220,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Laundry, GHS Library and GHS office"
+        "name": "Laundry, GHS Library and GHS office",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-relation-15777926-part-0"
@@ -236,7 +239,8 @@
             26.84026525
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-relation-15777926-part-0"
@@ -303,7 +307,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "B7 Boy's Block"
+        "name": "B7 Boy's Block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1141643440"
@@ -321,7 +326,8 @@
             26.8419558
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1141643440"
@@ -356,7 +362,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Quess Mess & Gym complex"
+        "name": "Quess Mess & Gym complex",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1141643445"
@@ -374,7 +381,8 @@
             26.8412441
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1141643445"
@@ -457,7 +465,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "B3 Block"
+        "name": "B3 Block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1151360712"
@@ -475,7 +484,8 @@
             26.84156845
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1151360712"
@@ -606,7 +616,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "B2 block"
+        "name": "B2 block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1151360713"
@@ -624,7 +635,8 @@
             26.842138050000003
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1151360713"
@@ -763,7 +775,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "B1 Block"
+        "name": "B1 Block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1151360714"
@@ -781,7 +794,8 @@
             26.841831
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1151360714"
@@ -816,7 +830,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Boxing and MMA ground"
+        "name": "Boxing and MMA ground",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158191366"
@@ -834,7 +849,8 @@
             26.846066399999998
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1158191366"
@@ -877,7 +893,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "G4 block"
+        "name": "G4 block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158512990"
@@ -895,7 +912,8 @@
             26.84045
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1158512990"
@@ -938,7 +956,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "G3 block"
+        "name": "G3 block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158514978"
@@ -956,7 +975,8 @@
             26.84057345
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1158514978"
@@ -999,7 +1019,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "G2 block"
+        "name": "G2 block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158514979"
@@ -1017,7 +1038,8 @@
             26.8405987
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1158514979"
@@ -1100,7 +1122,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "B6 block"
+        "name": "B6 block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158515143"
@@ -1118,7 +1141,8 @@
             26.842214650000003
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1158515143"
@@ -1201,7 +1225,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1158516081"
+        "name": "OSM building osm-way-1158516081",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158516081"
@@ -1260,7 +1285,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "B5 block"
+        "name": "B5 block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158516082"
@@ -1278,7 +1304,8 @@
             26.841793350000003
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1158516082"
@@ -1433,7 +1460,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Administrative Block"
+        "name": "Administrative Block",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158522861"
@@ -1451,7 +1479,8 @@
             26.8417527
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1158522861"
@@ -1502,7 +1531,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Chiller Panel Room"
+        "name": "Chiller Panel Room",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158936647"
@@ -1520,7 +1550,8 @@
             26.8413431
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1158936647"
@@ -1571,7 +1602,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Transformer"
+        "name": "Transformer",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1158936648"
@@ -1589,7 +1621,8 @@
             26.841525
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1158936648"
@@ -1624,7 +1657,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Ocean Hills Pool"
+        "name": "Ocean Hills Pool",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1159010179"
@@ -1642,7 +1676,8 @@
             26.8397836
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1159010179"
@@ -1709,7 +1744,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Faculty Apartment"
+        "name": "Faculty Apartment",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1159753599"
@@ -1727,7 +1763,8 @@
             26.8398208
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1159753599"
@@ -1762,7 +1799,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "CCTV room"
+        "name": "CCTV room",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1159754688"
@@ -1780,7 +1818,8 @@
             26.84217845
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1159754688"
@@ -1819,7 +1858,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Subway"
+        "name": "Subway",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1159754689"
@@ -1837,7 +1877,8 @@
             26.8420742
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1159754689"
@@ -1876,7 +1917,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Subway"
+        "name": "Subway",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1159754690"
@@ -1894,7 +1936,8 @@
             26.841918550000003
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1159754690"
@@ -1949,7 +1992,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Old Mess"
+        "name": "Old Mess",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1162173991"
@@ -1967,7 +2011,8 @@
             26.8430538
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1162173991"
@@ -2010,7 +2055,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164291055"
+        "name": "OSM building osm-way-1164291055",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164291055"
@@ -2045,7 +2091,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164291056"
+        "name": "OSM building osm-way-1164291056",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164291056"
@@ -2096,7 +2143,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Workshop Building"
+        "name": "Workshop Building",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164291057"
@@ -2114,7 +2162,8 @@
             26.8437865
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1164291057"
@@ -2157,7 +2206,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164291058"
+        "name": "OSM building osm-way-1164291058",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164291058"
@@ -2240,7 +2290,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Faculty Apartment"
+        "name": "Faculty Apartment",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164291981"
@@ -2258,7 +2309,8 @@
             26.8394593
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1164291981"
@@ -2301,7 +2353,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164410982"
+        "name": "OSM building osm-way-1164410982",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164410982"
@@ -2416,7 +2469,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Faculty Apartment"
+        "name": "Faculty Apartment",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164410983"
@@ -2434,7 +2488,8 @@
             26.8397018
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1164410983"
@@ -2469,7 +2524,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164562870"
+        "name": "OSM building osm-way-1164562870",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164562870"
@@ -2504,7 +2560,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164562871"
+        "name": "OSM building osm-way-1164562871",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164562871"
@@ -2539,7 +2596,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164563394"
+        "name": "OSM building osm-way-1164563394",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164563394"
@@ -2590,7 +2648,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164563395"
+        "name": "OSM building osm-way-1164563395",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164563395"
@@ -2625,7 +2684,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164591246"
+        "name": "OSM building osm-way-1164591246",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164591246"
@@ -2660,7 +2720,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1164591247"
+        "name": "OSM building osm-way-1164591247",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1164591247"
@@ -2695,7 +2756,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1165285554"
+        "name": "OSM building osm-way-1165285554",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1165285554"
@@ -2782,7 +2844,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Academic Block -3"
+        "name": "Academic Block -3",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1244851612"
@@ -2800,7 +2863,8 @@
             26.8440201
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1244851612"
@@ -2835,7 +2899,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1247657264"
+        "name": "OSM building osm-way-1247657264",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1247657264"
@@ -2890,7 +2955,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1249398706"
+        "name": "OSM building osm-way-1249398706",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1249398706"
@@ -2925,7 +2991,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1249398713"
+        "name": "OSM building osm-way-1249398713",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1249398713"
@@ -2972,7 +3039,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1249398718"
+        "name": "OSM building osm-way-1249398718",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1249398718"
@@ -3015,7 +3083,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1254788394"
+        "name": "OSM building osm-way-1254788394",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1254788394"
@@ -3050,7 +3119,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1254788413"
+        "name": "OSM building osm-way-1254788413",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1254788413"
@@ -3085,7 +3155,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1254788416"
+        "name": "OSM building osm-way-1254788416",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1254788416"
@@ -3120,7 +3191,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "OSM building osm-way-1271669888"
+        "name": "OSM building osm-way-1271669888",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1271669888"
@@ -3155,7 +3227,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "BlueDove Mess and BlueDove Gym"
+        "name": "BlueDove Mess and BlueDove Gym",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1356153775"
@@ -3173,7 +3246,8 @@
             26.840404149999998
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1356153775"
@@ -3208,7 +3282,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Lecture Hall Complex (LHC)"
+        "name": "Lecture Hall Complex (LHC)",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1359652183"
@@ -3226,7 +3301,8 @@
             26.844215300000002
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1359652183"
@@ -3293,7 +3369,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Block B8"
+        "name": "Block B8",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1568303891"
@@ -3311,7 +3388,8 @@
             26.84280185
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1568303891"
@@ -3370,7 +3448,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Block B9"
+        "name": "Block B9",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1568303897"
@@ -3388,7 +3467,8 @@
             26.8429388
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1568303897"
@@ -3439,7 +3519,8 @@
           ],
           "type": "Polygon"
         },
-        "name": "Block B10"
+        "name": "Block B10",
+        "visibility": "public"
       },
       "entity": "buildings",
       "external_id": "osm-way-1568303899"
@@ -3457,7 +3538,8 @@
             26.842695149999997
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-way-1568303899"

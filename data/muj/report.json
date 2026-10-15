@@ -216,940 +216,2875 @@
   "converter": "muj-osm-v1",
   "decisions": [
     {
+      "missing_members": [
+        {
+          "id": 7083052880,
+          "type": "node"
+        },
+        {
+          "id": 4813292581,
+          "type": "node"
+        },
+        {
+          "id": 4813243097,
+          "type": "node"
+        },
+        {
+          "id": 8036478117,
+          "type": "node"
+        },
+        {
+          "id": 6979547410,
+          "type": "node"
+        },
+        {
+          "id": 7083052884,
+          "type": "node"
+        },
+        {
+          "id": 2105397604,
+          "type": "node"
+        },
+        {
+          "id": 8036478114,
+          "type": "node"
+        },
+        {
+          "id": 2105397707,
+          "type": "node"
+        },
+        {
+          "id": 3788831315,
+          "type": "node"
+        },
+        {
+          "id": 3788831329,
+          "type": "node"
+        },
+        {
+          "id": 7083055189,
+          "type": "node"
+        },
+        {
+          "id": 3788831358,
+          "type": "node"
+        },
+        {
+          "id": 3788703296,
+          "type": "node"
+        },
+        {
+          "id": 3788703333,
+          "type": "node"
+        },
+        {
+          "id": 3788703354,
+          "type": "node"
+        },
+        {
+          "id": 3788703677,
+          "type": "node"
+        },
+        {
+          "id": 3788853454,
+          "type": "node"
+        },
+        {
+          "id": 2105800673,
+          "type": "node"
+        },
+        {
+          "id": 7083055211,
+          "type": "node"
+        },
+        {
+          "id": 7083055213,
+          "type": "node"
+        },
+        {
+          "id": 7083055218,
+          "type": "node"
+        },
+        {
+          "id": 8643260432,
+          "type": "node"
+        },
+        {
+          "id": 3788703320,
+          "type": "node"
+        },
+        {
+          "id": 3659486234,
+          "type": "node"
+        },
+        {
+          "id": 7114140244,
+          "type": "node"
+        },
+        {
+          "id": 5482393984,
+          "type": "node"
+        },
+        {
+          "id": 7083055188,
+          "type": "node"
+        },
+        {
+          "id": 758426669,
+          "type": "way"
+        },
+        {
+          "id": 758426670,
+          "type": "way"
+        },
+        {
+          "id": 1357877568,
+          "type": "way"
+        },
+        {
+          "id": 160118943,
+          "type": "way"
+        },
+        {
+          "id": 1393759719,
+          "type": "way"
+        },
+        {
+          "id": 1393759718,
+          "type": "way"
+        },
+        {
+          "id": 758426675,
+          "type": "way"
+        },
+        {
+          "id": 1300211094,
+          "type": "way"
+        },
+        {
+          "id": 1545072131,
+          "type": "way"
+        },
+        {
+          "id": 1545072132,
+          "type": "way"
+        },
+        {
+          "id": 1241017376,
+          "type": "way"
+        },
+        {
+          "id": 758426676,
+          "type": "way"
+        },
+        {
+          "id": 1530250117,
+          "type": "way"
+        },
+        {
+          "id": 1530250120,
+          "type": "way"
+        },
+        {
+          "id": 1199472697,
+          "type": "way"
+        },
+        {
+          "id": 1201368748,
+          "type": "way"
+        },
+        {
+          "id": 1201368746,
+          "type": "way"
+        },
+        {
+          "id": 375521478,
+          "type": "way"
+        },
+        {
+          "id": 570124982,
+          "type": "way"
+        },
+        {
+          "id": 390374919,
+          "type": "way"
+        },
+        {
+          "id": 570135106,
+          "type": "way"
+        },
+        {
+          "id": 865240142,
+          "type": "way"
+        },
+        {
+          "id": 375507172,
+          "type": "way"
+        },
+        {
+          "id": 1201593059,
+          "type": "way"
+        },
+        {
+          "id": 375509963,
+          "type": "way"
+        },
+        {
+          "id": 375509961,
+          "type": "way"
+        },
+        {
+          "id": 375507174,
+          "type": "way"
+        },
+        {
+          "id": 570166936,
+          "type": "way"
+        },
+        {
+          "id": 375507175,
+          "type": "way"
+        },
+        {
+          "id": 1315879998,
+          "type": "way"
+        },
+        {
+          "id": 758426677,
+          "type": "way"
+        },
+        {
+          "id": 758426678,
+          "type": "way"
+        },
+        {
+          "id": 758426679,
+          "type": "way"
+        },
+        {
+          "id": 1315879996,
+          "type": "way"
+        },
+        {
+          "id": 200611601,
+          "type": "way"
+        },
+        {
+          "id": 1244277162,
+          "type": "way"
+        },
+        {
+          "id": 570853774,
+          "type": "way"
+        },
+        {
+          "id": 570145750,
+          "type": "way"
+        },
+        {
+          "id": 570145749,
+          "type": "way"
+        },
+        {
+          "id": 28717352,
+          "type": "way"
+        },
+        {
+          "id": 570160387,
+          "type": "way"
+        },
+        {
+          "id": 570160383,
+          "type": "way"
+        },
+        {
+          "id": 1266692847,
+          "type": "way"
+        }
+      ],
       "reason": "excluded_bus_relation",
-      "source": "osm-relation-10475844"
+      "source": "osm-relation-10475844",
+      "tags": {
+        "from": "Bagru",
+        "interval": "00:20",
+        "name": "Bagru to Chandpole",
+        "opening_hours": "Mo-Su 06:00-20:00",
+        "operator": "JCTSL",
+        "public_transport": "yes",
+        "ref": "26",
+        "route": "bus",
+        "to": "Chandpole",
+        "type": "route",
+        "wikidata": "Q6124121"
+      }
     },
     {
+      "missing_members": [
+        {
+          "id": 8643260432,
+          "type": "node"
+        },
+        {
+          "id": 316957401,
+          "type": "node"
+        },
+        {
+          "id": 6531980320,
+          "type": "node"
+        },
+        {
+          "id": 1751224304,
+          "type": "node"
+        },
+        {
+          "id": 7083055210,
+          "type": "node"
+        },
+        {
+          "id": 3788852978,
+          "type": "node"
+        },
+        {
+          "id": 3788703679,
+          "type": "node"
+        },
+        {
+          "id": 3788703352,
+          "type": "node"
+        },
+        {
+          "id": 6978739446,
+          "type": "node"
+        },
+        {
+          "id": 3788703316,
+          "type": "node"
+        },
+        {
+          "id": 6978739447,
+          "type": "node"
+        },
+        {
+          "id": 3788831347,
+          "type": "node"
+        },
+        {
+          "id": 2105800435,
+          "type": "node"
+        },
+        {
+          "id": 2105397838,
+          "type": "node"
+        },
+        {
+          "id": 5481705863,
+          "type": "node"
+        },
+        {
+          "id": 8125106432,
+          "type": "node"
+        },
+        {
+          "id": 8036478115,
+          "type": "node"
+        },
+        {
+          "id": 2830752722,
+          "type": "node"
+        },
+        {
+          "id": 6979547405,
+          "type": "node"
+        },
+        {
+          "id": 6979547407,
+          "type": "node"
+        },
+        {
+          "id": 6979547408,
+          "type": "node"
+        },
+        {
+          "id": 6979547409,
+          "type": "node"
+        },
+        {
+          "id": 1722766127,
+          "type": "node"
+        },
+        {
+          "id": 316741325,
+          "type": "node"
+        },
+        {
+          "id": 4813292581,
+          "type": "node"
+        },
+        {
+          "id": 7083052879,
+          "type": "node"
+        },
+        {
+          "id": 8036478109,
+          "type": "node"
+        },
+        {
+          "id": 374922333,
+          "type": "way"
+        },
+        {
+          "id": 758060819,
+          "type": "way"
+        },
+        {
+          "id": 1206537584,
+          "type": "way"
+        },
+        {
+          "id": 935359547,
+          "type": "way"
+        },
+        {
+          "id": 134988455,
+          "type": "way"
+        },
+        {
+          "id": 695004395,
+          "type": "way"
+        },
+        {
+          "id": 570138396,
+          "type": "way"
+        },
+        {
+          "id": 866422897,
+          "type": "way"
+        },
+        {
+          "id": 1315879997,
+          "type": "way"
+        },
+        {
+          "id": 163425355,
+          "type": "way"
+        },
+        {
+          "id": 758426680,
+          "type": "way"
+        },
+        {
+          "id": 758426681,
+          "type": "way"
+        },
+        {
+          "id": 1315879999,
+          "type": "way"
+        },
+        {
+          "id": 375507179,
+          "type": "way"
+        },
+        {
+          "id": 570158439,
+          "type": "way"
+        },
+        {
+          "id": 753701966,
+          "type": "way"
+        },
+        {
+          "id": 375507170,
+          "type": "way"
+        },
+        {
+          "id": 375509962,
+          "type": "way"
+        },
+        {
+          "id": 1201593060,
+          "type": "way"
+        },
+        {
+          "id": 375507173,
+          "type": "way"
+        },
+        {
+          "id": 862568913,
+          "type": "way"
+        },
+        {
+          "id": 753701965,
+          "type": "way"
+        },
+        {
+          "id": 200570235,
+          "type": "way"
+        },
+        {
+          "id": 200570286,
+          "type": "way"
+        },
+        {
+          "id": 1290002698,
+          "type": "way"
+        },
+        {
+          "id": 1545072134,
+          "type": "way"
+        },
+        {
+          "id": 1545072133,
+          "type": "way"
+        },
+        {
+          "id": 967774258,
+          "type": "way"
+        },
+        {
+          "id": 1196005866,
+          "type": "way"
+        },
+        {
+          "id": 862568929,
+          "type": "way"
+        },
+        {
+          "id": 1530250118,
+          "type": "way"
+        },
+        {
+          "id": 1530250121,
+          "type": "way"
+        },
+        {
+          "id": 219936858,
+          "type": "way"
+        },
+        {
+          "id": 219936857,
+          "type": "way"
+        },
+        {
+          "id": 1008774152,
+          "type": "way"
+        },
+        {
+          "id": 1008774151,
+          "type": "way"
+        },
+        {
+          "id": 862568926,
+          "type": "way"
+        },
+        {
+          "id": 862568927,
+          "type": "way"
+        },
+        {
+          "id": 489043406,
+          "type": "way"
+        },
+        {
+          "id": 1393759718,
+          "type": "way"
+        },
+        {
+          "id": 1393759719,
+          "type": "way"
+        },
+        {
+          "id": 160118943,
+          "type": "way"
+        },
+        {
+          "id": 1357877568,
+          "type": "way"
+        },
+        {
+          "id": 862568932,
+          "type": "way"
+        },
+        {
+          "id": 220010906,
+          "type": "way"
+        }
+      ],
       "reason": "excluded_bus_relation",
-      "source": "osm-relation-11783173"
+      "source": "osm-relation-11783173",
+      "tags": {
+        "from": "Chandpole",
+        "interval": "00:20",
+        "name": "Chandpole to Bagru",
+        "opening_hours": "Mo-Su 06:00-20:00",
+        "operator": "JCTSL",
+        "public_transport": "yes",
+        "ref": "26",
+        "route": "bus",
+        "to": "Bagru",
+        "type": "route",
+        "wikidata": "Q6124121"
+      }
     },
     {
+      "missing_members": [],
       "reason": "non_building_or_indoor_relation",
-      "source": "osm-relation-15765611"
+      "source": "osm-relation-15765611",
+      "tags": {
+        "landuse": "education",
+        "layer": "-1",
+        "name": "AB2",
+        "type": "multipolygon"
+      }
     },
     {
+      "missing_members": [],
       "reason": "non_building_or_indoor_relation",
-      "source": "osm-relation-15765621"
+      "source": "osm-relation-15765621",
+      "tags": {
+        "building:levels": "5",
+        "landuse": "education",
+        "layer": "1",
+        "name": "AB1",
+        "type": "multipolygon"
+      }
     },
     {
+      "missing_members": [],
       "reason": "outside_exact_campus_coverage",
-      "source": "osm-relation-15777927"
+      "source": "osm-relation-15777927",
+      "tags": {
+        "building": "yes",
+        "type": "multipolygon"
+      }
     },
     {
+      "missing_members": [],
       "reason": "unsupported_relation",
-      "source": "osm-relation-19474646"
+      "source": "osm-relation-19474646",
+      "tags": {
+        "building": "hostel"
+      }
     },
     {
+      "missing_members": [],
       "reason": "unsupported_relation",
-      "source": "osm-relation-19474647"
+      "source": "osm-relation-19474647",
+      "tags": {
+        "route": "foot",
+        "type": "route"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164411258"
+      "source": "osm-way-1164411258",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164411259"
+      "source": "osm-way-1164411259",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164411260"
+      "source": "osm-way-1164411260",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164502056"
+      "source": "osm-way-1164502056",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164502057"
+      "source": "osm-way-1164502057",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164502058"
+      "source": "osm-way-1164502058",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164502059"
+      "source": "osm-way-1164502059",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164502060"
+      "source": "osm-way-1164502060",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164502061"
+      "source": "osm-way-1164502061",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164502062"
+      "source": "osm-way-1164502062",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164562869"
+      "source": "osm-way-1164562869",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164562873"
+      "source": "osm-way-1164562873",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164562877"
+      "source": "osm-way-1164562877",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164562878"
+      "source": "osm-way-1164562878",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164562879"
+      "source": "osm-way-1164562879",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164562880"
+      "source": "osm-way-1164562880",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1164562881"
+      "source": "osm-way-1164562881",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1166283926"
+      "source": "osm-way-1166283926",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1166283927"
+      "source": "osm-way-1166283927",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1166283928"
+      "source": "osm-way-1166283928",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1166283929"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1246117118"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1247085153"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1247085154"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1247085155"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1247085159"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1247085161"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1247352961"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1247657268"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249393737"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249393740"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249393743"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398683"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398684"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398686"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398687"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398688"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398689"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398690"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398691"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398692"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398693"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398699"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398700"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398703"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398714"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398715"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398716"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1249398717"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788392"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788395"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788399"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788400"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788401"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788406"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788409"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788410"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788414"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788415"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1254788419"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1256779741"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1256779742"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152906"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152909"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152911"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152912"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152913"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152914"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152915"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152916"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152917"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152919"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152920"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152921"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152922"
-    },
-    {
+      "source": "osm-way-1166283929",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1246117118",
+      "tags": {
+        "addr:housenumber": "222",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "office": "educational_institution",
+        "ref": "017",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1247085153",
+      "tags": {
+        "addr:housenumber": "221",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "office": "educational_institution",
+        "ref": "221",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1247085154",
+      "tags": {
+        "addr:housenumber": "220",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "office": "educational_institution",
+        "ref": "220",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1247085155",
+      "tags": {
+        "addr:housenumber": "221A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "office": "educational_institution",
+        "ref": "221A",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1247085159",
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "layer": "2",
+        "level": "2"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1247085161",
+      "tags": {
+        "addr:housenumber": "Faculty Block 3",
+        "addr:street": "2nd floor, AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "name": "School of Chemical and Civil Engineering",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1247352961",
+      "tags": {
+        "addr:housenumber": "101",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution",
+        "ref": "001",
+        "room": "office"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1247657268",
+      "tags": {
+        "addr:housenumber": "321A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution",
+        "ref": "321A",
+        "room": "laboratory"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249393737",
+      "tags": {
+        "addr:housenumber": "TMA Pai Auditorium",
+        "addr:street": "AB2 Corridor",
+        "amenity": "theatre",
+        "building": "yes",
+        "level": "0",
+        "name": "TMA Pai Auditorium",
+        "room": "auditorium"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249393740",
+      "tags": {
+        "addr:housenumber": "013",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "name": "Petroleum Lab",
+        "office": "educational_institution",
+        "ref": "013",
+        "room": "laboratory"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249393743",
+      "tags": {
+        "addr:housenumber": "014",
+        "addr:street": "AB2 Corridor",
+        "building": "residential",
+        "level": "0",
+        "name": "014",
+        "office": "educational_institution",
+        "ref": "014",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398683",
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "level": "0",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398684",
+      "tags": {
+        "addr:housenumber": "010",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "name": "010",
+        "office": "educational_institution",
+        "ref": "010",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398686",
+      "tags": {
+        "addr:housenumber": "030",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "030"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398687",
+      "tags": {
+        "addr:housenumber": "029",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "029",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398688",
+      "tags": {
+        "addr:housenumber": "028",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "028",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398689",
+      "tags": {
+        "addr:housenumber": "027",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "027",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398690",
+      "tags": {
+        "addr:housenumber": "025",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "025",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398691",
+      "tags": {
+        "addr:housenumber": "023",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "023",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398692",
+      "tags": {
+        "addr:housenumber": "021",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "021",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398693",
+      "tags": {
+        "addr:housenumber": "020",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "020",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398699",
+      "tags": {
+        "addr:housenumber": "001",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "001"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398700",
+      "tags": {
+        "addr:housenumber": "002",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "002"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398703",
+      "tags": {
+        "addr:housenumber": "003",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "003"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398714",
+      "tags": {
+        "addr:housenumber": "026",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "026"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398715",
+      "tags": {
+        "addr:housenumber": "024",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "office": "educational_institution",
+        "ref": "024"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398716",
+      "tags": {
+        "addr:housenumber": "022",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "name": "022",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1249398717",
+      "tags": {
+        "addr:housenumber": "018",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "018",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788392",
+      "tags": {
+        "addr:housenumber": "006",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "006",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788395",
+      "tags": {
+        "addr:housenumber": "007",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "007",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788399",
+      "tags": {
+        "addr:housenumber": "008",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "name": "008",
+        "office": "educational_institution",
+        "ref": "008"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788400",
+      "tags": {
+        "addr:housenumber": "009",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "name": "Project Lab",
+        "office": "educational_institution",
+        "ref": "009"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788401",
+      "tags": {
+        "addr:housenumber": "011",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "011"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788406",
+      "tags": {
+        "amenity": "fast_food",
+        "building": "yes",
+        "level": "0"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788409",
+      "tags": {
+        "addr:housenumber": "019",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "019",
+        "room": "classroom"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788410",
+      "tags": {
+        "addr:housenumber": "017",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "017"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788414",
+      "tags": {
+        "addr:housenumber": "015",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "015"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788415",
+      "tags": {
+        "addr:housenumber": "016",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "016"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1254788419",
+      "tags": {
+        "addr:housenumber": "012",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "name": "Bio Science Lab",
+        "office": "educational_institution",
+        "ref": "012"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1256779741",
+      "tags": {
+        "addr:housenumber": "321B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "3",
+        "office": "educational_institution",
+        "ref": "321B",
+        "room": "library"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1256779742",
+      "tags": {
+        "addr:housenumber": "318",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "name": "Material science Lab",
+        "office": "educational_institution",
+        "room": "laboratory"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152906",
+      "tags": {
+        "addr:housenumber": "102",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution",
+        "ref": "001",
+        "room": "office"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152909",
+      "tags": {
+        "addr:housenumber": "105",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution",
+        "ref": "001",
+        "room": "office"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152911",
+      "tags": {
+        "addr:housenumber": "106",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152912",
+      "tags": {
+        "addr:housenumber": "107",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152913",
+      "tags": {
+        "addr:housenumber": "108",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152914",
+      "tags": {
+        "addr:housenumber": "109",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152915",
+      "tags": {
+        "addr:housenumber": "111",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152916",
+      "tags": {
+        "addr:housenumber": "112",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152917",
+      "tags": {
+        "addr:housenumber": "113",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152919",
+      "tags": {
+        "addr:housenumber": "116",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152920",
+      "tags": {
+        "addr:housenumber": "114",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152921",
+      "tags": {
+        "addr:housenumber": "115",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152922",
+      "tags": {
+        "addr:housenumber": "117B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152924",
+      "tags": {
+        "addr:housenumber": "117A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152925",
+      "tags": {
+        "addr:housenumber": "117C",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152926",
+      "tags": {
+        "addr:housenumber": "117D",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152927",
+      "tags": {
+        "addr:housenumber": "118B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152928",
+      "tags": {
+        "addr:housenumber": "118C",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152929",
+      "tags": {
+        "addr:housenumber": "118D",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152930",
+      "tags": {
+        "addr:housenumber": "118A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152932",
+      "tags": {
+        "addr:housenumber": "319",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152933",
+      "tags": {
+        "addr:housenumber": "219",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152934",
+      "tags": {
+        "addr:housenumber": "219",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271152937",
+      "tags": {
+        "addr:housenumber": "218",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271669868",
+      "tags": {
+        "addr:housenumber": "215A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271669869",
+      "tags": {
+        "addr:housenumber": "217",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "name": "Officie Directorate of Academics",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271669871",
+      "tags": {
+        "addr:housenumber": "215B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271669877",
+      "tags": {
+        "addr:housenumber": "214",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "reason": "room_or_level_tagged_building_quarantined",
+      "source": "osm-way-1271669878",
+      "tags": {
+        "addr:housenumber": "213",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152924"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152925"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152926"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152927"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152928"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152929"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152930"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152932"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152933"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152934"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271152937"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669868"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669869"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669871"
-    },
-    {
+      "source": "osm-way-1271669879",
+      "tags": {
+        "addr:housenumber": "212",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669877"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669878"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669879"
-    },
-    {
-      "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669880"
-    },
-    {
+      "source": "osm-way-1271669880",
+      "tags": {
+        "addr:housenumber": "211",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669881"
-    },
+      "source": "osm-way-1271669881",
+      "tags": {
+        "addr:housenumber": "210",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669882"
-    },
+      "source": "osm-way-1271669882",
+      "tags": {
+        "addr:housenumber": "208",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669883"
-    },
+      "source": "osm-way-1271669883",
+      "tags": {
+        "addr:housenumber": "209",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669885"
+      "source": "osm-way-1271669885",
+      "tags": {
+        "addr:housenumber": "205",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669886"
+      "source": "osm-way-1271669886",
+      "tags": {
+        "addr:housenumber": "206",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669887"
+      "source": "osm-way-1271669887",
+      "tags": {
+        "addr:housenumber": "207",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669892"
+      "source": "osm-way-1271669892",
+      "tags": {
+        "addr:housenumber": "227A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669893"
+      "source": "osm-way-1271669893",
+      "tags": {
+        "addr:housenumber": "227B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669894"
+      "source": "osm-way-1271669894",
+      "tags": {
+        "addr:housenumber": "228A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669895"
+      "source": "osm-way-1271669895",
+      "tags": {
+        "addr:housenumber": "228B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669896"
+      "source": "osm-way-1271669896",
+      "tags": {
+        "addr:housenumber": "229A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669897"
+      "source": "osm-way-1271669897",
+      "tags": {
+        "addr:housenumber": "229B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669902"
+      "source": "osm-way-1271669902",
+      "tags": {
+        "addr:housenumber": "301",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669907"
+      "source": "osm-way-1271669907",
+      "tags": {
+        "addr:housenumber": "304",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669908"
+      "source": "osm-way-1271669908",
+      "tags": {
+        "addr:housenumber": "305",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "room_or_level_tagged_building_quarantined",
-      "source": "osm-way-1271669909"
+      "source": "osm-way-1271669909",
+      "tags": {
+        "addr:housenumber": "306",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1359652338"
+      "source": "osm-way-1359652338",
+      "tags": {
+        "amenity": "food_court",
+        "building": "yes",
+        "name": "NBC"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1429443572"
+      "source": "osm-way-1429443572",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1429443573"
+      "source": "osm-way-1429443573",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1429443574"
+      "source": "osm-way-1429443574",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1429443575"
+      "source": "osm-way-1429443575",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1429443576"
+      "source": "osm-way-1429443576",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1429443577"
+      "source": "osm-way-1429443577",
+      "tags": {
+        "building": "yes"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1503290126"
+      "source": "osm-way-1503290126",
+      "tags": {
+        "addr:city": "Bagru",
+        "addr:district": "Dehmi Kalan",
+        "addr:postcode": "303007",
+        "addr:street": "Near CDTI",
+        "building": "apartments",
+        "building:levels": "3",
+        "name": "Sunderone Symphonia",
+        "residential": "pg"
+      }
     },
     {
       "reason": "building_outside_exact_campus_coverage",
-      "source": "osm-way-1503536700"
+      "source": "osm-way-1503536700",
+      "tags": {
+        "building": "apartments",
+        "name": "Sunderone Melodia"
+      }
     },
     {
       "reason": "unsupported_highway",
-      "source": "osm-way-160118929"
+      "source": "osm-way-160118929",
+      "tags": {
+        "highway": "tertiary"
+      }
     },
     {
       "reason": "unsupported_highway",
-      "source": "osm-way-758426672"
+      "source": "osm-way-758426672",
+      "tags": {
+        "highway": "tertiary"
+      }
     },
     {
       "reason": "unsupported_highway",
-      "source": "osm-way-758426673"
+      "source": "osm-way-758426673",
+      "tags": {
+        "highway": "tertiary"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926203463"
+      "source": "osm-way-926203463",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926203466"
+      "source": "osm-way-926203466",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926203467"
+      "source": "osm-way-926203467",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926203468"
+      "source": "osm-way-926203468",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926203469"
+      "source": "osm-way-926203469",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926203473"
+      "source": "osm-way-926203473",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926203474"
+      "source": "osm-way-926203474",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926435165"
+      "source": "osm-way-926435165",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926435170"
+      "source": "osm-way-926435170",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926435178"
+      "source": "osm-way-926435178",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926435182"
+      "source": "osm-way-926435182",
+      "tags": {
+        "highway": "unclassified",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926435183"
+      "source": "osm-way-926435183",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926435185"
+      "source": "osm-way-926435185",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926452744"
+      "source": "osm-way-926452744",
+      "tags": {
+        "highway": "service",
+        "oneway": "yes",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926452745"
+      "source": "osm-way-926452745",
+      "tags": {
+        "highway": "service",
+        "oneway": "yes",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926452746"
+      "source": "osm-way-926452746",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926452747"
+      "source": "osm-way-926452747",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926452748"
+      "source": "osm-way-926452748",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926452749"
+      "source": "osm-way-926452749",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926452750"
+      "source": "osm-way-926452750",
+      "tags": {
+        "covered": "yes",
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926452752"
+      "source": "osm-way-926452752",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926460863"
+      "source": "osm-way-926460863",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926463921"
+      "source": "osm-way-926463921",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "indoor_or_room",
-      "source": "osm-way-926463927"
+      "source": "osm-way-926463927",
+      "tags": {
+        "highway": "path",
+        "layer": "0",
+        "level": "0",
+        "name": "AB1 corridor",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926475486"
+      "source": "osm-way-926475486",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926632403"
+      "source": "osm-way-926632403",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926645665"
+      "source": "osm-way-926645665",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926645667"
+      "source": "osm-way-926645667",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926645668"
+      "source": "osm-way-926645668",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926645669"
+      "source": "osm-way-926645669",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-926645670"
+      "source": "osm-way-926645670",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1154145269"
+      "source": "osm-way-1154145269",
+      "tags": {
+        "highway": "steps",
+        "incline": "down",
+        "layer": "-1",
+        "level": "0",
+        "name": "Subway Stairs",
+        "ramp:luggage": "no",
+        "ramp:wheelchair": "no",
+        "tunnel": "yes",
+        "tunnel:name": "Subway"
+      }
     },
     {
       "reason": "grade_separated_requires_review",
-      "source": "osm-way-1154145270"
+      "source": "osm-way-1154145270",
+      "tags": {
+        "highway": "pedestrian",
+        "level": "0",
+        "name": "Subway road",
+        "tunnel:name": "Subway"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1154145273"
+      "source": "osm-way-1154145273",
+      "tags": {
+        "highway": "steps",
+        "layer": "-1",
+        "name": "Subway Stairs",
+        "tunnel": "yes",
+        "tunnel:name": "Subway"
+      }
     },
     {
       "reason": "invalid_line",
-      "source": "osm-way-1154145951"
+      "source": "osm-way-1154145951",
+      "tags": {
+        "bicycle": "designated",
+        "foot": "designated",
+        "highway": "service",
+        "lit": "yes",
+        "name": "GHS Hostel Main Road",
+        "segregated": "no",
+        "wheelchair": "yes"
+      }
     },
     {
       "reason": "indoor_or_room",
-      "source": "osm-way-1158055386"
+      "source": "osm-way-1158055386",
+      "tags": {
+        "highway": "path",
+        "indoor": "yes",
+        "level": "0;1;2;3",
+        "name": "AB1 corridor"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1158057420"
+      "source": "osm-way-1158057420",
+      "tags": {
+        "footway": "sidewalk",
+        "highway": "footway",
+        "name": "GHs Footpath",
+        "surface": "paved"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1158057421"
+      "source": "osm-way-1158057421",
+      "tags": {
+        "dog": "yes",
+        "footway": "sidewalk",
+        "highway": "footway",
+        "lit": "24/7",
+        "name": "GHS footpath",
+        "surface": "paved",
+        "wheelchair": "yes"
+      }
     },
     {
       "reason": "indoor_or_room",
-      "source": "osm-way-1158509500"
+      "source": "osm-way-1158509500",
+      "tags": {
+        "building:levels": "3",
+        "footway": "AB2 corridor",
+        "highway": "path",
+        "level": "0",
+        "name": "AB2 Corridor",
+        "roof:levels": "1"
+      }
     },
     {
       "reason": "invalid_line",
-      "source": "osm-way-1158552748"
+      "source": "osm-way-1158552748",
+      "tags": {
+        "highway": "pedestrian",
+        "name": "G3 footway",
+        "segregated": "no",
+        "surface": "paving_stones"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1159542817"
+      "source": "osm-way-1159542817",
+      "tags": {
+        "highway": "service",
+        "lanes": "1",
+        "name": "MUJ Hostel Road",
+        "surface": "asphalt"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1163582909"
+      "source": "osm-way-1163582909",
+      "tags": {
+        "highway": "steps",
+        "incline": "up",
+        "layer": "1",
+        "name": "Grand Staircase"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1163582910"
+      "source": "osm-way-1163582910",
+      "tags": {
+        "highway": "steps",
+        "incline": "up",
+        "layer": "1",
+        "name": "Grand Staircase"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164290299"
+      "source": "osm-way-1164290299",
+      "tags": {
+        "footway": "sidewalk",
+        "highway": "footway",
+        "smoothness": "good",
+        "surface": "paved"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164590126"
+      "source": "osm-way-1164590126",
+      "tags": {
+        "highway": "service",
+        "sidewalk": "no",
+        "surface": "concrete"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164591248"
+      "source": "osm-way-1164591248",
+      "tags": {
+        "footway": "sidewalk",
+        "highway": "footway",
+        "smoothness": "good",
+        "surface": "paved"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164715171"
+      "source": "osm-way-1164715171",
+      "tags": {
+        "highway": "path",
+        "smoothness": "horrible",
+        "surface": "mud"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164715172"
+      "source": "osm-way-1164715172",
+      "tags": {
+        "foot": "yes",
+        "highway": "path",
+        "smoothness": "horrible",
+        "surface": "mud"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164715173"
+      "source": "osm-way-1164715173",
+      "tags": {
+        "highway": "residential",
+        "noname": "yes"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164716025"
+      "source": "osm-way-1164716025",
+      "tags": {
+        "highway": "service"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164716026"
+      "source": "osm-way-1164716026",
+      "tags": {
+        "highway": "service"
+      }
     },
     {
       "reason": "invalid_line",
-      "source": "osm-way-1164716027"
+      "source": "osm-way-1164716027",
+      "tags": {
+        "highway": "service"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164716028"
+      "source": "osm-way-1164716028",
+      "tags": {
+        "highway": "service"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164716029"
+      "source": "osm-way-1164716029",
+      "tags": {
+        "highway": "service"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164716030"
+      "source": "osm-way-1164716030",
+      "tags": {
+        "highway": "service"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1164716031"
+      "source": "osm-way-1164716031",
+      "tags": {
+        "highway": "service"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1165312335"
+      "source": "osm-way-1165312335",
+      "tags": {
+        "indoor": "room",
+        "level": "0",
+        "room": "classroom"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1216406061"
+      "source": "osm-way-1216406061",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1216406062"
+      "source": "osm-way-1216406062",
+      "tags": {
+        "highway": "residential"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1216406063"
+      "source": "osm-way-1216406063",
+      "tags": {
+        "highway": "residential"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1216406064"
+      "source": "osm-way-1216406064",
+      "tags": {
+        "highway": "residential"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1219452534"
+      "source": "osm-way-1219452534",
+      "tags": {
+        "highway": "track",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1219452880"
+      "source": "osm-way-1219452880",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1219452881"
+      "source": "osm-way-1219452881",
+      "tags": {
+        "highway": "track"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1219452882"
+      "source": "osm-way-1219452882",
+      "tags": {
+        "highway": "track"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1244943100"
+      "source": "osm-way-1244943100",
+      "tags": {
+        "highway": "path"
+      }
     },
     {
       "reason": "unsupported_highway",
-      "source": "osm-way-1245026708"
+      "source": "osm-way-1245026708",
+      "tags": {
+        "highway": "tertiary"
+      }
     },
     {
       "reason": "unsupported_highway",
-      "source": "osm-way-1245026709"
+      "source": "osm-way-1245026709",
+      "tags": {
+        "highway": "tertiary"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1245026711"
+      "source": "osm-way-1245026711",
+      "tags": {
+        "highway": "service"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1245556383"
+      "source": "osm-way-1245556383",
+      "tags": {
+        "highway": "steps",
+        "incline": "up",
+        "level": "0;1;2;3"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1245556384"
+      "source": "osm-way-1245556384",
+      "tags": {
+        "highway": "steps",
+        "incline": "up",
+        "level": "0;1;2;3"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1246099090"
+      "source": "osm-way-1246099090",
+      "tags": {
+        "highway": "footway",
+        "layer": "-1",
+        "tunnel": "yes"
+      }
     },
     {
       "reason": "indoor_or_room",
-      "source": "osm-way-1247085145"
+      "source": "osm-way-1247085145",
+      "tags": {
+        "highway": "path",
+        "indoor": "yes",
+        "level": "0;1;2;3",
+        "name": "AB1 corridor"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247085149"
+      "source": "osm-way-1247085149",
+      "tags": {
+        "indoor": "room",
+        "layer": "2",
+        "level": "3",
+        "room": "classroom"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247085150"
+      "source": "osm-way-1247085150",
+      "tags": {
+        "indoor": "room",
+        "layer": "2",
+        "level": "2",
+        "room": "classroom"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247085157"
+      "source": "osm-way-1247085157",
+      "tags": {
+        "indoor": "room",
+        "layer": "2",
+        "level": "2"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247085160"
+      "source": "osm-way-1247085160",
+      "tags": {
+        "indoor": "room"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1247085162"
+      "source": "osm-way-1247085162",
+      "tags": {
+        "highway": "path",
+        "level": "0;1;2;3"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1247150896"
+      "source": "osm-way-1247150896",
+      "tags": {
+        "highway": "path",
+        "level": "0;1;2;3"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1247150897"
+      "source": "osm-way-1247150897",
+      "tags": {
+        "highway": "path",
+        "layer": "1;2;3",
+        "level": "1;2;3"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1247150898"
+      "source": "osm-way-1247150898",
+      "tags": {
+        "highway": "steps",
+        "incline": "up",
+        "level": "0;1;2;3"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247150901"
+      "source": "osm-way-1247150901",
+      "tags": {
+        "indoor": "room",
+        "layer": "2",
+        "level": "2",
+        "name": "FB 2"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1247150902"
+      "source": "osm-way-1247150902",
+      "tags": {
+        "highway": "path",
+        "level": "1;2;3"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1247352964"
+      "source": "osm-way-1247352964",
+      "tags": {
+        "highway": "elevator"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1247352965"
+      "source": "osm-way-1247352965",
+      "tags": {
+        "highway": "elevator"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657261"
+      "source": "osm-way-1247657261",
+      "tags": {
+        "indoor": "room",
+        "level": "1;2;3",
+        "name": "Control room"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657263"
+      "source": "osm-way-1247657263",
+      "tags": {
+        "indoor": "room"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657265"
+      "source": "osm-way-1247657265",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "School of Basic Sciences"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657266"
+      "source": "osm-way-1247657266",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "Material Science Lab",
+        "ref": "318",
+        "room": "laboratory"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657267"
+      "source": "osm-way-1247657267",
+      "tags": {
+        "indoor": "room",
+        "layer": "3",
+        "level": "3",
+        "ref": "320",
+        "room": "classroom"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657269"
+      "source": "osm-way-1247657269",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "Library CCE",
+        "ref": "321A",
+        "room": "library"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657274"
+      "source": "osm-way-1247657274",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "Food Production Lab",
+        "ref": "325"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657275"
+      "source": "osm-way-1247657275",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "Advance Training Restaurant SHTM",
+        "ref": "326"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657276"
+      "source": "osm-way-1247657276",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "ref": "327",
+        "room": "classroom"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657277"
+      "source": "osm-way-1247657277",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "ref": "328",
+        "room": "classroom"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657278"
+      "source": "osm-way-1247657278",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "ref": "329",
+        "room": "classroom"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1247657279"
+      "source": "osm-way-1247657279",
+      "tags": {
+        "indoor": "room",
+        "level": "1;2;3",
+        "name": "Control Room"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1249393741"
+      "source": "osm-way-1249393741",
+      "tags": {
+        "highway": "elevator"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1249398710"
+      "source": "osm-way-1249398710",
+      "tags": {
+        "indoor": "room"
+      }
     },
     {
       "reason": "indoor_catalog_preparation_only",
-      "source": "osm-way-1254788407"
+      "source": "osm-way-1254788407",
+      "tags": {
+        "indoor": "room",
+        "level": "0;1;2;3",
+        "name": "Control Room"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1254788408"
+      "source": "osm-way-1254788408",
+      "tags": {
+        "highway": "elevator",
+        "level": "0;1;2;3",
+        "wheelchair": "yes"
+      }
     },
     {
       "reason": "indoor_or_room",
-      "source": "osm-way-1271244213"
+      "source": "osm-way-1271244213",
+      "tags": {
+        "highway": "path",
+        "name": "Old mess corridor"
+      }
     },
     {
       "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
-      "source": "osm-way-1503536166"
+      "source": "osm-way-1503536166",
+      "tags": {
+        "highway": "residential"
+      }
     },
     {
       "reason": "unsupported_level_or_layer",
-      "source": "osm-way-1568303898"
+      "source": "osm-way-1568303898",
+      "tags": {
+        "highway": "footway",
+        "layer": "-1"
+      }
     },
     {
       "reason": "blocked_or_level_node_segment",
-      "source": "osm-way-1159217177"
+      "source": "osm-way-1159217177",
+      "tags": {
+        "highway": "steps",
+        "ramp:wheelchair": "no"
+      }
     },
     {
       "reason": "blocked_or_level_node_segment",
-      "source": "osm-way-1245274146"
+      "source": "osm-way-1245274146",
+      "tags": {
+        "highway": "path"
+      }
     }
   ],
   "destinations": {
@@ -1398,6 +3333,7 @@
     "nodes": 283,
     "places": 55
   },
+  "included_highway_ways": 154,
   "length_policy": "PostGIS geography full polyline; estimated mapping distances, not surveyed",
   "provenance": {
     "anchors:osm-node-10773902923": {
@@ -8603,10 +10539,1990 @@
       }
     }
   },
+  "quarantined_indoor_features": [
+    {
+      "node_refs": [],
+      "source": "osm-node-11593739347",
+      "tags": {
+        "highway": "elevator",
+        "indoor": "yes",
+        "level": "0;1;2;3"
+      }
+    },
+    {
+      "node_refs": [],
+      "source": "osm-node-11594245178",
+      "tags": {
+        "highway": "elevator",
+        "indoor": "yes",
+        "level": "0;1;2;3"
+      }
+    },
+    {
+      "node_refs": [],
+      "source": "osm-node-11594245196",
+      "tags": {
+        "addr:housenumber": "FB 2",
+        "addr:street": "AB1 corridor",
+        "entrance": "main",
+        "level": "2",
+        "name": "FB Entrance"
+      }
+    },
+    {
+      "node_refs": [],
+      "source": "osm-node-11598364382",
+      "tags": {
+        "highway": "elevator",
+        "indoor": "yes",
+        "level": "0;1;2;3"
+      }
+    },
+    {
+      "node_refs": [
+        11579137920,
+        11579137923,
+        11804678738,
+        11595648714,
+        11809043895,
+        11804678736,
+        11809043893,
+        10769840669,
+        10769840673,
+        11598364398,
+        11598364397,
+        11598364395,
+        11598364393,
+        11598364391,
+        11598364380,
+        10769840672,
+        11593739327,
+        11584751331,
+        11576731867
+      ],
+      "source": "osm-way-1158055386",
+      "tags": {
+        "highway": "path",
+        "indoor": "yes",
+        "level": "0;1;2;3",
+        "name": "AB1 corridor"
+      }
+    },
+    {
+      "node_refs": [
+        10773981428,
+        10821461581,
+        10821461579,
+        10773981423,
+        10773981422,
+        10773981421,
+        10773981428
+      ],
+      "source": "osm-way-1158522154",
+      "tags": {
+        "fitness_station": "stairs",
+        "layer": "1",
+        "leisure": "fitness_station",
+        "level": "1",
+        "name": "Grand Staircase",
+        "sport": "fitness",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "node_refs": [
+        10839030682,
+        11612768349,
+        11612768350,
+        11612768352,
+        11612768354,
+        11576813471,
+        11612768364,
+        11612768356,
+        11612768357,
+        11612768360,
+        11612768362,
+        10839030681,
+        11664524372,
+        11664524378,
+        11664524380,
+        11664524395,
+        11664524396,
+        11612692561,
+        11612692560,
+        11612692552,
+        10839030680,
+        11612692551,
+        11664524404,
+        11612768344,
+        11664524405,
+        11612768346,
+        11664524149,
+        11664524147,
+        11664524142,
+        10839030679,
+        8597363231,
+        11612773092,
+        11612773080,
+        11612773078,
+        11612773084,
+        11573265518,
+        10839030682
+      ],
+      "source": "osm-way-1165312335",
+      "tags": {
+        "indoor": "room",
+        "level": "0",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11593739317,
+        11579137917,
+        11579137918,
+        11579137919,
+        11597502365,
+        11809063446
+      ],
+      "source": "osm-way-1245556383",
+      "tags": {
+        "highway": "steps",
+        "incline": "up",
+        "level": "0;1;2;3"
+      }
+    },
+    {
+      "node_refs": [
+        11579137921,
+        11579137922,
+        11594245186,
+        11594245187,
+        11579137921
+      ],
+      "source": "osm-way-1245556384",
+      "tags": {
+        "highway": "steps",
+        "incline": "up",
+        "level": "0;1;2;3"
+      }
+    },
+    {
+      "node_refs": [
+        11584751328,
+        11584751329,
+        11576731867,
+        11584751331,
+        11584751328
+      ],
+      "source": "osm-way-1246117118",
+      "tags": {
+        "addr:housenumber": "222",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "office": "educational_institution",
+        "ref": "017",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11576731867,
+        11594340527,
+        11809063447,
+        11593739331,
+        11594340518,
+        11593739335,
+        11804697575,
+        11804697576,
+        11593739332,
+        10769840671,
+        11593739344,
+        11594340525,
+        11804697573,
+        11804678765,
+        11804678758,
+        11593739346,
+        11594340530,
+        11593739348,
+        11594245179,
+        10776935386,
+        11594245181,
+        11598364385,
+        11804678752,
+        11598364386,
+        11598364388,
+        11595648710,
+        11576585096,
+        11809043888,
+        11804678742,
+        11809043890,
+        10769840670,
+        11804678732,
+        11804678740,
+        11595648712,
+        11579137920
+      ],
+      "source": "osm-way-1247085145",
+      "tags": {
+        "highway": "path",
+        "indoor": "yes",
+        "level": "0;1;2;3",
+        "name": "AB1 corridor"
+      }
+    },
+    {
+      "node_refs": [
+        10839037003,
+        11593739321,
+        11593739322,
+        10839037003
+      ],
+      "source": "osm-way-1247085149",
+      "tags": {
+        "indoor": "room",
+        "layer": "2",
+        "level": "3",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11593739322,
+        11593739323,
+        11593739324,
+        11598364379,
+        11593739321,
+        11593739322
+      ],
+      "source": "osm-way-1247085150",
+      "tags": {
+        "indoor": "room",
+        "layer": "2",
+        "level": "2",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11584751329,
+        11593739330,
+        11593739331,
+        11809063447,
+        11594340527,
+        11576731867,
+        11584751329
+      ],
+      "source": "osm-way-1247085153",
+      "tags": {
+        "addr:housenumber": "221",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "office": "educational_institution",
+        "ref": "221",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11804697575,
+        11593739333,
+        11593739334,
+        11593739335,
+        11804697575
+      ],
+      "source": "osm-way-1247085154",
+      "tags": {
+        "addr:housenumber": "220",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "office": "educational_institution",
+        "ref": "220",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11593739330,
+        11593739334,
+        11593739335,
+        11594340518,
+        11593739331,
+        11593739330
+      ],
+      "source": "osm-way-1247085155",
+      "tags": {
+        "addr:housenumber": "221A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "office": "educational_institution",
+        "ref": "221A",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        10769840671,
+        11593739338,
+        10839037004,
+        11593739336,
+        11593739341,
+        10769840671
+      ],
+      "source": "osm-way-1247085157",
+      "tags": {
+        "indoor": "room",
+        "layer": "2",
+        "level": "2"
+      }
+    },
+    {
+      "node_refs": [
+        11593739341,
+        11593739336,
+        11593739342,
+        11804697570,
+        11593739343,
+        11593739341
+      ],
+      "source": "osm-way-1247085159",
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "layer": "2",
+        "level": "2"
+      }
+    },
+    {
+      "node_refs": [
+        10769840671,
+        11593739341,
+        11593739343,
+        11804697571,
+        11593739344,
+        10769840671
+      ],
+      "source": "osm-way-1247085160",
+      "tags": {
+        "indoor": "room"
+      }
+    },
+    {
+      "node_refs": [
+        11593739344,
+        11804697571,
+        11593739343,
+        11804697570,
+        11593739342,
+        11804678768,
+        11804678762,
+        11804678756,
+        10839037105,
+        11804678755,
+        11804678760,
+        11593739346,
+        11804678758,
+        11804678766,
+        11804697573,
+        11594340525,
+        11593739344
+      ],
+      "source": "osm-way-1247085161",
+      "tags": {
+        "addr:housenumber": "Faculty Block 3",
+        "addr:street": "2nd floor, AB1 corridor",
+        "building": "yes",
+        "layer": "2",
+        "level": "2",
+        "name": "School of Chemical and Civil Engineering",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11593739347,
+        11598364383,
+        11593739348
+      ],
+      "source": "osm-way-1247085162",
+      "tags": {
+        "highway": "path",
+        "level": "0;1;2;3"
+      }
+    },
+    {
+      "node_refs": [
+        11594245178,
+        11594245179
+      ],
+      "source": "osm-way-1247150896",
+      "tags": {
+        "highway": "path",
+        "level": "0;1;2;3"
+      }
+    },
+    {
+      "node_refs": [
+        11598364383,
+        11595648720,
+        11594245180,
+        11594245181
+      ],
+      "source": "osm-way-1247150897",
+      "tags": {
+        "highway": "path",
+        "layer": "1;2;3",
+        "level": "1;2;3"
+      }
+    },
+    {
+      "node_refs": [
+        11594245182,
+        11594245183,
+        11594245184,
+        11594245185,
+        11594245182
+      ],
+      "source": "osm-way-1247150898",
+      "tags": {
+        "highway": "steps",
+        "incline": "up",
+        "level": "0;1;2;3"
+      }
+    },
+    {
+      "node_refs": [
+        11594245188,
+        11594245189,
+        11594245190,
+        11594245191,
+        11595648717,
+        11594245192,
+        11594245193,
+        11594245194,
+        11594245195,
+        11594245196,
+        11594245188
+      ],
+      "source": "osm-way-1247150901",
+      "tags": {
+        "indoor": "room",
+        "layer": "2",
+        "level": "2",
+        "name": "FB 2"
+      }
+    },
+    {
+      "node_refs": [
+        11594245180,
+        11594245196
+      ],
+      "source": "osm-way-1247150902",
+      "tags": {
+        "highway": "path",
+        "level": "1;2;3"
+      }
+    },
+    {
+      "node_refs": [
+        11594245193,
+        11594245192,
+        11595648717,
+        11594245191,
+        11594245190,
+        11594245189,
+        11594245188,
+        11594245196,
+        11594245195,
+        11594245194,
+        11594245193
+      ],
+      "source": "osm-way-1247159176",
+      "tags": {
+        "area": "yes",
+        "layer": "3",
+        "level": "3",
+        "name": "Faculty Block 4"
+      }
+    },
+    {
+      "node_refs": [
+        10839036999,
+        13566350121,
+        13566350120,
+        11809043907,
+        11595648708,
+        10839036999
+      ],
+      "source": "osm-way-1247352961",
+      "tags": {
+        "addr:housenumber": "101",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution",
+        "ref": "001",
+        "room": "office"
+      }
+    },
+    {
+      "node_refs": [
+        11598364379,
+        11593739324,
+        10769840672,
+        11598364380,
+        11593739326,
+        11598364379
+      ],
+      "source": "osm-way-1247657261",
+      "tags": {
+        "indoor": "room",
+        "level": "1;2;3",
+        "name": "Control room"
+      }
+    },
+    {
+      "node_refs": [
+        11598364384,
+        11598364385,
+        11804678749,
+        11598364387,
+        11598364384
+      ],
+      "source": "osm-way-1247657263",
+      "tags": {
+        "indoor": "room"
+      }
+    },
+    {
+      "node_refs": [
+        11593739344,
+        11804697570,
+        11593739342,
+        11804678768,
+        11804678762,
+        11804678756,
+        10839037105,
+        11804678755,
+        11804678760,
+        11593739346,
+        11593739344
+      ],
+      "source": "osm-way-1247657265",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "School of Basic Sciences"
+      }
+    },
+    {
+      "node_refs": [
+        11593739338,
+        10839037004,
+        11593739336,
+        10769840671,
+        11593739338
+      ],
+      "source": "osm-way-1247657266",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "Material Science Lab",
+        "ref": "318",
+        "room": "laboratory"
+      }
+    },
+    {
+      "node_refs": [
+        11593739335,
+        11804697575,
+        11593739333,
+        11593739334,
+        11593739335
+      ],
+      "source": "osm-way-1247657267",
+      "tags": {
+        "indoor": "room",
+        "layer": "3",
+        "level": "3",
+        "ref": "320",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11593739330,
+        11593739334,
+        11593739335,
+        11593739331,
+        11593739330
+      ],
+      "source": "osm-way-1247657268",
+      "tags": {
+        "addr:housenumber": "321A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution",
+        "ref": "321A",
+        "room": "laboratory"
+      }
+    },
+    {
+      "node_refs": [
+        11584751329,
+        11593739330,
+        11593739331,
+        11594340527,
+        11576731867,
+        11584751329
+      ],
+      "source": "osm-way-1247657269",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "Library CCE",
+        "ref": "321A",
+        "room": "library"
+      }
+    },
+    {
+      "node_refs": [
+        11598364380,
+        11593739326,
+        11593739325,
+        11598364390,
+        11598364391,
+        11598364380
+      ],
+      "source": "osm-way-1247657274",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "Food Production Lab",
+        "ref": "325"
+      }
+    },
+    {
+      "node_refs": [
+        11598364391,
+        11598364390,
+        11598364392,
+        11809043902,
+        11598364393,
+        11598364391
+      ],
+      "source": "osm-way-1247657275",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "name": "Advance Training Restaurant SHTM",
+        "ref": "326"
+      }
+    },
+    {
+      "node_refs": [
+        11598364393,
+        11809043902,
+        11598364392,
+        11598364394,
+        11598364395,
+        11598364393
+      ],
+      "source": "osm-way-1247657276",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "ref": "327",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11598364395,
+        11598364394,
+        11598364396,
+        11809043905,
+        11598364397,
+        11598364395
+      ],
+      "source": "osm-way-1247657277",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "ref": "328",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11598364398,
+        11598364397,
+        11809043905,
+        11598364396,
+        10839037002,
+        11809043906,
+        11598364398
+      ],
+      "source": "osm-way-1247657278",
+      "tags": {
+        "indoor": "room",
+        "level": "3",
+        "ref": "329",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11593739332,
+        10769840671,
+        11593739338,
+        11804697574,
+        11593739332
+      ],
+      "source": "osm-way-1247657279",
+      "tags": {
+        "indoor": "room",
+        "level": "1;2;3",
+        "name": "Control Room"
+      }
+    },
+    {
+      "node_refs": [
+        11612692540,
+        11664524391,
+        10773902923,
+        10773902922,
+        11664524398,
+        11576585094,
+        10773902921,
+        10773902920,
+        11612692544,
+        11664524407,
+        11612692545,
+        11612692546,
+        11612692547,
+        11612692540
+      ],
+      "source": "osm-way-1249393737",
+      "tags": {
+        "addr:housenumber": "TMA Pai Auditorium",
+        "addr:street": "AB2 Corridor",
+        "amenity": "theatre",
+        "building": "yes",
+        "level": "0",
+        "name": "TMA Pai Auditorium",
+        "room": "auditorium"
+      }
+    },
+    {
+      "node_refs": [
+        10773902924,
+        11612692551,
+        10839030680,
+        11612692552,
+        11612692558,
+        11612692556,
+        11612692553,
+        11664524156,
+        10773902924
+      ],
+      "source": "osm-way-1249393740",
+      "tags": {
+        "addr:housenumber": "013",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "name": "Petroleum Lab",
+        "office": "educational_institution",
+        "ref": "013",
+        "room": "laboratory"
+      }
+    },
+    {
+      "node_refs": [
+        11612692559,
+        11612692554,
+        11612692555,
+        11612692560,
+        11612692561,
+        11664524392,
+        11612692559
+      ],
+      "source": "osm-way-1249393743",
+      "tags": {
+        "addr:housenumber": "014",
+        "addr:street": "AB2 Corridor",
+        "building": "residential",
+        "level": "0",
+        "name": "014",
+        "office": "educational_institution",
+        "ref": "014",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11612692551,
+        11664524404,
+        11584636872,
+        10773902924,
+        11612692551
+      ],
+      "source": "osm-way-1249398683",
+      "tags": {
+        "amenity": "toilets",
+        "building": "yes",
+        "level": "0",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        13545183739,
+        13545183740,
+        13545183741,
+        13545183742,
+        13545183743,
+        13545183739
+      ],
+      "source": "osm-way-1249398684",
+      "tags": {
+        "addr:housenumber": "010",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "name": "010",
+        "office": "educational_institution",
+        "ref": "010",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11612773082,
+        11612773076,
+        11584636877,
+        11612768350,
+        11612768349,
+        11612773082
+      ],
+      "source": "osm-way-1249398687",
+      "tags": {
+        "addr:housenumber": "029",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "029",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11584636877,
+        11612773123,
+        11612768351,
+        11612768352,
+        11612768350,
+        11584636877
+      ],
+      "source": "osm-way-1249398688",
+      "tags": {
+        "addr:housenumber": "028",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "028",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11612768351,
+        11612768353,
+        11612768354,
+        11612768352,
+        11612768351
+      ],
+      "source": "osm-way-1249398689",
+      "tags": {
+        "addr:housenumber": "027",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "027",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11612768355,
+        11612768356,
+        11612768357,
+        11612768358,
+        11612773125,
+        11612768355
+      ],
+      "source": "osm-way-1249398690",
+      "tags": {
+        "addr:housenumber": "025",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "025",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11612768358,
+        11612768359,
+        11612768360,
+        11612768357,
+        11612768358
+      ],
+      "source": "osm-way-1249398691",
+      "tags": {
+        "addr:housenumber": "023",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "023",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11612768359,
+        11612692539,
+        11612768361,
+        11612768362,
+        11612768360,
+        11612768359
+      ],
+      "source": "osm-way-1249398692",
+      "tags": {
+        "addr:housenumber": "021",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "021",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11612768361,
+        10773902919,
+        11664524374,
+        11612768363,
+        10839030681,
+        11612768362,
+        11612768361
+      ],
+      "source": "osm-way-1249398693",
+      "tags": {
+        "addr:housenumber": "020",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "020",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11612773097,
+        11612773116,
+        11612773117,
+        11612773118,
+        11612773097
+      ],
+      "source": "osm-way-1249398710",
+      "tags": {
+        "indoor": "room"
+      }
+    },
+    {
+      "node_refs": [
+        11612692547,
+        11612773127,
+        11612773128,
+        11664524379,
+        10773902920,
+        11664524408,
+        11612692546,
+        11612692547
+      ],
+      "source": "osm-way-1249398717",
+      "tags": {
+        "addr:housenumber": "018",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "018",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        10839030679,
+        11664524142,
+        11664524143,
+        11664524144,
+        10839030679
+      ],
+      "source": "osm-way-1254788392",
+      "tags": {
+        "addr:housenumber": "006",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "006",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11664524147,
+        11664524149,
+        11664524150,
+        11664524157,
+        11664524148,
+        11664524147
+      ],
+      "source": "osm-way-1254788395",
+      "tags": {
+        "addr:housenumber": "007",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "007",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11612768363,
+        11664524372,
+        11664524373,
+        11664524376,
+        11664524374,
+        11612768363
+      ],
+      "source": "osm-way-1254788407",
+      "tags": {
+        "indoor": "room",
+        "level": "0;1;2;3",
+        "name": "Control Room"
+      }
+    },
+    {
+      "node_refs": [
+        11664524373,
+        11664524375,
+        11664524377,
+        11664524376,
+        11664524373
+      ],
+      "source": "osm-way-1254788408",
+      "tags": {
+        "highway": "elevator",
+        "level": "0;1;2;3",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "node_refs": [
+        11664524375,
+        11664524372,
+        11664524378,
+        11664524379,
+        11612773128,
+        11664524375
+      ],
+      "source": "osm-way-1254788409",
+      "tags": {
+        "addr:housenumber": "019",
+        "addr:street": "AB2 Corridor",
+        "building": "yes",
+        "level": "0",
+        "office": "educational_institution",
+        "ref": "019",
+        "room": "classroom"
+      }
+    },
+    {
+      "node_refs": [
+        11584751329,
+        11593739330,
+        11593739331,
+        11594340527,
+        11576731867,
+        11584751329
+      ],
+      "source": "osm-way-1256779741",
+      "tags": {
+        "addr:housenumber": "321B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "3",
+        "office": "educational_institution",
+        "ref": "321B",
+        "room": "library"
+      }
+    },
+    {
+      "node_refs": [
+        11593739338,
+        10839037004,
+        11593739336,
+        10769840671,
+        11593739338
+      ],
+      "source": "osm-way-1256779742",
+      "tags": {
+        "addr:housenumber": "318",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "name": "Material science Lab",
+        "office": "educational_institution",
+        "room": "laboratory"
+      }
+    },
+    {
+      "node_refs": [
+        11595648708,
+        11809043907,
+        13566350120,
+        13566350130,
+        11809043910,
+        11595648708
+      ],
+      "source": "osm-way-1271152906",
+      "tags": {
+        "addr:housenumber": "102",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution",
+        "ref": "001",
+        "room": "office"
+      }
+    },
+    {
+      "node_refs": [
+        11804678730,
+        13566350125,
+        11809043885,
+        10839037110,
+        11804678730
+      ],
+      "source": "osm-way-1271152909",
+      "tags": {
+        "addr:housenumber": "105",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution",
+        "ref": "001",
+        "room": "office"
+      }
+    },
+    {
+      "node_refs": [
+        11804678732,
+        10769840670,
+        11804678733,
+        11595648704,
+        11804678734,
+        11804678732
+      ],
+      "source": "osm-way-1271152910",
+      "tags": {
+        "addr:housenumber": "110",
+        "addr:street": "AB1 corridor",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043894,
+        11804678735,
+        11804678736,
+        11809043893,
+        10769840669,
+        13566350124,
+        11809043894
+      ],
+      "source": "osm-way-1271152911",
+      "tags": {
+        "addr:housenumber": "106",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678735,
+        11809043896,
+        11804678737,
+        11809043891,
+        11804678738,
+        11595648714,
+        11809043895,
+        11804678736,
+        11804678735
+      ],
+      "source": "osm-way-1271152912",
+      "tags": {
+        "addr:housenumber": "107",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678737,
+        11804678739,
+        11809043892,
+        11804678740,
+        11804678738,
+        11809043891,
+        11804678737
+      ],
+      "source": "osm-way-1271152913",
+      "tags": {
+        "addr:housenumber": "108",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678739,
+        11804678734,
+        11804678732,
+        11804678740,
+        11809043892,
+        11804678739
+      ],
+      "source": "osm-way-1271152914",
+      "tags": {
+        "addr:housenumber": "109",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        10769840670,
+        11804678733,
+        11809043889,
+        11804678741,
+        11804678742,
+        11809043890,
+        10769840670
+      ],
+      "source": "osm-way-1271152915",
+      "tags": {
+        "addr:housenumber": "111",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678742,
+        11804678741,
+        11809043887,
+        11804678744,
+        11804678746,
+        11804678754,
+        11598364388,
+        11804678742
+      ],
+      "source": "osm-way-1271152916",
+      "tags": {
+        "addr:housenumber": "112",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678754,
+        11804678751,
+        11809043884,
+        11804678745,
+        11804678746,
+        11804678754
+      ],
+      "source": "osm-way-1271152917",
+      "tags": {
+        "addr:housenumber": "113",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678751,
+        11804678747,
+        11809043883,
+        11804678748,
+        11804678745,
+        11809043884,
+        11804678751
+      ],
+      "source": "osm-way-1271152919",
+      "tags": {
+        "addr:housenumber": "116",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678745,
+        11804678746,
+        11804678744,
+        11804678753,
+        11804678745
+      ],
+      "source": "osm-way-1271152920",
+      "tags": {
+        "addr:housenumber": "114",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678745,
+        11804678753,
+        10839037108,
+        11804678748,
+        11804678745
+      ],
+      "source": "osm-way-1271152921",
+      "tags": {
+        "addr:housenumber": "115",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678755,
+        10839037105,
+        11804678756,
+        11804678757,
+        11804678755
+      ],
+      "source": "osm-way-1271152922",
+      "tags": {
+        "addr:housenumber": "117B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678757,
+        11804678761,
+        11804678759,
+        11804678760,
+        11804678755,
+        11804678757
+      ],
+      "source": "osm-way-1271152924",
+      "tags": {
+        "addr:housenumber": "117A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678761,
+        11804678756,
+        11804678762,
+        11804678767,
+        11804678763,
+        11804678761
+      ],
+      "source": "osm-way-1271152925",
+      "tags": {
+        "addr:housenumber": "117C",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678761,
+        11804678763,
+        11804678764,
+        11804678759,
+        11804678761
+      ],
+      "source": "osm-way-1271152926",
+      "tags": {
+        "addr:housenumber": "117D",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678767,
+        11804678762,
+        11804678768,
+        11804697569,
+        11804678767
+      ],
+      "source": "osm-way-1271152927",
+      "tags": {
+        "addr:housenumber": "118B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804697569,
+        11804678768,
+        11593739342,
+        11804697570,
+        11804697569
+      ],
+      "source": "osm-way-1271152928",
+      "tags": {
+        "addr:housenumber": "118C",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804697569,
+        11804697570,
+        11804697571,
+        11804697572,
+        11804697569
+      ],
+      "source": "osm-way-1271152929",
+      "tags": {
+        "addr:housenumber": "118D",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804697569,
+        11804697572,
+        11804678764,
+        11804678763,
+        11804678767,
+        11804697569
+      ],
+      "source": "osm-way-1271152930",
+      "tags": {
+        "addr:housenumber": "118A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "layer": "1",
+        "level": "1",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678748,
+        10839037108,
+        11804678744,
+        11804678746,
+        11804678745,
+        11804678748
+      ],
+      "source": "osm-way-1271669868",
+      "tags": {
+        "addr:housenumber": "215A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678747,
+        11809043883,
+        11809043884,
+        11804678751,
+        11804678747
+      ],
+      "source": "osm-way-1271669869",
+      "tags": {
+        "addr:housenumber": "217",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "name": "Officie Directorate of Academics",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678751,
+        11804678745,
+        11804678746,
+        11804678754,
+        11804678751
+      ],
+      "source": "osm-way-1271669871",
+      "tags": {
+        "addr:housenumber": "215B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11598364388,
+        11804678754,
+        11804678746,
+        11804678744,
+        11809043887,
+        11809043888,
+        11598364388
+      ],
+      "source": "osm-way-1271669877",
+      "tags": {
+        "addr:housenumber": "214",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043888,
+        11809043887,
+        11809043889,
+        11809043890,
+        11809043888
+      ],
+      "source": "osm-way-1271669878",
+      "tags": {
+        "addr:housenumber": "213",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043890,
+        11809043889,
+        11804678733,
+        10769840670,
+        11809043890
+      ],
+      "source": "osm-way-1271669879",
+      "tags": {
+        "addr:housenumber": "212",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678732,
+        10769840670,
+        11804678733,
+        11595648704,
+        11804678734,
+        11804678732
+      ],
+      "source": "osm-way-1271669880",
+      "tags": {
+        "addr:housenumber": "211",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678740,
+        11804678732,
+        11804678734,
+        11804678739,
+        11809043892,
+        11804678740
+      ],
+      "source": "osm-way-1271669881",
+      "tags": {
+        "addr:housenumber": "210",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043891,
+        11809043892,
+        11804678739,
+        11804678737,
+        11809043891
+      ],
+      "source": "osm-way-1271669882",
+      "tags": {
+        "addr:housenumber": "208",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678738,
+        11804678740,
+        11809043892,
+        11809043891,
+        11804678738
+      ],
+      "source": "osm-way-1271669883",
+      "tags": {
+        "addr:housenumber": "209",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        10769840669,
+        11809043893,
+        11809043894,
+        13566350124,
+        10769840669
+      ],
+      "source": "osm-way-1271669885",
+      "tags": {
+        "addr:housenumber": "205",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043893,
+        11809043895,
+        11809043896,
+        11809043894,
+        11809043893
+      ],
+      "source": "osm-way-1271669886",
+      "tags": {
+        "addr:housenumber": "206",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043895,
+        11595648714,
+        11804678738,
+        11809043891,
+        11804678737,
+        11809043896,
+        11809043895
+      ],
+      "source": "osm-way-1271669887",
+      "tags": {
+        "addr:housenumber": "207",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043902,
+        11598364393,
+        11598364395,
+        11809043903,
+        11809043902
+      ],
+      "source": "osm-way-1271669892",
+      "tags": {
+        "addr:housenumber": "227A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11598364392,
+        11809043902,
+        11809043903,
+        11809043904,
+        11598364392
+      ],
+      "source": "osm-way-1271669893",
+      "tags": {
+        "addr:housenumber": "227B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043903,
+        11598364395,
+        11598364397,
+        11809043905,
+        11809043903
+      ],
+      "source": "osm-way-1271669894",
+      "tags": {
+        "addr:housenumber": "228A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043904,
+        11809043903,
+        11809043905,
+        11598364396,
+        11809043904
+      ],
+      "source": "osm-way-1271669895",
+      "tags": {
+        "addr:housenumber": "228B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043905,
+        11598364397,
+        11598364398,
+        11809043906,
+        11809043905
+      ],
+      "source": "osm-way-1271669896",
+      "tags": {
+        "addr:housenumber": "229A",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11598364396,
+        11809043905,
+        11809043906,
+        10839037002,
+        11598364396
+      ],
+      "source": "osm-way-1271669897",
+      "tags": {
+        "addr:housenumber": "229B",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "2",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        10839036999,
+        11595648708,
+        11809043907,
+        13566350120,
+        13566350121,
+        10839036999
+      ],
+      "source": "osm-way-1271669902",
+      "tags": {
+        "addr:housenumber": "301",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11804678730,
+        13563782563,
+        13563782570,
+        13566350133,
+        11804678730
+      ],
+      "source": "osm-way-1271669907",
+      "tags": {
+        "addr:housenumber": "304",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        13563782571,
+        13566350132,
+        13563782559,
+        13563782564,
+        13563782571
+      ],
+      "source": "osm-way-1271669908",
+      "tags": {
+        "addr:housenumber": "305",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution"
+      }
+    },
+    {
+      "node_refs": [
+        11809043913,
+        13566350123,
+        13566350129,
+        13566350131,
+        11809043913
+      ],
+      "source": "osm-way-1271669909",
+      "tags": {
+        "addr:housenumber": "306",
+        "addr:street": "AB1 corridor",
+        "building": "yes",
+        "level": "3",
+        "office": "educational_institution"
+      }
+    }
+  ],
   "raw_counts": {
     "node": 3193,
     "relation": 9,
     "way": 517
+  },
+  "raw_tag_counts": {
+    "building": 167,
+    "highway": 243,
+    "indoor": 22
   },
   "routable_entrance_count": 21,
   "scope": {
@@ -9072,5 +12988,690 @@
     "hostel_way": 1158554635
   },
   "source_sha256": "d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de",
+  "surrounding_feature_decisions": [
+    {
+      "missing_members": [],
+      "reason": "outside_exact_campus_coverage",
+      "source": "osm-relation-15777927",
+      "tags": {
+        "building": "yes",
+        "type": "multipolygon"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164411258",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164411259",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164411260",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164502056",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164502057",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164502058",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164502059",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164502060",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164502061",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164502062",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164562869",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164562873",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164562877",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164562878",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164562879",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164562880",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1164562881",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1166283926",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1166283927",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1166283928",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1166283929",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1359652338",
+      "tags": {
+        "amenity": "food_court",
+        "building": "yes",
+        "name": "NBC"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1429443572",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1429443573",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1429443574",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1429443575",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1429443576",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1429443577",
+      "tags": {
+        "building": "yes"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1503290126",
+      "tags": {
+        "addr:city": "Bagru",
+        "addr:district": "Dehmi Kalan",
+        "addr:postcode": "303007",
+        "addr:street": "Near CDTI",
+        "building": "apartments",
+        "building:levels": "3",
+        "name": "Sunderone Symphonia",
+        "residential": "pg"
+      }
+    },
+    {
+      "reason": "building_outside_exact_campus_coverage",
+      "source": "osm-way-1503536700",
+      "tags": {
+        "building": "apartments",
+        "name": "Sunderone Melodia"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926203463",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926203466",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926203467",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926203468",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926203469",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926203473",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926203474",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926435165",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926435170",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926435178",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926435182",
+      "tags": {
+        "highway": "unclassified",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926435183",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926435185",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926452744",
+      "tags": {
+        "highway": "service",
+        "oneway": "yes",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926452745",
+      "tags": {
+        "highway": "service",
+        "oneway": "yes",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926452746",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926452747",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926452748",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926452749",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926452750",
+      "tags": {
+        "covered": "yes",
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926452752",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926460863",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926463921",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926475486",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926632403",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926645665",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926645667",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926645668",
+      "tags": {
+        "highway": "service",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926645669",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-926645670",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1158057420",
+      "tags": {
+        "footway": "sidewalk",
+        "highway": "footway",
+        "name": "GHs Footpath",
+        "surface": "paved"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1158057421",
+      "tags": {
+        "dog": "yes",
+        "footway": "sidewalk",
+        "highway": "footway",
+        "lit": "24/7",
+        "name": "GHS footpath",
+        "surface": "paved",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1159542817",
+      "tags": {
+        "highway": "service",
+        "lanes": "1",
+        "name": "MUJ Hostel Road",
+        "surface": "asphalt"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164290299",
+      "tags": {
+        "footway": "sidewalk",
+        "highway": "footway",
+        "smoothness": "good",
+        "surface": "paved"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164590126",
+      "tags": {
+        "highway": "service",
+        "sidewalk": "no",
+        "surface": "concrete"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164591248",
+      "tags": {
+        "footway": "sidewalk",
+        "highway": "footway",
+        "smoothness": "good",
+        "surface": "paved"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164715171",
+      "tags": {
+        "highway": "path",
+        "smoothness": "horrible",
+        "surface": "mud"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164715172",
+      "tags": {
+        "foot": "yes",
+        "highway": "path",
+        "smoothness": "horrible",
+        "surface": "mud"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164715173",
+      "tags": {
+        "highway": "residential",
+        "noname": "yes"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164716025",
+      "tags": {
+        "highway": "service"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164716026",
+      "tags": {
+        "highway": "service"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164716028",
+      "tags": {
+        "highway": "service"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164716029",
+      "tags": {
+        "highway": "service"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164716030",
+      "tags": {
+        "highway": "service"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1164716031",
+      "tags": {
+        "highway": "service"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1216406061",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1216406062",
+      "tags": {
+        "highway": "residential"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1216406063",
+      "tags": {
+        "highway": "residential"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1216406064",
+      "tags": {
+        "highway": "residential"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1219452534",
+      "tags": {
+        "highway": "track",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1219452880",
+      "tags": {
+        "highway": "residential",
+        "source": "maxar"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1219452881",
+      "tags": {
+        "highway": "track"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1219452882",
+      "tags": {
+        "highway": "track"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1244943100",
+      "tags": {
+        "highway": "path"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1245026711",
+      "tags": {
+        "highway": "service"
+      }
+    },
+    {
+      "reason": "path_outside_exact_campus_coverage_or_cross_campus_gap",
+      "source": "osm-way-1503536166",
+      "tags": {
+        "highway": "residential"
+      }
+    }
+  ],
   "unanchored_destination_count": 34
 }

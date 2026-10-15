@@ -147,7 +147,17 @@ def convert(raw: bytes, *, batch_size=400):
     decisions = report["decisions"]
 
     def note(kind, identity, reason):
-        decisions.append({"source": f"osm-{kind}-{identity}", "reason": reason})
+        item = {"source": f"osm-{kind}-{identity}", "reason": reason}
+        element = elements.get(kind, {}).get(identity)
+        if element is not None:
+            item["tags"] = tags(element)
+            if kind == "relation":
+                item["missing_members"] = [
+                    {"type": m.attrib["type"], "id": int(m.attrib["ref"])}
+                    for m in element.findall("member")
+                    if int(m.attrib["ref"]) not in elements.get(m.attrib["type"], {})
+                ]
+        decisions.append(item)
 
     def refs(e):
         ids = [int(n.attrib["ref"]) for n in e.findall("nd")]
@@ -241,6 +251,7 @@ def convert(raw: bytes, *, batch_size=400):
             "code": external.replace("-", "_").upper(),
             "name": name,
             "kind": kind,
+            "visibility": "restricted" if access_reason(t) else "public",
             "description": evidence("feature", external, t)
             + " Display point only; routes require explicit mapped entrance anchors.",
             "point": mapping(point),
@@ -347,6 +358,7 @@ def convert(raw: bytes, *, batch_size=400):
                 "code": external.replace("-", "_").upper(),
                 "name": t.get("name", f"OSM building {external}")[:160],
                 "footprint": mapping(p),
+                "visibility": "restricted" if access_reason(t) else "public",
             },
             external,
             t,
@@ -533,6 +545,24 @@ def convert(raw: bytes, *, batch_size=400):
         )
     report["components"] = sorted(components, key=lambda c: (-c["nodes"], c["example_source_node"]))
     report["destinations"] = catalog
+    report["raw_tag_counts"] = {
+        key: sum(key in tags(e) for e in elements["way"].values())
+        for key in ("building", "highway", "indoor")
+    }
+    report["included_highway_ways"] = len({i for i, _, _ in segments})
+    report["quarantined_indoor_features"] = [
+        {
+            "source": f"osm-{kind}-{i}",
+            "tags": tags(e),
+            "node_refs": [int(n.attrib["ref"]) for n in e.findall("nd")],
+        }
+        for kind in ("node", "way")
+        for i, e in sorted(elements[kind].items())
+        if tags(e).get("indoor") not in {None, "no"}
+        or "room" in tags(e)
+        or tags(e).get("level", "0") not in {"0", "0.0"}
+    ]
+    report["surrounding_feature_decisions"] = [d for d in decisions if "outside" in d["reason"]]
     report["included_counts"] = dict(sorted(Counter(r["entity"] for r in records).items()))
     report["exclusion_reason_counts"] = dict(
         sorted(Counter(d["reason"] for d in decisions).items())

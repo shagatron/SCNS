@@ -8,9 +8,11 @@ import os
 import time
 from pathlib import Path
 from urllib.parse import urlencode
+from uuid import UUID
 
 from app.cli.indoor_demo import Client, DemoError, prompt_login
 from app.core.config import get_settings
+from app.services.imports import stable_id
 from app.services.muj_setup import ROOT, prepared
 from app.services.osm_conversion import encode
 
@@ -95,12 +97,45 @@ def stage(client, preparation, *, confirm=input, sleep=time.sleep):
         client.request("POST", base + "/apply", headers={"If-Match": f'"{job["preview_version"]}"'})
         print(f"{path.name}: applied transactionally to draft only.")
     diagnostics = client.request("GET", draft + "/graph/validation")
+    evidence = []
+    for source_id, target_id, profile in [
+        ("10780185181", "11573265515", "shortest"),
+        ("10780185180", "10780185181", "shortest"),
+        ("10780185181", "11573265515", "step_free"),
+    ]:
+        params = {
+            "source": str(stable_id(UUID(state["campus_id"]), "places", "osm-node-" + source_id)),
+            "target": str(stable_id(UUID(state["campus_id"]), "places", "osm-node-" + target_id)),
+            "profile": profile,
+        }
+        result = client.request("GET", draft + "/graph/route-test?" + urlencode(params))
+        evidence.append(
+            {
+                "source_osm_node": source_id,
+                "target_osm_node": target_id,
+                "profile": profile,
+                "result": result,
+                "qualification": "Draft software check, not field verification",
+            }
+        )
+        print(
+            f"Draft software route {source_id} → {target_id} ({profile}): found={result['found']}, metres={result['distance_m']}"
+        )
     folder = Path(get_settings().storage_root) / "private/muj"
     folder.mkdir(parents=True, exist_ok=True, mode=0o700)
     out = folder / "latest-validation.json"
     fd = os.open(out, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     with os.fdopen(fd, "wb") as stream:
-        stream.write(encode(diagnostics))
+        stream.write(
+            encode(
+                {
+                    "validation": diagnostics,
+                    "routes": evidence,
+                    "campus_id": state["campus_id"],
+                    "draft_id": state["draft_id"],
+                }
+            )
+        )
     print(
         f"Draft graph diagnostics saved privately: {out}. Review disconnected paths, unanchored destinations and mapping gaps. No warnings acknowledged, sources approved, review submitted or release published."
     )
@@ -116,24 +151,33 @@ class LocalClient(Client):
         base, query = path.split("?", 1)
         from urllib.parse import parse_qs
 
-        if set(parse_qs(query)) != {"filename"} or not base.endswith("/imports"):
+        keys = set(parse_qs(query))
+        if not (
+            (method == "POST" and keys == {"filename"} and base.endswith("/imports"))
+            or (
+                method == "GET"
+                and keys == {"source", "target", "profile"}
+                and base.endswith("/graph/route-test")
+            )
+        ):
             raise DemoError("Unexpected query refused")
-        # Base's '?' guard applies to path; URL is local, query is exclusively a checked filename.
-        original_url = self.url
-        # Implement dedicated binary upload without relaxing the general client guard.
+        if not base.startswith("/api/v1/admin/campuses/") or ".." in base:
+            raise DemoError("Unexpected path refused")
         from urllib.error import HTTPError, URLError
         from urllib.request import Request
 
-        h = {"Origin": self.origin, "X-CSRF-Token": self.session["csrf_token"], **kwargs["headers"]}
+        h = {"Origin": self.origin, **kwargs.get("headers", {})}
+        if method != "GET":
+            h["X-CSRF-Token"] = self.session["csrf_token"]
         try:
             with self.opener.open(
-                Request(original_url + path, data=kwargs["raw"], method=method, headers=h),
+                Request(self.url + path, data=kwargs.get("raw"), method=method, headers=h),
                 timeout=60,
             ) as response:
                 return json.loads(response.read())
         except (HTTPError, URLError, OSError):
             raise DemoError(
-                "MUJ upload failed. Inspect admin history; rerun reconciles exact upload identity without saving credentials."
+                "MUJ request failed. Inspect admin history; rerun reconciles exact upload identity without saving credentials."
             ) from None
 
 

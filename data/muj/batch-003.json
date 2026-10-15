@@ -6133,7 +6133,8 @@
             26.8420098
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-10733816254"
@@ -6150,7 +6151,8 @@
             26.8434477
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-10773902923"
@@ -6177,7 +6179,8 @@
             26.8415563
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-10780185180"
@@ -6204,7 +6207,8 @@
             26.8415678
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-10780185181"
@@ -6231,7 +6235,8 @@
             26.8438174
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-10828149259"
@@ -6248,7 +6253,8 @@
             26.8414351
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11573265515"
@@ -6275,7 +6281,8 @@
             26.840274
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11573972967"
@@ -6302,7 +6309,8 @@
             26.8430042
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11593739317"
@@ -6329,7 +6337,8 @@
             26.8424876
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11594245182"
@@ -6356,7 +6365,8 @@
             26.8421998
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11594245187"
@@ -6383,7 +6393,8 @@
             26.8423328
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11598364403"
@@ -6410,7 +6421,8 @@
             26.8427582
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11612768365"
@@ -6437,7 +6449,8 @@
             26.8427515
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11612773070"
@@ -6464,7 +6477,8 @@
             26.8430551
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11612773094"
@@ -6491,7 +6505,8 @@
             26.8432269
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11612773101"
@@ -6518,7 +6533,8 @@
             26.8432077
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11612773115"
@@ -6545,7 +6561,8 @@
             26.8436688
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11664524151"
@@ -6572,7 +6589,8 @@
             26.843507
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11664524161"
@@ -6599,7 +6617,8 @@
             26.8434686
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11664524167"
@@ -6626,7 +6645,8 @@
             26.8432078
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11664524384"
@@ -6653,7 +6673,8 @@
             26.8435277
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11664524402"
@@ -6680,7 +6701,8 @@
             26.8431806
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11664524407"
@@ -6707,7 +6729,8 @@
             26.8430013
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-11809063446"
@@ -6734,7 +6757,8 @@
             26.8415259
           ],
           "type": "Point"
-        }
+        },
+        "visibility": "public"
       },
       "entity": "places",
       "external_id": "osm-node-12585506492"

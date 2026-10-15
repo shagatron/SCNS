@@ -95,6 +95,9 @@ def stage(client, preparation, *, confirm=input, sleep=time.sleep):
                 "Stopped before apply; staged preview and earlier batches retained. Rerun safely."
             )
         client.request("POST", base + "/validate")
+        # A correction may have been applied while this worker/preview was pending.
+        # Recheck immutable correction history immediately before the versioned write.
+        client.request("POST", f"/api/v1/admin/campuses/{source}/muj-setup")
         client.request("POST", base + "/apply", headers={"If-Match": f'"{job["preview_version"]}"'})
         print(f"{path.name}: applied transactionally to draft only.")
     diagnostics = client.request("GET", draft + "/graph/validation")

@@ -141,7 +141,9 @@ def main():
             )
         target = str(stable_id(CAMPUS_ID, "places", "osm-node-10828149259"))
         source = str(stable_id(CAMPUS_ID, "places", "osm-node-10780185180"))
-        new_route = client.request("GET", path + f"/route-test?source={source}&target={target}")
+        new_route = client.request(
+            "GET", path + f"/route-test?source={source}&target={target}&profile=shortest"
+        )
         assert new_route["found"] and new_route["distance_m"] > 0
         print(
             "V2 built computed University Entrance -> mapped entrance10828149259:",

@@ -7,6 +7,7 @@ import json
 import os
 import time
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from urllib.parse import urlencode
 from uuid import UUID
 
@@ -14,7 +15,7 @@ from app.cli.indoor_demo import Client, DemoError, prompt_login
 from app.core.config import get_settings
 from app.services.imports import stable_id
 from app.services.muj_setup import ROOT, prepared
-from app.services.osm_conversion import encode
+from app.services.osm_conversion import convert, encode, write_conversion
 
 
 def stage(client, preparation, *, confirm=input, sleep=time.sleep):
@@ -139,15 +140,19 @@ def stage(client, preparation, *, confirm=input, sleep=time.sleep):
     print(
         f"Draft graph diagnostics saved privately: {out}. Review disconnected paths, unanchored destinations and mapping gaps. No warnings acknowledged, sources approved, review submitted or release published."
     )
+    if diagnostics["errors"] or diagnostics["truncated"]:
+        raise DemoError(
+            "Draft diagnostics contain errors or are truncated. Partial progress retained; review the saved report and resolve explicitly before continuing."
+        )
     return state
 
 
 class LocalClient(Client):
-    # Base 3C helper intentionally disallows query strings. This helper permits only encoded filename.
+    # Base 3C client disallows queries. This helper permits only upload filename or draft route inputs.
     def request(self, method, path, *args, **kwargs):
         if "?" not in path:
             return super().request(method, path, *args, **kwargs)
-        # Use the base opener/security behavior with an encoded filename in the URL temporarily.
+        # Retain the base local-only URL, no redirects, cookies, CSRF and safe error handling.
         base, query = path.split("?", 1)
         from urllib.parse import parse_qs
 
@@ -190,7 +195,7 @@ def main():
     client = LocalClient()
     try:
         manifest, _ = prepared()
-        account = prompt_login(client, "existing system administrator")
+        account = prompt_login(client, "system administrator")
         if not any("user_admin" in g["permissions"] for g in account["grants"]):
             raise DemoError("Existing system administrator required")
         folder = Path(get_settings().storage_root) / "private/muj"
@@ -203,6 +208,12 @@ def main():
             raise DemoError(
                 "OSM checksum differs from pinned owner source. No campus/draft changes. Convert/review a new source explicitly."
             )
+        with TemporaryDirectory(prefix="scns-muj-reproduce-") as scratch:
+            write_conversion(convert(raw), scratch)
+            if json.loads((Path(scratch) / "manifest.json").read_bytes()) != manifest:
+                raise DemoError(
+                    "Source conversion differs from pinned preparation. Stop and review; nothing applied."
+                )
         if not target.exists():
             fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
             with os.fdopen(fd, "wb") as stream:

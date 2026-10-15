@@ -133,6 +133,19 @@ def main():
             )
         )
     finally:
+        # Only this runner's own temporary bind mount, never a retained volume.
+        # Root-owned private mode0700 files must be removed by their owning container.
+        if api in containers:
+            run(
+                [
+                    "docker",
+                    "exec",
+                    api,
+                    "python",
+                    "-c",
+                    "from pathlib import Path; import shutil; [(shutil.rmtree(p) if p.is_dir() else p.unlink()) for p in Path('/app/storage').iterdir()]",
+                ]
+            )
         for container in reversed(containers):
             run(["docker", "rm", "-f", container])
         if connected:

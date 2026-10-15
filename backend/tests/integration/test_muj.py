@@ -183,3 +183,54 @@ def test_provision_transaction_rolls_back_and_pinned_files_are_valid(
         db.scalar(select(RoleAssignment.user_id).where(RoleAssignment.campus_id == CAMPUS_ID))
         is None
     )
+
+
+@pytest.mark.parametrize("role", ["editor", "reviewer_publisher", "operations"])
+def test_only_existing_system_admin_can_create_a_campus(client, db, bundle, identity, role):
+    headers = sign_in(client, identity)
+    db.delete(db.get(RoleAssignment, (identity[0].id, bundle.campus.id, "system_admin")))
+    db.add(RoleAssignment(user_id=identity[0].id, campus_id=bundle.campus.id, role=role))
+    db.flush()
+    response = client.post(f"/api/v1/admin/campuses/{bundle.campus.id}/muj-setup", headers=headers)
+    assert response.status_code == 403
+    assert db.get(Campus, CAMPUS_ID) is None
+
+
+def test_changed_preparation_and_unrelated_admin_never_adopt_existing_muj(
+    client, db, bundle, identity, monkeypatch
+):
+    import app.services.muj_setup as service
+    from app.models.admin import User
+    from app.services.admin_auth import HASHER
+
+    headers = sign_in(client, identity)
+    result = provision(client, bundle, headers)
+    manifest, config = prepared()
+    manifest["converter"] = "changed-preparation"
+    monkeypatch.setattr(service, "prepared", lambda: (manifest, config))
+    assert (
+        client.post(
+            f"/api/v1/admin/campuses/{bundle.campus.id}/muj-setup", headers=headers
+        ).status_code
+        == 409
+    )
+    monkeypatch.setattr(service, "prepared", prepared)
+    password = secrets.token_urlsafe(24)
+    outsider = User(
+        username="another-admin",
+        display_name="Isolated other administrator",
+        password_hash=HASHER.hash(password),
+    )
+    db.add(outsider)
+    db.flush()
+    db.add(RoleAssignment(user_id=outsider.id, campus_id=bundle.campus.id, role="system_admin"))
+    db.flush()
+    h = sign_in(client, (outsider, password))
+    assert (
+        client.post(f"/api/v1/admin/campuses/{bundle.campus.id}/muj-setup", headers=h).status_code
+        == 403
+    )
+    assert (
+        str(db.scalar(select(Revision.id).where(Revision.campus_id == CAMPUS_ID)))
+        == result["draft_id"]
+    )

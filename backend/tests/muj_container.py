@@ -2,6 +2,7 @@
 
 import os
 import secrets
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from uuid import UUID
 
@@ -39,6 +40,22 @@ def main():
     client = LocalClient()
     client.login("muj-test-owner", password)
     try:
+        second = LocalClient()
+        second.login("muj-test-owner", password)
+        try:
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results = list(
+                    pool.map(
+                        lambda c: c.request(
+                            "POST", f"/api/v1/admin/campuses/{bundle.campus.id}/muj-setup"
+                        ),
+                        [client, second],
+                    )
+                )
+            assert len({r["draft_id"] for r in results}) == 1
+            assert sum(r["created"] for r in results) == 1
+        finally:
+            second.logout()
         # Stop deliberately after the worker prepares the first preview; rerun reconciles it.
         try:
             stage(client, ROOT, confirm=lambda _: "STOP")
@@ -54,9 +71,10 @@ def main():
                 m.__tablename__: db.scalar(
                     select(func.count()).select_from(m).where(m.campus_id == CAMPUS_ID)
                 )
-                for m in (Campus, Revision, Edge, Place, ImportJob)
+                for m in (Revision, Edge, Place, ImportJob)
             }
             assert revision.status == "draft"
+            assert not db.get(Campus, CAMPUS_ID).is_demo
             assert db.get(ActiveRelease, (CAMPUS_ID, "public")) is None
             assert str(db.get(ActiveRelease, (bundle.campus.id, "public")).release_id) == before
             assert all(

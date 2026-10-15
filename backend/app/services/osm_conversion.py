@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from shapely.geometry import LineString, Point, Polygon, mapping
+from shapely.geometry import LineString, MultiPolygon, Point, Polygon, mapping
 from shapely.ops import polygonize, unary_union
 from shapely.validation import explain_validity
 
@@ -96,17 +96,6 @@ def vertical_reason(t):
     if any(t.get(k) not in {None, "no"} for k in ("bridge", "tunnel")) or "tunnel:name" in t:
         return "grade_separated_requires_review"
     return None
-
-
-def metres(points):
-    # Diagnostic spherical length only; authoritative import lengths use PostGIS geography.
-    total = 0
-    for a, b in zip(points, points[1:], strict=False):
-        x, y = map(math.radians, a)
-        xx, yy = map(math.radians, b)
-        h = math.sin((yy - y) / 2) ** 2 + math.cos(y) * math.cos(yy) * math.sin((xx - x) / 2) ** 2
-        total += 6371008.8 * 2 * math.asin(min(1, math.sqrt(h)))
-    return total
 
 
 def convert(raw: bytes, *, batch_size=400):
@@ -302,7 +291,7 @@ def convert(raw: bytes, *, batch_size=400):
                 Polygon(o.exterior.coords, [h.exterior.coords for h in inner if o.covers(h)])
                 for o in outer
             ]
-            if not unary_union(polys).is_valid or any(not p.is_valid for p in polys):
+            if not MultiPolygon(polys).is_valid or any(not p.is_valid for p in polys):
                 raise ValueError("invalid_relation_geometry")
             member_ways.update(members)
             if not t.get("building") or vertical_reason(t):

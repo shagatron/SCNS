@@ -15,7 +15,7 @@ from app.schemas.api import Point, Polygon
 from app.schemas.publication import SourceInput
 from app.services.admin_auth import audit
 from app.services.admin_catalog import create_draft
-from app.services.osm_conversion import ATTRIBUTION, VERSION
+from app.services.osm_conversion import ATTRIBUTION, VERSION, encode
 from app.services.publication import add_source
 
 ROOT = Path(__file__).resolve().parents[3] / "data/muj"
@@ -32,12 +32,17 @@ def prepared(root=ROOT):
             raise ValueError(
                 "Pinned MUJ preparation checksum mismatch; regenerate and review the complete preparation"
             )
+    if {p.name for p in root.glob("batch-*.json")} != {
+        n for n in manifest["files"] if n.startswith("batch-")
+    }:
+        raise ValueError("Unlisted or missing MUJ batch; use the complete pinned preparation")
     return manifest, json.loads((root / "campus.json").read_bytes())
 
 
 def provision(db, actor, request_id):
     """Caller must authorize system administration before entry, under normal CSRF/session."""
     manifest, config = prepared()
+    preparation_checksum = hashlib.sha256(encode(manifest)).hexdigest()
     db.execute(text("SELECT pg_advisory_xact_lock(hashtext('scns-provision-MUJ-v1'))"))
     campus = db.scalar(select(Campus).where((Campus.code == "MUJ") | (Campus.id == CAMPUS_ID)))
     prior = db.scalar(
@@ -50,6 +55,7 @@ def provision(db, actor, request_id):
             campus.id != CAMPUS_ID
             or not prior
             or prior.after.get("source_sha256") != manifest["source_sha256"]
+            or prior.after.get("preparation_checksum") != preparation_checksum
         ):
             raise DomainError(
                 "conflict",
@@ -119,6 +125,7 @@ def provision(db, actor, request_id):
         resource_id=CAMPUS_ID,
         after={
             "source_sha256": manifest["source_sha256"],
+            "preparation_checksum": preparation_checksum,
             "converter": VERSION,
             "timezone": config["timezone"],
             "is_demo": False,

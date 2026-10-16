@@ -9,6 +9,7 @@ from app.core.config import get_settings
 from app.core.errors import DomainError
 from app.models import Anchor, Campus, Edge, Node, Place
 from app.routing.dijkstra import Arc, shortest_path
+from app.routing.instructions import outdoor_instruction
 from app.schemas.api import RouteOut, RouteRequest, RouteSegment
 from app.services.catalog import active_release, public_places
 
@@ -186,13 +187,6 @@ def _calculate_route(session, request, release, projection, force_mixed=False):
     segments = []
     for edge_id in path.edges:
         edge, geometry = edges[edge_id]
-        verb = (
-            "Take the stairs"
-            if edge.kind == "stairs"
-            else "Follow the ramp"
-            if edge.kind == "ramp"
-            else "Follow the path"
-        )
         segments.append(
             RouteSegment(
                 edge_id=edge.id,
@@ -200,7 +194,7 @@ def _calculate_route(session, request, release, projection, force_mixed=False):
                 to_node_id=edge.to_node_id,
                 geometry=geometry,
                 distance_m=round(edge.distance_m, 2),
-                instruction=f"{verb} to {labels[str(edge.to_node_id)]}.",
+                instruction=outdoor_instruction(edge.kind, labels[str(edge.to_node_id)]),
             )
         )
     now = datetime.now(UTC)

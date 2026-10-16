@@ -12,6 +12,7 @@ COPY backend/alembic.ini ./
 COPY data/demo /app/data/demo
 COPY data/muj /app/data/muj
 COPY data/muj-v2 /app/data/muj-v2
+COPY data/muj-naming /app/data/muj-naming
 COPY data/templates/import-v1 /app/data/templates/import-v1
 ENV PATH="/app/backend/.venv/bin:$PATH"
 EXPOSE 8000

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" role="img"><title>E01 · Subway entrance/exit</title>
+<defs><clipPath id="map"><rect x="20" y="65" width="960" height="660"/></clipPath></defs>
+<rect width="1000" height="800" fill="#faf9f4"/>
+<text x="24" y="28" font-family="sans-serif" font-size="20" font-weight="bold">E01 · Subway entrance/exit</text>
+<text x="24" y="51" font-family="sans-serif" font-size="12">Source context only · orange: identify · purple: proposed · green: already named · no access/floor inference</text>
+<g clip-path="url(#map)">
+<polyline points="1338.28,2632.66 1270.75,2454.24 887.03,1653.18 688.08,1246.53 446.83,740.00 125.00,96.01 -45.24,-262.16 -163.02,-535.20 -254.21,-817.30 -304.47,-1012.74 -340.72,-1179.32 -342.98,-1199.01 -414.66,-1819.32 -460.28,-2197.17 -492.33,-2501.34 -544.90,-2939.71 -605.71,-3469.18 -604.53,-3609.96 -579.13,-3734.65 -350.04,-4667.65 -183.01,-5424.82 -143.50,-5604.03 -131.69,-5815.17 -167.29,-5977.30 -240.57,-6126.19 -510.24,-6527.25 -604.47,-6642.36 -736.73,-6721.97 -896.63,-6757.01 -1265.46,-6781.28 -1660.27,-6800.77 -2077.04,-6830.76 -2713.77,-6877.71 -2879.96,-6866.47 -3091.79,-6812.01 -3277.81,-6798.97 -3439.49,-6810.08 -3987.57,-6846.32 -4396.80,-6881.37 -5052.28,-6966.55 -5172.73,-7011.84 -5426.26,-7049.48 -5605.57,-7084.92 -5883.20,-7111.32 -6191.09,-7140.65 -6930.76,-7211.01 -8060.32,-7318.47 -8754.36,-7367.35 -8955.27,-7393.02 -9238.12,-7425.00 -9532.90,-7420.81 -9740.63,-7438.37 -9792.37,-7471.75 -9873.54,-7527.35 -9908.55,-7626.70 -9930.92,-7703.04 -9943.08,-7912.05" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="612.67,183.13 626.85,176.94 754.06,128.40 802.90,109.45 784.44,63.10 879.26,48.93 972.77,35.03 1010.21,24.59 1066.17,-24.82 1171.72,-90.85" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="-181.00,606.80 -100.60,823.19 3.66,784.42 17.78,822.33 145.11,774.98 113.78,690.72 81.32,702.76 39.49,590.24 137.46,553.87 111.53,484.11 91.47,491.56 63.76,417.08 71.65,414.15 -3.46,212.06 -226.92,295.11 -200.16,367.00 -43.63,308.81 -19.72,373.25 7.04,363.34 46.79,470.28 -0.02,487.70 -37.52,386.82 -74.61,400.58 -87.72,365.34 -237.24,420.93 -212.68,486.90 -111.45,449.33 -88.73,510.51 -174.23,542.30 -154.00,596.76 -181.00,606.80" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="220.94,545.09 185.58,474.20 150.15,410.96" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="415.68,407.50 573.03,337.14" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="368.98,307.55 415.68,407.50" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="1030.45,289.73 999.71,302.83 988.14,306.82 981.55,309.35 939.25,325.44 916.82,332.89 889.82,343.33 841.88,360.42 754.06,128.40 734.07,75.27 713.72,20.54 692.42,-32.33 674.61,-82.67 655.57,-133.15 637.71,-183.02 628.75,-207.76 641.68,-212.75 693.13,-233.09 753.17,-256.97" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="2129.75,181.53 2162.80,258.21 2303.72,443.48 1947.59,721.65 2008.35,873.53 1650.26,1019.30 1584.69,863.56 1413.45,881.45 1247.61,899.93 1179.20,895.74 1145.32,869.01 1130.49,823.19 1113.34,694.51 1116.60,574.81 1085.33,494.08 702.44,650.82 697.04,639.65 646.07,520.88 573.03,337.14 524.62,218.84 379.90,-195.99 365.66,-236.75 1067.18,-525.10 1404.91,-656.83 1745.02,-790.63 2112.12,-935.07 2269.30,-532.74 2369.16,-275.12 2421.97,-146.84 2188.13,-48.56 2148.79,96.68 2097.53,113.24" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="559.33,204.41 416.09,-209.02 469.38,-231.50 1036.32,-451.68 1085.27,-470.37" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="326.56,685.60 181.19,379.97 68.21,154.73 -39.24,-91.12 -133.17,-290.09 -225.44,-509.67 -307.38,-765.09 -336.04,-797.75 -394.19,-1137.56 -400.95,-1193.35 -404.51,-1222.68 -478.50,-1670.63 -505.56,-1860.02" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="702.44,650.82 727.84,739.14 749.73,809.09 913.73,1221.73" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="745.58,479.65 681.26,505.59 646.07,520.88" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="676.34,297.31 605.02,323.98 573.03,337.14" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="559.33,204.41 605.02,323.98 681.26,505.59 714.37,589.78 777.32,563.18 1068.36,445.74 1335.67,333.42 1381.71,312.54" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="202.37,555.20 220.94,545.09" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="714.37,589.78 697.04,639.65 528.65,709.08" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="339.61,293.45 371.65,276.69 382.39,297.24 350.65,314.53 339.61,293.45" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="377.41,300.10 434.61,414.82 448.43,442.55 421.43,456.05 350.65,314.53 377.41,300.10" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="155.73,371.52 240.88,547.75 205.81,563.24 202.37,555.20 123.04,388.61 155.73,371.52" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="296.47,818.54 297.42,795.59 294.99,787.95 258.85,713.60 185.87,563.44 119.77,427.45 5.73,192.17 -21.98,109.78" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="-263.83,504.46 -293.55,429.38 -266.44,418.61 -50.58,333.09 -24.65,398.59 -8.92,392.34 14.45,451.39 20.51,466.75 119.77,427.45" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="749.26,468.08 861.52,426.12 911.42,403.91 941.09,395.66 963.64,387.02 1011.87,368.13 1084.38,337.81 1179.44,300.63 1296.68,254.42 1273.30,196.83 1256.93,152.54 1249.16,132.79 1241.80,113.24 1223.88,69.28 1206.67,18.81 1185.49,-38.85 1193.20,-41.64 1217.17,-50.75 1195.52,-107.48 1177.24,-155.42 1154.04,-144.65 1143.42,-141.06 1125.50,-187.81 1107.70,-235.95 1085.09,-294.21 1064.62,-350.53 1057.21,-371.68 1039.05,-421.95 935.75,-383.38 917.12,-376.00 871.13,-357.78 826.51,-340.23 782.31,-323.00 733.42,-303.72 674.79,-280.64 623.29,-260.36 603.95,-252.78 514.29,-217.47 540.87,-146.11 558.91,-97.77 617.59,57.71 637.95,114.37 605.96,125.21 593.09,129.53 612.67,183.13 631.06,233.00 642.34,229.21 652.78,225.76 674.02,268.45 726.77,397.79 749.26,468.08" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="612.67,183.13 559.33,204.41" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="745.58,479.65 1035.37,366.87 1305.76,260.00 1351.80,240.32" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="288.23,701.43 326.56,685.60" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="446.83,740.00 528.65,709.08" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="446.83,740.00 315.46,789.68" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="559.33,204.41 524.62,218.84" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="185.87,563.44 202.37,555.20" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="288.23,701.43 258.85,713.60" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="469.38,-231.50 605.96,125.21 626.85,176.94 642.34,229.21 676.34,297.31 745.58,479.65" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="150.15,410.96 368.98,307.55" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="745.58,479.65 777.32,563.18" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="652.78,225.76 762.55,179.01 781.36,225.09 734.72,243.91 674.02,268.45 652.78,225.76" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="789.37,175.75 831.38,159.85 837.79,176.55 795.66,192.70 789.37,175.75" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="674.02,268.45 734.72,243.91 781.36,225.09 794.35,257.34 687.08,300.63 674.02,268.45" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="726.77,397.79 836.96,360.48 861.52,426.12 749.26,468.08 726.77,397.79" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="795.48,204.61 846.98,185.12 876.24,262.40 824.73,281.88 795.48,204.61" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="662.45,38.62 713.72,20.54 734.07,75.27 684.17,95.55 662.45,38.62" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="617.59,57.71 662.45,38.62 684.17,95.55 637.95,114.37 617.59,57.71" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="652.78,225.76 674.02,268.45 734.72,243.91 781.36,225.09 762.55,179.01 652.78,225.76" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="726.77,397.79 756.85,385.62 719.35,292.79 689.27,304.96 726.77,397.79" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="721.73,292.39 759.17,276.69 797.74,368.46 760.29,384.22 721.73,292.39" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="801.12,368.80 834.82,354.90 796.90,263.06 763.26,276.96 801.12,368.80" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<text x="356.8" y="295.1" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">CCTV room</text>
+<text x="401.7" y="371.4" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">Subway</text>
+<text x="180.6" y="466.3" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">Subway</text>
+<text x="179.6" y="551.1" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">Subway Road</text>
+<circle cx="415.7" cy="407.5" r="3" fill="#167163"/>
+<path d="M415.7,407.5 L438.7,387.5" stroke="#167163"/>
+<rect x="422.7" y="377.5" width="32" height="20" rx="4" fill="#167163"/>
+<text x="438.7" y="391.5" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E01</text>
+<circle cx="528.7" cy="709.1" r="3" fill="#167163"/>
+<path d="M528.7,709.1 L551.7,732.1" stroke="#167163"/>
+<rect x="535.7" y="722.1" width="32" height="20" rx="4" fill="#167163"/>
+<text x="551.7" y="736.1" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E03</text>
+<circle cx="288.2" cy="701.4" r="3" fill="#167163"/>
+<path d="M288.2,701.4 L265.2,681.4" stroke="#167163"/>
+<rect x="249.2" y="671.4" width="32" height="20" rx="4" fill="#167163"/>
+<text x="265.2" y="685.4" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E04</text>
+<circle cx="795.7" cy="192.7" r="3" fill="#ae520e"/>
+<path d="M795.7,192.7 L818.7,172.7" stroke="#ae520e"/>
+<rect x="802.7" y="162.7" width="32" height="20" rx="4" fill="#ae520e"/>
+<text x="818.7" y="176.7" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E11</text>
+</g>
+<text x="24" y="755" font-family="sans-serif" font-size="12">© OpenStreetMap contributors · https://www.openstreetmap.org/copyright · ODbL 1.0</text>
+<text x="24" y="777" font-family="sans-serif" font-size="12">WGS84 longitude/latitude · source tags may be incomplete · paths include excluded/indoor source context</text>
+</svg>

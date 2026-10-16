@@ -2,6 +2,7 @@
 
 from app.core.errors import DomainError
 from app.routing.dijkstra import Arc, shortest_path
+from app.routing.instructions import outdoor_instruction
 
 
 def compute(data, source, target, profile="shortest", mode="metric", speed=1.3, *, start_node=None):
@@ -108,14 +109,7 @@ def compute(data, source, target, profile="shortest", mode="metric", speed=1.3, 
         t = floors.get(to_floor_id, {})
         building = data.get("buildings", {}).get(f.get("building_id") or t.get("building_id"), {})
         if kind == "outdoor":
-            verb = (
-                "Take the stairs"
-                if row["kind"] == "stairs"
-                else "Follow the ramp"
-                if row["kind"] == "ramp"
-                else "Follow the path"
-            )
-            instruction = f"{verb} to {outdoor[b[2:]]['label']}."
+            instruction = outdoor_instruction(row["kind"], outdoor[b[2:]]["label"])
         elif kind == "indoor":
             instruction = f"{'Pass through the door' if row['kind'] == 'door' else 'Follow the corridor'} to {indoor[b[2:]]['label']} on {f['label']} in {building['name']}."
         elif kind == "entrance_transition":

@@ -1,5 +1,24 @@
 # Verification evidence
 
+## MUJ owner-reported Windows publication and routing-policy wording — 16October2026
+
+**Owner-reported Windows evidence (not automated/agent inspection):** existing MUJ published locally through the normal workflow and appears in the public explorer; all requested public acceptance checks passed (three metric routes, unavailable Library/cross-campus and verified-step-free routes, OSM attribution, retained Demo baseline). Source/submission/approval used separate application accounts **all operated by the owner**. Application-account separation is not independent human review, institutional approval, field survey or accessibility verification. Active Windows release ID/current draft/review version not supplied; no cloud copy inspected/published as a substitute.
+
+Owner University Entrance→Mapped entrance10828149259: metric shortest approximately513m (prior exact metric513.10m/13edges); Directions only approximately799m/9edges. Existing results explicitly say **fewest eligible traversals**. The earlier operations guide incorrectly paired Directions only with the metric513expectation; corrected. Hostel→GHS and Hostel→Faculty metric baselines23.62m/3 and163.28m/6 retained in owner-reported public acceptance; unsupported routes and Demo baseline passed. These newly reported Windows results precede this wording update; **new Windows control wording/manual checks are not yet owner-verified**.
+
+Implementation inspected: `services/routes.py`, `routing/mixed.py`, `routing/dijkstra.py`, `services/publication.py` projection, `services/closures.py` overlay and mixed start handling. Metric shortest minimises stored distance and accepts permitted estimated outdoor lengths; fastest uses supported seconds; Directions only costs each eligible directed arc1and minimises traversals. Displayed known length/ETA is descriptive in traversal mode, not the objective. Fastest remains unavailable for Directions only. Step-free/open/direction/public/anchor/connector/floor-capability/live-restriction eligibility, QR/GPS/release confirmation and unknown-cost rules remain unchanged; no field verification follows from a metric policy.
+
+Public frontend-only change: conditional Fewest eligible traversals/Shortest walking route option, Metric · stored path distances label, visible accessible objective/estimate description shared by both selects. API option values/handlers/results unchanged. Existing result disclosure retained. Admin metric legacy label unchanged and its measurement limits documented.
+
+| Check | Actual result |
+|---|---|
+| Frontend lint/type/build | `npm --workspace frontend run check` and `run build` passed. |
+| Frontend units | **62passed/13files**. New known estimated-length Directions-only result case keeps traversal objective/disclaimer despite a displayed distance. Rendered response fixture, not an automated computed MUJ route. |
+| Source desktop/mobile |**36passed2.9m** in one desktop/mobile navigation/location/QR/closure/indoor-routing invocation; no failures/skips. New browser check exercises both labels/accessible descriptions, API shortest+directions_only values/cost_units, fastest disable/reset/restore, old-result reset, step-free selection retention and overflow. Existing journeys cover synthetic route/accessibility/failure/keyboard/axe, QR, simulated GPS/freshness, closures and indoor transitions. |
+| Unaffected backend evidence reused | No backend algorithm/service/API/schema/contract/data/dependency changes; retain previous160units/8PostGIS/new-helper actual-worker evidence and earlier navigation/permission/migration/packaging verification. No new backend/migration/built-container suite claimed. |
+
+Early unfinished checkpoint79e9291 pushed. Logs `/tmp/scns-policy-{static,units,build,browser}.log`. Retained developer before/after receipts `/tmp/scns-policy-before.json` and `/tmp/scns-policy-after.json` match all22non-spatial table counts/content hashes and .env-presence (absent), including accounts/drafts/releases/audits and old developer schema. Existing volumes/uploads/old worker preserved; no developer DB writes. Only the runner's dedicated test database/processes used/cleaned. `git diff --check` passed. [Frontend-only data-preserving Windows update and exact manual checks](../operations/muj-routing-policy-update.md). No graph edits/reimport/reseed/reset/republish/deployment/environment publication.
+
 ## Bounded MUJ publication preparation — 16 October 2026
 
 Parent verified clean local/remote `ee97dbc8c71f0979d354e6866d479cf6f0be1073`, branch `feat/muj-connectivity-review`. Owner-reported Windows receipt recovery/source approval by muj-reviewer and3routes passed; actual current version not known to cloud. Reported validation cba61b0b-045a-4978-a9b2-1f2f1ff064c0/0errors148warnings retained as owner report, not agent inspection.

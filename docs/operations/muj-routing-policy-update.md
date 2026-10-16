@@ -4,7 +4,7 @@ Owner report,16October2026: the existing Windows MUJ draft was published locally
 
 | Route / policy | Owner-reported Windows public result |
 |---|---|
-|University Entrance → Mapped entrance10828149259, metric shortest|Approximately513m (earlier exact stored result513.10m/13edges)|
+|University Entrance → Mapped entrance 10828149259, metric shortest|Approximately513m (earlier exact stored result513.10m/13edges)|
 |Same endpoints, Directions only|Approximately799m/9edges; UI explicitly says “fewest eligible traversals”|
 |Hostel Entrance → GHS Entrance, metric shortest|Earlier documented23.62m/3edges; owner reports public acceptance passed|
 |Hostel Entrance → Faculty Block Entrance, metric shortest|Earlier documented163.28m/6edges; owner reports public acceptance passed|
@@ -61,7 +61,7 @@ Hard-refresh Chrome with **Ctrl+Shift+R**. Do not rerun setup/import/correction/
 
 ## Short manual check after the wording update (not yet owner-reported)
 
-1. Select MUJ. **Distance policy → Metric · stored path distances**, **Route preference → Shortest walking route**. Choose **Starting point → University Entrance**, **Destination → Mapped entrance10828149259**, then **Find walking route**. Expect approximately513m with the existing release/restrictions unchanged. The description explicitly says outdoor/OSM lengths may be estimated and metric eligibility is not field verification.
+1. Select MUJ. **Distance policy → Metric · stored path distances**, **Route preference → Shortest walking route**. Choose **Starting point → University Entrance**, **Destination → Mapped entrance 10828149259**, then **Find walking route**. Expect approximately513m with the existing release/restrictions unchanged. The description explicitly says outdoor/OSM lengths may be estimated and metric eligibility is not field verification.
 2. Choose **Distance policy → Directions only · unknown distance allowed**. Standard preference becomes **Fewest eligible traversals**, and fastest is disabled. Compute again: owner-reported baseline is approximately799m/9edges. The result still states fewest eligible traversals, not shortest distance/fastest. Different active restrictions or release can legitimately change the result; investigate rather than republish to force a match.
 3. Switch back to metric: standard label returns to **Shortest walking route**; fastest becomes available and old results are cleared until recalculated. Switching from fastest to Directions only still selects the standard/traversal option. Step-free selection stays step-free when changing policy.
 4. Under metric shortest, recheck Hostel→GHS (stored23.62m/3edges) and Hostel→Faculty (stored163.28m/6edges). Public cards can round to24m/163m. Library/cross-campus routes and verified step-free Hostel→GHS stay unavailable. Retain OSM attribution. Switch to Demo: Main Gate→Library remains257m/4min.

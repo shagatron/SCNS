@@ -6,6 +6,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import sys
 import time
 import warnings
@@ -13,7 +14,7 @@ from contextlib import contextmanager
 from http.cookiejar import CookieJar
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 from urllib.request import (
     HTTPCookieProcessor,
     HTTPRedirectHandler,
@@ -53,9 +54,23 @@ class Client:
         self.url, self.origin, self.session = url, origin, None
         self.opener = build_opener(ProxyHandler({}), HTTPCookieProcessor(CookieJar()), NoRedirect())
 
-    def request(self, method, path, payload=None, *, headers=None, raw=None, binary=False):
+    def request(
+        self, method, path, payload=None, *, headers=None, raw=None, binary=False, query=None
+    ):
         if not path.startswith("/api/v1/") or ".." in path or "?" in path:
             raise DemoError("Unexpected API path.")
+        suffix = ""
+        if query is not None:
+            if (
+                method != "GET"
+                or not re.fullmatch(r"/api/v1/admin/campuses/[0-9a-f-]{36}/audit", path)
+                or not isinstance(query, dict)
+                or set(query) != {"offset"}
+                or type(query["offset"]) is not int
+                or not 0 <= query["offset"] <= 100000
+            ):
+                raise DemoError("Only bounded read-only audit offsets are supported.")
+            suffix = "?" + urlencode(query)
         h = {"Origin": self.origin, **(headers or {})}
         if self.session and method != "GET":
             h["X-CSRF-Token"] = self.session["csrf_token"]
@@ -65,7 +80,7 @@ class Client:
             body = json.dumps(payload).encode()
         try:
             with self.opener.open(
-                Request(self.url + path, data=body, method=method, headers=h), timeout=60
+                Request(self.url + path + suffix, data=body, method=method, headers=h), timeout=60
             ) as response:
                 self.last_request_id = response.headers.get("X-Request-ID")
                 data = response.read()

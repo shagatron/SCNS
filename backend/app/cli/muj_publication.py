@@ -708,7 +708,10 @@ def main():
     client = Client(origin=os.environ.get("PUBLIC_APP_URL", "http://localhost:5173"))
     try:
         prompt_login(
-            client, "MUJ owner/editor or independent reviewer (as appropriate for this action)"
+            client,
+            "MUJ owner/editor or reviewer application account"
+            if args.naming_clone
+            else "MUJ owner/editor or independent reviewer (as appropriate for this action)",
         )
         UUID(client.session["user_id"])
         if args.naming_clone:

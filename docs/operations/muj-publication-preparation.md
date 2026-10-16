@@ -6,6 +6,78 @@ Owner-reported Windows evidence: v2 correction applied at6, receipt recovered wi
 
 **Subsequent owner report (16October2026):** MUJ is now published locally and all requested public acceptance checks passed. Source/submission/approval used separate application accounts operated by the owner; no independent human or institutional approval is claimed. The steps below remain reference for the workflow, **not an instruction to republish**. For the current wording-only update use [routing-policy update instructions](muj-routing-policy-update.md).
 
+## Existing Windows E22 naming Draft2: read-only review preparation
+
+Use this section for the existing naming draft **bf1e8e0f-f400-4f5f-a16e-25ac11503392**. Do not create another draft or replay naming. Owner-reported last edit3/sourceApproved; validation **9da479c1-6971-4ee3-984f-d0e46ba315a8** has0errors145warnings. The helper fetches current state and rejects stale validation; it never assumes edit3 is still current. Source approval inherited from the parent must be preserved; no source-approval action is required by this command.
+
+Owner-pasted145warning evidence was parsed separately (SHA256e972a5dcf3550bf2af8979712bcd8ac1cbfd3e6002c9f213afd98843d1d723ee). This is owner-supplied evidence, not an agent query of Windows. It agrees with the reported delta, which the helper independently verifies against actual authenticated server history:
+
+|Finding change|Required explanation|
+|---|---|
+|143unchanged warning IDs|Full diagnostic content and underlying dataset/evidence must still match; prior substantive reasons become candidates, not automatic acknowledgements.|
+|E22 shortest:2e91f6527197dcf605c6bd1c →31e82f537d40675eb7d195da|Only message name changed to TMA Pai Auditorium entrance; stable place419441aa-2e6a-57b4-9981-48c31bc40a5c/topology/access unchanged.|
+|E22 step-free:afc1f1a73eadcdbf2e59b416 →814311f5e36600b827d98bd1|Same naming-only hash change; no verified accessibility or route gained.|
+|3import_provenance warnings absent|Normal clone has no newly committed import jobs. Original parent receipts and copied bindings remain verified/preserved. This is not reimport, lost provenance, a repaired graph or new rights approval.|
+
+Expected categories remain52connectivity_shortest,55connectivity_step_free,33unmapped_entrance,2near_duplicate and1eachcomponents_shortest/components_step_free/unknown_accessibility. The two ambiguous source-stub pairs still require explicit current review of their unresolved floor/physical relationship. Candidate carry-forward is not a new acceptance or independent human review.
+
+### Complete update/report command block
+
+PowerShell in the existing clean repository, Docker Desktop Linux containers running. This rebuilds/replaces only API/web containers using retained volumes; database/worker/accounts/.env/uploads/drafts/releases remain in place. No migration, validation creation, draft creation, naming, acknowledgements, submission, approval or publication is performed. Password stays hidden in the terminal; no `-T`, pipes, transcripts, credentials in commands/files/chat.
+
+```powershell
+$ErrorActionPreference = 'Stop'
+function Invoke-ScnsStep {
+    param([Parameter(Mandatory=$true)][scriptblock]$Action)
+    & $Action
+    if ($LASTEXITCODE -ne 0) { throw 'SCNS command failed. Stop and preserve all existing data/reasons.' }
+}
+Invoke-ScnsStep { git status --short }
+if (git status --porcelain) { throw 'Preserve local changes first; nothing reset.' }
+Invoke-ScnsStep { git fetch origin feat/muj-connectivity-review }
+Invoke-ScnsStep { git switch feat/muj-connectivity-review }
+Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
+Invoke-ScnsStep { git merge-base --is-ancestor 8adf3a2 HEAD }
+Invoke-ScnsStep { docker compose build api frontend }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build --force-recreate api frontend }
+Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
+$E22Draft = 'bf1e8e0f-f400-4f5f-a16e-25ac11503392'
+$E22Validation = '9da479c1-6971-4ee3-984f-d0e46ba315a8'
+Invoke-ScnsStep {
+    docker compose run --rm --no-deps api python -m app.cli.muj_publication --naming-clone --draft $E22Draft --validation $E22Validation
+}
+$E22Bundle = (Read-Host 'Paste the exact bundle directory printed by THIS invocation (or its report.md path)').Trim() -replace '/report\.md$', ''
+if ($E22Bundle -notmatch '^/app/storage/private/muj-naming-review/bf1e8e0f-f400-4f5f-a16e-25ac11503392/[0-9a-f-]{36}/v[0-9]+-[0-9a-f]{64}-[0-9a-f-]{36}$') { throw 'Unexpected bundle path; preserve data and inspect the printed report.' }
+$E22Local = Join-Path (Join-Path (Get-Location).Path 'data\staging\muj-e22-review') ([guid]::NewGuid().ToString())
+New-Item -ItemType Directory -Force -Path $E22Local | Out-Null
+Invoke-ScnsStep { docker compose cp "api:${E22Bundle}/." $E22Local }
+notepad (Join-Path $E22Local 'report.md')
+notepad (Join-Path $E22Local 'proposal.json')
+```
+
+Enter the existing owner/editor or reviewer **application account** privately. Separate owner-operated accounts are not independent human or institutional review. Use only the exact bundle printed by this invocation and check `prepared_by` matches your operator; no newest-file guess selects another account's proposal. Another account can have its own bundle. A new unique local directory preserves earlier local edits.
+
+The command's success means a report was generated. **Inspect `blockers`, `unjustified_findings`, complete diff, prior/current validation and actual effective proposals before use.** Expected same-state result:0blockers,145one-to-one counterparts (143identical+2E22name/ID changes),3explicitly removed original import findings, exactly2changed records and unchanged source approvals. It fetches the parent/clone full checksums, approved artifact, published submission/decision, original3pinned import metadata records and current validation—not the static pasted text. Default source/geometry/topology/rights checks remain strict.
+
+Files under `/app/storage/private/muj-naming-review/<draft>/<operator>/v<actual-version>-<full-checksum>-<validation>/`:
+
+- `report.md` / `report.json`: full parent identity/creation audit, exact before/after diff, prior/current validator evidence, original imports, source approvals, per-ID counterparts, near-pair evidence, prior submission/reviewer reasons, current server reasons and effective proposals.
+- `proposal.json`: current validation ID and proposed submitter warning reasons, with E22 wording updated and stable current warning IDs.
+- `reviewer-proposal.json`: separately sourced prior approving-account reasons as candidates for current account review. This file is not a decision/approval payload.
+- Per-operator `latest.json`: successful bundle pointer. Any blocked inspection records `blocked.json` without deleting prior reports/proposals.
+
+Repeated reads at the same version/checksum/validation preserve private edited reasons and stale keys for inspection. Current server submission/approval wording is seeded when available; existing private text takes precedence. Missing/invalid/stale IDs/reasons become blockers, never silently deleted. A changed version gets a separate bundle; earlier owner files remain. Browser-unsaved textarea contents are not on the server; preserve them privately yourself. Local copied-file edits are also not automatically uploaded or applied. If intentionally editing the private server proposal, copy only the reviewed JSON back to its exact current `$E22Bundle` and rerun the same preflight; this changes a helper file, not the dataset or server acknowledgements. Retain all prior copies.
+
+### Verification boundaries and explicit next steps
+
+The helper verifies the draft's actual creation parent via paginated normal audit GETs (up to10050entries; unavailable audit stops), reconstructs the complete original parent from its authenticated review diff, and checks its full checksum and public artifact. If the parent is itself a clone/incomplete history, it stops for separate assessment. It then reconstructs the entire naming draft and requires the exact two E22 records plus correct derived search_text regeneration; any extra owner/source/binding/frame/catalog/graph change or hidden checksum difference is flagged and preserved. Parent/current route evidence must remain equivalent (human explanation text may differ), with the same validator and exact finding semantics except the allowed name/ID delta. A change in route inputs/policy/results, validator, warning content/counts, source approval or active release stops rather than asserting equivalence. Original pinned-dataset mode is unchanged and still rejects the clone; clone bundles cannot enter its submit/approve path.
+
+On stale validation, open **Admin → Assigned campus → MUJ → Selected draft (Draft2) → Review and releases → Run authoritative validation** using the intended route evidence; preserve meaningful expected no-route cases. Rerun with the new actual validation ID. Do not force the old ID/version/checksum or assume a new validation alone resolves an unexpected data diff. If route-policy/evidence changed, inspect it against the parent's exact displayed evidence rather than fabricating matching outcomes. Any data/source diff needs separate review; this tool never repairs it.
+
+After the report is justified, the owner explicitly enters the individual reasons in **Reason for warning <current ID>** and chooses **Submit exact validated version for review**. A separately authenticated eligible reviewer account must independently assess each current finding/reason and choose **Approve exact reviewed content**; owner-operated account separation is not a separate human review. Final **Prepare publication / Confirm publish immutable release** remains a separate explicit owner action, outside this preparation task. Do not bulk-acknowledge undisclosed warnings, run the old create/naming/import helper, or publish merely because a candidate proposal exists. MUJ's active public release and Demo remain unchanged throughout preflight.
+
+The sections below describe the original first-publication helper and remain historical workflow reference. They do not authorize a new submission/publication of the old draft or apply automatically to the naming clone.
+
 ## 1. Complete PowerShell update and read-only preflight (existing owner)
 
 Open PowerShell in the existing repository with Docker Desktop Linux containers running. This block does **not** submit, approve, validate or publish. Normal login/logout still create/revoke a session and record authentication audits; dataset reads are read-only. Passwords are entered privately in the secure terminal, never arguments/chat/files. Do not pipe the login command or add `-T`.

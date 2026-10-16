@@ -260,14 +260,19 @@ def collect(client, draft, validation=None):
         packet["id"] == str(draft) and packet["status"] in {"draft", "review"},
         "Expected existing naming draft/review revision",
     )
-    creation = [
-        e
-        for e in client.request("GET", f"/api/v1/admin/campuses/{CAMPUS_ID}/audit")
-        if e["action"] == "draft.create" and e["revision_id"] == str(draft)
-    ]
+    creation = []
+    for offset in range(0, 10001, 50):
+        page = client.request(
+            "GET", f"/api/v1/admin/campuses/{CAMPUS_ID}/audit", query={"offset": offset}
+        )
+        creation.extend(
+            e for e in page if e["action"] == "draft.create" and e["revision_id"] == str(draft)
+        )
+        if creation or len(page) < 50:
+            break
     require(
         len(creation) == 1 and creation[0]["after"]["parent_id"] == release["dataset_revision_id"],
-        "Draft parent not uniquely verified against current published release in latest50 audits; inspect Audit records / Next audit page",
+        "Draft parent not uniquely verified against current published release within the bounded10050-entry audit search; inspect Audit records / Next audit page",
     )
     parent_packet = client.request("GET", f"{base}/{release['dataset_revision_id']}/review")
     parent = reconstruct_parent(parent_packet, release, artifact)
@@ -300,6 +305,21 @@ def collect(client, draft, validation=None):
     require(
         route_evidence(run["evidence"]) == route_evidence(parent_run["evidence"]),
         "Current route acceptance evidence differs from reviewed parent; inspect before retaining reasons",
+    )
+    expected_counts = {
+        "connectivity_shortest": 52,
+        "connectivity_step_free": 55,
+        "unmapped_entrance": 33,
+        "near_duplicate": 2,
+        "components_shortest": 1,
+        "components_step_free": 1,
+        "unknown_accessibility": 1,
+    }
+    require(
+        dict(Counter(d["code"] for d in run["report"]["diagnostics"])) == expected_counts
+        and dict(Counter(d["code"] for d in parent_run["report"]["diagnostics"]))
+        == {**expected_counts, "import_provenance": 3},
+        "Unexpected warning categories/counts; separate assessment required",
     )
     transitions, removed, reasons, unjustified = compare_findings(
         parent_run["report"]["diagnostics"],
@@ -349,6 +369,11 @@ def collect(client, draft, validation=None):
         "parent_release": release,
         "creation_audit": creation[0],
         "parent_submission_id": submission["id"],
+        "previous_validation": parent_run,
+        "previous_submission": submission,
+        "near_duplicate_pairs": original.near_pairs(
+            current, original.topology(current, "shortest")
+        ),
         "full_diff": packet["diff"],
         "validation": run,
         "sources": current["sources"],
@@ -386,28 +411,47 @@ def preflight(client, draft, validation=None):
         raise
     folder = root / f"v{report['version']}-{report['checksum']}-{report['validation_id']}"
     folder.mkdir(exist_ok=True, mode=0o700)
+    effective = {}
     for filename, reasons in [
         ("proposal.json", report["proposed_reasons"]),
         ("reviewer-proposal.json", report["reviewer_proposed_reasons"]),
     ]:
         path = folder / filename
         proposed = {"validation_id": report["validation_id"], "acknowledgements": reasons}
+        current_submissions = [
+            s
+            for s in report["existing_submissions"]
+            if s["checksum"] == report["checksum"]
+            and s["validation_id"] == report["validation_id"]
+            and s["status"] in {"submitted", "approved"}
+        ]
+        if current_submissions and not path.exists():
+            existing = current_submissions[0]["acknowledgements"]
+            if filename == "reviewer-proposal.json":
+                decisions = [
+                    d for d in current_submissions[0]["decisions"] if d["decision"] == "approve"
+                ]
+                existing = decisions[-1]["acknowledgements"] if decisions else reasons
+            proposed["acknowledgements"] = deepcopy(existing)
         if path.exists():
             proposed = json.loads(path.read_text())
             for identity, reason in reasons.items():
                 proposed.setdefault("acknowledgements", {}).setdefault(identity, reason)
-            if (
-                proposed.get("validation_id") != report["validation_id"]
-                or set(proposed["acknowledgements"]) != set(reasons)
-                or any(
-                    not isinstance(v, str) or not 10 <= len(v.strip()) <= 2000
-                    for v in proposed["acknowledgements"].values()
-                )
-            ):
-                report["blockers"].append(
-                    f"{filename} has stale/invalid owner edits; retained for reconciliation"
-                )
+        if (
+            proposed.get("validation_id") != report["validation_id"]
+            or set(proposed["acknowledgements"]) != set(reasons)
+            or any(
+                not isinstance(v, str) or not 10 <= len(v.strip()) <= 2000
+                for v in proposed["acknowledgements"].values()
+            )
+        ):
+            report["blockers"].append(
+                f"{filename} has stale/invalid owner edits; retained for reconciliation"
+            )
         persist(path, proposed)
+        effective[filename] = proposed
+    report["effective_proposals"] = effective
+    report["prepared_by"] = user
     persist(folder / "report.json", report)
     persist(
         root / "latest.json",

@@ -36,3 +36,14 @@ it('reports unknown total distance and ETA and labels directions-only honestly',
   expect(screen.getByText(/Known distance subtotal: 18.00m/)).toBeInTheDocument()
   expect(screen.getByText(/not a shortest-distance or fastest route/)).toBeInTheDocument()
 })
+
+
+it('keeps the traversal objective explicit even when a directions-only route has known estimated lengths', () => {
+  render(<RouteDetails route={{ ...route, distance_m: 799, cost_mode: 'directions_only', cost_units: 'traversals',
+    segments: [{ ...route.segments[0], distance_m: 799, distance_status: 'estimated' }],
+    warnings: ['OSM-derived lengths are estimates, not field-survey evidence.'] }} />)
+  expect(screen.getByText('799')).toBeInTheDocument()
+  expect(screen.getByText(/fewest eligible traversals/)).toBeInTheDocument()
+  expect(screen.getByText(/not a shortest-distance or fastest route/)).toBeInTheDocument()
+  expect(screen.getByText('OSM-derived lengths are estimates, not field-survey evidence.')).toBeInTheDocument()
+})

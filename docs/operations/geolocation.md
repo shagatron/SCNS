@@ -50,7 +50,7 @@ These steps simulate a position, not real-device/permission/field evidence. Use 
 ```
 
 3. Back in the app click **Use my location**. When Chrome prompts, choose **Allow**. Expected: reported accuracy radius±5m, suggested **Gate**, approach approximately0m, no computed route until confirmation. For this synthetic software test click **I am at this landmark now**. It is not a claim that an invented physical gate exists.
-4. Destination **Library**, preference **Shortest walking route**, distance policy **Verified metric paths**→Find walking route. Original synthetic graph:256.88m/three stored edges, UI257metres/4min estimated. Route begins at confirmed Gate; approach excluded. Selecting a suggestion alone must never establish the start.
+4. Destination **Library**, preference **Shortest walking route**, distance policy **Metric · stored path distances** (formerly **Verified metric paths**)→Find walking route. Original synthetic graph:256.88m/three stored edges, UI257metres/4min estimated. Route begins at confirmed Gate; approach excluded. Selecting a suggestion alone must never establish the start.
 5. Optional approach demonstration: send override latitude0.00023, longitude0.00016, accuracy5, request location again. Expect nearbyGate suggestion with a nonzero approximate straight-line approach; confirm only in synthetic simulation. Route distance still begins atGate, not the simulated dot.
 6. Send the following overrides one at a time, then press Use my location. No automatic retry/acquisition.
 

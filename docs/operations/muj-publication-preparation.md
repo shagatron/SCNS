@@ -2,7 +2,9 @@
 
 This guide uses `feat/muj-connectivity-review` including `ee97dbc`. It prepares the **existing** campus `afcf4f1a-635f-563b-af5b-3d7efd2ed84c`, draft `d1a8bb10-cd34-4fe3-905b-53996334dd40`. No reimport, graph repair, reseed, bootstrap, schema change or cloud publication. `.env`, accounts, uploads, named volumes, Demo and all releases stay intact. Windows Docker is separate from cloud tests; no database ports are exposed for remote access.
 
-Owner-reported Windows evidence: v2 correction applied at6, receipt recovered without graph writes; subsequent independent source approval by `muj-reviewer`. **Fetch the current version; source approval consumes a version.** Latest reported authoritative validation `cba61b0b-045a-4978-a9b2-1f2f1ff064c0`:0blocking errors/148warnings, Hostel Entrance→GHS Entrance standard found/step-free absent, Directions only, no maximum bound. Three owner-tested distances/edges:513.10m/13,23.62m/3,163.28m/6. These are owner-reported software tests, not physical/official/accessibility evidence.
+Owner-reported Windows evidence: v2 correction applied at6, receipt recovered without graph writes; subsequent source approval by the separate `muj-reviewer` application account. **Fetch the current version; source approval consumes a version.** Latest reported authoritative validation `cba61b0b-045a-4978-a9b2-1f2f1ff064c0`:0blocking errors/148warnings, Hostel Entrance→GHS Entrance standard found/step-free absent, Directions only, no maximum bound. Three owner-tested distances/edges:513.10m/13,23.62m/3,163.28m/6. These are owner-reported software tests, not physical/official/accessibility evidence.
+
+**Subsequent owner report (16October2026):** MUJ is now published locally and all requested public acceptance checks passed. Source/submission/approval used separate application accounts operated by the owner; no independent human or institutional approval is claimed. The steps below remain reference for the workflow, **not an instruction to republish**. For the current wording-only update use [routing-policy update instructions](muj-routing-policy-update.md).
 
 ## 1. Complete PowerShell update and read-only preflight (existing owner)
 
@@ -123,9 +125,9 @@ Enter existing **owner** credentials privately. The helper rechecks evidence and
 
 If submission response or receipt saving fails, rerun **the same action with the same bundle/account**. It first verifies an exact existing server submission (validation/checksum/actor/reasons) and returns without another workflow write. A verification receipt does not invent the original request audit ID. A stale/different submission or reason stops; never edit old version/checksum to force replay. GUI rejection/withdrawal/edit requires fresh evidence and bundle.
 
-## 5. Independent review by existing muj-reviewer
+## 5. Review by the separate existing muj-reviewer application account
 
-In admin click **Sign out**, sign in privately as **muj-reviewer**, choose the same campus/draft and **Review and releases**. Source approval alone is not content approval. Review **Changes from parent release**, **Approved public projection counts**, **Source rights and public derivatives**, **Validation evidence**, **Computed route acceptance evidence**, **Imported batch provenance** and **Submitter warning acknowledgements**. The independent reviewer must inspect source/content and decide whether this limited scope is justified. The owner/contributor cannot approve or publish, including as system administrator.
+In admin click **Sign out**, sign in privately as **muj-reviewer**, choose the same campus/draft and **Review and releases**. Source approval alone is not content approval. “Independent” in the application means a distinct permitted non-contributor identity; it does not establish an independent human reviewer. The owner reports operating all these accounts. Review **Changes from parent release**, **Approved public projection counts**, **Source rights and public derivatives**, **Validation evidence**, **Computed route acceptance evidence**, **Imported batch provenance** and **Submitter warning acknowledgements**. The independent reviewer must inspect source/content and decide whether this limited scope is justified. The owner/contributor cannot approve or publish, including as system administrator.
 
 To avoid retyping148reasons, generate the reviewer's **own** read-only bundle:
 
@@ -176,9 +178,9 @@ This creates an immutable release/artifact and changes only this campus's public
 
 ## 7. Local public acceptance, attribution and rollback availability
 
-Open/refresh `http://localhost:5173/`. Choose MUJ in the public campus selector; its name identifies **OSM preparation**. Retain **Directions only · unknown distance allowed** under **Distance policy**, **Shortest walking route** under **Route preference**, then set **Starting point**/**Destination** and **Find walking route**:
+Open/refresh `http://localhost:5173/`. Choose MUJ in the public campus selector; its name identifies **OSM preparation**. Choose **Metric · stored path distances** under **Distance policy** (historically labelled **Verified metric paths**), **Shortest walking route** under **Route preference**, then set **Starting point**/**Destination** and **Find walking route**:
 
-| Inputs | Expected unchanged stored result |
+| Inputs (metric shortest unless stated) | Expected unchanged stored result |
 |---|---|
 |University Entrance → Mapped entrance 10828149259|513.10m /13edges|
 |Hostel Entrance → GHS Entrance|23.62m /3edges|
@@ -187,7 +189,7 @@ Open/refresh `http://localhost:5173/`. Choose MUJ in the public campus selector;
 |University Entrance → Hostel Entrance|No eligible route across unresolved access/grade/coverage gap|
 |Hostel Entrance → GHS Entrance; Step-free · verified access only|No verified step-free route|
 
-Public route cards may round known distances to whole metres; exact decimals/edge counts remain in the approved computed evidence and public route response (browser Network inspector if needed). Route distances are mapping estimates, not survey measurements; no distance upper bound was set for validation. Do not claim actual-device GPS verification. Unsupported **Verified metric paths** results need not match Directions only; do not relax the policy to fake a verified measurement.
+Public route cards may round known distances to whole metres; exact decimals/edge counts remain in the approved computed evidence and public route response (browser Network inspector if needed). Route distances are mapping estimates, not survey measurements; no distance upper bound was set for validation. Do not claim actual-device GPS verification. **Correction to the earlier guide:**513.10m/13edges is the metric-shortest University Entrance result, not a Directions-only expectation. Owner reports Directions only gives approximately799m/9edges and explicitly says fewest eligible traversals. That objective minimises unit-cost traversals, not metres or time. Metric eligibility permits estimated outdoor OSM lengths and does not imply field verification; step-free eligibility is separate. See the [exact objectives and wording update](muj-routing-policy-update.md).
 
 Inspect public **Campus map**: approved coverage overlay attribution should display `© OpenStreetMap contributors`, copyright URL and ODbL1.0. **Place details** retains source/no-field-verification/display-point/explicit-anchor limitations. **Clear paths. Clear limits.** explains published source/accessibility limitations and estimated travel. Neither private warning reasons nor reviewer notes are published as public notices. Current UI has **no dedicated campus-specific long-form “limited academic preview” notice editor**; the existing OSM-preparation name, source attribution and place descriptions qualify the data, but do not claim all warning explanations appear publicly. The pre-publication disclosure check in step2 must be completed before approval; this helper does not redesign the explorer or fabricate a public notice.
 

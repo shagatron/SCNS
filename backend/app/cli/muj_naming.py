@@ -243,6 +243,14 @@ def main():
         )
         if preview["blockers"]:
             raise DemoError("Naming preflight blocked; inspect report. No dataset writes.")
+        if not args.draft:
+            dashboard = client.request("GET", f"/api/v1/admin/campuses/{CAMPUS_ID}/dashboard")
+            print("Existing editable drafts (choose intentionally, or create a new one in admin):")
+            for draft in dashboard["drafts"]:
+                if draft["status"] == "draft":
+                    print(
+                        f"Draft {draft['version']} UUID {draft['id']} edit version {draft['edit_version']}"
+                    )
         if not args.apply_source_name:
             return
         if not preview["changes"]:

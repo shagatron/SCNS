@@ -60,11 +60,12 @@ notepad $LocalReport
 
 Do this only after reading the proposal and choosing to accept that **source-only** name. Unresolved locations remain pending owner identification; nothing guesses them.
 
-1. Open `http://localhost:5173/admin`, **Sign in** as owner/editor, **Assigned campus → MUJ**. Select **Catalog**, then **Create draft from published release**. This clones the local active release through the normal API; it preserves your original published/frozen draft and all other drafts. Alternatively select an intentionally chosen existing **editable** naming draft. Do not return the published revision to draft or reuse an unrelated work draft.
-2. Copy the new draft UUID from **Selected draft**/its displayed revision identifier. It is not necessarily the old d1a8bb10… draft; no ID/version is assumed. Run this read-only draft preview:
+1. Open `http://localhost:5173/admin`, **Sign in** as owner/editor, **Assigned campus → MUJ**. Select **Draft catalog**, then **Create draft from published release**. This clones the local active release through the normal API; it preserves your original published/frozen draft and all other drafts. Alternatively select an intentionally chosen existing **editable** naming draft. Do not return the published revision to draft or reuse an unrelated work draft.
+2. The draft dropdown displays its version/status/date, not its UUID. After creating/selecting the intended draft, rerun the default read-only helper below. It lists editable drafts with full UUIDs, draft numbers and current edit versions. Match the new draft number from **Selected draft** and copy that UUID. It is not necessarily the old d1a8bb10… draft; no ID/version is assumed. Then preview that selected draft:
 
 ```powershell
-$NamingDraft = Read-Host 'Editable MUJ naming draft UUID'
+Invoke-ScnsStep { docker compose run --rm --no-deps api python -m app.cli.muj_naming }
+$NamingDraft = Read-Host 'Editable MUJ naming draft UUID from the matching draft number above'
 $ParsedNamingDraft = [guid]::Parse($NamingDraft)
 Invoke-ScnsStep { docker compose run --rm --no-deps api python -m app.cli.muj_naming --draft $ParsedNamingDraft }
 ```
@@ -79,7 +80,7 @@ Invoke-ScnsStep { docker compose run --rm --no-deps api python -m app.cli.muj_na
 Enter credentials privately again. This still prints/saves a fresh exact preview. Type **APPLY NAMES** only after inspecting that report; anything else stops. Each normal server transaction requires If-Match, permissions, CSRF and full validation/audits. Node and catalog writes are **two transactions**, not a single atomic batch. Version/source fields are rechecked between them. A conflict/storage/connection failure can leave exactly one rename applied; it does not imply rollback.
 
 5. Recovery: run the same command **without** `--apply-source-name` first. It reports exact already-present and remaining names, without data writes. Reaccept only the fresh remaining proposal if still intended. Exact target names are no-ops; repeated completed applications do not increment draft version or duplicate naming audits. Real successful responses save actual request IDs/actor receipts privately. Lost response/receipt recovery proves current state only; it cannot invent the original audit actor/request. Original server audits remain authoritative. No old receipt is replaced.
-6. Refresh **Catalog → Places** and **Outdoor graph**: E22 name/label should match, IDs/point/anchor unchanged. All17unresolved entrances remain as before. Public explorer must still show the **existing release names** until you separately review and publish this draft. The source naming helper has no publish/source-approval/submission capability.
+6. Refresh **Draft catalog → Places** and **Outdoor graph**: E22 name/label should match, IDs/point/anchor unchanged. All17unresolved entrances remain as before. Public explorer must still show the **existing release names** until you separately review and publish this draft. The source naming helper has no publish/source-approval/submission capability.
 
 ## Readable direction wording and manual checks
 

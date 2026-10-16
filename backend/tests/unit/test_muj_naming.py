@@ -144,3 +144,45 @@ def test_artifact_integrity_and_safe_url_guard():
     client.release["artifact_url"] = "http://example.test/secret"
     with pytest.raises(DemoError, match="URL"):
         preflight(client)
+
+
+def test_lost_success_response_reconciles_only_remaining_names_and_never_fabricates_receipt():
+    from app.cli.muj_naming import apply_reviewed
+
+    class Transport(FixtureClient):
+        def __init__(self):
+            super().__init__()
+            self.writes = 0
+            self.lose = True
+
+        def request(self, method, path, payload=None, *, headers=None, **kwargs):
+            if method == "GET":
+                return super().request(method, path, **kwargs)
+            assert headers == {"If-Match": f'"{self.graph["revision_version"]}"'}
+            if method == "POST":
+                change = payload["changes"][0]
+                self.graph["nodes"][change["id"]].update(change["data"])
+            else:
+                identity = path.split("/")[-1]
+                self.graph["places"][identity].update(payload["data"])
+            self.graph["revision_version"] += 1
+            self.writes += 1
+            self.last_request_id = f"actual-response-{self.writes}"
+            if self.lose:
+                self.lose = False
+                raise DemoError("Response lost after committed write")
+            return {"revision_version": self.graph["revision_version"]}
+
+    transport = Transport()
+    draft = "00000000-0000-4000-8000-000000000002"
+    receipts = []
+    with pytest.raises(DemoError, match="lost"):
+        apply_reviewed(transport, preflight(transport, draft), receipts.append)
+    assert transport.writes == 1 and not receipts
+    remaining = preflight(transport, draft)
+    assert len(remaining["changes"]) == 1
+    final = apply_reviewed(transport, remaining, receipts.append)
+    assert not final["changes"] and transport.writes == 2 and len(receipts) == 1
+    assert receipts[0]["audit_request_id"] == "actual-response-2"
+    apply_reviewed(transport, final, receipts.append)
+    assert transport.writes == 2 and len(receipts) == 1

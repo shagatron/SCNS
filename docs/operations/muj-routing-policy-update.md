@@ -59,7 +59,9 @@ Start-Process 'http://localhost:5173/'
 
 Hard-refresh Chrome with **Ctrl+Shift+R**. Do not rerun setup/import/correction/submit/approve/publish helpers. No migration, reseed, account change, volume removal or public hosting is required. Keep existing `.env`, accounts, uploads, QR markers/restrictions, drafts and immutable releases.
 
-## Short manual check after the wording update (not yet owner-reported)
+## Short manual check after the wording update
+
+Owner subsequently reports the updated Windows controls work and confirms metric~513m versus Directions only~799m/9edges. This confirms those reported labels/results; it does not claim every keyboard/phone/fastest-switch subcheck below was manually repeated. See the separate [naming assessment/update](muj-naming.md) for the next bounded follow-up.
 
 1. Select MUJ. **Distance policy → Metric · stored path distances**, **Route preference → Shortest walking route**. Choose **Starting point → University Entrance**, **Destination → Mapped entrance 10828149259**, then **Find walking route**. Expect approximately513m with the existing release/restrictions unchanged. The description explicitly says outdoor/OSM lengths may be estimated and metric eligibility is not field verification.
 2. Choose **Distance policy → Directions only · unknown distance allowed**. Standard preference becomes **Fewest eligible traversals**, and fastest is disabled. Compute again: owner-reported baseline is approximately799m/9edges. The result still states fewest eligible traversals, not shortest distance/fastest. Different active restrictions or release can legitimately change the result; investigate rather than republish to force a match.

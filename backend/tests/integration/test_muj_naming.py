@@ -106,11 +106,13 @@ def test_cli_actual_session_partial_receipt_failure_retry_conflict_permissions_a
     monkeypatch.setenv("STORAGE_ROOT", str(tmp_path))
     get_settings.cache_clear()
 
-    def invoke(apply=False):
+    def invoke(apply=False, published_only=False):
         monkeypatch.setattr(
             sys,
             "argv",
-            ["muj_naming", "--draft", draft] + (["--apply-source-name"] if apply else []),
+            ["muj_naming"]
+            + ([] if published_only else ["--draft", draft])
+            + (["--apply-source-name"] if apply else []),
         )
         cli.main()
 
@@ -161,6 +163,7 @@ def test_cli_actual_session_partial_receipt_failure_retry_conflict_permissions_a
     with pytest.raises(SystemExit):
         invoke(True)
     assert not [w for w in writes if "/drafts/" in w[1]]
+    before_names = read_graph()
     monkeypatch.setattr("builtins.input", lambda _: "APPLY NAMES")
     original = cli.persist
 
@@ -185,6 +188,15 @@ def test_cli_actual_session_partial_receipt_failure_retry_conflict_permissions_a
     for r in cli.supported_changes():
         assert final[r["entity"]][r["id"]][cli.LABELS[r["entity"]]] == r["proposed_name"]
     assert final["edges"] == saved["edges"] and final["anchors"] == saved["anchors"]
+    expected_rows = deepcopy(before_names)
+    for change in cli.supported_changes():
+        expected_rows[change["entity"]][change["id"]][cli.LABELS[change["entity"]]] = change[
+            "proposed_name"
+        ]
+    for entity in ("nodes", "places", "edges", "anchors", "frames"):
+        assert (
+            final[entity] == expected_rows[entity]
+        )  # All unrelated owner data/evidence preserved.
     assert list(db.scalars(select(ActiveRelease.release_id))) == before_releases
     n = final["revision_version"]
     invoke(True)
@@ -195,6 +207,7 @@ def test_cli_actual_session_partial_receipt_failure_retry_conflict_permissions_a
     receipt = json.loads(receipts[0].read_text())
     assert receipt["audit_request_id"] and receipt["requested_by"] == str(identity[0].id)
     assert all(p.stat().st_mode & 0o777 == 0o600 for p in folder.glob("*.json"))
+    invoke(published_only=True)
     output = capsys.readouterr().out
     assert identity[1] not in output
     assert all(

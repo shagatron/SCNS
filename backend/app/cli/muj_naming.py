@@ -1,6 +1,6 @@
 """Read-only MUJ published naming preflight; optional explicit source-supported draft rename.
 
-No guessed names, draft creation, graph repair, source approval or publication.
+Read-only by default. Explicit resumable E22 draft creation is available; no guessed names, graph repair, source approval or publication.
 """
 
 import argparse
@@ -218,7 +218,16 @@ def main():
         action="store_true",
         help="Only the source-supported E22 auditorium name; requires preview and explicit APPLY NAMES",
     )
+    parser.add_argument(
+        "--create-draft-and-apply",
+        action="store_true",
+        help="Preview/confirm one resumable new E22 draft; no UUID copying or publication",
+    )
     args = parser.parse_args()
+    if args.create_draft_and_apply and (args.draft or args.apply_source_name):
+        parser.error(
+            "--create-draft-and-apply is a separate workflow; do not combine with --draft/--apply-source-name"
+        )
     if args.apply_source_name and not args.draft:
         parser.error("--apply-source-name requires --draft; no draft is created automatically")
     client = Client(origin=os.environ.get("PUBLIC_APP_URL", "http://localhost:5173"))
@@ -226,6 +235,27 @@ def main():
     try:
         prompt_login(client, "MUJ editor/owner")
         user = str(UUID(client.session["user_id"]))  # Real SessionOut shape.
+        if args.create_draft_and_apply:
+            from app.cli.muj_naming_create import run
+
+            folder = Path(get_settings().storage_root) / "private/muj-naming"
+
+            def created_receipt(item):
+                # Current draft identity comes only from the durable server response.
+                state = json.loads((folder / "create-e22.json").read_bytes())
+                persist(
+                    folder / f"create-e22-receipt-{uuid4()}.json",
+                    {
+                        **item,
+                        "requested_by": user,
+                        "draft_id": state["draft"]["id"],
+                        "release_id": state["release"]["id"],
+                    },
+                )
+
+            attempted = True
+            run(client, user, folder, created_receipt)
+            return
         preview = preflight(client, args.draft)
         folder = Path(get_settings().storage_root) / "private/muj-naming" / user
         folder.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -286,7 +316,11 @@ def main():
     except (DemoError, ValueError, KeyError, OSError, TypeError) as error:
         if isinstance(error, DemoError):
             print(str(error))  # Shared client errors omit response bodies/secrets.
-        if attempted:
+        if attempted and args.create_draft_and_apply:
+            print(
+                "Creation/names may have committed. Keep /app/storage/private/muj-naming/create-e22.json. Rerun the SAME --create-draft-and-apply command with the SAME owner; the fixed server key recovers the existing draft. Never delete the journal or choose a new key/account."
+            )
+        elif attempted:
             print(
                 "A name transaction may have succeeded. Preserve the draft; rerun WITHOUT --apply-source-name to verify partial/current state. Exact already-present names are no-ops; no original audit evidence is invented."
             )

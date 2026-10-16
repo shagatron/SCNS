@@ -2,6 +2,63 @@
 
 This is a source naming assessment and optional draft-only correction, not a new campus import or publication. Existing Windows MUJ is published and owner-reported acceptance passed. The owner additionally reports the updated metric/traversal controls work: University Entrance → Mapped entrance10828149259 is approximately513m under metric shortest and799m/9edges under Directions only. These are owner-reported Windows software results, not cloud inspection, field measurements or independent human/institutional approval.
 
+## Authorized E22: one update-and-run command block
+
+Owner authorization covers **one new naming draft** from the current local published release and exactly these existing entities:
+
+|Entity|Stable UUID|Change|
+|---|---|---|
+|E22 graph node|fd6f991a-9add-586e-ba6f-e0d8c0515bfb|OSM junction11664524407 → TMA Pai Auditorium entrance|
+|E22 place|419441aa-2e6a-57b4-9981-48c31bc40a5c|Mapped entrance11664524407 → TMA Pai Auditorium entrance|
+
+Actual current labels/release are fetched before confirmation. All17unresolved identities, including E05, remain unchanged. The source-supported name omits “main” and makes no floor/accessibility/institutional claim. The workflow has a fixed E22 allowlist; an expanded inventory cannot broaden it silently. No manual draft creation or UUID copying is needed for this mode.
+
+Run in the existing clean Windows repository with Docker Desktop running Linux containers. This builds/replaces only the API/web containers using retained volumes; the database and existing worker remain in place. There is no migration for this helper extension.
+
+```powershell
+$ErrorActionPreference = 'Stop'
+function Invoke-ScnsStep {
+    param([Parameter(Mandatory=$true)][scriptblock]$Action)
+    & $Action
+    if ($LASTEXITCODE -ne 0) { throw 'SCNS command failed. Stop here; preserve existing data and the naming journal.' }
+}
+Invoke-ScnsStep { git status --short }
+if (git status --porcelain) { throw 'Preserve local changes first; nothing reset.' }
+Invoke-ScnsStep { git fetch origin feat/muj-connectivity-review }
+Invoke-ScnsStep { git switch feat/muj-connectivity-review }
+Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
+Invoke-ScnsStep { git merge-base --is-ancestor ff40e3c HEAD }
+Invoke-ScnsStep { docker compose build api frontend }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build --force-recreate api frontend }
+Invoke-ScnsStep { docker compose ps }
+Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
+Invoke-ScnsStep {
+    docker compose run --rm --no-deps api python -m app.cli.muj_naming --create-draft-and-apply
+}
+```
+
+Enter the existing owner username/password privately in that terminal (hidden password; no `-T`, pipes, command-line passwords or transcripts). The CLI validates the actual top-level session user_id and uses normal authenticated APIs/CSRF. It prints and privately saves the actual release/checksum and exact two old→new names. Type **CREATE AND APPLY E22** once to authorize that invocation; any other answer stops before dataset writes. On a partial retry the same confirmation covers only the freshly previewed remaining change. Completed retries are read-only and do not ask another confirmation.
+
+Expected success: `Draft <actual number> UUID <actual UUID>; edit version <actual version>. Applied this run 2; remaining 0.` It then prints PRESENT for both exact UUIDs/names. Draft number/UUID cannot be supplied by the cloud agent: the helper obtains and prints the Windows server's response and durably saves it. If the published names are already present, it creates nothing. If the current published state has only one naming change remaining or conflicts with the source evidence, it stops for inspection instead of manufacturing a new plan.
+
+## Automatic recovery and durable creation receipt
+
+The existing private upload volume stores:
+
+- `/app/storage/private/muj-naming/create-e22.json`: owner/campus/release, stable creation key, server-returned draft number/UUID, actual immutable creation audit and last state verification. No password, cookie or CSRF token.
+- `create-e22-preview.json`: exact most recent preview.
+- `create-e22-receipt-<UUID>.json`: actual successful naming response/request/actor receipts. Lost responses/receipt failures do not cause a fabricated original receipt.
+
+The intent/key is atomically saved and fsynced **before** draft creation. A local lock prevents simultaneous helper runs. The key is stable for the same owner even if a response, UUID save or local journal is lost; it does not change with time or release. The normal draft API finds its immutable prior creation audit and returns the same editable draft. The helper verifies the actual audit actor/campus/key/UUID/parent against the previewed release, then stores the returned UUID before applying any names. It uses the actual original creation event, never the request ID of an idempotent replay as proof of original creation.
+
+After any interruption, rerun **the same final Compose command above with the same owner account**. Keep the journal and existing draft. No new key, account, manual import or replacement draft is needed. A lost creation response or failed UUID save reuses the server key; a lost node/place response rereads the existing draft and offers only remaining names. A fully completed rerun reports applied0/remaining0 and does not POST draft creation or naming again. All naming writes still enforce draft-wide If-Match, normal authorization/validation/audits. A conflict preserves owner edits; no silent overwrite of a different owner-entered label. The catalog's derived search_text is rebuilt normally for the renamed place; other source/graph/catalog fields remain unchanged.
+
+Each node/place update is a normal transaction; interruption can leave one name saved. Output may therefore report applied1/remaining0 on the completing retry, or applied0/remaining0 on read-only verification. “PRESENT” describes verified current state, not proof that this invocation originally wrote it. Original server audits remain authoritative.
+
+If release/restrictions changed, the draft is locked, a different account is used, source/owner labels conflict or creation parent differs, the helper stops and preserves the saved UUID. It never creates a replacement automatically. Creation verification is deliberately bounded to the latest50campus audit entries. If the matching entry is missing/older, it stops: open **Admin → Assigned campus → MUJ → Audit records → Next audit page**, locate `draft.create` with the saved key/actor/UUID/parent and retain that evidence for recovery. Do not delete/edit the journal, change keys/accounts, assume a failed request rolled back, or bypass the blocker. A stale/missing audit requires read-only recovery assessment before application. You can still inspect the retained draft with the existing default/`--draft` read-only helper; final publication is never part of this workflow.
+
+After success, open **Admin → Assigned campus → MUJ → Draft catalog**, select the printed **Draft number**, then **Places** and **Outdoor graph** to inspect E22. The existing public explorer must retain its old release/name until a separately authorized normal review/publication. Sources, topology, geometry, costs, anchors and accessibility are preserved; all other drafts/releases/accounts/uploads/.env/volumes remain intact. No submission/approval/publication is performed. Actual Windows execution remains owner-run and unverified until reported.
+
 ## Inspect the evidence first
 
 [Numbered atlas and identification table](../data/muj-naming/README.md), [overview](../data/muj-naming/overview.svg), [423-row CSV](../data/muj-naming/inventory.csv) and [full source-evidence JSON](../../data/muj-naming/inventory.json) use the exact pinned OSM source SHA256d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de. Source IDs, tags, explicit way membership, imported building associations and anchor references are retained. Contributor metadata is excluded. Source context includes excluded/indoor/private paths; it does not imply navigation eligibility or physical connectivity. Every entrance has its own zoomed map. The overview is intentionally less detailed; use individual maps for crowded markers. OSM attribution/ODbL remains visible.
@@ -42,7 +99,7 @@ Start-Process (Resolve-Path '.\docs\data\muj-naming\overview.svg').Path
 Start-Process (Resolve-Path '.\docs\data\muj-naming\E05.svg').Path
 ```
 
-Enter the existing MUJ owner/editor username and hidden password **in that terminal only**. Do not use `-T`, piping, command-line passwords, transcripts, environment credentials or chat. The helper uses normal server-side sessions/CSRF/Origin, RAM cookies, localhost-only transport and no redirects. It validates the real top-level SessionOut.user_id. Login/logout have their normal session audits; default mode performs only dataset GETs. It verifies the downloaded immutable artifact checksum and current release twice, then saves a private per-user preflight JSON in the existing private upload volume. No draft is created automatically.
+Enter the existing MUJ owner/editor username and hidden password **in that terminal only**. Do not use `-T`, piping, command-line passwords, transcripts, environment credentials or chat. The helper uses normal server-side sessions/CSRF/Origin, RAM cookies, localhost-only transport and no redirects. It validates the real top-level SessionOut.user_id. Login/logout have their normal session audits; default mode performs only dataset GETs. It verifies the downloaded immutable artifact checksum and current release twice, then saves a private per-user preflight JSON in the existing private upload volume. No draft is created in this default read-only mode; the explicit confirmed create mode above is separate.
 
 Expected on unchanged current source labels: actual MUJ release/checksum printed, `draft version None`,0blockers,2proposed fields: E22 nodes.label and places.name → TMA Pai Auditorium entrance. Actual release ID must be read from Windows output, not invented here. If already published under those names, zero proposed changes is valid. Other owner labels/moved target/missing anchor in a selected draft cause blockers; preserve and inspect rather than force/apply. Current release/restriction or draft version changes while reviewing cause a safe stop.
 
@@ -56,9 +113,9 @@ Invoke-ScnsStep { docker compose cp "api:$ReportPath" $LocalReport }
 notepad $LocalReport
 ```
 
-## Optional source-supported E22 draft rename
+## Alternative: intentionally select an existing editable draft
 
-Do this only after reading the proposal and choosing to accept that **source-only** name. Unresolved locations remain pending owner identification; nothing guesses them.
+The create workflow above is the authorized simpler path. This older alternative is for intentionally selecting an existing editable draft after reading the **source-only** proposal. Unresolved locations remain pending owner identification; nothing guesses them.
 
 1. Open `http://localhost:5173/admin`, **Sign in** as owner/editor, **Assigned campus → MUJ**. Select **Draft catalog**, then **Create draft from published release**. This clones the local active release through the normal API; it preserves your original published/frozen draft and all other drafts. Alternatively select an intentionally chosen existing **editable** naming draft. Do not return the published revision to draft or reuse an unrelated work draft.
 2. The draft dropdown displays its version/status/date, not its UUID. After creating/selecting the intended draft, rerun the default read-only helper below. It lists editable drafts with full UUIDs, draft numbers and current edit versions. Match the new draft number from **Selected draft** and copy that UUID. It is not necessarily the old d1a8bb10… draft; no ID/version is assumed. Then preview that selected draft:

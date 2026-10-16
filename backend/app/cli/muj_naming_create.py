@@ -55,7 +55,7 @@ def creation_evidence(client, state):
     ]
     if len(matches) != 1:
         raise DemoError(
-            "Creation audit not uniquely available in latest50 records. Draft UUID is retained; inspect Admin > Audit records (Next page) for the saved creation key/parent. Do not delete the journal or use a new key/account."
+            "Creation audit not uniquely available in latest50 records. Draft UUID is retained; inspect Admin > Audit records (Next audit page) for the saved creation key/parent. Do not delete the journal or use a new key/account."
         )
     event = matches[0]
     if (
@@ -71,6 +71,20 @@ def creation_evidence(client, state):
 
 def run(client, owner, folder, record_write):
     """One confirmation per mutating invocation; completed reruns are read-only."""
+    changes = supported_changes()
+    if (
+        len(changes) != 2
+        or {r["entity"] for r in changes} != {"nodes", "places"}
+        or any(
+            r.get("marker") != "E22"
+            or r.get("external_id") != "osm-node-11664524407"
+            or r["proposed_name"] != "TMA Pai Auditorium entrance"
+            for r in changes
+        )
+    ):
+        raise DemoError(
+            "E22-only allowlist differs; no creation/application. Inspect the installed naming inventory."
+        )
     folder.mkdir(parents=True, exist_ok=True, mode=0o700)
     path = folder / "create-e22.json"
     with (folder / "create-e22.lock").open("a") as lock:
@@ -85,6 +99,9 @@ def run(client, owner, folder, record_write):
         )
         state = read_state(path, owner)
         public = preflight(client)
+        print(
+            f"Published release {public['release']['id']}; artifact checksum {public['release']['artifact_checksum']}."
+        )
         if public["blockers"]:
             raise DemoError("Published E22 preflight has blockers; no creation/application.")
         if state and state["release"] != public["release"]:

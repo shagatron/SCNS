@@ -1,5 +1,7 @@
 # Update MUJ safely: versioned source correction and dataset wording
 
+**Publication preparation follow-up:** owner reports receipt recovery and subsequent source approval succeeded. Version6 is the correction-history version, not an assumed current version. Use [the bounded publication preflight/workflow](muj-publication-preparation.md) to fetch current version/checksum/validation and inspect148reported whole-publication warnings. No correction replay.
+
 **Latest owner state: the correction is already applied at reported version6. After updating, follow [read-only receipt recovery](#recover-the-already-applied-windows-correction-receipt-bug); do not APPLY again.**
 
 This update corrects notices, adds reproducible diagnostics and delivers a **separate versioned v2 source-segment correction**. Original v1 preparation/source receipts remain unchanged. Do not rerun`setup-muj-osm.ps1` or upload full v2 bundles over your existing draft. Use the guarded correction below: preview22operations, explicitly APPLY one normal authenticated graph transaction. No source/review approval or publication occurs. No automatic upsert/deletion of owner work.

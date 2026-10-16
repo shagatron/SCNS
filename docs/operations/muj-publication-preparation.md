@@ -6,7 +6,7 @@ Owner-reported Windows evidence: v2 correction applied at6, receipt recovered wi
 
 ## 1. Complete PowerShell update and read-only preflight (existing owner)
 
-Open PowerShell in the existing repository with Docker Desktop Linux containers running. This block does **not** submit, approve, validate or publish. Passwords are entered privately in the secure terminal, never arguments/chat/files. Do not pipe the login command or add `-T`.
+Open PowerShell in the existing repository with Docker Desktop Linux containers running. This block does **not** submit, approve, validate or publish. Normal login/logout still create/revoke a session and record authentication audits; dataset reads are read-only. Passwords are entered privately in the secure terminal, never arguments/chat/files. Do not pipe the login command or add `-T`.
 
 ```powershell
 $ErrorActionPreference = 'Stop'

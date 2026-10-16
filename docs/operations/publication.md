@@ -74,3 +74,8 @@ Prior approved public artifacts remain immutable/retrievable after a later publi
 ## M3A floorplan update
 
 Draft floors, private PDF/PNG/JPEG processing and evidence-bound calibration are available. The existing import worker also handles floorplan jobs; migrate through `0012_floorplans` before using the new images. [Floorplan workflow, limits and exact data-retaining Windows PowerShell update](floorplans.md) preserves .env/accounts/volumes/active release. Indoor tracing/connectors/routing remain unfinished 3B/3C.
+
+
+## Existing MUJ OSM draft
+
+Use the [current MUJ existing-draft guide](muj-publication-preparation.md), on `feat/muj-connectivity-review`, rather than switching this current installation to the historical M2C branch in the older example above. Its helper fetches current metadata and prepares exact per-warning evidence through existing APIs, with explicit owner submission and independent review decisions; it cannot publish. Source-only approval is distinct from institutional endorsement and content approval. No graph repair, reimport or blanket acknowledgement.

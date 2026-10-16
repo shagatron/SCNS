@@ -445,7 +445,18 @@ def preflight(client, draft, validation=None):
             f"v{report['version']}-{report['checksum'][:12]}-{report['validation_id'] or 'no-validation'}"
         )
     )
-    folder.mkdir(parents=True, exist_ok=True, mode=0o700)
+    for directory in (
+        folder.parents[3],
+        folder.parents[2],
+        folder.parents[1],
+        folder.parent,
+        folder,
+    ):
+        # Restrict only this helper's tree; do not change existing upload storage permissions.
+        if directory.name == "private":
+            continue
+        directory.mkdir(parents=True, exist_ok=True, mode=0o700)
+        directory.chmod(0o700)
     manual_path = folder / "manual-findings.json"
     if not manual_path.exists():
         persist(

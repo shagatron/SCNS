@@ -12,6 +12,7 @@ from sqlalchemy import create_engine, func, select
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session
 
+from app.cli import muj_publication as publication_helper
 from app.cli import muj_update as updater
 from app.cli.admin import bootstrap
 from app.cli.dataset import read_bundle, seed_bundle
@@ -19,9 +20,10 @@ from app.cli.indoor_demo import DemoError
 from app.cli.muj import LocalClient, stage
 from app.core.config import get_settings
 from app.models import ActiveRelease, Campus, Edge, Place, Revision
-from app.models.admin import AuditEvent
+from app.models.admin import AuditEvent, RoleAssignment, User
 from app.models.imports import ImportJob
 from app.models.publication import SourceAsset
+from app.services.admin_auth import HASHER
 from app.services.imports import stable_id
 from app.services.muj_setup import CAMPUS_ID, ROOT
 from app.services.muj_update import plan
@@ -231,6 +233,90 @@ def main():
             assert "409" in str(error)
         else:
             raise AssertionError("Original v1 helper must not replay after correction")
+        # Normal independent source approval and authoritative validation in the
+        # owned fixture only; exercise the new CLI read-only against the actual API.
+        reviewer_password = secrets.token_urlsafe(32)
+        with Session(engine) as db, db.begin():
+            reviewer = User(
+                username="muj-fixture-reviewer",
+                display_name="Ephemeral independent reviewer",
+                password_hash=HASHER.hash(reviewer_password),
+            )
+            db.add(reviewer)
+            db.flush()
+            db.add(
+                RoleAssignment(user_id=reviewer.id, campus_id=CAMPUS_ID, role="reviewer_publisher")
+            )
+        review_client = LocalClient()
+        review_client.login("muj-fixture-reviewer", reviewer_password)
+        review_base = path.removesuffix("/graph")
+        packet = review_client.request("GET", review_base + "/review")
+        source_id = next(iter(packet["sources"]))
+        review_client.request(
+            "POST",
+            review_base + f"/sources/{source_id}/approve",
+            headers={"If-Match": f'"{packet["edit_version"]}"'},
+        )
+        review_client.logout()
+        packet = client.request("GET", review_base + "/review")
+        client.request(
+            "POST",
+            review_base + "/validations",
+            {
+                "routes": [
+                    {
+                        "source": publication_helper.place("10780185181"),
+                        "target": publication_helper.place("11573265515"),
+                        "profile": p,
+                        "expected_found": p == "shortest",
+                        "cost_mode": "directions_only",
+                        "maximum_distance_m": None,
+                        "reason": "Limited OSM fixture; no verified step-free source; no physical survey.",
+                    }
+                    for p in ("shortest", "step_free")
+                ]
+            },
+            headers={"If-Match": f'"{packet["edit_version"]}"'},
+        )
+        with Session(engine) as db:
+            before_preflight = list(
+                db.scalars(select(AuditEvent.id).where(AuditEvent.campus_id == CAMPUS_ID))
+            )
+        with (
+            patch.object(
+                publication_helper, "prompt_login", lambda c, _: c.login("muj-test-owner", password)
+            ),
+            patch("sys.argv", ["muj_publication", "--draft", state["draft_id"]]),
+        ):
+            publication_helper.main()
+        folder = Path(
+            json.loads(
+                (
+                    Path(get_settings().storage_root)
+                    / "private/muj-publication"
+                    / state["draft_id"]
+                    / "latest.json"
+                ).read_text()
+            )["bundle"]
+        )
+        preflight = json.loads((folder / "report.json").read_text())
+        assert (
+            preflight["version"] == packet["edit_version"]
+            and preflight["validation"]["report"]["warnings"] == 148
+        )
+        assert len(preflight["proposed_reasons"]) == 146
+        assert len(preflight["unjustified_findings"]) == 2
+        assert {d["code"] for d in preflight["unjustified_findings"]} == {"near_duplicate"}
+        assert preflight["sources"][source_id]["approved_by"] is not None
+        with Session(engine) as db:
+            assert (
+                list(db.scalars(select(AuditEvent.id).where(AuditEvent.campus_id == CAMPUS_ID)))
+                == before_preflight
+            )
+            assert db.get(ActiveRelease, (CAMPUS_ID, "public")) is None
+        print(
+            "PASS built publication CLI preflight: real session/API, current version after independent source approval,148actual warning IDs,146proposed reasons +2explicit manual findings, private report, no dataset/workflow/publication write."
+        )
         print(
             "PASS built v2 correction: exact preview, one atomic graph POST, 22 actor audits, explicit replaced-edge removal, retry no-op, old-helper guard, unapproved source/public release isolation."
         )

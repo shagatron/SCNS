@@ -138,7 +138,26 @@ def near_pairs(graph, connections):
 def collect(client, draft, validation=None):
     base = f"/api/v1/admin/campuses/{CAMPUS_ID}/drafts/{draft}"
     packet = client.request("GET", base + "/review")
-    graph = client.request("GET", base + "/graph")
+    if packet["status"] == "draft":
+        graph = client.request("GET", base + "/graph")
+    else:
+        # Editable graph API intentionally rejects review/frozen revisions. For this
+        # original new-campus draft, the authenticated review diff contains every row.
+        graph = {
+            "revision_version": packet["edit_version"],
+            **{
+                layer: {
+                    d["id"]: d["after"]
+                    for d in packet["diff"]
+                    if d["entity"] == layer and d["after"] is not None
+                }
+                for layer in ("nodes", "edges", "anchors", "places", "frames")
+            },
+        }
+        if any(set(graph[k]) != set(v) for k, v in pinned_graph().items()):
+            raise DemoError(
+                "Locked review diff is not a complete original MUJ dataset; cannot infer missing rows. Use normal review UI/separate assessment."
+            )
     active = next(
         (s for s in packet["submissions"] if s["status"] in {"submitted", "approved", "published"}),
         None,
@@ -441,6 +460,7 @@ def preflight(client, draft, validation=None):
                 if d["code"] == "near_duplicate"
             },
         )
+    manual_path.chmod(0o600)
     assessments = json.loads(manual_path.read_text())
     if assessments:
         report = prepare(packet, graph, run, jobs, active, draft, assessments)
@@ -475,6 +495,17 @@ def preflight(client, draft, validation=None):
             "Existing proposal has stale/invalid fields or reasons; retained untouched. Reconcile the private proposal and rerun preflight."
         )
     persist(folder / "report.json", report)
+    persist(
+        folder.parents[1] / "latest.json",
+        {
+            "bundle": str(folder),
+            "prepared_by": user,
+            "action": mode,
+            "version": report["version"],
+            "checksum": report["checksum"],
+            "validation_id": report["validation_id"],
+        },
+    )
     text = report_markdown(report, proposed)
     temp = folder / "report.md.tmp"
     temp.write_text(text, encoding="utf-8")
@@ -514,6 +545,8 @@ def perform(client, folder, action, confirm=None):
         raise DemoError(
             "Only explicit independent approval is supported; reject/withdraw through the UI."
         )
+    if action == "submit" and payload["validation_id"] != saved["validation_id"]:
+        raise DemoError("Proposal validation changed; create a fresh preflight.")
     packet, graph, run, jobs, active = collect(client, draft, saved["validation_id"])
     # Reconcile a previously committed exact action before checking the old version.
     # Evidence comes from the actual server packet, never an invented request/audit ID.

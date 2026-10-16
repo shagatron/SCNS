@@ -1,6 +1,8 @@
 """Actual CLI, HTTP contracts and normal review services; never publish a MUJ fixture."""
 
+import base64
 import json
+from types import SimpleNamespace
 from uuid import UUID
 
 import pytest
@@ -9,13 +11,15 @@ from sqlalchemy import func, select
 from app.cli import muj_publication as cli
 from app.cli.indoor_demo import DemoError
 from app.core.config import get_settings
-from app.models import ActiveRelease
+from app.models import ActiveRelease, Revision
 from app.models.admin import AuditEvent, RoleAssignment
 from app.services import publication
 from app.services.muj_update import apply_reviewed, plan
 from tests.integration.test_admin import ORIGIN, sign_in, version
+from tests.integration.test_imports import apply, preview
 from tests.integration.test_muj import identity as muj_identity
-from tests.integration.test_muj_update import setup
+from tests.integration.test_muj import provision
+from tests.integration.test_muj_update import Adapter
 from tests.integration.test_publication import reviewer as publication_reviewer
 
 pytestmark = pytest.mark.integration
@@ -36,7 +40,28 @@ def test_real_cli_preflight_manual_findings_stale_checks_retry_and_independent_a
 ):
     import sys
 
-    adapter, result, graph_path = setup(client, db, bundle, identity)
+    headers = sign_in(client, identity)
+    result = provision(client, bundle, headers)
+    draft_meta = {"id": result["draft_id"]}
+    muj = SimpleNamespace(campus=SimpleNamespace(id=cli.CAMPUS_ID))
+    for path in sorted(cli.ROOT.glob("batch-*.json")):
+        response = client.post(
+            f"/api/v1/admin/campuses/{cli.CAMPUS_ID}/drafts/{result['draft_id']}/imports",
+            params={"filename": path.name},
+            content=path.read_bytes(),
+            headers={
+                **headers,
+                "Content-Type": "application/octet-stream",
+                "X-Import-Options": base64.b64encode(
+                    (cli.ROOT / "options.json").read_bytes()
+                ).decode(),
+                "Idempotency-Key": path.stem + "-publication-test",
+            },
+        )
+        job = preview(db, response)
+        apply(client, muj, draft_meta, headers, job)
+    graph_path = f"/api/v1/admin/campuses/{cli.CAMPUS_ID}/drafts/{result['draft_id']}/graph"
+    adapter = Adapter(client, headers)
     draft = result["draft_id"]
     base = graph_path.removesuffix("/graph")
     apply_reviewed(adapter, plan(adapter.request("GET", graph_path), draft))
@@ -119,13 +144,27 @@ def test_real_cli_preflight_manual_findings_stale_checks_retry_and_independent_a
         cli, "prompt_login", lambda c, _: c.login(account[0][0].username, account[0][1])
     )
 
-    def invoke(action="preflight", folder=None):
-        args = ["muj_publication", "--draft", draft, "--action", action]
+    def invoke(action="preflight", folder=None, draft_override=None):
+        args = ["muj_publication", "--draft", str(draft_override or draft), "--action", action]
         if folder:
             args += ["--bundle", str(folder)]
         monkeypatch.setattr(sys, "argv", args)
         cli.main()
 
+    foreign = db.scalar(select(Revision.id).where(Revision.campus_id == bundle.campus.id))
+    with pytest.raises(SystemExit, match="HTTP 404"):
+        invoke(draft_override=foreign)
+    grant = db.get(RoleAssignment, (reviewer[0].id, cli.CAMPUS_ID, "reviewer_publisher"))
+    db.delete(grant)
+    db.flush()
+    account[0] = reviewer
+    with pytest.raises(SystemExit, match="HTTP 403"):
+        invoke()
+    db.add(
+        RoleAssignment(user_id=reviewer[0].id, campus_id=cli.CAMPUS_ID, role="reviewer_publisher")
+    )
+    db.flush()
+    account[0] = identity
     invoke()
     folder = next(tmp_path.rglob("report.json")).parent
     report = json.loads((folder / "report.json").read_text())

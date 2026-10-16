@@ -60,7 +60,7 @@ def build_inventory(raw):
         building_ways = [w for w in ways if w["tags"].get("building")]
         label = data.get("name", data.get("label"))
         proposed = label
-        confidence = "existing source label; not field verified"
+        confidence = "existing imported label; not field verified"
         reason = "Retain existing label; no new identity asserted."
         if label and re.fullmatch(r"Mapped entrance [0-9]+", label):
             proposed = None
@@ -70,6 +70,10 @@ def build_inventory(raw):
                 proposed = building_ways[0]["tags"]["name"] + " entrance"
                 confidence = "source-supported explicit outline membership; not surveyed"
                 reason = f"Entrance node is an explicit nd member of named building way {building_ways[0]['osm_way']}. No main/accessibility claim."
+        if label and label.startswith("OSM building "):
+            proposed = None
+            confidence = "unnamed source building; owner identification required"
+            reason = "No source name; retain administrative provenance without inventing building identity."
         if entity == "nodes" and re.fullmatch(r"OSM junction [0-9]+", label or ""):
             proposed = None
             confidence = "unnamed intermediate; no stored rename proposed"

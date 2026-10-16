@@ -1,77 +1,77 @@
 marker,entity,id,external_id,current_label,proposed_name,confidence,reason
-,anchors,0a7406f3-aa1f-5597-935f-d895db73f4ee,osm-node-11573972967,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,0a87cf62-cc36-547b-a5de-acdc91b8fe7f,osm-node-11612768365,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,0b5aa15c-5a58-5ec5-a381-e60640586fa4,osm-node-11612773094,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,1a1037ce-9e5d-5b82-9d38-e77aa44a3972,osm-node-11594245182,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,2349dd29-049c-5273-8a43-908c3fc15a70,osm-node-11594245187,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,25735f0f-9971-531a-b9d7-da5f82da5049,osm-node-10828149259,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,2bd2b5e5-9fd7-5203-ae16-631e1ee404da,osm-node-10780185181,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,38186bbe-78eb-5680-b914-548c1e47b273,osm-node-11664524151,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,4be3466a-f93c-5673-8e3d-b5aa48de7b5e,osm-node-11664524384,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,4f0deacd-431e-5672-ac6c-43517787e4ec,osm-node-10773902923,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,7aea62cf-68e2-5393-af43-3fa51ee00449,osm-node-11664524167,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,8b518481-d9f3-55d0-ac7f-e7110b99ca88,osm-node-11664524407,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,986a8cc6-b66b-534b-8506-ae5a3235be9c,osm-node-11573265515,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,987726a1-e34b-57c1-98ae-0ab1cca37928,osm-node-11612773115,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,9914d032-bab9-5460-a9b9-2c9ec8543e5a,osm-node-11809063446,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,9c59830d-69a8-5990-aa58-6465e380f710,osm-node-11593739317,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,a38ea40e-b79a-5f3b-bd80-e2ae3f3b7ea9,osm-node-11598364403,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,a8762d57-d971-5180-84ed-73ada27d818f,osm-node-11612773101,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,b4159ccf-22c0-590b-8a10-9ccf3b6a17f4,osm-node-10780185180,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,d142d2c0-b01f-52d3-8258-1f64b8db2bed,osm-node-11612773070,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,ef188972-4a38-581b-8dec-60ca619079ec,osm-node-11664524402,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,anchors,eff073db-e006-5e7d-9843-d5f8ce667937,osm-node-11664524161,,,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,048f4b70-a289-551b-a2a4-7a9f1d0dcdde,osm-way-1141643445,Quess Mess & Gym complex,Quess Mess & Gym complex,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,0b9b0ab5-f19e-52b4-b869-776ef4ba6606,osm-way-1159010179,Ocean Hills Pool,Ocean Hills Pool,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,0e509f11-b25f-5746-a36b-60accf9b89ca,osm-way-1158514979,G2 block,G2 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,0eb568a6-7d31-583d-897c-9ba76a1f77eb,osm-way-1164410983,Faculty Apartment,Faculty Apartment,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,12ee6a6e-3083-5de6-9f81-cd67e27b978a,osm-way-1359652183,Lecture Hall Complex (LHC),Lecture Hall Complex (LHC),existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,1643691e-7c21-507c-898c-f193f275722d,osm-way-1158522861,Administrative Block,Administrative Block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,2267e593-1ccf-5749-9f2a-4155e6aa1a6f,osm-way-1158516082,B5 block,B5 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,29d3f65f-5ead-5729-9710-5bbc72a0afc6,osm-way-1254788413,OSM building osm-way-1254788413,OSM building osm-way-1254788413,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,2e4f587f-1a43-5dbf-872f-c2a41c8be2c1,osm-way-1164291058,OSM building osm-way-1164291058,OSM building osm-way-1164291058,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,397e0c1d-b29a-5b23-b6e0-d15f532ce2ac,osm-way-1164591247,OSM building osm-way-1164591247,OSM building osm-way-1164591247,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,3981270d-6024-5d26-ac2e-1d2bd9d7b0cf,osm-way-1254788394,OSM building osm-way-1254788394,OSM building osm-way-1254788394,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,3af4cfc1-a1bb-5a3b-bea6-93dd324fc7fd,osm-way-1356153775,BlueDove Mess and BlueDove Gym,BlueDove Mess and BlueDove Gym,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,40417ede-af5c-534a-af42-bb8c8e537c14,osm-way-1159753599,Faculty Apartment,Faculty Apartment,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,44e651e0-438e-597a-a173-b07f9846122a,osm-way-1159754688,CCTV room,CCTV room,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,46c1fa7b-fe3b-587b-9f88-8cf7e31caeef,osm-way-1568303899,Block B10,Block B10,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,49fd89e4-0ec8-5eff-9a63-f029a740e4fe,osm-way-1158936648,Transformer,Transformer,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,4a936ef5-99fe-5149-a2f9-8dfb59fae3ca,osm-way-1159754690,Subway,Subway,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,4f38884e-1f54-55d5-bc6e-7a4dae09fc6b,osm-way-1162173991,Old Mess,Old Mess,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,52925d51-fbc3-511d-baf0-f1949a1e2937,osm-way-1164591246,OSM building osm-way-1164591246,OSM building osm-way-1164591246,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,5a637bdb-0675-571a-b0c7-a66c52f9692f,osm-way-1254788416,OSM building osm-way-1254788416,OSM building osm-way-1254788416,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,5b7b205e-6dc6-578f-a994-81573226bef7,osm-way-1151360714,B1 Block,B1 Block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,5b99b80c-6bfb-5efe-bad9-afebc4b6ef19,osm-way-1249398718,OSM building osm-way-1249398718,OSM building osm-way-1249398718,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,66ea990a-cbf9-513a-9c6a-069c632f9fab,osm-way-1568303891,Block B8,Block B8,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,6d29376f-ce8c-5177-b4d2-da5b53b75f31,osm-way-1158512990,G4 block,G4 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,6fcc4e3f-5d07-5f68-9d8a-52f790082afd,osm-way-1249398713,OSM building osm-way-1249398713,OSM building osm-way-1249398713,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,7ceb311c-c705-5f13-b0a8-a4594ea9f6cd,osm-way-1164291055,OSM building osm-way-1164291055,OSM building osm-way-1164291055,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,7e5a26ff-4d27-54de-ac82-7d98b2d5b935,osm-way-1244851612,Academic Block -3,Academic Block -3,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,7f30f5f3-cff1-5b0b-b940-b62be6077d5a,osm-way-1151360713,B2 block,B2 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,80844f29-3b20-5bb9-bedd-3a15616dd538,osm-way-1164410982,OSM building osm-way-1164410982,OSM building osm-way-1164410982,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,864c247c-ba72-5c44-91ea-c4f47a17f3b0,osm-way-1158516081,OSM building osm-way-1158516081,OSM building osm-way-1158516081,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,86c5c76e-6608-57b0-8190-52dcd7e9541d,osm-way-1247657264,OSM building osm-way-1247657264,OSM building osm-way-1247657264,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,88ec0c10-6545-5840-b04c-81140caa0a9e,osm-way-1141643440,B7 Boy's Block,B7 Boy's Block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,893be599-56a1-5d85-8cc9-c6a66a4e72b9,osm-way-1165285554,OSM building osm-way-1165285554,OSM building osm-way-1165285554,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,a152631a-36d7-54b4-affc-0ff1d75a6a68,osm-way-1164291056,OSM building osm-way-1164291056,OSM building osm-way-1164291056,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,a41fda01-93c7-5fcd-a2c1-a6d23ecf1133,osm-way-1568303897,Block B9,Block B9,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,b6c31edc-8519-5d8b-baec-5b809b150e60,osm-way-1164563394,OSM building osm-way-1164563394,OSM building osm-way-1164563394,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,bb719c16-04d6-5eb1-a676-b0665f0a5867,osm-way-1158514978,G3 block,G3 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,be7cc846-cc9e-5096-94a6-ceca3a0db8c1,osm-way-1249398706,OSM building osm-way-1249398706,OSM building osm-way-1249398706,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,c2c6831e-7e86-5aae-930d-2e59124661c9,osm-way-1164291057,Workshop Building,Workshop Building,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,c85d14b4-30ee-5957-951e-032025c499fd,osm-relation-15765627-part-0,G-1 Block,G-1 Block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,cd1116be-5ff8-5383-b0da-8f9ad5312582,osm-way-1164291981,Faculty Apartment,Faculty Apartment,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,cf55970b-c9de-54cf-a7c5-b16e15f748da,osm-way-1164562871,OSM building osm-way-1164562871,OSM building osm-way-1164562871,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,d41398a0-0ead-517c-98f0-1d5998f4b010,osm-way-1158936647,Chiller Panel Room,Chiller Panel Room,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,d807f061-1b10-5ed1-b276-24235aa79e9c,osm-way-1158191366,Boxing and MMA ground,Boxing and MMA ground,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,e0eebfe7-a678-571c-a231-eca4cbdad3a7,osm-way-1164563395,OSM building osm-way-1164563395,OSM building osm-way-1164563395,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,e1037141-6eb2-5e7f-ba8b-365e01ea7104,osm-way-1151360712,B3 Block,B3 Block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,e20f32f9-f97f-572c-9e66-0be84b0f672f,osm-way-1271669888,OSM building osm-way-1271669888,OSM building osm-way-1271669888,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,e63ebc11-caff-5d1d-94a8-c32e3583344a,osm-way-1164562870,OSM building osm-way-1164562870,OSM building osm-way-1164562870,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,f0b2eb24-d8b3-52ba-9219-be3937204c06,osm-relation-15777926-part-0,"Laundry, GHS Library and GHS office","Laundry, GHS Library and GHS office",existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,f0d731dd-61bf-5890-8e14-4f74383586c1,osm-way-1158515143,B6 block,B6 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,buildings,f75b49ae-269c-5587-ae15-4d1faea836a2,osm-way-1159754689,Subway,Subway,existing source label; not field verified,Retain existing label; no new identity asserted.
+,anchors,0a7406f3-aa1f-5597-935f-d895db73f4ee,osm-node-11573972967,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,0a87cf62-cc36-547b-a5de-acdc91b8fe7f,osm-node-11612768365,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,0b5aa15c-5a58-5ec5-a381-e60640586fa4,osm-node-11612773094,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,1a1037ce-9e5d-5b82-9d38-e77aa44a3972,osm-node-11594245182,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,2349dd29-049c-5273-8a43-908c3fc15a70,osm-node-11594245187,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,25735f0f-9971-531a-b9d7-da5f82da5049,osm-node-10828149259,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,2bd2b5e5-9fd7-5203-ae16-631e1ee404da,osm-node-10780185181,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,38186bbe-78eb-5680-b914-548c1e47b273,osm-node-11664524151,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,4be3466a-f93c-5673-8e3d-b5aa48de7b5e,osm-node-11664524384,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,4f0deacd-431e-5672-ac6c-43517787e4ec,osm-node-10773902923,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,7aea62cf-68e2-5393-af43-3fa51ee00449,osm-node-11664524167,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,8b518481-d9f3-55d0-ac7f-e7110b99ca88,osm-node-11664524407,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,986a8cc6-b66b-534b-8506-ae5a3235be9c,osm-node-11573265515,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,987726a1-e34b-57c1-98ae-0ab1cca37928,osm-node-11612773115,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,9914d032-bab9-5460-a9b9-2c9ec8543e5a,osm-node-11809063446,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,9c59830d-69a8-5990-aa58-6465e380f710,osm-node-11593739317,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,a38ea40e-b79a-5f3b-bd80-e2ae3f3b7ea9,osm-node-11598364403,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,a8762d57-d971-5180-84ed-73ada27d818f,osm-node-11612773101,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,b4159ccf-22c0-590b-8a10-9ccf3b6a17f4,osm-node-10780185180,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,d142d2c0-b01f-52d3-8258-1f64b8db2bed,osm-node-11612773070,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,ef188972-4a38-581b-8dec-60ca619079ec,osm-node-11664524402,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,anchors,eff073db-e006-5e7d-9843-d5f8ce667937,osm-node-11664524161,,,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,048f4b70-a289-551b-a2a4-7a9f1d0dcdde,osm-way-1141643445,Quess Mess & Gym complex,Quess Mess & Gym complex,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,0b9b0ab5-f19e-52b4-b869-776ef4ba6606,osm-way-1159010179,Ocean Hills Pool,Ocean Hills Pool,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,0e509f11-b25f-5746-a36b-60accf9b89ca,osm-way-1158514979,G2 block,G2 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,0eb568a6-7d31-583d-897c-9ba76a1f77eb,osm-way-1164410983,Faculty Apartment,Faculty Apartment,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,12ee6a6e-3083-5de6-9f81-cd67e27b978a,osm-way-1359652183,Lecture Hall Complex (LHC),Lecture Hall Complex (LHC),existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,1643691e-7c21-507c-898c-f193f275722d,osm-way-1158522861,Administrative Block,Administrative Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,2267e593-1ccf-5749-9f2a-4155e6aa1a6f,osm-way-1158516082,B5 block,B5 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,29d3f65f-5ead-5729-9710-5bbc72a0afc6,osm-way-1254788413,OSM building osm-way-1254788413,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,2e4f587f-1a43-5dbf-872f-c2a41c8be2c1,osm-way-1164291058,OSM building osm-way-1164291058,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,397e0c1d-b29a-5b23-b6e0-d15f532ce2ac,osm-way-1164591247,OSM building osm-way-1164591247,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,3981270d-6024-5d26-ac2e-1d2bd9d7b0cf,osm-way-1254788394,OSM building osm-way-1254788394,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,3af4cfc1-a1bb-5a3b-bea6-93dd324fc7fd,osm-way-1356153775,BlueDove Mess and BlueDove Gym,BlueDove Mess and BlueDove Gym,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,40417ede-af5c-534a-af42-bb8c8e537c14,osm-way-1159753599,Faculty Apartment,Faculty Apartment,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,44e651e0-438e-597a-a173-b07f9846122a,osm-way-1159754688,CCTV room,CCTV room,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,46c1fa7b-fe3b-587b-9f88-8cf7e31caeef,osm-way-1568303899,Block B10,Block B10,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,49fd89e4-0ec8-5eff-9a63-f029a740e4fe,osm-way-1158936648,Transformer,Transformer,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,4a936ef5-99fe-5149-a2f9-8dfb59fae3ca,osm-way-1159754690,Subway,Subway,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,4f38884e-1f54-55d5-bc6e-7a4dae09fc6b,osm-way-1162173991,Old Mess,Old Mess,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,52925d51-fbc3-511d-baf0-f1949a1e2937,osm-way-1164591246,OSM building osm-way-1164591246,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,5a637bdb-0675-571a-b0c7-a66c52f9692f,osm-way-1254788416,OSM building osm-way-1254788416,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,5b7b205e-6dc6-578f-a994-81573226bef7,osm-way-1151360714,B1 Block,B1 Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,5b99b80c-6bfb-5efe-bad9-afebc4b6ef19,osm-way-1249398718,OSM building osm-way-1249398718,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,66ea990a-cbf9-513a-9c6a-069c632f9fab,osm-way-1568303891,Block B8,Block B8,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,6d29376f-ce8c-5177-b4d2-da5b53b75f31,osm-way-1158512990,G4 block,G4 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,6fcc4e3f-5d07-5f68-9d8a-52f790082afd,osm-way-1249398713,OSM building osm-way-1249398713,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,7ceb311c-c705-5f13-b0a8-a4594ea9f6cd,osm-way-1164291055,OSM building osm-way-1164291055,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,7e5a26ff-4d27-54de-ac82-7d98b2d5b935,osm-way-1244851612,Academic Block -3,Academic Block -3,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,7f30f5f3-cff1-5b0b-b940-b62be6077d5a,osm-way-1151360713,B2 block,B2 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,80844f29-3b20-5bb9-bedd-3a15616dd538,osm-way-1164410982,OSM building osm-way-1164410982,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,864c247c-ba72-5c44-91ea-c4f47a17f3b0,osm-way-1158516081,OSM building osm-way-1158516081,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,86c5c76e-6608-57b0-8190-52dcd7e9541d,osm-way-1247657264,OSM building osm-way-1247657264,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,88ec0c10-6545-5840-b04c-81140caa0a9e,osm-way-1141643440,B7 Boy's Block,B7 Boy's Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,893be599-56a1-5d85-8cc9-c6a66a4e72b9,osm-way-1165285554,OSM building osm-way-1165285554,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,a152631a-36d7-54b4-affc-0ff1d75a6a68,osm-way-1164291056,OSM building osm-way-1164291056,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,a41fda01-93c7-5fcd-a2c1-a6d23ecf1133,osm-way-1568303897,Block B9,Block B9,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,b6c31edc-8519-5d8b-baec-5b809b150e60,osm-way-1164563394,OSM building osm-way-1164563394,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,bb719c16-04d6-5eb1-a676-b0665f0a5867,osm-way-1158514978,G3 block,G3 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,be7cc846-cc9e-5096-94a6-ceca3a0db8c1,osm-way-1249398706,OSM building osm-way-1249398706,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,c2c6831e-7e86-5aae-930d-2e59124661c9,osm-way-1164291057,Workshop Building,Workshop Building,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,c85d14b4-30ee-5957-951e-032025c499fd,osm-relation-15765627-part-0,G-1 Block,G-1 Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,cd1116be-5ff8-5383-b0da-8f9ad5312582,osm-way-1164291981,Faculty Apartment,Faculty Apartment,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,cf55970b-c9de-54cf-a7c5-b16e15f748da,osm-way-1164562871,OSM building osm-way-1164562871,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,d41398a0-0ead-517c-98f0-1d5998f4b010,osm-way-1158936647,Chiller Panel Room,Chiller Panel Room,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,d807f061-1b10-5ed1-b276-24235aa79e9c,osm-way-1158191366,Boxing and MMA ground,Boxing and MMA ground,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,e0eebfe7-a678-571c-a231-eca4cbdad3a7,osm-way-1164563395,OSM building osm-way-1164563395,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,e1037141-6eb2-5e7f-ba8b-365e01ea7104,osm-way-1151360712,B3 Block,B3 Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,e20f32f9-f97f-572c-9e66-0be84b0f672f,osm-way-1271669888,OSM building osm-way-1271669888,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,e63ebc11-caff-5d1d-94a8-c32e3583344a,osm-way-1164562870,OSM building osm-way-1164562870,,unnamed source building; owner identification required,No source name; retain administrative provenance without inventing building identity.
+,buildings,f0b2eb24-d8b3-52ba-9219-be3937204c06,osm-relation-15777926-part-0,"Laundry, GHS Library and GHS office","Laundry, GHS Library and GHS office",existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,f0d731dd-61bf-5890-8e14-4f74383586c1,osm-way-1158515143,B6 block,B6 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,buildings,f75b49ae-269c-5587-ae15-4d1faea836a2,osm-way-1159754689,Subway,Subway,existing imported label; not field verified,Retain existing label; no new identity asserted.
 ,nodes,002cde28-2da2-53f8-a02c-ee3c0c51a289,osm-node-10733835812,OSM junction 10733835812,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 E19,nodes,01345387-81cc-503a-a682-55c4ca34a6e6,osm-node-11664524167,OSM junction 11664524167,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,02374990-ed0e-5586-96c9-72d069f9f4e9,osm-node-11612773076,OSM junction 11612773076,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
@@ -120,7 +120,7 @@ E09,nodes,265bf0a9-493b-56f4-b29a-ce62bef10758,osm-node-11594245182,OSM junction
 ,nodes,2b6e2bcd-9452-548f-85eb-d0015a6ba009,osm-node-11584636877,OSM junction 11584636877,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,2dae938e-cc26-59ef-beda-e03797623386,osm-node-8597438091,OSM junction 8597438091,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,2dcd5b67-5df8-5e38-a689-e4e67765ec4e,osm-node-11612692515,OSM junction 11612692515,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
-E06,nodes,2e463c0a-e5a8-5273-ba3b-8943f65d0475,osm-node-11573265515,GHS Entrance,GHS Entrance,existing source label; not field verified,Retain existing label; no new identity asserted.
+E06,nodes,2e463c0a-e5a8-5273-ba3b-8943f65d0475,osm-node-11573265515,GHS Entrance,GHS Entrance,existing imported label; not field verified,Retain existing label; no new identity asserted.
 ,nodes,2e6b2137-115e-584a-a7f6-d96e533f053a,osm-node-11612692531,OSM junction 11612692531,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,2eb0d706-735f-5f23-9e90-8f441c6a5d6c,osm-node-10808416011,OSM junction 10808416011,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,2f9c9df3-8f9c-529c-abb7-9c7c20859832,osm-node-11664524146,OSM junction 11664524146,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
@@ -135,7 +135,7 @@ E15,nodes,3581791b-f9ff-5c37-9321-33caaf2ffbfc,osm-node-11612773101,OSM junction
 ,nodes,36478505-962d-5624-9f81-dc604d8e08a1,osm-node-13566350122,OSM junction 13566350122,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,372e5bf7-b598-54dc-9834-0f15ca2b9777,osm-node-10769840704,OSM junction 10769840704,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,37adb04f-24ba-537e-a48d-c79a6bdfb351,osm-node-11572260759,OSM junction 11572260759,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
-,nodes,3884427c-e4e5-5fd2-adaf-5b6b1d025094,osm-node-10769840672,c1,c1,existing source label; not field verified,Retain existing label; no new identity asserted.
+,nodes,3884427c-e4e5-5fd2-adaf-5b6b1d025094,osm-node-10769840672,c1,c1,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E16,nodes,3947dbe1-8cbe-5b61-94ba-1288a30a6f34,osm-node-11612773115,OSM junction 11612773115,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,396e80d7-a67a-5f49-af0f-c05c34271f84,osm-node-10733835809,OSM junction 10733835809,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,3a77545a-6456-59f7-9d1a-b088529ecc2b,osm-node-10770949036,OSM junction 10770949036,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
@@ -177,7 +177,7 @@ E10,nodes,4e996e5f-1a17-569f-9f05-0072b7ab67a2,osm-node-11594245187,OSM junction
 ,nodes,5bcd8400-7612-5e56-affd-ec0be114db67,osm-node-11809043903,OSM junction 11809043903,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,5d3315c2-bb02-504e-bf19-020548485fdd,osm-node-10769840696,OSM junction 10769840696,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,5d539415-4143-51ae-9651-28eb89dc58b0,osm-node-11612768367,OSM junction 11612768367,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
-E07,nodes,5da6f8f1-ec97-58be-8e27-fb165dde971e,osm-node-11573972967,Faculty Block Entrance,Faculty Block Entrance,existing source label; not field verified,Retain existing label; no new identity asserted.
+E07,nodes,5da6f8f1-ec97-58be-8e27-fb165dde971e,osm-node-11573972967,Faculty Block Entrance,Faculty Block Entrance,existing imported label; not field verified,Retain existing label; no new identity asserted.
 ,nodes,5dd8f79e-119e-57bf-a3bf-da83fe455c82,osm-node-11612773113,OSM junction 11612773113,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,5f19d84e-a026-5858-acf6-45e48616bfae,osm-node-11664524155,OSM junction 11664524155,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,5f514284-d387-54f0-8c67-e7df77386c6a,osm-node-14284287705,OSM junction 14284287705,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
@@ -217,7 +217,7 @@ E07,nodes,5da6f8f1-ec97-58be-8e27-fb165dde971e,osm-node-11573972967,Faculty Bloc
 ,nodes,7ba2ec50-cbff-5633-9923-a9451c943075,osm-node-11598364400,OSM junction 11598364400,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,7ba80484-affb-52bd-863c-a3eb73b1a5cd,osm-node-10827798207,OSM junction 10827798207,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 E13,nodes,7c6023a2-8939-5aaf-9d82-8b17a1561ccc,osm-node-11612773070,OSM junction 11612773070,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
-,nodes,7f5254f8-f4d5-5874-bd0c-adda6f703036,osm-node-11804678738,c4,c4,existing source label; not field verified,Retain existing label; no new identity asserted.
+,nodes,7f5254f8-f4d5-5874-bd0c-adda6f703036,osm-node-11804678738,c4,c4,existing imported label; not field verified,Retain existing label; no new identity asserted.
 ,nodes,807aac5f-4bfa-5958-883b-a994328c068e,osm-node-11612768347,OSM junction 11612768347,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,80e3818b-f581-5002-9d6e-46a762013b36,osm-node-10634009264,OSM junction 10634009264,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,813f9ff0-bd16-5d7a-8bdd-ab5de3a99922,osm-node-10778271611,OSM junction 10778271611,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
@@ -228,7 +228,7 @@ E17,nodes,85ea89ba-4232-5804-8b75-c734bc51bcc1,osm-node-11664524151,OSM junction
 ,nodes,86de7bc0-fd30-59ac-8e37-b74724d2726d,osm-node-11595648721,OSM junction 11595648721,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,86f24430-5b30-548c-89c8-025df1e01d7b,osm-node-8597438060,OSM junction 8597438060,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,886c234d-7ea4-5e5c-bdff-f6b7f8b76dcc,osm-node-14284287710,OSM junction 14284287710,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
-,nodes,89433100-0037-51f4-ab0f-536c7e91e206,osm-node-10769840671,c2,c2,existing source label; not field verified,Retain existing label; no new identity asserted.
+,nodes,89433100-0037-51f4-ab0f-536c7e91e206,osm-node-10769840671,c2,c2,existing imported label; not field verified,Retain existing label; no new identity asserted.
 ,nodes,8996638d-2166-5d55-9e4d-f74302721a76,osm-node-11595648722,OSM junction 11595648722,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,89ddfeba-9a54-5c33-a306-4699f9286ee5,osm-node-11579137920,OSM junction 11579137920,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,8ff4d3b5-c4ce-5b16-9b2d-a76986ceb7dc,osm-node-11576731862,OSM junction 11576731862,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
@@ -236,7 +236,7 @@ E20,nodes,91fd534e-a634-5438-82ee-d6e918ca5313,osm-node-11664524384,OSM junction
 ,nodes,9339e9ee-2b86-5c8f-a96b-c9c6fae31071,osm-node-11612692540,OSM junction 11612692540,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,94d91258-4129-53f6-8458-cd551636b888,osm-node-10733835817,OSM junction 10733835817,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,972a5764-06dd-55a4-99e0-2061dcf6849c,osm-node-11598364391,OSM junction 11598364391,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
-E03,nodes,97820783-76c1-5cfe-b29d-e5a88153473e,osm-node-10780185180,University Entrance,University Entrance,existing source label; not field verified,Retain existing label; no new identity asserted.
+E03,nodes,97820783-76c1-5cfe-b29d-e5a88153473e,osm-node-10780185180,University Entrance,University Entrance,existing imported label; not field verified,Retain existing label; no new identity asserted.
 ,nodes,9924c20b-4aee-5d24-97d1-dee7d05bfd77,osm-node-11612692539,OSM junction 11612692539,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,9a729c21-85b5-50f4-a588-0e43307f35e6,osm-node-10634009281,OSM junction 10634009281,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,9ad0d9a5-b94f-5d33-b52e-2e606ab9a43b,osm-node-10788334696,OSM junction 10788334696,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
@@ -253,7 +253,7 @@ E03,nodes,97820783-76c1-5cfe-b29d-e5a88153473e,osm-node-10780185180,University E
 ,nodes,a221e59a-5013-5fe3-a17c-e27e5ee2b462,osm-node-11584636871,OSM junction 11584636871,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,a237bb77-52e5-55b0-b4b8-dd80ae1f86bc,osm-node-10830869771,OSM junction 10830869771,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,a2a39b90-005e-5e61-8f1e-16aac44b8c55,osm-node-10783410006,OSM junction 10783410006,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
-,nodes,a2a8af0f-0dab-5182-9bd8-6cf85155e6fc,osm-node-10769840689,AB1 footway,AB1 footway,existing source label; not field verified,Retain existing label; no new identity asserted.
+,nodes,a2a8af0f-0dab-5182-9bd8-6cf85155e6fc,osm-node-10769840689,AB1 footway,AB1 footway,existing imported label; not field verified,Retain existing label; no new identity asserted.
 ,nodes,a430fca2-fe32-5f81-8790-a9329c40907b,osm-node-10733835814,OSM junction 10733835814,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,a4e1ffa2-c922-51e1-bf00-54035bdff0ed,osm-node-11576585092,OSM junction 11576585092,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,a566507e-a692-5f57-a598-ca62326a9b9e,osm-node-10769840678,OSM junction 10769840678,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
@@ -309,7 +309,7 @@ E08,nodes,b7823a47-64ca-50e1-8d8e-159c48273de4,osm-node-11593739317,OSM junction
 ,nodes,cba4530a-c7a8-553a-b874-2ba609e87786,osm-node-12649140394,OSM junction 12649140394,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,cda18bb6-d727-509a-b4d3-7254926345d8,osm-node-10778271609,OSM junction 10778271609,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,ce6cf411-1aa3-5dc5-bec6-a6a11958dd3a,osm-node-11594245198,OSM junction 11594245198,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
-E04,nodes,cea4c430-6ca6-5ffb-b928-4e411367e6a6,osm-node-10780185181,Hostel Entrance,Hostel Entrance,existing source label; not field verified,Retain existing label; no new identity asserted.
+E04,nodes,cea4c430-6ca6-5ffb-b928-4e411367e6a6,osm-node-10780185181,Hostel Entrance,Hostel Entrance,existing imported label; not field verified,Retain existing label; no new identity asserted.
 ,nodes,d0495559-ae95-5520-af77-1e0ffeb7ca7e,osm-node-10774250020,OSM junction 10774250020,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,d0a82082-b48a-59e0-8e34-a364a327baf7,osm-node-10778271615,OSM junction 10778271615,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,d2350ec5-f4fa-5fa9-a484-dff592feb39f,osm-node-11598364393,OSM junction 11598364393,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
@@ -368,57 +368,57 @@ E22,nodes,fd6f991a-9add-586e-ba6f-e0d8c0515bfb,osm-node-11664524407,OSM junction
 ,nodes,ffd8bfbf-cb20-5096-b196-58ced4b06595,osm-node-11115911871,OSM junction 11115911871,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 ,nodes,fff2b3ed-89b4-5c2c-95f2-e24c1c60eba2,osm-node-14284287704,OSM junction 14284287704,,unnamed intermediate; no stored rename proposed,Public directions use neutral path wording; stable ID/label/evidence remain administrative provenance.
 E20,places,00bcebbb-28ad-5c97-8b0d-b45279f7e2e3,osm-node-11664524384,Mapped entrance 11664524384,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,04eaa63d-45a9-51bf-a660-d4bb6a5ac0f0,osm-way-1151360712,B3 Block,B3 Block,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,04eaa63d-45a9-51bf-a660-d4bb6a5ac0f0,osm-way-1151360712,B3 Block,B3 Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E05,places,06948014-2faa-5e3b-9684-72b65814fa1d,osm-node-10828149259,Mapped entrance 10828149259,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,16368e0c-e0d4-50fb-9167-7ee4266f8580,osm-way-1244851612,Academic Block -3,Academic Block -3,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,1e37dac1-ece9-55f4-bf72-b16e86c37fb2,osm-node-12585506492,Central Library,Central Library,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,20d01d5d-a587-5e82-8f5c-05f588afe1f1,osm-way-1158191366,Boxing and MMA ground,Boxing and MMA ground,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,16368e0c-e0d4-50fb-9167-7ee4266f8580,osm-way-1244851612,Academic Block -3,Academic Block -3,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,1e37dac1-ece9-55f4-bf72-b16e86c37fb2,osm-node-12585506492,Central Library,Central Library,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,20d01d5d-a587-5e82-8f5c-05f588afe1f1,osm-way-1158191366,Boxing and MMA ground,Boxing and MMA ground,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E21,places,21d3b3a4-3b49-5f22-b9c4-6cf987f79567,osm-node-11664524402,Mapped entrance 11664524402,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
 E19,places,25edf47e-e4d5-50e5-9236-fd90a2e94b6b,osm-node-11664524167,Mapped entrance 11664524167,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
 E02,places,325dac15-163a-5a85-b263-864523054765,osm-node-10773902923,Mapped entrance 10773902923,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,35c700b2-c4a4-595b-9a65-7f8490aa31eb,osm-way-1158522861,Administrative Block,Administrative Block,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,35c700b2-c4a4-595b-9a65-7f8490aa31eb,osm-way-1158522861,Administrative Block,Administrative Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E15,places,3759169d-55f6-5938-9263-61db4f15546c,osm-node-11612773101,Mapped entrance 11612773101,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,37d4da5d-34fa-5922-b77c-2bb498dc1810,osm-way-1568303891,Block B8,Block B8,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,3f1520a5-23cf-58b8-99bc-c5265476ff64,osm-way-1162173991,Old Mess,Old Mess,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,37d4da5d-34fa-5922-b77c-2bb498dc1810,osm-way-1568303891,Block B8,Block B8,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,3f1520a5-23cf-58b8-99bc-c5265476ff64,osm-way-1162173991,Old Mess,Old Mess,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E22,places,419441aa-2e6a-57b4-9981-48c31bc40a5c,osm-node-11664524407,Mapped entrance 11664524407,TMA Pai Auditorium entrance,source-supported explicit outline membership; not surveyed,Entrance node is an explicit nd member of named building way 1249393737. No main/accessibility claim.
 E12,places,470089a0-4dba-5479-9186-2a4103257c95,osm-node-11612768365,Mapped entrance 11612768365,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
 E16,places,4bcc93b5-f951-5dec-885f-f4719acf775f,osm-node-11612773115,Mapped entrance 11612773115,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,4bd043f9-5b1b-549a-a61a-89b0345e0787,osm-way-1141643440,B7 Boy's Block,B7 Boy's Block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,4c6b0b31-68f9-58f4-af95-6ca56111e459,osm-way-1151360713,B2 block,B2 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,4d2fcff5-6960-5a2b-a3de-81cc7dc37a97,osm-way-1159754689,Subway,Subway,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,4bd043f9-5b1b-549a-a61a-89b0345e0787,osm-way-1141643440,B7 Boy's Block,B7 Boy's Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,4c6b0b31-68f9-58f4-af95-6ca56111e459,osm-way-1151360713,B2 block,B2 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,4d2fcff5-6960-5a2b-a3de-81cc7dc37a97,osm-way-1159754689,Subway,Subway,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E17,places,4f807e02-3aff-5bf7-aad8-2fe49e254410,osm-node-11664524151,Mapped entrance 11664524151,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
 E10,places,597e7b4f-e88d-5ece-a785-64f4a04b585f,osm-node-11594245187,Mapped entrance 11594245187,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,6249098b-d58b-5394-94bc-de0effb2fd73,osm-way-1158936647,Chiller Panel Room,Chiller Panel Room,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,6249098b-d58b-5394-94bc-de0effb2fd73,osm-way-1158936647,Chiller Panel Room,Chiller Panel Room,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E14,places,62af77d6-f272-55a7-909c-131423dbbdd8,osm-node-11612773094,Mapped entrance 11612773094,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,643fb560-58b4-5813-be1a-d0182af0b8d9,osm-relation-15777926-part-0,"Laundry, GHS Library and GHS office","Laundry, GHS Library and GHS office",existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,66003e9c-c7f3-5e5c-9441-c669a765028d,osm-way-1158516082,B5 block,B5 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,6b55a867-34d7-5bcf-a581-ef0c4798f8a1,osm-way-1359652183,Lecture Hall Complex (LHC),Lecture Hall Complex (LHC),existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,6e9a1407-768e-5e19-8fd0-ca64ad51bb2d,osm-way-1158514979,G2 block,G2 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-E01,places,7020670d-fa16-568d-a945-2fcdbcc14f28,osm-node-10733816254,Subway entrance/exit,Subway entrance/exit,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,643fb560-58b4-5813-be1a-d0182af0b8d9,osm-relation-15777926-part-0,"Laundry, GHS Library and GHS office","Laundry, GHS Library and GHS office",existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,66003e9c-c7f3-5e5c-9441-c669a765028d,osm-way-1158516082,B5 block,B5 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,6b55a867-34d7-5bcf-a581-ef0c4798f8a1,osm-way-1359652183,Lecture Hall Complex (LHC),Lecture Hall Complex (LHC),existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,6e9a1407-768e-5e19-8fd0-ca64ad51bb2d,osm-way-1158514979,G2 block,G2 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+E01,places,7020670d-fa16-568d-a945-2fcdbcc14f28,osm-node-10733816254,Subway entrance/exit,Subway entrance/exit,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E09,places,70758b27-b24c-56b6-8c6f-180f662b6d1a,osm-node-11594245182,Mapped entrance 11594245182,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,778c6cf7-682d-55b8-af5d-688aaf310b61,osm-way-1158936648,Transformer,Transformer,existing source label; not field verified,Retain existing label; no new identity asserted.
-E07,places,7a9252c6-b34a-53a1-b17a-e44c5a170108,osm-node-11573972967,Faculty Block Entrance,Faculty Block Entrance,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,7c6972f7-0ddb-5962-a6c1-44200932d053,osm-way-1164291981,Faculty Apartment,Faculty Apartment,existing source label; not field verified,Retain existing label; no new identity asserted.
-E03,places,899a2e1e-92de-5e56-ba70-8587df8f2d8f,osm-node-10780185180,University Entrance,University Entrance,existing source label; not field verified,Retain existing label; no new identity asserted.
-E04,places,8f92c608-4969-56e9-927b-5907b3cf0de7,osm-node-10780185181,Hostel Entrance,Hostel Entrance,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,922fc987-3d99-5746-9aa2-553c8f5d4c62,osm-way-1158515143,B6 block,B6 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,92698415-4f89-580d-991f-0a2b1f1114fa,osm-way-1159010179,Ocean Hills Pool,Ocean Hills Pool,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,93e0988b-919b-5533-9325-e340e97fd27c,osm-way-1568303899,Block B10,Block B10,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,94298961-1dc7-5cce-bafd-fa6d9f48cf76,osm-way-1159754690,Subway,Subway,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,bcf20e7e-e40d-5729-9aa6-22c99262d16d,osm-way-1158512990,G4 block,G4 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,c3cdd4e6-4bc5-5eca-8222-5bb622c5bab5,osm-way-1164291057,Workshop Building,Workshop Building,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,ca227137-5d48-5e0b-a722-f9eb0a992970,osm-way-1159754688,CCTV room,CCTV room,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,778c6cf7-682d-55b8-af5d-688aaf310b61,osm-way-1158936648,Transformer,Transformer,existing imported label; not field verified,Retain existing label; no new identity asserted.
+E07,places,7a9252c6-b34a-53a1-b17a-e44c5a170108,osm-node-11573972967,Faculty Block Entrance,Faculty Block Entrance,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,7c6972f7-0ddb-5962-a6c1-44200932d053,osm-way-1164291981,Faculty Apartment,Faculty Apartment,existing imported label; not field verified,Retain existing label; no new identity asserted.
+E03,places,899a2e1e-92de-5e56-ba70-8587df8f2d8f,osm-node-10780185180,University Entrance,University Entrance,existing imported label; not field verified,Retain existing label; no new identity asserted.
+E04,places,8f92c608-4969-56e9-927b-5907b3cf0de7,osm-node-10780185181,Hostel Entrance,Hostel Entrance,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,922fc987-3d99-5746-9aa2-553c8f5d4c62,osm-way-1158515143,B6 block,B6 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,92698415-4f89-580d-991f-0a2b1f1114fa,osm-way-1159010179,Ocean Hills Pool,Ocean Hills Pool,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,93e0988b-919b-5533-9325-e340e97fd27c,osm-way-1568303899,Block B10,Block B10,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,94298961-1dc7-5cce-bafd-fa6d9f48cf76,osm-way-1159754690,Subway,Subway,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,bcf20e7e-e40d-5729-9aa6-22c99262d16d,osm-way-1158512990,G4 block,G4 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,c3cdd4e6-4bc5-5eca-8222-5bb622c5bab5,osm-way-1164291057,Workshop Building,Workshop Building,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,ca227137-5d48-5e0b-a722-f9eb0a992970,osm-way-1159754688,CCTV room,CCTV room,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E11,places,ce4c10eb-a008-5f31-b676-842566a12f9f,osm-node-11598364403,Mapped entrance 11598364403,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,d1657172-4a82-5b58-98fe-b279452aecb0,osm-way-1141643445,Quess Mess & Gym complex,Quess Mess & Gym complex,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,d4c663b1-eff4-5ba0-b32e-8191911754aa,osm-way-1568303897,Block B9,Block B9,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,d5261d04-f79f-580a-a201-75a941c6debf,osm-way-1158514978,G3 block,G3 block,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,d5264cfa-a162-5259-a9f1-0c0001500441,osm-way-1356153775,BlueDove Mess and BlueDove Gym,BlueDove Mess and BlueDove Gym,existing source label; not field verified,Retain existing label; no new identity asserted.
-,places,de3c46e3-3dac-5948-9c9d-8568890ea7cc,osm-relation-15765627-part-0,G-1 Block,G-1 Block,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,d1657172-4a82-5b58-98fe-b279452aecb0,osm-way-1141643445,Quess Mess & Gym complex,Quess Mess & Gym complex,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,d4c663b1-eff4-5ba0-b32e-8191911754aa,osm-way-1568303897,Block B9,Block B9,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,d5261d04-f79f-580a-a201-75a941c6debf,osm-way-1158514978,G3 block,G3 block,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,d5264cfa-a162-5259-a9f1-0c0001500441,osm-way-1356153775,BlueDove Mess and BlueDove Gym,BlueDove Mess and BlueDove Gym,existing imported label; not field verified,Retain existing label; no new identity asserted.
+,places,de3c46e3-3dac-5948-9c9d-8568890ea7cc,osm-relation-15765627-part-0,G-1 Block,G-1 Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E13,places,e38a6086-f832-5593-8f23-cf595cf9ea5b,osm-node-11612773070,Mapped entrance 11612773070,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,e4c00ec7-7f36-54cc-97fc-100a9a70ae6e,osm-way-1159753599,Faculty Apartment,Faculty Apartment,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,e4c00ec7-7f36-54cc-97fc-100a9a70ae6e,osm-way-1159753599,Faculty Apartment,Faculty Apartment,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E08,places,eae70b08-19a3-51dd-8a33-44c253d25111,osm-node-11593739317,Mapped entrance 11593739317,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,f2555eec-3d22-5c53-87fb-1983955840ba,osm-way-1164410983,Faculty Apartment,Faculty Apartment,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,f2555eec-3d22-5c53-87fb-1983955840ba,osm-way-1164410983,Faculty Apartment,Faculty Apartment,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E23,places,f6a01735-f5c4-5821-abdc-0e6850b77b05,osm-node-11809063446,Mapped entrance 11809063446,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-,places,f9227e1f-5dc5-555b-beb7-1897459fcee6,osm-way-1151360714,B1 Block,B1 Block,existing source label; not field verified,Retain existing label; no new identity asserted.
+,places,f9227e1f-5dc5-555b-beb7-1897459fcee6,osm-way-1151360714,B1 Block,B1 Block,existing imported label; not field verified,Retain existing label; no new identity asserted.
 E18,places,fad7f9b5-d74f-563b-a2b6-441f7cce857f,osm-node-11664524161,Mapped entrance 11664524161,,unresolved; owner identification required,No unique explicitly named containing source building way. Proximity is not identity.
-E06,places,fdf4178e-c5e7-5d35-8d2e-e4daabe24ddf,osm-node-11573265515,GHS Entrance,GHS Entrance,existing source label; not field verified,Retain existing label; no new identity asserted.
+E06,places,fdf4178e-c5e7-5d35-8d2e-e4daabe24ddf,osm-node-11573265515,GHS Entrance,GHS Entrance,existing imported label; not field verified,Retain existing label; no new identity asserted.

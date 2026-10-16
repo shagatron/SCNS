@@ -257,3 +257,33 @@ def test_failed_seed_rolls_back_everything(db, bundle, seeded):
     with pytest.raises(DBAPIError), db.begin_nested():
         seed_bundle(db, modified)
     assert db.scalar(select(func.count()).select_from(Revision)) == count
+
+
+def test_technical_junction_wording_preserves_legacy_and_mixed_route_selection(
+    client, db, bundle, seeded
+):
+    baseline = client.post("/api/v1/routes", json=body(bundle)).json()
+    node_id = baseline["segments"][0]["to_node_id"]
+    modes = ("metric", "directions_only")
+    before = {
+        m: client.post("/api/v1/routes", json=body(bundle, cost_mode=m)).json() for m in modes
+    }
+    # Construct a new isolated synthetic release through the fixture loader;
+    # never alter a frozen published row or disable its database guard.
+    revised = bundle.model_copy(deep=True)
+    source_node = next(n for n in revised.nodes if str(n.id) == node_id)
+    original = source_node.label
+    source_node.label = "OSM junction 10828149259"
+    test_release = seed_bundle(db, revised)
+    for mode in modes:
+        after = client.post("/api/v1/routes", json=body(bundle, cost_mode=mode)).json()
+        assert after["distance_m"] == before[mode]["distance_m"]
+        assert after["estimated_duration_s"] == before[mode]["estimated_duration_s"]
+        assert [s["edge_id"] for s in after["segments"]] == [
+            s["edge_id"] for s in before[mode]["segments"]
+        ]
+        assert after["segments"][0]["instruction"] == "Continue along the walkway."
+        assert after["arrival_instruction"] == "Arrive at Library."
+        assert "OSM junction" not in " ".join(s["instruction"] for s in after["segments"])
+    stored = db.get(Node, (test_release.dataset_revision_id, source_node.id))
+    assert stored.label == "OSM junction 10828149259" and stored.label != original

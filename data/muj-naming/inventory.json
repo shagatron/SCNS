@@ -11,7 +11,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "yes",
@@ -47,7 +47,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -78,7 +78,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -109,7 +109,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -142,7 +142,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -175,7 +175,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "yes"
@@ -201,7 +201,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "access": "permissive",
@@ -235,7 +235,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -266,7 +266,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -297,7 +297,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "yes"
@@ -356,7 +356,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "yes"
@@ -388,7 +388,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "main"
@@ -425,7 +425,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "access": "permissive",
@@ -470,7 +470,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "door": "yes/manual/main_entrance",
@@ -503,7 +503,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -537,7 +537,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "yes"
@@ -571,7 +571,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -596,7 +596,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -627,7 +627,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "access": "permissive",
@@ -661,7 +661,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -692,7 +692,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -723,7 +723,7 @@
       "marker": null,
       "current_label": null,
       "proposed_name": null,
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "staircase"
@@ -754,7 +754,7 @@
       "marker": null,
       "current_label": "Quess Mess & Gym complex",
       "proposed_name": "Quess Mess & Gym complex",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -774,7 +774,7 @@
       "marker": null,
       "current_label": "Ocean Hills Pool",
       "proposed_name": "Ocean Hills Pool",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -793,7 +793,7 @@
       "marker": null,
       "current_label": "G2 block",
       "proposed_name": "G2 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -814,7 +814,7 @@
       "marker": null,
       "current_label": "Faculty Apartment",
       "proposed_name": "Faculty Apartment",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -833,7 +833,7 @@
       "marker": null,
       "current_label": "Lecture Hall Complex (LHC)",
       "proposed_name": "Lecture Hall Complex (LHC)",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -853,7 +853,7 @@
       "marker": null,
       "current_label": "Administrative Block",
       "proposed_name": "Administrative Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "university",
@@ -874,7 +874,7 @@
       "marker": null,
       "current_label": "B5 block",
       "proposed_name": "B5 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -896,9 +896,9 @@
       "external_id": "osm-way-1254788413",
       "marker": null,
       "current_label": "OSM building osm-way-1254788413",
-      "proposed_name": "OSM building osm-way-1254788413",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "amenity": "fast_food",
         "building": "yes"
@@ -915,9 +915,9 @@
       "external_id": "osm-way-1164291058",
       "marker": null,
       "current_label": "OSM building osm-way-1164291058",
-      "proposed_name": "OSM building osm-way-1164291058",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -933,9 +933,9 @@
       "external_id": "osm-way-1164591247",
       "marker": null,
       "current_label": "OSM building osm-way-1164591247",
-      "proposed_name": "OSM building osm-way-1164591247",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -951,9 +951,9 @@
       "external_id": "osm-way-1254788394",
       "marker": null,
       "current_label": "OSM building osm-way-1254788394",
-      "proposed_name": "OSM building osm-way-1254788394",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "amenity": "toilets",
         "building": "yes"
@@ -971,7 +971,7 @@
       "marker": null,
       "current_label": "BlueDove Mess and BlueDove Gym",
       "proposed_name": "BlueDove Mess and BlueDove Gym",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -991,7 +991,7 @@
       "marker": null,
       "current_label": "Faculty Apartment",
       "proposed_name": "Faculty Apartment",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1011,7 +1011,7 @@
       "marker": null,
       "current_label": "CCTV room",
       "proposed_name": "CCTV room",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1030,7 +1030,7 @@
       "marker": null,
       "current_label": "Block B10",
       "proposed_name": "Block B10",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "apartments",
@@ -1049,7 +1049,7 @@
       "marker": null,
       "current_label": "Transformer",
       "proposed_name": "Transformer",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "transformer",
@@ -1068,7 +1068,7 @@
       "marker": null,
       "current_label": "Subway",
       "proposed_name": "Subway",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1088,7 +1088,7 @@
       "marker": null,
       "current_label": "Old Mess",
       "proposed_name": "Old Mess",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "amenity": "food_court",
@@ -1109,9 +1109,9 @@
       "external_id": "osm-way-1164591246",
       "marker": null,
       "current_label": "OSM building osm-way-1164591246",
-      "proposed_name": "OSM building osm-way-1164591246",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -1127,9 +1127,9 @@
       "external_id": "osm-way-1254788416",
       "marker": null,
       "current_label": "OSM building osm-way-1254788416",
-      "proposed_name": "OSM building osm-way-1254788416",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "amenity": "fast_food",
         "building": "yes"
@@ -1147,7 +1147,7 @@
       "marker": null,
       "current_label": "B1 Block",
       "proposed_name": "B1 Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1171,9 +1171,9 @@
       "external_id": "osm-way-1249398718",
       "marker": null,
       "current_label": "OSM building osm-way-1249398718",
-      "proposed_name": "OSM building osm-way-1249398718",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "amenity": "toilets",
         "building": "yes",
@@ -1193,7 +1193,7 @@
       "marker": null,
       "current_label": "Block B8",
       "proposed_name": "Block B8",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "apartments",
@@ -1212,7 +1212,7 @@
       "marker": null,
       "current_label": "G4 block",
       "proposed_name": "G4 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1235,9 +1235,9 @@
       "external_id": "osm-way-1249398713",
       "marker": null,
       "current_label": "OSM building osm-way-1249398713",
-      "proposed_name": "OSM building osm-way-1249398713",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "amenity": "toilets",
         "building": "yes",
@@ -1256,9 +1256,9 @@
       "external_id": "osm-way-1164291055",
       "marker": null,
       "current_label": "OSM building osm-way-1164291055",
-      "proposed_name": "OSM building osm-way-1164291055",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -1275,7 +1275,7 @@
       "marker": null,
       "current_label": "Academic Block -3",
       "proposed_name": "Academic Block -3",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1294,7 +1294,7 @@
       "marker": null,
       "current_label": "B2 block",
       "proposed_name": "B2 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1319,9 +1319,9 @@
       "external_id": "osm-way-1164410982",
       "marker": null,
       "current_label": "OSM building osm-way-1164410982",
-      "proposed_name": "OSM building osm-way-1164410982",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -1337,9 +1337,9 @@
       "external_id": "osm-way-1158516081",
       "marker": null,
       "current_label": "OSM building osm-way-1158516081",
-      "proposed_name": "OSM building osm-way-1158516081",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes",
         "internet_access:fee": "no",
@@ -1359,9 +1359,9 @@
       "external_id": "osm-way-1247657264",
       "marker": null,
       "current_label": "OSM building osm-way-1247657264",
-      "proposed_name": "OSM building osm-way-1247657264",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "amenity": "toilets",
         "building": "yes"
@@ -1379,7 +1379,7 @@
       "marker": null,
       "current_label": "B7 Boy's Block",
       "proposed_name": "B7 Boy's Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1400,9 +1400,9 @@
       "external_id": "osm-way-1165285554",
       "marker": null,
       "current_label": "OSM building osm-way-1165285554",
-      "proposed_name": "OSM building osm-way-1165285554",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -1418,9 +1418,9 @@
       "external_id": "osm-way-1164291056",
       "marker": null,
       "current_label": "OSM building osm-way-1164291056",
-      "proposed_name": "OSM building osm-way-1164291056",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -1437,7 +1437,7 @@
       "marker": null,
       "current_label": "Block B9",
       "proposed_name": "Block B9",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "apartments",
@@ -1455,9 +1455,9 @@
       "external_id": "osm-way-1164563394",
       "marker": null,
       "current_label": "OSM building osm-way-1164563394",
-      "proposed_name": "OSM building osm-way-1164563394",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -1474,7 +1474,7 @@
       "marker": null,
       "current_label": "G3 block",
       "proposed_name": "G3 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1494,9 +1494,9 @@
       "external_id": "osm-way-1249398706",
       "marker": null,
       "current_label": "OSM building osm-way-1249398706",
-      "proposed_name": "OSM building osm-way-1249398706",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "amenity": "theatre",
         "building": "yes"
@@ -1514,7 +1514,7 @@
       "marker": null,
       "current_label": "Workshop Building",
       "proposed_name": "Workshop Building",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1533,7 +1533,7 @@
       "marker": null,
       "current_label": "G-1 Block",
       "proposed_name": "G-1 Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1553,7 +1553,7 @@
       "marker": null,
       "current_label": "Faculty Apartment",
       "proposed_name": "Faculty Apartment",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1572,9 +1572,9 @@
       "external_id": "osm-way-1164562871",
       "marker": null,
       "current_label": "OSM building osm-way-1164562871",
-      "proposed_name": "OSM building osm-way-1164562871",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -1591,7 +1591,7 @@
       "marker": null,
       "current_label": "Chiller Panel Room",
       "proposed_name": "Chiller Panel Room",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1610,7 +1610,7 @@
       "marker": null,
       "current_label": "Boxing and MMA ground",
       "proposed_name": "Boxing and MMA ground",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1629,9 +1629,9 @@
       "external_id": "osm-way-1164563395",
       "marker": null,
       "current_label": "OSM building osm-way-1164563395",
-      "proposed_name": "OSM building osm-way-1164563395",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -1648,7 +1648,7 @@
       "marker": null,
       "current_label": "B3 Block",
       "proposed_name": "B3 Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -1672,9 +1672,9 @@
       "external_id": "osm-way-1271669888",
       "marker": null,
       "current_label": "OSM building osm-way-1271669888",
-      "proposed_name": "OSM building osm-way-1271669888",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "amenity": "toilets",
         "building": "yes"
@@ -1691,9 +1691,9 @@
       "external_id": "osm-way-1164562870",
       "marker": null,
       "current_label": "OSM building osm-way-1164562870",
-      "proposed_name": "OSM building osm-way-1164562870",
-      "confidence": "existing source label; not field verified",
-      "reason": "Retain existing label; no new identity asserted.",
+      "proposed_name": null,
+      "confidence": "unnamed source building; owner identification required",
+      "reason": "No source name; retain administrative provenance without inventing building identity.",
       "source_tags": {
         "building": "yes"
       },
@@ -1710,7 +1710,7 @@
       "marker": null,
       "current_label": "Laundry, GHS Library and GHS office",
       "proposed_name": "Laundry, GHS Library and GHS office",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "commercial",
@@ -1731,7 +1731,7 @@
       "marker": null,
       "current_label": "B6 block",
       "proposed_name": "B6 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "addr:housenumber": "B6",
@@ -1757,7 +1757,7 @@
       "marker": null,
       "current_label": "Subway",
       "proposed_name": "Subway",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -3929,7 +3929,7 @@
       "marker": "E06",
       "current_label": "GHS Entrance",
       "proposed_name": "GHS Entrance",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "access": "permissive",
@@ -4549,7 +4549,7 @@
       "marker": null,
       "current_label": "c1",
       "proposed_name": "c1",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "description": "Till room no.",
@@ -6328,7 +6328,7 @@
       "marker": "E07",
       "current_label": "Faculty Block Entrance",
       "proposed_name": "Faculty Block Entrance",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "yes",
@@ -8070,7 +8070,7 @@
       "marker": null,
       "current_label": "c4",
       "proposed_name": "c4",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "name": "c4"
@@ -8550,7 +8550,7 @@
       "marker": null,
       "current_label": "c2",
       "proposed_name": "c2",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "name": "c2"
@@ -8951,7 +8951,7 @@
       "marker": "E03",
       "current_label": "University Entrance",
       "proposed_name": "University Entrance",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "access": "permissive",
@@ -9753,7 +9753,7 @@
       "marker": null,
       "current_label": "AB1 footway",
       "proposed_name": "AB1 footway",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "name": "AB1 footway"
@@ -12155,7 +12155,7 @@
       "marker": "E04",
       "current_label": "Hostel Entrance",
       "proposed_name": "Hostel Entrance",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "access": "permissive",
@@ -14608,7 +14608,7 @@
       "marker": null,
       "current_label": "B3 Block",
       "proposed_name": "B3 Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -14671,7 +14671,7 @@
       "marker": null,
       "current_label": "Academic Block -3",
       "proposed_name": "Academic Block -3",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -14696,7 +14696,7 @@
       "marker": null,
       "current_label": "Central Library",
       "proposed_name": "Central Library",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "amenity": "library",
@@ -14721,7 +14721,7 @@
       "marker": null,
       "current_label": "Boxing and MMA ground",
       "proposed_name": "Boxing and MMA ground",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -14887,7 +14887,7 @@
       "marker": null,
       "current_label": "Administrative Block",
       "proposed_name": "Administrative Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "university",
@@ -14951,7 +14951,7 @@
       "marker": null,
       "current_label": "Block B8",
       "proposed_name": "Block B8",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "apartments",
@@ -14976,7 +14976,7 @@
       "marker": null,
       "current_label": "Old Mess",
       "proposed_name": "Old Mess",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "amenity": "food_court",
@@ -15123,7 +15123,7 @@
       "marker": null,
       "current_label": "B7 Boy's Block",
       "proposed_name": "B7 Boy's Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15151,7 +15151,7 @@
       "marker": null,
       "current_label": "B2 block",
       "proposed_name": "B2 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15183,7 +15183,7 @@
       "marker": null,
       "current_label": "Subway",
       "proposed_name": "Subway",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15286,7 +15286,7 @@
       "marker": null,
       "current_label": "Chiller Panel Room",
       "proposed_name": "Chiller Panel Room",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15348,7 +15348,7 @@
       "marker": null,
       "current_label": "Laundry, GHS Library and GHS office",
       "proposed_name": "Laundry, GHS Library and GHS office",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "commercial",
@@ -15375,7 +15375,7 @@
       "marker": null,
       "current_label": "B5 block",
       "proposed_name": "B5 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15404,7 +15404,7 @@
       "marker": null,
       "current_label": "Lecture Hall Complex (LHC)",
       "proposed_name": "Lecture Hall Complex (LHC)",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15430,7 +15430,7 @@
       "marker": null,
       "current_label": "G2 block",
       "proposed_name": "G2 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15457,7 +15457,7 @@
       "marker": "E01",
       "current_label": "Subway entrance/exit",
       "proposed_name": "Subway entrance/exit",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "yes",
@@ -15542,7 +15542,7 @@
       "marker": null,
       "current_label": "Transformer",
       "proposed_name": "Transformer",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "transformer",
@@ -15567,7 +15567,7 @@
       "marker": "E07",
       "current_label": "Faculty Block Entrance",
       "proposed_name": "Faculty Block Entrance",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "entrance": "yes",
@@ -15609,7 +15609,7 @@
       "marker": null,
       "current_label": "Faculty Apartment",
       "proposed_name": "Faculty Apartment",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15635,7 +15635,7 @@
       "marker": "E03",
       "current_label": "University Entrance",
       "proposed_name": "University Entrance",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "access": "permissive",
@@ -15675,7 +15675,7 @@
       "marker": "E04",
       "current_label": "Hostel Entrance",
       "proposed_name": "Hostel Entrance",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "access": "permissive",
@@ -15715,7 +15715,7 @@
       "marker": null,
       "current_label": "B6 block",
       "proposed_name": "B6 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "addr:housenumber": "B6",
@@ -15747,7 +15747,7 @@
       "marker": null,
       "current_label": "Ocean Hills Pool",
       "proposed_name": "Ocean Hills Pool",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15772,7 +15772,7 @@
       "marker": null,
       "current_label": "Block B10",
       "proposed_name": "Block B10",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "apartments",
@@ -15797,7 +15797,7 @@
       "marker": null,
       "current_label": "Subway",
       "proposed_name": "Subway",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15823,7 +15823,7 @@
       "marker": null,
       "current_label": "G4 block",
       "proposed_name": "G4 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15853,7 +15853,7 @@
       "marker": null,
       "current_label": "Workshop Building",
       "proposed_name": "Workshop Building",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15878,7 +15878,7 @@
       "marker": null,
       "current_label": "CCTV room",
       "proposed_name": "CCTV room",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15934,7 +15934,7 @@
       "marker": null,
       "current_label": "Quess Mess & Gym complex",
       "proposed_name": "Quess Mess & Gym complex",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -15960,7 +15960,7 @@
       "marker": null,
       "current_label": "Block B9",
       "proposed_name": "Block B9",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "apartments",
@@ -15985,7 +15985,7 @@
       "marker": null,
       "current_label": "G3 block",
       "proposed_name": "G3 block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -16012,7 +16012,7 @@
       "marker": null,
       "current_label": "BlueDove Mess and BlueDove Gym",
       "proposed_name": "BlueDove Mess and BlueDove Gym",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -16038,7 +16038,7 @@
       "marker": null,
       "current_label": "G-1 Block",
       "proposed_name": "G-1 Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -16101,7 +16101,7 @@
       "marker": null,
       "current_label": "Faculty Apartment",
       "proposed_name": "Faculty Apartment",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -16167,7 +16167,7 @@
       "marker": null,
       "current_label": "Faculty Apartment",
       "proposed_name": "Faculty Apartment",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -16232,7 +16232,7 @@
       "marker": null,
       "current_label": "B1 Block",
       "proposed_name": "B1 Block",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "building": "yes",
@@ -16300,7 +16300,7 @@
       "marker": "E06",
       "current_label": "GHS Entrance",
       "proposed_name": "GHS Entrance",
-      "confidence": "existing source label; not field verified",
+      "confidence": "existing imported label; not field verified",
       "reason": "Retain existing label; no new identity asserted.",
       "source_tags": {
         "access": "permissive",

@@ -275,7 +275,9 @@ def main():
         print(
             "Source-supported names saved in draft only. Review/validation/publication remain explicit and separate."
         )
-    except (DemoError, ValueError, KeyError, OSError, TypeError):
+    except (DemoError, ValueError, KeyError, OSError, TypeError) as error:
+        if isinstance(error, DemoError):
+            print(str(error))  # Shared client errors omit response bodies/secrets.
         if attempted:
             print(
                 "A name transaction may have succeeded. Preserve the draft; rerun WITHOUT --apply-source-name to verify partial/current state. Exact already-present names are no-ops; no original audit evidence is invented."

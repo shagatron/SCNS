@@ -20,9 +20,11 @@ from app.services.muj_update import comparable
 from app.services.publication import TABLES, checksum, public_projection
 
 
-def require(condition, message):
+def require(condition, message, details=None):
     if not condition:
-        raise DemoError(message + " No dataset writes; preserve current draft/reasons.")
+        error = DemoError(message + " No dataset writes; preserve current draft/reasons.")
+        error.evidence = details
+        raise error
 
 
 def select_run(packet, identity=None):
@@ -108,6 +110,11 @@ def verify_diff(parent, packet):
         len(changes) == len(packet["diff"]) == 2
         and set(changes) == {(r["entity"], r["id"]) for r in allowed},
         "Full draft diff contains changes beyond the two E22 records",
+        {
+            "observed_diff": packet["diff"],
+            "checksum": packet["checksum"],
+            "expected_records": [{"entity": r["entity"], "id": r["id"]} for r in allowed],
+        },
     )
     for row in allowed:
         entity, identity = row["entity"], row["id"]
@@ -225,6 +232,15 @@ def compare_findings(previous, current, acknowledgements):
     require(
         len(actual) == len(current) and actual == expected,
         "Unexpected current finding additions/removals/content; no blanket reason carry-forward",
+        {
+            "added_ids": sorted(set(actual) - set(expected)),
+            "missing_ids": sorted(set(expected) - set(actual)),
+            "differences": [
+                {"id": i, "expected": expected.get(i), "actual": actual.get(i)}
+                for i in sorted(set(expected) | set(actual))
+                if expected.get(i) != actual.get(i)
+            ],
+        },
     )
     require(
         len(previous) == 148
@@ -305,6 +321,14 @@ def collect(client, draft, validation=None):
     require(
         route_evidence(run["evidence"]) == route_evidence(parent_run["evidence"]),
         "Current route acceptance evidence differs from reviewed parent; inspect before retaining reasons",
+        {
+            "parent_validation_id": parent_run["id"],
+            "previous_evidence": parent_run["evidence"],
+            "current_validation_id": run["id"],
+            "current_evidence": run["evidence"],
+            "current_version": packet["edit_version"],
+            "current_checksum": packet["checksum"],
+        },
     )
     expected_counts = {
         "connectivity_shortest": 52,
@@ -404,11 +428,12 @@ def preflight(client, draft, validation=None):
             {
                 "draft_id": str(draft),
                 "blockers": [str(error)],
+                "details": getattr(error, "evidence", None),
                 "scope_type": "e22-naming-clone",
                 "action": "read_only",
             },
         )
-        raise
+        raise DemoError(f"{error} Inspect {root}/blocked.json.") from None
     folder = root / f"v{report['version']}-{report['checksum']}-{report['validation_id']}"
     folder.mkdir(exist_ok=True, mode=0o700)
     effective = {}

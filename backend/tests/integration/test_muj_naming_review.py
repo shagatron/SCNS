@@ -43,6 +43,8 @@ def reviewer(db, bundle):
 def test_normal_parent_history_clone_diff_current_reasons_and_read_only_retries(
     client, db, bundle, identity, reviewer, monkeypatch, tmp_path
 ):
+    monkeypatch.setenv("STORAGE_ROOT", str(tmp_path))
+    get_settings.cache_clear()
     owner_headers = sign_in(client, identity)
     result = provision(client, bundle, owner_headers)
     fixture = SimpleNamespace(campus=SimpleNamespace(id=cli.CAMPUS_ID))
@@ -243,7 +245,9 @@ def test_normal_parent_history_clone_diff_current_reasons_and_read_only_retries(
         cli.preflight(http, UUID(draft), UUID(validation["id"]))
     assert list(db.scalars(select(ActiveRelease.release_id))) == before
     assert json.loads((folder / "proposal.json").read_text()) == proposal
-    assert json.loads((folder.parent / "blocked.json").read_text())["blockers"]
+    conflict = json.loads((folder.parent / "blocked.json").read_text())
+    assert conflict["blockers"] and conflict["details"]["observed_diff"]
+    assert any(d["id"] == other for d in conflict["details"]["observed_diff"])
     assert all(p.stat().st_mode & 0o777 == 0o600 for p in tmp_path.rglob("*.json"))
     assert all(
         identity[1] not in p.read_text() and "csrf_token" not in p.read_text()

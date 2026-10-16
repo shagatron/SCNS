@@ -542,6 +542,10 @@ def perform(client, folder, action, confirm=None):
     if root not in folder.parents:
         raise DemoError("Use the exact private preflight bundle printed by this helper.")
     saved = json.loads((folder / "report.json").read_text())
+    if saved.get("scope_type") == "e22-naming-clone":
+        raise DemoError(
+            "Naming-clone bundles are read-only; use the normal UI with current individual reasons"
+        )
     payload = json.loads((folder / "proposal.json").read_text())
     if saved["prepared_by"] != str(UUID(client.session["user_id"])) or saved["action"] != action:
         raise DemoError(
@@ -689,7 +693,16 @@ def main():
     parser.add_argument("--validation", type=UUID)
     parser.add_argument("--action", choices=["preflight", "submit", "approve"], default="preflight")
     parser.add_argument("--bundle", type=Path)
+    parser.add_argument(
+        "--naming-clone",
+        action="store_true",
+        help="Read-only full-parent/diff and warning counterpart assessment for the E22 clone",
+    )
     args = parser.parse_args()
+    if args.naming_clone and (args.action != "preflight" or args.bundle):
+        parser.error(
+            "--naming-clone is read-only; submit/review/publication remain explicit through the normal UI"
+        )
     if args.action != "preflight" and not args.bundle:
         parser.error("Explicit action requires the previously inspected --bundle path")
     client = Client(origin=os.environ.get("PUBLIC_APP_URL", "http://localhost:5173"))
@@ -698,7 +711,11 @@ def main():
             client, "MUJ owner/editor or independent reviewer (as appropriate for this action)"
         )
         UUID(client.session["user_id"])
-        if args.action == "preflight":
+        if args.naming_clone:
+            from app.cli.muj_naming_review import preflight as naming_preflight
+
+            naming_preflight(client, args.draft, args.validation)
+        elif args.action == "preflight":
             preflight(client, args.draft, args.validation)
         else:
             # Bind the command's campus/draft to the saved bundle, never silently select another.

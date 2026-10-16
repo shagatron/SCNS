@@ -6,7 +6,7 @@ This is a source naming assessment and optional draft-only correction, not a new
 
 [Numbered atlas and identification table](../data/muj-naming/README.md), [overview](../data/muj-naming/overview.svg), [423-row CSV](../data/muj-naming/inventory.csv) and [full source-evidence JSON](../../data/muj-naming/inventory.json) use the exact pinned OSM source SHA256d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de. Source IDs, tags, explicit way membership, imported building associations and anchor references are retained. Contributor metadata is excluded. Source context includes excluded/indoor/private paths; it does not imply navigation eligibility or physical connectivity. Every entrance has its own zoomed map. The overview is intentionally less detailed; use individual maps for crowded markers. OSM attribution/ODbL remains visible.
 
-Inventory “current” labels are the pinned import baseline, **not a claim to have queried Windows**. Run the helper below to bind the actual current published release ID/checksum/labels and any selected draft's fresh edit version. Its report marks missing/owner-renamed rows; it never restores a pinned dataset over owner work.
+Inventory `existing_building_id` retains the pinned import external reference (resolve it against the buildings rows’ `external_id`/stable UUID); it is not a claim to have read a Windows database field. All entrance associations remain null. Inventory “current” labels are the pinned import baseline, **not a claim to have queried Windows**. Run the helper below to bind the actual current published release ID/checksum/labels and any selected draft's fresh edit version. Its report marks missing/owner-renamed rows; it never restores a pinned dataset over owner work.
 
 - **E22 / osm-node-11664524407:** proposed **TMA Pai Auditorium entrance** for its existing place and graph node. Exact source membership in named building way1249393737 supports this; no proximity inference. Source entrance=main is retained as evidence, but the proposed name deliberately omits main. No new building association, room/floor or accessibility claim.
 - **E02 / osm-node-10773902923:** source node belongs to both the named auditorium outline and room016 outline; exclusive identity remains ambiguous. No automatic auditorium rename.
@@ -70,7 +70,7 @@ $ParsedNamingDraft = [guid]::Parse($NamingDraft)
 Invoke-ScnsStep { docker compose run --rm --no-deps api python -m app.cli.muj_naming --draft $ParsedNamingDraft }
 ```
 
-3. Inspect its printed private report, including full before/after fields. Only nodes.label/places.name may differ. Geometry, stable IDs, costs, direction, visibility, accessibility, description, evidence and anchors remain unchanged. If there are blockers or any unexpected input, stop. This helper never merges source nodes or repairs topology.
+3. Inspect its printed private report, including full before/after fields. Only nodes.label/places.name may differ in the writable payload. The normal catalog service also regenerates its derived search index for the renamed place; this is expected and keeps search aligned with the new name. Geometry, stable IDs, costs, direction, visibility, accessibility, description, evidence and anchors remain unchanged. If there are blockers or any unexpected input, stop. This helper never merges source nodes or repairs topology.
 4. If accepting **only E22**, run:
 
 ```powershell

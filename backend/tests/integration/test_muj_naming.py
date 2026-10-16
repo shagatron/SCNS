@@ -193,6 +193,16 @@ def test_cli_actual_session_partial_receipt_failure_retry_conflict_permissions_a
         expected_rows[change["entity"]][change["id"]][cli.LABELS[change["entity"]]] = change[
             "proposed_name"
         ]
+    # The catalog API intentionally rebuilds this derived index after a rename.
+    # Assert the exact additional field, rather than hiding arbitrary row drift.
+    place_id = next(r["id"] for r in cli.supported_changes() if r["entity"] == "places")
+    renamed = final["places"][place_id]
+    expected_place = expected_rows["places"][place_id]
+    differences = {k for k in renamed if renamed[k] != expected_place[k]}
+    assert differences == {"search_text"}
+    assert "tma pai auditorium entrance" in renamed["search_text"]
+    assert "mapped entrance" not in renamed["search_text"]
+    expected_place["search_text"] = renamed["search_text"]
     for entity in ("nodes", "places", "edges", "anchors", "frames"):
         assert (
             final[entity] == expected_rows[entity]

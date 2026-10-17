@@ -14,7 +14,9 @@ function Invoke-ScnsStep {
     if ($LASTEXITCODE -ne 0) { throw 'SCNS command failed. Stop and preserve existing work, data and volumes.' }
 }
 Invoke-ScnsStep { git status --short }
-if (git status --porcelain) { throw 'Preserve local changes before updating; nothing reset.' }
+$ScnsDirty = git status --porcelain
+if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect working tree; stop.' }
+if ($ScnsDirty) { throw 'Preserve local changes before updating; nothing reset.' }
 Invoke-ScnsStep { git fetch origin refs/heads/redesign/map-explorer:refs/remotes/origin/redesign/map-explorer }
 $ScnsExplorerBranch = git branch --list redesign/map-explorer
 if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect local branches; stop.' }
@@ -63,4 +65,4 @@ The Windows E22 publication/acceptance recorded earlier is **owner-reported**, p
 
 Frozen installation: `npm ci`; `cd backend` then `UV_CACHE_DIR=/tmp/scns-uv-cache uv sync --frozen`. Do not run `make setup` merely to overwrite local configuration. Frontend: `npm run check --workspace frontend`, `npm run test --workspace frontend`, `npm run build --workspace frontend`. Existing contract checks: from backend, `uv run --frozen pytest -q tests/unit/test_floorplan_contract.py tests/unit/test_qr_contract.py tests/unit/test_publication_contract.py tests/unit/test_indoor_contract.py tests/unit/test_closure_contract.py`.
 
-Use documented isolated source runner `cd backend; uv run --frozen python -m tests.browser_runner` with existing test-database prerequisites; it explicitly owns/resets only a `_e2e_test` database and temporary fixture storage, never the retained developer database. After frozen API/frontend builds, `python scripts/smoke-publication-containers.py` owns its uniquely named test DB/network/temporary storage and cleans those resources only. The runner now includes explorer/source-visual fixtures. Do not run these against Windows developer data. Evidence and limits are recorded in [verification](../testing/verification.md); screenshots are in [the preview index](../previews/map-explorer/README.md).
+Use documented isolated source runner `cd backend; uv run --frozen python -m tests.browser_runner` with existing test-database prerequisites; it explicitly owns/resets only a `_e2e_test` database and temporary fixture storage, never the retained developer database. In the managed cloud, use `DOCKER_CONFIG=/tmp/scns-docker python scripts/cloud-build.py` for the frozen API/frontend build: it forwards the existing proxy, proxy DNS and CA trust without printing credentials or disabling TLS. After those builds, `python scripts/smoke-publication-containers.py` owns its uniquely named test DB/network/temporary storage and cleans those resources only. The default runner includes all existing workflows plus explorer/source-visual fixtures. After a presentation-only correction, `python scripts/smoke-publication-containers.py --explorer-only` reruns explorer, source-response simulation and public-experience checks with the same disposable DB/storage and private/readiness boundaries; it does not replace the initial full regression. Do not run these against Windows developer data. Evidence and limits are recorded in [verification](../testing/verification.md); screenshots are in [the preview index](../previews/map-explorer/README.md).

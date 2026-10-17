@@ -39,6 +39,6 @@ test('source-derived MUJ footprints/path context and unresolved names in a simul
   await expect(page.locator('.selected-pin')).toHaveCount(1)
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
   await page.getByRole('button',{name:'Close place details'}).click()
-  await page.locator('#explorer').evaluate(el=>el.scrollIntoView({behavior:'instant'}))
-  await page.screenshot({path:`test-results/map-explorer/${info.project.name}-source-context.png`,style:'.public-navigation, .skip-link { visibility:hidden !important; }'})
+  // Capture the complete map/context/attribution rather than just the tall mobile controls.
+  await page.locator('.outdoor-panel').screenshot({path:`test-results/map-explorer/${info.project.name}-source-context.png`,style:'.public-navigation, .skip-link { visibility:hidden !important; }'})
 })

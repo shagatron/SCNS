@@ -1,0 +1,119 @@
+{
+  "captured_on": "2026-10-17",
+  "frontend_image_sha256": "3f041fa78566f3e08de415059eb09ef2f999233263cfdf665de5d7f76b59d5a4",
+  "scope": "Disposable synthetic Demo API routes; explicitly simulated source-response context only for MUJ. Not Windows or actual MUJ release evidence.",
+  "images": [
+    {
+      "file": "1440-browse.png",
+      "width_px": 1440,
+      "height_px": 960,
+      "bytes": 107257,
+      "sha256": "ef75c1f9a2d2356ff41cb0ef9814dfe04d8917a88c623fbb503336704b2277b8"
+    },
+    {
+      "file": "1440-route.png",
+      "width_px": 1440,
+      "height_px": 960,
+      "bytes": 117527,
+      "sha256": "8be45c74e57ed1a38e445bce64c62f9795b83b108adf3cce16a37918b33e03b8"
+    },
+    {
+      "file": "1440-selected.png",
+      "width_px": 1440,
+      "height_px": 960,
+      "bytes": 119952,
+      "sha256": "67b4e10fda23ead16ebc4734a542f09cff179fdface44ca80cc363e460ced678"
+    },
+    {
+      "file": "320-browse.png",
+      "width_px": 320,
+      "height_px": 960,
+      "bytes": 56373,
+      "sha256": "312b4bc275741734dde171f8b1829899d10dbf7ce03d1955d3315815301614a2"
+    },
+    {
+      "file": "320-route.png",
+      "width_px": 320,
+      "height_px": 960,
+      "bytes": 52996,
+      "sha256": "4b72833b8950d69ac50854d33e9959889045b324d01773b1a75d8acbabaaa9fb"
+    },
+    {
+      "file": "360-browse.png",
+      "width_px": 360,
+      "height_px": 960,
+      "bytes": 64020,
+      "sha256": "b99cf312e84ccf1b016232e997443b3053a90f71c5308fec5abd55bd4d44d6fa"
+    },
+    {
+      "file": "360-route.png",
+      "width_px": 360,
+      "height_px": 960,
+      "bytes": 55444,
+      "sha256": "90a8865947fc1d1684e68105a705e41925797cbfc8131e252d91b353c1d28da9"
+    },
+    {
+      "file": "390-browse.png",
+      "width_px": 390,
+      "height_px": 960,
+      "bytes": 64358,
+      "sha256": "df5c1b14a44108a2d59aaedab52f7a5577986299947fd5a0aa8e5356e18bf3ec"
+    },
+    {
+      "file": "390-route.png",
+      "width_px": 390,
+      "height_px": 960,
+      "bytes": 56402,
+      "sha256": "d42d93435bbe546d000b7a723bc4afe4fcdd859e509f4c3c289d01be0fde8fa5"
+    },
+    {
+      "file": "390-selected.png",
+      "width_px": 390,
+      "height_px": 960,
+      "bytes": 54938,
+      "sha256": "6cbddbd231839882661edc23c8e0169c5761b25d3b071f0a22734956371e857e"
+    },
+    {
+      "file": "768-browse.png",
+      "width_px": 768,
+      "height_px": 960,
+      "bytes": 92408,
+      "sha256": "4566b46fdafb0c727dcb41d665eb208fc3bdf3299fac12cd161a3aa0fc5eabef"
+    },
+    {
+      "file": "768-route.png",
+      "width_px": 768,
+      "height_px": 960,
+      "bytes": 93196,
+      "sha256": "ad80255338bab4995ae99f083312e966fcdc571a0349398e1da5d9e8ec12ae35"
+    },
+    {
+      "file": "desktop-chromium-source-context.png",
+      "width_px": 813,
+      "height_px": 624,
+      "bytes": 64319,
+      "sha256": "4547a88cd9e38124c559330dc2691b355efc4ce102b1a84b35dd40a507ec0f4f"
+    },
+    {
+      "file": "mobile-chromium-source-context.png",
+      "width_px": 824,
+      "height_px": 1614,
+      "bytes": 255379,
+      "sha256": "a7bf1e131e38afd2a934cfe5936067fc701e0ea64740a3594de5d06cbfda6de9"
+    },
+    {
+      "file": "360-full-route-directions.png",
+      "width_px": 340,
+      "height_px": 3045,
+      "bytes": 162431,
+      "sha256": "2e98a6910ea75484a5e5a8659bfa398635ffcf0e7ccedca0b5d2573135bb65d8"
+    },
+    {
+      "file": "1440-full-route-directions.png",
+      "width_px": 1392,
+      "height_px": 2387,
+      "bytes": 225328,
+      "sha256": "7025b6e48c92242bf84604da139f06c43ee1a4a1a4d3f8f4862a0779841ad3e6"
+    }
+  ]
+}

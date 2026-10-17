@@ -103,3 +103,22 @@ test('failed map renderer chunk retains the working text-only route planner', as
   await expect(page.getByText('Arrive at Library.', { exact: true })).toBeVisible()
   await expect(page.locator('.route-metrics')).toContainText('257')
 })
+
+test('a reduced mobile viewport keeps the focused search and native panel controls usable', async ({ page }) => {
+  // Deterministic keyboard-space emulation, NOT an actual phone/SIP test.
+  await page.setViewportSize({ width: 390, height: 800 })
+  await page.goto('/#explorer')
+  await page.getByRole('button', { name: 'Collapse panel', exact: true }).click()
+  await page.setViewportSize({ width: 390, height: 440 })
+  await page.getByLabel('Search destinations').fill('books')
+  await expect(page.getByLabel('Search destinations')).toBeFocused()
+  await expect(page.getByLabel('Search destinations')).toBeInViewport()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  await page.locator('.place-select').filter({ hasText: 'Library' }).click()
+  await expect(page.getByRole('region', { name: 'Selected place details' })).toBeFocused()
+  await page.keyboard.press('Escape')
+  await expect(page.locator('.place-select').filter({ hasText: 'Library' })).toBeFocused()
+  await page.setViewportSize({ width: 390, height: 800 })
+  await page.getByRole('button', { name: 'Plan route', exact: true }).click()
+  await expect(page.getByLabel('Destination', { exact: true })).toBeFocused()
+})

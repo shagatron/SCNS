@@ -1,0 +1,110 @@
+{
+  "baseline": "4fbc61663add1a31df0cda66e065e73a542f6fed",
+  "qualification": "Before implementation, isolated synthetic Demo fixture, actual desktop/mobile Chromium renders; not Windows, real MUJ or physical phone evidence.",
+  "files": {
+    "desktop-chromium/directory.png": {
+      "bytes": 108521,
+      "sha256": "a8eaec2d339b970a1bdb8d9ee6e5bf97810d616bdf7be8352ae2de2fe65fdf4f",
+      "dimensions": [
+        1392,
+        1629
+      ]
+    },
+    "desktop-chromium/intro.png": {
+      "bytes": 89162,
+      "sha256": "a2a380b9c38745442138b1be7e5d69482ea50f728d26ea3595e1135105665a1c",
+      "dimensions": [
+        1392,
+        912
+      ]
+    },
+    "desktop-chromium/no-route.png": {
+      "bytes": 159741,
+      "sha256": "8a07b47cf6d1cde6bbad67f30f11ebc36e6e9526dea4314a2f64c85eac8d3cfe",
+      "dimensions": [
+        1392,
+        1645
+      ]
+    },
+    "desktop-chromium/observations.json": {
+      "bytes": 4636,
+      "sha256": "31d9df89bd3cbd942dcad99511dfe7b494048103f61087a8e08041dda0c80345"
+    },
+    "desktop-chromium/planner.png": {
+      "bytes": 51022,
+      "sha256": "c4c44372fb3b80572192d6e63ac325f2a3e7abaa4400b693e64b37722be72f4d",
+      "dimensions": [
+        321,
+        1148
+      ]
+    },
+    "desktop-chromium/route.png": {
+      "bytes": 194999,
+      "sha256": "2cdcb2ab0c9bbfe5e1c3b1b231418d6e15bfb2d762207c0270ce56bb60438e08",
+      "dimensions": [
+        1392,
+        2397
+      ]
+    },
+    "desktop-chromium/search-error.png": {
+      "bytes": 40262,
+      "sha256": "12194db6eaf07d44725a2bd9c41e3169e68bab8330859dd3f64392e040bc6662",
+      "dimensions": [
+        1392,
+        677
+      ]
+    },
+    "mobile-chromium/directory.png": {
+      "bytes": 328236,
+      "sha256": "87a3fae472fc41c76772c350efc61524ac0b3393559011cce0d06acbf37d50af",
+      "dimensions": [
+        971,
+        9035
+      ]
+    },
+    "mobile-chromium/intro.png": {
+      "bytes": 158855,
+      "sha256": "d57c056fb5643cea285ea10b910cd833ac3f4b49338257339e0bb36b5b97aa52",
+      "dimensions": [
+        971,
+        2376
+      ]
+    },
+    "mobile-chromium/no-route.png": {
+      "bytes": 470186,
+      "sha256": "2207373d2224d55f666e8b57d476ada53c017700874d0175f07d8e6459608f1b",
+      "dimensions": [
+        971,
+        6224
+      ]
+    },
+    "mobile-chromium/observations.json": {
+      "bytes": 4629,
+      "sha256": "7cbdf3323e9244a734a1e1f9b403989181cd256c6b32c0761617e366e6cb7922"
+    },
+    "mobile-chromium/planner.png": {
+      "bytes": 180664,
+      "sha256": "a69b978a302bafed637015985a29cf2f0e6b04abdbd7ac4fc4e1f455831bb512",
+      "dimensions": [
+        866,
+        2993
+      ]
+    },
+    "mobile-chromium/route.png": {
+      "bytes": 529518,
+      "sha256": "6064956cde8040883f74d560dcf1660a2be7745b0aff6f981cfa98e508eaf974",
+      "dimensions": [
+        971,
+        8054
+      ]
+    },
+    "mobile-chromium/search-error.png": {
+      "bytes": 88442,
+      "sha256": "889dba6a4cb25f8eec7d0176519629cac042bed8664c01a58c87d4354e9ea2f5",
+      "dimensions": [
+        971,
+        1667
+      ]
+    }
+  }
+}

@@ -8,7 +8,7 @@ import math
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 
-from shapely.geometry import LineString, Point, shape
+from shapely.geometry import LineString, Point, Polygon, shape
 
 from app.services.muj_diagnostics import diagnose
 from app.services.osm_conversion import WALK, access_reason, encode, tags, vertical_reason
@@ -63,6 +63,13 @@ def account(raw, preparation):
         for index in range(left, right):
             represented[way, index].append({"edge_id": identity, "source_forward": forward})
     coverage = shape(diagnostic["scope"]["coverage"])
+    footprints = {}
+    for w, element in ways.items():
+        rr = refs[w]
+        if "building" in tags(element) and len(rr) >= 4 and rr[0] == rr[-1]:
+            polygon = Polygon([positions[n] for n in rr])
+            if polygon.is_valid:
+                footprints[w] = polygon
     decisions = defaultdict(set)
     for d in diagnostic["source_decisions"]:
         decisions[d["source"]].add(d["reason"])
@@ -142,6 +149,17 @@ def account(raw, preparation):
                         for k, v in entities["anchors"].items()
                         if v["node_id"] in {f"osm-node-{a}", f"osm-node-{b}"}
                     ),
+                    "building_interior_context": [
+                        {
+                            "way_id": w,
+                            "tags": tags(ways[w]),
+                            "both_endpoints_explicit_outline_members": a in refs[w]
+                            and b in refs[w],
+                            "assessment": "Source geometry/outline overlap only; not a new passage, floor, identity or access approval.",
+                        }
+                        for w, polygon in footprints.items()
+                        if LineString(points).relate_pattern(polygon, "T********")
+                    ],
                     "proposed_change": None,
                 }
             )
@@ -185,6 +203,7 @@ def account(raw, preparation):
         "format": "scns-muj-all-source-pairs-v1",
         "source_sha256": diagnostic["source_sha256"],
         "manifest_sha256": diagnostic["preparation_manifest_sha256"],
+        "scope": diagnostic["scope"],
         "counts": {
             "highway_ways": len({r["way_id"] for r in rows}),
             "source_pairs": len(rows),
@@ -248,18 +267,33 @@ def draw(report, raw, bounds, questions, title):
         for n in root.findall("node")
     }
     for w in root.findall("way"):
-        if "building" in tags(w):
+        if "building" in tags(w) or "leisure" in tags(w):
             coords = [pp[n.attrib["ref"]] for n in w.findall("nd") if n.attrib["ref"] in pp]
             if len(coords) > 2:
                 svg.append(
                     f'<polyline points="{points(coords)}" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>'
                 )
+                if name := tags(w).get("name"):
+                    x, y = xy(coords[0])
+                    svg.append(
+                        f'<text x="{x:.2f}" y="{y:.2f}" font-size="8" font-family="sans-serif" fill="#777">{html.escape(name[:60])}</text>'
+                    )
     for row in report["segments"]:
         color = "#19745f" if row["represented"] else "#b44348"
         dash = "" if row["represented"] else ' stroke-dasharray="4 3"'
         svg.append(
             f'<polyline points="{points(row["geometry"])}" fill="none" stroke="{color}" stroke-width="1.8"{dash}><title>{row["segment"]}: {html.escape(", ".join(row["reasons"]) or "retained")}</title></polyline>'
         )
+    for c in report["components"]:
+        x, y = xy(pp[str(c["source_node_ids"][0])])
+        svg.append(
+            f'<text x="{x:.2f}" y="{y - 4:.2f}" font-family="sans-serif" font-size="10" fill="#075b43">C{c["component"]}</text>'
+        )
+    if east - west < 0.001:
+        for identity, p in pp.items():
+            if west <= p[0] <= east and south <= p[1] <= north:
+                x, y = xy(p)
+                svg.append(f'<circle cx="{x:.2f}" cy="{y:.2f}" r="2" fill="#222"/><text x="{x + 4:.2f}" y="{y:.2f}" font-family="sans-serif" font-size="8">{identity}</text>')
     for q in questions:
         x, y = xy(q["point"])
         svg.append(
@@ -273,3 +307,99 @@ def draw(report, raw, bounds, questions, title):
         ]
     )
     return "\n".join(svg) + "\n"
+
+
+def write_atlas(report, raw, output):
+    """Stable numbered source-only questions, not implied or proposed connectors."""
+    root = ET.fromstring(raw)
+    nodes = {
+        int(n.attrib["id"]): [float(n.attrib["lon"]), float(n.attrib["lat"])]
+        for n in root.findall("node")
+    }
+    questions = [
+        (
+            1,
+            10778271605,
+            "10778271605; ways1159217177/1245274146",
+            "What current pedestrian audience is permitted at the explicitly private subway entrance? Retain private exclusion until documented permission/source evidence supersedes it.",
+        ),
+        (
+            2,
+            10733816254,
+            "10733816254/255/256/257; ways1154145270/1154145273/1246099090/1154145269",
+            "Clarify approach/tunnel extent, actual landings and permitted road-gap coverage. Shared source chain exists, but tunnel:name, layer=-1, stairs and polygon gap remain unresolved. No new source evidence resolves the earlier finding.",
+        ),
+        (
+            3,
+            12585506492,
+            "Library node12585506492; Administrative Block way1158522861",
+            "Identify an actual permitted Library arrival door, floor and continuous mapped approach. Library display point/outline containment and screenshot wording do not establish an entrance.",
+        ),
+        (
+            4,
+            10773902923,
+            "ways926463927/1158509500/1158055386/1247085145; entrances10773902923/11664524407",
+            "Which corridor sections are outdoor, covered or indoor, on which floor and through which permitted doors? Retain conservative corridor/level exclusions. Existing E22 identity stays TMA Pai Auditorium entrance; no new identity inferred.",
+        ),
+        (
+            5,
+            11809063446,
+            "nodes11809063446/11593739317 and11594340527/11809063447; ways1247085147/1271670518/1245278034",
+            "Do the distinct near-duplicate source stubs actually join at the same permitted level/door? Need source/annotated evidence before any merge; proximity alone is insufficient and physical separation is not established.",
+        ),
+        (
+            6,
+            10770949033,
+            "ways1158191367/1158191368/1164590129 (C8)",
+            "If a connection from this mapped sports-path component is wanted, identify its actual continuous permitted approach and shared source-node evidence. No excluded highway touches this component; source does not provide the missing join.",
+        ),
+        (
+            7,
+            10771011953,
+            "way1158192973 (C16)",
+            "Identify a continuous permitted approach to this isolated hostel-side footway if needed. No excluded highway shares a retained node; do not snap it to adjacent lanes.",
+        ),
+        (
+            8,
+            10634009265,
+            "ways1141643441/1141643442/1141643443 (C6)",
+            "Identify a continuous permitted approach to the source-labelled jogging loop if needed. No excluded highway shares its retained nodes; no nearby-road shortcut is supported.",
+        ),
+    ]
+    questions = [
+        {"id": identity, "point": nodes[node], "source_ids": sources, "question": text}
+        for identity, node, sources, text in questions
+    ]
+    (output / "questions.json").write_bytes(encode(questions))
+    bounds = shape(report["scope"]["extent"]).bounds
+    maps = {
+        "overview": (bounds, "All-source MUJ path accounting · questions1–8"),
+        "academic": (
+            (75.5631, 26.8409, 75.5676, 26.8441),
+            "Academic paths, Library context and corridor questions",
+        ),
+        "hostel-crossing": (
+            (75.5604, 26.8398, 75.5644, 26.8431),
+            "Hostel paths and unresolved boundary/subway approaches",
+        ),
+        "cricket": (
+            (75.5625, 26.8440, 75.5682, 26.8470),
+            "Northern campus / sports-path source context",
+        ),
+        "near-pairs": (
+            (75.56405, 26.8428, 75.56455, 26.84325),
+            "Distinct source stubs · no proximity merge (question5)",
+        ),
+    }
+    for name, (bounds, title) in maps.items():
+        (output / f"{name}.svg").write_text(
+            draw(report, raw, bounds, questions, title), encoding="utf-8"
+        )
+    (output / "questions.md").write_text(
+        "# Questions requiring campus/source evidence\n\n"
+        "Numbered circles match the [overview](overview.svg) and detail maps. Red dashed lines are excluded **original OSM geometry**, never proposed connections. Distinct source IDs remain distinct; no physical separation or access approval is inferred. Coordinates are original OSM mapping, not screenshot tracing or a survey.\n\n"
+        "| Map number | Exact OSM references | Specific evidence needed |\n|---|---|---|\n"
+        + "\n".join(f"| {q['id']} | {q['source_ids']} | {q['question']} |" for q in questions)
+        + "\n\nScreenshot-only apparent connections are questions, not routing data. No Google labels, imagery or highlighted geometry are used in any figure or dataset. © OpenStreetMap contributors / ODbL1.0.\n",
+        encoding="utf-8",
+    )

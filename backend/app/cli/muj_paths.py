@@ -13,6 +13,82 @@ from app.core.config import get_settings
 from app.services.muj_setup import CAMPUS_ID, ROOT
 from app.services.muj_update import ROOT2, comparable, correction, graph_records, plan
 from app.services.osm_conversion import encode
+from app.services.publication import TABLES, checksum, public_projection
+
+
+def release_graph(client, packet, artifact):
+    """Reconstruct frozen snapshots through supported complete review diffs.
+
+    Frozen revisions deliberately have no editor /graph endpoint. Follow actual
+    creation audits, never assume the old first publication is the current parent.
+    """
+    packets = {}
+
+    def build(p, visiting):
+        identity = str(UUID(p["id"]))
+        if identity in visiting or len(visiting) >= 16 or p["status"] != "frozen":
+            raise DemoError(
+                "Frozen ancestry missing, cyclic or deeper than16; inspect review/audit history. No writes."
+            )
+        packets[identity] = p
+        empty = {"campus": artifact["campus"], **{k: {} for k in TABLES}}
+
+        def apply(full):
+            seen = set()
+            for d in p["diff"]:
+                key = (d["entity"], d["id"])
+                if (
+                    d["entity"] not in TABLES
+                    or key in seen
+                    or full[d["entity"]].get(d["id"]) != d["before"]
+                ):
+                    raise DemoError(
+                        "Unexpected/duplicate review diff before-image; preserve data, no writes."
+                    )
+                seen.add(key)
+                if d["after"] is None:
+                    full[d["entity"]].pop(d["id"], None)
+                else:
+                    full[d["entity"]][d["id"]] = d["after"]
+            return full
+
+        if all(d["before"] is None and d["after"] is not None for d in p["diff"]):
+            full = apply(empty)
+            complete = checksum(full) == p["checksum"]
+        else:
+            complete = False
+        if not complete:
+            creation = []
+            for offset in range(0, 10001, 50):
+                page = client.request(
+                    "GET", f"/api/v1/admin/campuses/{CAMPUS_ID}/audit", query={"offset": offset}
+                )
+                creation.extend(
+                    e
+                    for e in page
+                    if e["action"] == "draft.create" and e["revision_id"] == identity
+                )
+                if creation or len(page) < 50:
+                    break
+            if len(creation) != 1 or not creation[0]["after"].get("parent_id"):
+                raise DemoError(
+                    "Frozen parent not uniquely established within10050audit entries. Inspect Audit records / Next audit page; do not create a replacement draft."
+                )
+            parent = str(UUID(creation[0]["after"]["parent_id"]))
+            old = client.request(
+                "GET", f"/api/v1/admin/campuses/{CAMPUS_ID}/drafts/{parent}/review"
+            )
+            if old["id"] != parent:
+                raise DemoError("Parent review identity mismatch; no writes.")
+            full = apply(build(old, visiting | {identity}))
+        if checksum(full) != p["checksum"] or full["sources"] != p["sources"]:
+            raise DemoError("Reconstructed frozen content/source checksum mismatch; no writes.")
+        return full
+
+    full = build(packet, set())
+    if public_projection(full) != artifact:
+        raise DemoError("Frozen content/public artifact projection mismatch; no writes.")
+    return {"revision_version": packet["edit_version"], **full}, packets
 
 
 def preflight(client):
@@ -30,7 +106,7 @@ def preflight(client):
     base = prefix + f"/drafts/{UUID(release['dataset_revision_id'])}"
     dashboard = client.request("GET", prefix + "/dashboard")
     packet = client.request("GET", base + "/review")
-    graph = client.request("GET", base + "/graph")
+    graph, ancestry = release_graph(client, packet, artifact)
     blockers = []
     if packet["status"] != "frozen" or packet["id"] != release["dataset_revision_id"]:
         blockers.append("Published parent is not the expected immutable frozen revision.")
@@ -77,7 +153,11 @@ def preflight(client):
         blockers.append(
             "Current dataset differs from the audited preparation plus E22. No correction is authorized."
         )
-    correction_state = plan(graph, release["dataset_revision_id"])["state"]
+    try:
+        correction_state = plan(graph, release["dataset_revision_id"])["state"]
+    except DemoError as exc:
+        correction_state = "conflict"
+        blockers.append(str(exc))
     if correction_state != "already_applied":
         blockers.append(
             "Prior correction is not already applied; do not replay it through this audit."
@@ -86,8 +166,9 @@ def preflight(client):
     # generation is included in the release descriptor and safely stops this run.
     if (
         client.request("GET", f"/api/v1/campuses/{CAMPUS_ID}/release") != release
-        or client.request("GET", base + "/graph") != graph
-        or client.request("GET", base + "/review") != packet
+        or any(
+            client.request("GET", prefix + f"/drafts/{i}/review") != p for i, p in ancestry.items()
+        )
         or client.request("GET", prefix + "/dashboard") != dashboard
     ):
         raise DemoError(
@@ -100,6 +181,10 @@ def preflight(client):
         "draft_version": packet["edit_version"],
         "content_checksum": packet["checksum"],
         "authenticated_graph_sha256": hashlib.sha256(encode(graph)).hexdigest(),
+        "frozen_ancestry": [
+            {"id": p["id"], "checksum": p["checksum"], "edit_version": p["edit_version"]}
+            for p in ancestry.values()
+        ],
         "source_sha256": changes["source_sha256"],
         "editable_or_review_drafts": dashboard["drafts"],
         "sources": packet["sources"],
@@ -127,7 +212,7 @@ def main():
     mode.add_parser("preflight", help="Authenticated actual-current-release read-only evidence")
     args = parser.parse_args()
     if args.mode == "audit":
-        from app.services.muj_paths import account, write_accounting
+        from app.services.muj_paths import account, write_accounting, write_atlas
 
         output = args.output.resolve()
         protected = [ROOT.resolve(), ROOT2.resolve(), args.source.resolve()]
@@ -145,6 +230,7 @@ def main():
         account(raw, ROOT)
         report = account(raw, ROOT2)
         write_accounting(report, output)
+        write_atlas(report, raw, output)
         print(
             json.dumps(
                 {
@@ -167,7 +253,13 @@ def main():
         folder.mkdir(parents=True, exist_ok=True, mode=0o700)
         path = folder / f"preflight-{uuid4()}.json"
         persist(path, report)
-        print(json.dumps(report, indent=2, ensure_ascii=False))
+        print(
+            json.dumps(
+                {k: v for k, v in report.items() if k not in {"sources", "validation_history"}},
+                indent=2,
+                ensure_ascii=False,
+            )
+        )
         print(f"Private report: {path}. No draft created, graph writes, approval or publication.")
         if report["blockers"]:
             raise DemoError("Preflight differences require inspection; preserve existing dataset.")

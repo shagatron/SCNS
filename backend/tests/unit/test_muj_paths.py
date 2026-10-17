@@ -12,7 +12,7 @@ from app.cli.muj_naming import supported_changes
 from app.services.muj_paths import account, draw, write_accounting
 from app.services.muj_setup import CAMPUS_ID
 from app.services.muj_update import ROOT2, correction, graph_records
-from app.services.osm_conversion import convert, write_conversion
+from app.services.osm_conversion import convert, encode, write_conversion
 from tests.unit.test_osm_conversion import path, sample
 
 
@@ -40,7 +40,7 @@ def test_every_pair_full_geometry_and_pedestrian_direction(tmp_path, tag, forwar
     )
     assert report["entrances"][0]["anchored"]
     write_accounting(report, tmp_path / "output")
-    assert json.loads((tmp_path / "output/segments.json").read_bytes()) == report
+    assert (tmp_path / "output/segments.json").read_bytes() == encode(report)
     assert ET.fromstring(
         draw(report, raw, (75.56, 26.84, 75.565, 26.845), [], "Source only")
     ).tag.endswith("svg")
@@ -82,6 +82,47 @@ def test_foot_permission_override_barrier_boundary_and_explicit_junctions(tmp_pa
         "pair:outside_exact_polygon_union_or_gap" in r["reasons"] for r in report["segments"]
     )
     assert not report["unexplained_omissions"]
+
+
+def test_distinct_crossing_references_and_blocked_node_do_not_invent_joins(tmp_path):
+    extra = '<node id="13" lon="75.561" lat="26.843"/><node id="14" lon="75.563" lat="26.84"/>'
+    report = audit(sample(path() + path(101, refs=(13, 14)), extra), tmp_path)
+    assert report["counts"]["weak_components"] == 2
+    assert not report["junctions"] and not report["proposed_changes"]
+    root = ET.fromstring(sample(path()))
+    node = next(n for n in root.findall("node") if n.attrib["id"] == "11")
+    ET.SubElement(node, "tag", {"k": "barrier", "v": "wall"})
+    blocked = audit(ET.tostring(root), tmp_path)
+    assert not any(r["represented"] for r in blocked["segments"])
+    assert all("node/11:unverified_barrier" in r["reasons"] for r in blocked["segments"])
+    ET.SubElement(node, "tag", {"k": "foot", "v": "yes"})
+    allowed = audit(ET.tostring(root), tmp_path)
+    assert all(r["represented"] for r in allowed["segments"])
+
+
+def test_changed_original_or_preparation_rejected_and_no_source_path_overwrite(
+    tmp_path, monkeypatch
+):
+    raw = sample(path())
+    write_conversion(convert(raw, covered_segments_v2=True), tmp_path)
+    with pytest.raises(ValueError, match="Original checksum"):
+        account(raw + b" ", tmp_path)
+    (tmp_path / "batch-001.json").write_text("{}")
+    with pytest.raises(ValueError, match="derivative checksum"):
+        account(raw, tmp_path)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "muj_paths",
+            "audit",
+            "--source",
+            str(tmp_path / "original.osm"),
+            "--output",
+            str(tmp_path / "original.osm"),
+        ],
+    )
+    with pytest.raises(SystemExit):
+        muj_paths.main()
 
 
 class Fixture:
@@ -141,6 +182,20 @@ class Fixture:
         )
 
 
+@pytest.fixture(autouse=True)
+def fixture_reconstruction(monkeypatch):
+    # Full frozen diff/audit reconstruction is exercised through real API packets
+    # by the PostGIS test. Here isolate the preflight boundary/retry comparisons.
+    original = muj_paths.release_graph
+
+    def reconstruct(client, packet, artifact):
+        if isinstance(client, Fixture):
+            return deepcopy(client.graph), {packet["id"]: deepcopy(packet)}
+        return original(client, packet, artifact)
+
+    monkeypatch.setattr(muj_paths, "release_graph", reconstruct)
+
+
 def test_real_session_shape_current_release_e22_owner_drafts_and_safe_retries():
     client = Fixture()
     before = deepcopy(client.__dict__)
@@ -164,7 +219,7 @@ def test_owner_edit_preserved_and_reported_not_silently_repaired():
     assert client.graph == before
 
 
-@pytest.mark.parametrize("boundary", ["/release", "/graph", "/review", "/dashboard"])
+@pytest.mark.parametrize("boundary", ["/release", "/review", "/dashboard"])
 def test_changed_evidence_stops_without_any_write(boundary):
     client = Fixture()
     original = client.request

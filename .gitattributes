@@ -4,3 +4,8 @@ data/muj/*.geojson text eol=lf
 
 data/muj-v2/*.json text eol=lf
 data/muj-v2/*.geojson text eol=lf
+
+# Reproducible source audit artifacts, including Windows autocrlf checkouts.
+docs/data/muj-path-audit/*.json text eol=lf
+docs/data/muj-path-audit/*.csv text eol=lf
+docs/data/muj-path-audit/*.svg text eol=lf

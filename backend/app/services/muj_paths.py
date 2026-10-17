@@ -228,7 +228,7 @@ def write_accounting(report, output):
     (output / "segments.json").write_bytes(encode(report))
     keys = list(report["segments"][0])
     with (output / "segments.csv").open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=keys)
+        writer = csv.DictWriter(stream, fieldnames=keys, lineterminator="\n")
         writer.writeheader()
         for row in report["segments"]:
             writer.writerow(

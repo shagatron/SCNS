@@ -1,0 +1,61 @@
+{
+  "files": {
+    "academic.png": {
+      "bytes": 271382,
+      "sha256": "e437dc90bc56209b13281563f052fb2bdbdb6570a10b80def2d36980c966c530"
+    },
+    "academic.svg": {
+      "bytes": 344197,
+      "sha256": "f17b9f147e8dd83c456fb3d93c8dd7126433c3beba2fbbf4ad897f5493ab2a00"
+    },
+    "cricket.png": {
+      "bytes": 112974,
+      "sha256": "3578fe30d51ef4243e92bde0ad61cd29cd259463a72ffe6badb0658f063f1f3e"
+    },
+    "cricket.svg": {
+      "bytes": 344662,
+      "sha256": "7fc92ebd316d25203f037fe13e996a084d0796865b73de5b6cf4f4a96c578ef1"
+    },
+    "hostel-crossing.png": {
+      "bytes": 314639,
+      "sha256": "5b2467e9680b98d476e89ffa75fb8e3bd0c2a9b8866534ce46bbf41f1158775c"
+    },
+    "hostel-crossing.svg": {
+      "bytes": 344426,
+      "sha256": "a31cf3357ac8bbd869005b0590fd4b8a2727bc2dc499f218730bcc8675892581"
+    },
+    "near-pairs.png": {
+      "bytes": 65689,
+      "sha256": "1eefa8401c72dad5e19825c44b800f0cd22db4763e18b68f1c3199e6626a0a11"
+    },
+    "near-pairs.svg": {
+      "bytes": 362311,
+      "sha256": "2a5305201532fe47fd02c8b41fa93c91938eebc14a7ca49c8e71fb02f6ef7f2f"
+    },
+    "overview.png": {
+      "bytes": 248121,
+      "sha256": "e677cd6046b7817642616e1bb1ea61ee6c785e3d914bfda678b04fce83f7c07f"
+    },
+    "overview.svg": {
+      "bytes": 340770,
+      "sha256": "ce482f076a9ff98675299639a4681464fa87000e22134a7bf1513630008e4dad"
+    },
+    "questions.json": {
+      "bytes": 3665,
+      "sha256": "604e7a7a354cbe5193624f959f6ce9f5881797032167269ac8dee7b3535a3544"
+    },
+    "routes.json": {
+      "bytes": 1792826,
+      "sha256": "ac69930a140129d9a84d802e655dfea3e1a387ee0606129dbbbead424b51afb2"
+    },
+    "segments.csv": {
+      "bytes": 774737,
+      "sha256": "651f69002e85a4898b8b74b3e5e707b0e42fa3a9f12f10606ce3ac074d153c44"
+    },
+    "segments.json": {
+      "bytes": 1992379,
+      "sha256": "8dde04c9243726b0b883ba2f5b58d8aeeabe52836b23b7457378b09b9da5f4df"
+    }
+  },
+  "qualification": "Generated original-OSM audit derivatives and isolated PostGIS fixture routes; no Windows/physical verification. PNGs are actual Chromium renders of corresponding original SVGs, no image editing."
+}

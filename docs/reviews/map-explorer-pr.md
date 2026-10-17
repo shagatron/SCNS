@@ -11,3 +11,5 @@ The MUJ visual fixture is a read-only source-response simulation using committed
 Windows update/start and manual inputs: `docs/operations/map-explorer.md`. The update preserves `.env`, accounts, drafts/releases, private uploads and volumes, reuses any existing temporary phone-access override unchanged, and starts/checks the database before API readiness. No migration, reseeding, helper replay, publication or deployment.
 
 Target: `feat/muj-connectivity-review`. Do not merge or deploy as part of this change.
+
+Creation attempted after verified completion5a81226: GitHub CLI returned `Post "https://api.github.com/graphql": Forbidden` (exit1). Git push succeeded. Open the prepared PR manually: https://github.com/shagatron/SCNS/compare/feat/muj-connectivity-review...redesign/map-explorer?expand=1 . No merge or deployment performed.

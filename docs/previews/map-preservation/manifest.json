@@ -218,6 +218,47 @@
       "height_px": 853,
       "bytes": 57323,
       "sha256": "b5ef3d9b36ee3ee8e8ec3dfdfd439bdb62c1798e5e7b26757a29891834d8dd81"
+    },
+    {
+      "file": "built/320-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 260,
+      "height_px": 598,
+      "bytes": 37021,
+      "sha256": "ef21a291a29a81cb6f3b7f61639955100c058eacafa30eff1ad979ad684b4a97"
+    },
+    {
+      "file": "built/360-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 300,
+      "height_px": 557,
+      "bytes": 38599,
+      "sha256": "38d776d0f9d878b492e87eb48fa867337cb5e11a905cf02d3df5bd1c72865167"
+    },
+    {
+      "file": "built/390-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 330,
+      "height_px": 527,
+      "bytes": 40427,
+      "sha256": "13985b04cf033e4dd7ab37d7e3b0977efd3c387fafc06dd571d1acc12c859496"
+    },
+    {
+      "file": "built/768-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 342,
+      "height_px": 647,
+      "bytes": 37486,
+      "sha256": "2e494572d3c30526e362f82d97ac4ea1298ea635b6091413b83411c3b12a3ddc"
+    },
+    {
+      "file": "built/1440-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 914,
+      "height_px": 599,
+      "bytes": 60639,
+      "sha256": "e11aeae9a54f5e32f7a76c212413b275e657962bd492a0682fd1caa2cfad5aa8"
     }
-  ]
+  ],
+  "built_frontend_sha256": "0a65ea22f1ef4e7519d9dd5ef37e5185d09fd48487a5cd5d158839d7e9449610"
 }

@@ -2,11 +2,11 @@
 
 Functional authority: `a30810d5b73ffd2d757f2c05de1ed2a59f2e39aa`. Audited redesign: `6baeaadb95b92f52ce09bdcadeab42e1ee182151`. Correction continues on `redesign/map-explorer`; no reset/worktree or retained data changes. This audit supersedes the earlier claim that passing redesign tests demonstrated preservation. Those results describe the former implementation, not feature parity.
 
-## Method and current checkpoint
+## Method and evidence boundaries
 
-Full tracked diff reviewed, including all application files, changed/added tests, harness, documentation and screenshots. A clean archived baseline under `/tmp` shares only installed frozen dependencies; it is not a worktree and contains no developer `.env`/uploads. Baseline and original redesign run sequentially against separately named disposable fixture databases/storage, with the identical `preservation-observation.spec.ts` desktop/mobile journey. Baseline results and matched screenshots are recorded before corrections; final corrected comparison and regression verification are pending in this checkpoint.
+Full tracked diff reviewed, including all application files, changed/added tests, harness, documentation and screenshots. A clean archived baseline under `/tmp` shares only installed frozen dependencies; it is not a worktree and contains no developer `.env`/uploads. Baseline and original redesign run sequentially against separately named disposable fixture databases/storage, with the identical `preservation-observation.spec.ts` desktop/mobile journey. Baseline and original-redesign results were recorded before corrections. Final corrected runtime records match each viewport’s actual baseline, including map focus order; only requested route-error placement differs. Intro/directory/planner captures are pixel-identical in both layouts. Full built regression outcome is recorded in verification.
 
-## Findings and required corrections
+## Findings and correction criteria
 
 | Area | Baseline behavior | Original redesign difference | Correction / acceptance |
 |---|---|---|---|
@@ -58,3 +58,33 @@ Full tracked diff reviewed, including all application files, changed/added tests
 ## Intentional differences remaining after correction
 
 Only outdoor dark surfaces/vectors, mint route/halo and corresponding legend colour, original SVG category markers (with the original direct destination action), and frame-safe entrance dots are intended map presentation differences. Pins add no tab stops, preserving baseline map/directory keyboard order; directory actions remain keyboard accessible. Floor plans and surrounding controls remain original. The map-only exception boundary is additive resilience; contextual planner/linked-place errors deliberately improve placement without changing messages, requests, focus or navigation. Final observed evidence and any unresolved limits must be recorded before declaring completion.
+
+## Completed parity checklist
+
+These items are verified by the complete source comparison, actual pinned-baseline/original/corrected runs, matched component captures and final compiled104-case suite. Passing redesigned selectors alone is not the evidence basis. Exact runs/rechecks and limits are in [verification](verification.md).
+
+- [x] Full affected application/test/harness/documentation diff reviewed; eight surrounding source files match baseline bytes, plus state/query/handler and fit/resize equality checks.
+- [x] Homepage intro/campus selection/readiness, overview/counts, process, about/footer content and original section order restored.
+- [x] Original navigation/Places/Explore/skip targets, normal scrolling and focus helper restored; Places reaches the actual directory.
+- [x] Complete six-card directory, graphics/headings/buildings, details/descriptions/aliases/codes/floor/room and direct unknown/unmapped/catalog-only qualifications restored.
+- [x] Original search/alias/code matching, placeholder/max length, category list, empty/loading/error/retry, pagination totals/ranges/endpoints and offset reset retained.
+- [x] Start here and Route here remain sequentially available without mode switching; original field update/clear/open/focus behavior and no automatic calculation retained.
+- [x] Original initial public map place input, all pins/permanent names, direct destination click, zoom/Fit/bounds/resize and map keyboard tab order retained. Icons add no tab stops.
+- [x] Original planner grid/controls/order/typography/buttons, Main Gate/shortest/metric defaults, swap/clear and native details retained.
+- [x] Metric/traversal/fastest/step-free policy wording, eligibility, estimate/unknown-distance/accessibility qualifications unchanged.
+- [x] Stored-edge computation, no-route/same-place/unknown-cost behavior, distance/nullable ETA/assumptions and original full-width independent directions retained.
+- [x] Hide map, native control collapse, direction section buttons, shared manual-route URL and reload recovery retained.
+- [x] Floor/building controls, reviewed floor/frame filtering, original approved image colours/coordinates, image retry, labels, connectors/stairs/lift/mixed journeys and intentional disconnected routes retained.
+- [x] QR confirmation, locked campus, planned/unavailable/revoked fallback, source/swap behavior and reload/revalidation retained.
+- [x] GPS explicit opt-in/landmark confirmation, simulated denial/inaccuracy/outside/unmatched/context/release/expiry, manual/QR fallback and coordinate privacy retained. No GPS floor inference or live tracking.
+- [x] Closure check/freshness/overlay/context invalidation, unsafe-result hiding, unresolved restriction state, estimated-end/operator-verification messages and reopening behavior retained.
+- [x] Release metadata/initial availability, stale data hiding, exact clear/remount/invalidation/query/retry/periodic recovery retained; unchanged baseline publication assertions rechecked serially.
+- [x] Search failures stay beside directory controls; unchanged route/shared-place feedback is beside planner; deferred API test verifies no error-driven scroll/focus jump, with selections preserved. Map/floor/metadata retries remain contextual.
+- [x] Keyboard form/navigation/skip/actions, five-width overflow/axe/reduced-motion checks and original mobile document flow retained. Native device/AT testing is separately unverified.
+- [x] Baseline indoor immediate-visibility and2px surrounding-control assertions restored; only permitted outdoor colour selectors differ in original tests. Tests for withdrawn unrequested components replaced with baseline behavioral checks.
+- [x] Exact per-viewport baseline runtime contract, source boundary checks and six pixel-identical intro/directory/planner pairs pass; original rejected-directory evidence retained.
+- [x] Frontend lint/type/build/65units pass; final affected source29pass/1intentional skip and full built103pass/1skip, actual worker and private/readiness boundaries pass. Initial failures/rechecks remain disclosed.
+- [x]31PNG files non-empty/decoded/checksummed; compiled320/360/390/768/1440px renders and matched desktop/mobile controls/errors/directions inspected.
+- [x] Retained22table counts/content digests and `.env` presence exactly unchanged after all checks. Only owned disposable DBs/storage/containers/network and regenerable old build cache cleaned; volumes/accounts/uploads/drafts/releases untouched.
+
+The intentional differences are limited to the outdoor presentation, frame-safe visual entrance dots, specifically requested contextual feedback placement and the additive map-only exception fallback described above. Actual Windows, published MUJ/E22 data, real-device keyboard/GPS, human AT, physical-route and accessibility verification are not claimed. No merge, publication of retained data, deployment or later milestone.

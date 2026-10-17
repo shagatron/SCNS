@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Campus, MapData, Search } from '../../api/client'
 import type { components } from '../../api/generated'
-import { hasMujBranding, MujEmblem, MujHeroPhoto } from './MujBranding'
+import { MujEmblem, MujHeroPhoto } from './MujBranding'
 
 const sections = ['intro', 'overview', 'how', 'directory', 'explorer'] as const
 export function PublicNavigation() {
@@ -52,7 +52,8 @@ export function PublicMotion({ direct }: { direct: boolean }) {
 }
 
 export function CampusOpening({ campus, campuses, locked, onCampus, online, connected, unavailable = false }: { campus?: Campus; campuses?: Campus[]; locked: boolean; onCampus: (id: string) => void; online: boolean; connected: boolean; unavailable?: boolean }) {
-  const muj = hasMujBranding(campus)
+  // Published campus metadata, never a name substring or GPS inference.
+  const muj = campus?.code === 'MUJ' && !campus.is_demo
   return <section className={`campus-opening editorial-section${muj ? ' campus-opening-muj' : ''}`} id="intro" tabIndex={-1} aria-labelledby="intro-heading">
     {muj && <MujHeroPhoto key={campus?.id} />}
     <div className="opening-top">{muj ? <div className="muj-brand"><MujEmblem key={campus?.id} /><div><span className="section-index">SCNS — SMART CAMPUS NAVIGATION</span><p className="project-attribution">Student project · not an official university service.</p></div></div> : <span className="section-index">SCNS — SMART CAMPUS NAVIGATION</span>}<p>{campus?.name ?? 'Campus navigation'}<br />Published places. Connected paths.</p></div>

@@ -248,6 +248,8 @@ html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .public-app .place-card-body p { max-width: 65ch; }
 .public-app .public-navigation { box-shadow: 0 3px 14px #1111100c; }
 @media (max-width: 760px) {
+  /* Cap the painted photo height, not content: keep the full dome visible. */
+  .public-app .muj-hero-photo picture { height: min(100%, 250vw); mask-image: linear-gradient(#000 80%, transparent); }
   .public-app .muj-brand { gap: 14px; }
   .public-app .muj-brand > div:last-child { flex: 1; }
   .public-app .muj-emblem { width: 70px; height: 80.92px; padding: 10px; }

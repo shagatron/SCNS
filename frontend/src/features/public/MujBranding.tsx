@@ -1,10 +1,4 @@
 import { useState } from 'react'
-import type { Campus } from '../../api/client'
-
-// Use published campus metadata, never a substring/name or GPS inference.
-export function hasMujBranding(campus?: Campus) {
-  return campus?.code === 'MUJ' && !campus.is_demo
-}
 
 export function MujHeroPhoto() {
   const [failed, setFailed] = useState(false)

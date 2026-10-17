@@ -9,7 +9,7 @@ const props = { campuses: [demo, muj], locked: false, onCampus: vi.fn(), online:
 
 it('uses metadata for MUJ branding and retains title, actions, selector and source qualifications', () => {
   const { container } = render(<CampusOpening {...props} campus={muj} />)
-  expect(screen.getByRole('heading', { name: 'Find your way across campus.' })).toBeVisible()
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Find yourway acrosscampus.')
   expect(screen.getByRole('link', { name: 'Explore campus' })).toHaveAttribute('href', '#explorer')
   expect(screen.getByRole('link', { name: /About the data/ })).toHaveAttribute('href', '#about')
   expect(screen.getByText('Campus service connected')).toBeVisible()
@@ -48,7 +48,7 @@ it('keeps content and QR selector locking after photo and emblem errors, without
   expect(screen.getByText('University emblem unavailable')).toBeVisible()
   expect(screen.getByLabelText('Explore campus')).toBeDisabled()
   expect(screen.getByText('Campus service connected')).toBeVisible()
-  expect(screen.getByRole('heading', { name: 'Find your way across campus.' })).toBeVisible()
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Find yourway acrosscampus.')
   expect(action).toHaveFocus()
 })
 

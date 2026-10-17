@@ -202,12 +202,13 @@ def main():
                 *(
                     ["muj.spec.ts"]
                     if args.muj_only
-                    else ["map-explorer.spec.ts", "map-source-fixture.spec.ts", "public-experience.spec.ts"]
+                    else ["map-explorer.spec.ts", "map-source-fixture.spec.ts", "preservation-observation.spec.ts", "public-experience.spec.ts"]
                     if args.explorer_only
                     else [
                         "public-experience.spec.ts",
                         "map-explorer.spec.ts",
                         "map-source-fixture.spec.ts",
+                        "preservation-observation.spec.ts",
                         "muj.spec.ts",
                         "imports.spec.ts",
                         "admin.spec.ts",

@@ -1,158 +1,23 @@
-/* Map workspace only: homepage, QR landing and admin keep their existing systems. */
-.public-app .map-workspace {
-  --ink: #eff3ef; --paper: #1b201e; --yellow: #9bf3ce; --line: #46524c; --muted: #b6c1ba;
-  background: #181c1a; color: var(--ink); border: 1px solid #46524c; border-radius: 20px;
-  padding: 28px; margin: 0 0 18px; isolation: isolate;
+/* Outdoor map presentation only. All surrounding components use baseline public.css. */
+.public-app .outdoor-panel {
+  --ink: #eff3ef; --muted: #b7c9bd;
+  background: #252e29; color: #eff3ef; border-color: #4d6054; border-radius: 16px;
 }
-.public-app .map-workspace .explorer-heading { display: flex; align-items: center; justify-content: space-between; gap: 28px; margin-bottom: 18px; }
-.public-app .map-workspace .display-heading { font-size: clamp(30px,4vw,52px); letter-spacing: -.045em; margin: 8px 0; }
-.public-app .map-workspace .explorer-heading p { font-size: 12px; margin: 0; max-width: 340px; color: var(--muted); }
-.public-app .map-workspace .explorer-grid { display: grid; grid-template-columns: 340px minmax(0,1fr); gap: 0; align-items: start; }
-.public-app .map-workspace input, .public-app .map-workspace select { color-scheme: dark; background: #292f2c; color: #eff3ef; border: 1px solid #647269; border-radius: 10px; padding: 11px 12px; font-size: 13px; }
-.public-app .map-workspace input::placeholder { color: #b6c1ba; opacity: 1; }
-.public-app .map-workspace button { color: #eff3ef; background: #272e2a; border: 1px solid #627068; border-radius: 10px; min-height: 44px; font-size: 12px; padding: 10px 12px; }
-.public-app .map-workspace button:hover:not(:disabled) { color: #fff; background: #3b4d43; border-color: #9bf3ce; }
-.public-app .map-workspace :focus-visible { outline: 3px solid #b9ffe0; outline-offset: 3px; }
-.public-app .map-workspace label { color: #d0d9d2; font-size: 11px; font-weight: 550; margin: 0 0 6px; }
-.public-app .map-workspace .workspace-status { padding: 0 0 14px; }
-.public-app .map-workspace .notice { color: #e2ebe5; background: #25362d; border-left: 3px solid #9bf3ce; padding: 12px; font-size: 12px; margin: 0 0 8px; }
-.public-app .map-workspace .restriction-status { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 20px; background: none; border: 0; padding: 0; }
-.public-app .map-workspace .restriction-status p { margin: 0; font-size: 12px; flex: 1 1 200px; }
-.public-app .map-workspace .restriction-status p:not(:first-child) { flex-basis: 100%; }
-.public-app .map-workspace .error-box { background: #3c2a22; border-color: #f0ba91; color: #ffe1cb; font-size: 13px; }
-.public-app .map-workspace .error-text, .public-app .map-workspace .place-unavailable { color: #ffd0b4; }
-.public-app .map-workspace .loading, .public-app .map-workspace .empty-state { color: #d6e1da; background: #29352e; padding: 16px; border-radius: 10px; }
-.public-app .map-workspace .explorer-sidebar { padding: 20px 20px 20px 0; }
-.public-app .map-workspace .workspace-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
-.public-app .map-workspace .workspace-brand > span { border-radius: 10px; display: grid; place-items: center; width: 36px; height: 36px; background: #f0f4ef; color: #16231c; font-size: 24px; }
-.public-app .map-workspace .workspace-brand strong { font-size: 21px; letter-spacing: -.05em; flex: 1; }
-.public-app .map-workspace .workspace-brand strong span { color: #bac7bf; font-size: 12px; letter-spacing: 0; font-weight: 450; }
-.public-app .map-workspace .panel-toggle { padding: 6px 9px; font-size: 10px; }
-.public-app .map-workspace .explorer-campus { margin-bottom: 14px; }
-.public-app .map-workspace .explorer-mode { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 4px; background: #111613; border-radius: 12px; margin-bottom: 18px; }
-.public-app .map-workspace .explorer-mode button { border-color: transparent; background: none; }
-.public-app .map-workspace .explorer-mode button[aria-pressed='true'] { background: #35493d; color: #c9ffe5; border-color: #6daa8a; }
-.public-app .map-workspace .directory-controls { display: grid; grid-template-columns: minmax(0,1fr) 108px; gap: 10px; padding: 0; border: 0; margin-bottom: 14px; }
-.public-app .map-workspace .directory-controls select { padding-left: 8px; }
-.public-app .map-workspace .pagination { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
-.public-app .map-workspace .pagination > span { flex-basis: 100%; font-size: 11px; color: #bdc9c1; }
-.public-app .map-workspace .pagination button { font-size: 11px; }
-.public-app .map-workspace .explorer-places { display: grid; gap: 8px; }
-.public-app .map-workspace .place-row { border: 1px solid #4c5951; background: #222924; border-radius: 14px; overflow: visible; padding: 4px; }
-.public-app .map-workspace .place-row.is-selected { border-color: #9bf3ce; background: #293c31; }
-.public-app .map-workspace .place-select { display: flex; align-items: center; width: 100%; gap: 12px; padding: 10px 6px; text-align: left; border: 0; background: none; }
-.public-app .map-workspace .place-select > span:nth-child(2) { flex: 1; }
-.public-app .map-workspace .place-select strong { display: block; font-size: 13px; line-height: 1.35; font-weight: 600; }
-.public-app .map-workspace .place-select small { display: block; font-size: 10px; color: #bbc7bf; margin-top: 5px; text-transform: capitalize; }
-.public-app .map-workspace .row-actions { display: flex; gap: 6px; padding-left: 52px; }
-.public-app .map-workspace .row-actions button { border: 0; background: none; font-size: 10px; padding: 5px 8px; text-align: left; }
-.public-app .map-workspace .category-icon { flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; background: #c4dfd0; color: #20372b; display: grid; place-items: center; }
-.public-app .map-workspace .category-icon svg { width: 22px; height: 22px; }
-.public-app .map-workspace .kind-cafe { background: #edcdb4; color: #422e20; }
-.public-app .map-workspace .kind-library { background: #d8d5ed; color: #322d47; }
-.public-app .map-workspace .kind-water { background: #c4dfe9; color: #20343d; }
-.public-app .map-workspace .planner-card { background: transparent; border: 0; padding: 12px 0 0; box-shadow: none; border-radius: 0; }
-.public-app .map-workspace .planner-card h2 { font-size: 24px; letter-spacing: -.045em; }
-.public-app .map-workspace .planner-card .section-title { display: none; }
-.public-app .map-workspace .planner-card > .muted { font-size: 11px; margin-bottom: 8px; }
-.public-app .map-workspace .route-controls { border-color: #46524c; }
-.public-app .map-workspace .route-controls > summary { font-size: 12px; }
-.public-app .map-workspace .planner-fields { gap: 12px; }
-.public-app .map-workspace .location-start { background: #202b24; padding: 12px; border: 1px solid #465b4e; border-radius: 10px; margin: 8px 0 18px; }
-.public-app .map-workspace .location-start p { font-size: 11px; }
-.public-app .map-workspace .location-start button { font-size: 12px; }
-.public-app .map-workspace .primary-button { background: #9bf3ce; color: #14271d; border-color: #9bf3ce; border-radius: 10px; font-weight: 700; margin-top: 6px; }
-.public-app .map-workspace .primary-button:hover:not(:disabled) { background: #c2ffe4; color: #102219; }
-.public-app .map-workspace #routing-policy { font-size: 11px; margin: 12px 0 0; }
-.public-app .map-workspace .map-column { position: sticky; top: 100px; padding: 20px 0 20px 20px; border-left: 1px solid #46524c; }
-.public-app .map-workspace .map-toolbar { margin-bottom: 12px; font-size: 13px; }
-.public-app .map-workspace .view-controls { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; }
-.public-app .map-workspace .view-controls label { flex: 0 1 130px; margin: 0; }
-.public-app .map-workspace .view-controls select { flex: 1; }
-.public-app .map-workspace .map-panel { background: #252e29; border: 1px solid #4d6054; border-radius: 16px; }
-.public-app .map-workspace .map-caption { color: #e7f0e9; background: #26362c; font-size: 11px; }
-.public-app .map-workspace .map-caption .status-dot { background: #9bf3ce; }
-.public-app .map-workspace .campus-map.leaflet-container { height: clamp(420px,65svh,760px); background: #252c28; }
-.public-app .map-workspace .leaflet-control-zoom a { background: #202a24; color: #eff7f0; border-color: #66776a; }
-.public-app .map-workspace .leaflet-control-attribution { background: #18221cec; color: #d8e5dc; font-size: 10px; }
-.public-app .map-workspace .leaflet-control-attribution a { color: #bbf6d4; }
-.public-app .map-workspace .leaflet-tooltip { color: #eff7f0; background: #24372c; border-color: #73947f; font-size: 11px; max-width: 200px; white-space: normal; }
-.public-app .map-workspace .map-fit { bottom: 28px; right: 12px; font-size: 11px; }
-.public-app .map-workspace .map-legend { padding: 12px; gap: 10px 16px; color: #d7e5db; }
-.public-app .map-workspace .map-source { color: #b7c9bd; font-size: 10px; padding: 0 12px 12px; }
-.public-app .map-workspace .map-footnote { color: #bdc9c1; font-size: 10px; }
-.public-app .map-workspace .scns-pin { background: #d3e9db; color: #233b2b; border: 2px solid #17251b; border-radius: 50%; box-shadow: 0 2px 8px #0006; display: grid; place-items: center; }
-.public-app .map-workspace .scns-pin svg { width: 22px; height: 22px; }
-.public-app .map-workspace .selected-pin { background: #9bf3ce; color: #102c1a; border-color: #9bf3ce; box-shadow: 0 0 0 5px #9bf3ce40; }
-.public-app .map-workspace .explorer-place-card { position: relative; background: #1c2620; border: 1px solid #87b497; border-radius: 16px; padding: 18px; margin: 16px 0 0; box-shadow: 0 12px 32px #0004; max-width: 460px; }
-.public-app .map-workspace .selected-place-heading { display: flex; align-items: center; gap: 12px; }
-.public-app .map-workspace .selected-place-heading > div { flex: 1; }
-.public-app .map-workspace .selected-place-heading p { font-size: 10px; text-transform: capitalize; margin: 0 0 4px; color: #c2d4c7; }
-.public-app .map-workspace .selected-place-heading h3 { font-size: 18px; line-height: 1.3; margin: 0; }
-.public-app .map-workspace .close-place { align-self: start; font-size: 24px; padding: 2px; min-width: 44px; }
-.public-app .map-workspace .explorer-place-card > p { font-size: 12px; margin: 14px 0 0; }
-.public-app .map-workspace .selected-place-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-.public-app .map-workspace .selected-place-actions .primary-button { margin: 0; }
-.public-app .map-workspace .route-results { margin: 24px 0 0; }
-.public-app .map-workspace .route-details { padding-top: 18px; border-color: #46524c; }
-.public-app .map-workspace .route-details h2 { font-size: 24px; }
-.public-app .map-workspace .route-metrics { background: #263e2e; color: #b4ffdb; border: 1px solid #719c7e; border-radius: 12px; padding: 18px; gap: 12px; }
-.public-app .map-workspace .route-metrics strong { font-size: 34px; }
-.public-app .map-workspace .route-metrics small { font-size: 10px; color: #d2f4df; }
-.public-app .map-workspace .directions li { font-size: 13px; padding: 14px 0 14px 34px; }
-.public-app .map-workspace .directions li::before { color: #a6d4b7; font-size: 11px; }
-.public-app .map-workspace .directions small { color: #bdc9c1; font-size: 11px; }
-@media(min-width:1100px) { .public-app .map-workspace .explorer-place-card { position: absolute; z-index: 600; top: 200px; right: 24px; width: min(340px, calc(100% - 48px)); max-height: 50svh; overflow-y: auto; } }
-@media(max-width:1000px) { .public-app .map-workspace { padding: 20px; } .public-app .map-workspace .explorer-grid { grid-template-columns: 310px minmax(0,1fr); } .public-app .map-workspace .explorer-sidebar { padding-right: 16px; } .public-app .map-workspace .map-column { padding-left: 16px; } }
-@media(max-width:760px) {
-  .public-app .map-workspace { padding: 16px 12px; border-radius: 18px; }
-  .public-app .map-workspace .explorer-heading { display: block; }
-  .public-app .map-workspace .explorer-heading > p { margin-top: 10px; }
-  .public-app .map-workspace .explorer-heading .section-index { font-size: 9px; }
-  .public-app .map-workspace .explorer-grid { display: flex; flex-direction: column; }
-  .public-app .map-workspace .map-column { order: -1; width: 100%; position: relative; top: auto; border: 0; padding: 0; }
-  .public-app .map-workspace .view-controls { display: block; }
-  .public-app .map-workspace .view-controls label { margin: 0 0 6px; }
-  .public-app .map-workspace .campus-map.leaflet-container { height: clamp(320px,52svh,520px); }
-  .public-app .map-workspace .explorer-sidebar { width: 100%; margin-top: 14px; border: 1px solid #53695a; padding: 18px 12px max(18px,env(safe-area-inset-bottom)); border-radius: 20px 20px 14px 14px; background: #1e2821; }
-  .public-app .map-workspace .explorer-place-card { margin: 12px 0; max-width: none; box-shadow: none; }
-  .public-app .map-workspace .workspace-brand > span { display: none; }
-  .public-app .map-workspace .workspace-brand strong { font-size: 22px; }
-  .public-app .map-workspace .workspace-brand strong span { font-size: 11px; }
-  .public-app .map-workspace .directory-controls { grid-template-columns: minmax(0,1fr) 110px; }
-}
-/* Leaflet anchors have no intrinsic width: prevent one-letter tooltip columns. */
-.public-app .map-workspace .leaflet-tooltip { width: max-content; max-width: 200px; }
-.public-app .map-workspace .explorer-place-card:focus { outline: 2px solid #b9ffe0; outline-offset: 3px; }
-.public-app .map-workspace .pagination { border: 0; }
-.public-app .map-workspace .pagination [hidden] { display: none; }
-.public-app .map-workspace .planner-card { padding-top: 4px; }
-.public-app .map-workspace .location-start p { margin: 8px 0 0; }
-@media(max-width:760px) {
-  /* One shared control tree, laid out above the map and below as a native sheet. */
-  .public-app .map-workspace .explorer-grid { display: grid; grid-template-columns: minmax(0,1fr); }
-  .public-app .map-workspace .explorer-sidebar { display: contents; }
-  .public-app .map-workspace .workspace-brand { grid-row: 1; margin: 8px 0 12px; }
-  .public-app .map-workspace .explorer-campus { grid-row: 2; margin-bottom: 12px; }
-  .public-app .map-workspace .directory-controls { grid-row: 3; }
-  .public-app .map-workspace .explorer-mode { grid-row: 4; margin-bottom: 12px; }
-  .public-app .map-workspace .map-column { grid-row: 5; }
-  .public-app .map-workspace #explorer-panel { grid-row: 6; margin-top: 14px; padding: 16px 12px max(16px,env(safe-area-inset-bottom)); border: 1px solid #53695a; border-radius: 20px 20px 14px 14px; background: #1e2821; }
-  .public-app .map-workspace .campus-map.leaflet-container { height: clamp(300px,48svh,420px); }
-}
-@media(max-width:760px) {
-  .public-app .map-workspace .explorer-heading { margin-bottom: 12px; }
-  .public-app .map-workspace .explorer-heading .section-index { display: none; }
-  .public-app .map-workspace .explorer-heading .display-heading { font-size: 26px; margin: 2px 0 6px; }
-  .public-app .map-workspace .explorer-heading > p { font-size: 10px; line-height: 1.4; margin-top: 0; }
-  .public-app .map-workspace .restriction-status { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; }
-  .public-app .map-workspace .restriction-status p { font-size: 10px; }
-  .public-app .map-workspace .restriction-status p:not(:first-child) { grid-column: 1/-1; }
-  .public-app .map-workspace .workspace-brand { margin: 0 0 8px; }
-  .public-app .map-workspace .directory-controls { margin: 0 0 12px; }
-  .public-app .map-workspace .map-column { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; }
-  .public-app .map-workspace .map-toolbar { grid-column: 2; grid-row: 1; align-self: end; margin: 0; }
-  .public-app .map-workspace .map-toolbar > span { display: none; }
-  .public-app .map-workspace .view-controls { grid-column: 1; grid-row: 1; margin: 0; }
-  .public-app .map-workspace .map-column > :not(.map-toolbar):not(.view-controls) { grid-column: 1/-1; }
-}
+.public-app .outdoor-panel .map-caption { color: #e7f0e9; background: #26362c; }
+.public-app .outdoor-panel .map-caption .status-dot { background: #9bf3ce; }
+.public-app .outdoor-panel .campus-map.leaflet-container { background: #252c28; }
+.public-app .outdoor-panel .leaflet-control-zoom a { background: #202a24; color: #eff7f0; border-color: #66776a; }
+.public-app .outdoor-panel .leaflet-control-attribution { background: #18221cec; color: #d8e5dc; }
+.public-app .outdoor-panel .leaflet-control-attribution a { color: #bbf6d4; }
+.public-app .outdoor-panel .leaflet-tooltip { color: #eff7f0; background: #24372c; border-color: #73947f; width: max-content; max-width: 200px; white-space: normal; }
+.public-app .outdoor-panel .map-fit { color: #eff3ef; background: #272e2a; border-color: #627068; border-radius: 10px; }
+.public-app .outdoor-panel .map-fit:hover { background: #3b4d43; border-color: #9bf3ce; }
+.public-app .outdoor-panel :focus-visible { outline: 3px solid #b9ffe0; outline-offset: 3px; }
+.public-app .outdoor-panel .map-legend { color: #d7e5db; }
+.public-app .outdoor-panel .map-source { color: #b7c9bd; }
+.public-app .outdoor-panel .notice { color: #e2ebe5; background: #25362d; border-color: #9bf3ce; }
+.public-app .outdoor-panel .scns-pin { background: #d3e9db; color: #233b2b; border: 2px solid #17251b; border-radius: 50%; box-shadow: 0 2px 8px #0006; display: grid; place-items: center; }
+.public-app .outdoor-panel .scns-pin svg { width: 20px; height: 20px; }
+.public-app .outdoor-panel .kind-cafe { background: #edcdb4; color: #422e20; }
+.public-app .outdoor-panel .kind-library { background: #d8d5ed; color: #322d47; }
+.public-app .outdoor-panel .kind-water { background: #c4dfe9; color: #20343d; }

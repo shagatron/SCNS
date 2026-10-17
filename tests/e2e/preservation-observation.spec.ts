@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 // This identical observational journey runs against archived a30810d, original
@@ -42,8 +42,8 @@ test('matched baseline preservation observation', async ({ page }, info) => {
   observations.startAction = await page.getByLabel('Starting point', { exact: true }).inputValue()
   observations.routeActionStillVisibleAfterStart = await page.getByRole('button', { name: 'Route to Library', exact: true }).isVisible()
   save()
-  if (!observations.routeActionStillVisibleAfterStart) await page.getByRole('button', { name:'Browse places', exact:true }).click()
   await page.getByLabel('Starting point', { exact: true }).selectOption({ label: 'Main Gate' })
+  if (!observations.routeActionStillVisibleAfterStart) await page.getByRole('button', { name:'Browse places', exact:true }).click()
   await page.getByRole('button', { name: 'Route to Library', exact: true }).click()
   await expect(page.getByLabel('Destination', { exact: true })).toBeFocused()
   await page.getByRole('button', { name: 'Find walking route' }).click()
@@ -68,4 +68,14 @@ test('matched baseline preservation observation', async ({ page }, info) => {
   observations.searchError = await page.evaluate(() => ({ parent: [...document.querySelectorAll('[role="alert"]')].find(e => e.textContent?.includes('Synthetic directory lookup failed.'))?.closest('section[id]')?.id, focused:document.activeElement?.id }))
   await page.locator('#directory').screenshot({ path:`${dir}/search-error.png`,style:'.public-navigation, .skip-link { visibility:hidden !important; }' })
   save()
+  if (variant === 'corrected') {
+    // Actual runtime contract captured from archived baseline, not rewritten to
+    // match the redesign. Only the explicitly requested error placement differs.
+    const baseline = JSON.parse(readFileSync(resolve('../tests/fixtures/public-baseline-a30810d.json'), 'utf8'))
+    for (const key of ['structure','placesNavigation','search','startAction','routeActionStillVisibleAfterStart','route','hiddenMap','searchError']) {
+      expect(observations[key], key).toEqual(baseline[key])
+    }
+    expect((observations.noRoute as {message:unknown}).message).toEqual(baseline.noRoute.message)
+    expect((observations.noRoute as {errorParent:string}).errorParent).toBe('planner')
+  }
 })

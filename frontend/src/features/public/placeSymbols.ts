@@ -1,4 +1,4 @@
-// Fixed original SVG symbols shared by React rows and Leaflet pins.
+// Fixed original SVG symbols for Leaflet pins; never interpolate user markup.
 export const categoryPaths: Record<string, string> = {
   building: 'M4 21V3h16v18M8 7h1m6 0h1M8 11h1m6 0h1M9 21v-5h6v5',
   library: 'M3 4h7l2 2 2-2h7v15h-7l-2 2-2-2H3zM12 6v15',

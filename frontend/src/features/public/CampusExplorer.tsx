@@ -10,7 +10,6 @@ import RouteDetails from '../routing/RouteDetails'
 import '../../styles/public.css'
 import '../../styles/explorer.css'
 import MapFailureBoundary from '../maps/MapFailureBoundary'
-import { ExplorerPlaces, ExplorerPlaceCard } from './ExplorerPlaces'
 import OutdoorLocation, { type GPSStart } from '../location/OutdoorLocation'
 
 const FloorRouteMap = lazy(() => import('../maps/FloorRouteMap'))
@@ -24,9 +23,7 @@ function Failure({ error, retry }: { error: Error; retry: () => void }) {
   return <div className="error-box" role="alert"><p>{error.message}</p><button onClick={retry}>Try again</button></div>
 }
 
-type CampusControl = { campuses?: Campus[]; onCampus?: (id: string) => void; locked?: boolean }
-
-export default function CampusExplorer({ campus, online, qrStart, qrNotice, ...campusControl }: { campus: Campus; online: boolean; qrStart?: ConfirmedQR; qrNotice?: ReactNode } & CampusControl) {
+export default function CampusExplorer({ campus, online, qrStart, qrNotice }: { campus: Campus; online: boolean; qrStart?: ConfirmedQR; qrNotice?: ReactNode }) {
   const cache = useQueryClient()
   const release = useQuery({ retry: false, queryKey: ['release', campus.id], queryFn: () => api<Release>(`/campuses/${campus.id}/release`), refetchInterval: online ? 30000 : false })
   const [seen, setSeen] = useState<string | null>(null)
@@ -68,11 +65,11 @@ export default function CampusExplorer({ campus, online, qrStart, qrNotice, ...c
     {!initial.data && !initial.error && !release.error && <p role="status" className="loading">Loading destinations for the current release…</p>}
     {qrStart && release.data && qrStart.release_id !== release.data.id && <p role="status" className="notice">The published map changed. <button onClick={() => window.dispatchEvent(new Event('qr-marker-stale'))}>Recheck and confirm the QR marker</button></p>}
     </div>
-    {!recovering && (!qrStart || qrStart.release_id === release.data?.id) && initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={`${release.data.id}:${epoch}`} campus={campus} initial={initial.data} online={online} release={release.data} qrStart={qrStart?.release_id === release.data.id ? qrStart : undefined} qrNotice={qrNotice} {...campusControl} />}
+    {!recovering && (!qrStart || qrStart.release_id === release.data?.id) && initial.data && release.data && initial.data.release_id === release.data.id && <Planner key={`${release.data.id}:${epoch}`} campus={campus} initial={initial.data} online={online} release={release.data} qrStart={qrStart?.release_id === release.data.id ? qrStart : undefined} qrNotice={qrNotice} />}
   </>
 }
 
-function Planner({ campus, initial, online, release, qrStart, qrNotice, campuses, onCampus, locked }: { campus: Campus; initial: Search; online: boolean; release: Release; qrStart?: ConfirmedQR; qrNotice?: ReactNode } & CampusControl) {
+function Planner({ campus, initial, online, release, qrStart, qrNotice }: { campus: Campus; initial: Search; online: boolean; release: Release; qrStart?: ConfirmedQR; qrNotice?: ReactNode }) {
   const [params] = useState(() => new URLSearchParams(window.location.search))
   const linked = !qrStart && params.get('campus') === campus.id && params.get('release') === release.id
   const qrValue = qrStart ? `qr:${qrStart.id}` : ''
@@ -84,15 +81,6 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice, campuses
   const floors = useQuery({ queryKey: ['floors', campus.id, release.id], retry: false, queryFn: () => api<components['schemas']['FloorsOut']>(`/campuses/${campus.id}/floors?expected_release_id=${release.id}`) })
   const linkedPlaces = useQuery({ queryKey: ['linked-places', campus.id, release.id, source, destination], enabled: linked && !!source && !!destination, retry: false, queryFn: () => Promise.all([source, destination].map(id => api<Place>(`/campuses/${campus.id}/places/${id}?expected_release_id=${release.id}`))) })
   const [q, setQ] = useState('')
-  const [selected, setSelected] = useState<Place | undefined>()
-  const [panelExpanded, setPanelExpanded] = useState(true)
-  const [planning, setPlanning] = useState(true)
-  const selectionTrigger = useRef<HTMLElement | null>(null)
-  useEffect(() => {
-    const open = () => { setPlanning(true); setPanelExpanded(true) }
-    window.addEventListener('explorer-open-planner', open)
-    return () => window.removeEventListener('explorer-open-planner', open)
-  }, [])
   const [category, setCategory] = useState('')
   const [offset, setOffset] = useState(0)
   const [formError, setFormError] = useState('')
@@ -135,26 +123,10 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice, campuses
   function clear() { route.reset(); setFormError(''); const url = new URL(window.location.href); url.search = new URLSearchParams({ campus: campus.id }).toString(); window.history.replaceState(null, '', url) }
   const reloaded = useRef(false)
   useEffect(() => { if (!reloaded.current && linked && params.get('routed') === '1' && linkedPlaces.data && online && closures.fresh && !closures.isFetching && closures.data?.release_id === release.id) { reloaded.current = true; route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id, expected_closure_overlay_version: closures.data?.closure_overlay_version }) } }, [linked, linkedPlaces.data, online, params, campus.id, source, destination, profile, costMode, release.id, route, closures.fresh, closures.isFetching, closures.data])
-  function selectPlace(place: Place) {
-    selectionTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
-    setSelected(place); setPanelExpanded(true)
-    setSelectedPlaces(current => [...current.filter(p => p.id !== place.id), place])
-  }
-  function closePlace() {
-    setSelected(undefined)
-    requestAnimationFrame(() => {
-      const trigger = selectionTrigger.current
-      if (trigger?.isConnected) trigger.focus()
-      else document.getElementById('search')?.focus()
-    })
-  }
-  function startAt(place: Place) {
-    setSelectedPlaces(current => [...current.filter(p => p.id !== place.id), place]); setGPS(null); setLocationEpoch(n => n + 1); setSource(place.id); clear(); setPlanning(true); setPanelExpanded(true); setSelected(undefined); focusPlanner('source')
-  }
   function choose(place: Place) {
     if (route.isPending) return
     setSelectedPlaces(current => [...current.filter(p => p.id !== place.id), place])
-    setDestination(place.id); clear(); setPlanning(true); setPanelExpanded(true); setSelected(undefined)
+    setDestination(place.id); clear()
     focusPlanner('destination')
   }
   function submit(event: React.FormEvent) {
@@ -164,43 +136,34 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice, campuses
     if (!parsed.success) { setFormError('Choose both a starting point and a destination.'); return }
     if (!closures.fresh || closures.isFetching || closures.data?.release_id !== release.id) { setFormError('Check current operational restrictions before routing. Manual and QR selections remain available.'); return }
     setFormError('')
-    route.mutate({ campus_id: campus.id, source: source === gpsValue && validGPS ? validGPS : qrStart && source === qrValue ? { kind: 'qr', marker_id: qrStart.id, expected_marker_version: qrStart.version, confirmed: true } : { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id, expected_closure_overlay_version: closures.data.closure_overlay_version }, { onSuccess(result) { setPanelExpanded(true); const next = result.segments[0]?.floor_id ?? 'outdoor'; setView(next); updateLink(next) } })
+    route.mutate({ campus_id: campus.id, source: source === gpsValue && validGPS ? validGPS : qrStart && source === qrValue ? { kind: 'qr', marker_id: qrStart.id, expected_marker_version: qrStart.version, confirmed: true } : { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id, expected_closure_overlay_version: closures.data.closure_overlay_version }, { onSuccess(result) { const next = result.segments[0]?.floor_id ?? 'outdoor'; setView(next); updateLink(next) } })
   }
   return <>
     <CampusOverview initial={initial} map={!map.error ? map.data : undefined} floors={!floors.error ? floors.data : undefined} />
     <HowNavigationWorks />
     <section id="directory" tabIndex={-1} className="directory editorial-section" aria-labelledby="directory-heading"><div className="directory-header"><div><p className="eyebrow">03 — YOUR NEXT STOP</p><h2 id="directory-heading" className="display-heading" data-reveal>Places worth<br />finding.</h2></div><p className="muted">Browse the published directory. Choose a place to begin or a destination to reach.</p></div>
-      <a className="explore-action" href="#explorer">Browse the map directory <span aria-hidden="true">↗</span></a>
-    </section>
-    <section id="explorer" data-explorer-ready tabIndex={-1} className="editorial-section explorer-section map-workspace" aria-labelledby="explorer-heading">
-      <div className="explorer-heading"><div><p className="section-index">04 — THE INTERACTIVE EXPLORER</p><h2 id="explorer-heading" className="display-heading">Your way through.</h2></div><p>{campus.name}{campus.is_demo ? ' · Synthetic data only' : ' · Published campus map'}<br />Choose a known start. Check restrictions before walking.</p></div>
-    {qrNotice && <div className="qr-confirmed">{qrNotice}</div>}
-    <aside className="workspace-status" aria-label="Route safety and connection">
-        {!online && <p role="status">Offline. New routes paused; previously displayed text is not live guidance.</p>}
-        <aside className="notice restriction-status" aria-label="Operational restrictions"><p>{closures.fresh ? `Live restrictions checked · overlay v${closures.data?.closure_overlay_version}` : 'Current closures unavailable. A connection and successful check are required for a new route.'}</p><button type="button" disabled={!online || closures.isFetching} onClick={() => void closures.refetch()}>Check restrictions</button>{closures.error && <p role="alert">{closures.error.message}</p>}{closures.data?.unresolved_count ? <p role="alert">A retained restriction needs operator review; routing is paused.</p> : null}{closures.data?.items.map(item => <p key={item.id}>{item.label} · {item.state} · {item.reason}. Estimated end {item.estimated_end_at ? new Date(item.estimated_end_at).toLocaleString() : 'unknown'}; operator verification required.</p>)}</aside>
-        {source === gpsValue && <p role="status" className="notice">{validGPS ? 'Outdoor landmark confirmed. Route distance begins at that landmark; request a fresh fix when confirmation expires.' : 'Location confirmation expired or context changed. Request location again or choose a manual/QR start.'}</p>}
-        {route.data && !visibleRoute && <p role="alert" className="notice">Previous route hidden: restrictions changed or current closure information is unavailable. Your selections are retained. Check restrictions and calculate again before walking.</p>}
-        {route.isPending && <p role="status" className="loading">Calculating a route through mapped paths…</p>}
-        {route.error && <div role="alert" className="error-box"><strong>Route unavailable</strong><p>{route.error.message}</p></div>}
-        {!panelExpanded && visibleRoute && <p role="status">Route ready · {visibleRoute.distance_m == null ? 'Distance unknown' : `${Math.round(visibleRoute.distance_m)}m`} · {visibleRoute.estimated_duration_s == null ? 'ETA unavailable' : `${Math.ceil(visibleRoute.estimated_duration_s / 60)}min estimated`}. Expand panel for directions and assumptions.</p>}
-    </aside>
-    <div className="explorer-grid">
-      <aside className="explorer-sidebar" aria-label="Campus navigation workspace">
-        <div className="workspace-brand"><span aria-hidden="true">↗</span><strong>scns<span> / explorer</span></strong><button className="panel-toggle" aria-expanded={panelExpanded} aria-controls="explorer-panel" onClick={() => setPanelExpanded(!panelExpanded)}>{panelExpanded ? 'Collapse panel' : 'Expand panel'}</button></div>
-        {onCampus && <div className="explorer-campus"><label htmlFor="explorer-campus">Explorer campus</label><select id="explorer-campus" value={campus.id} disabled={locked} onChange={e => onCampus(e.target.value)}>{campuses?.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>}
-              <div className="directory-controls"><div><label htmlFor="search">Search destinations</label><input id="search" type="search" placeholder="Try library, coffee, or a building code" value={q} maxLength={120} onChange={e => { setQ(e.target.value); setOffset(0); setPlanning(false); setPanelExpanded(true) }} /></div>
-        <div><label htmlFor="category">Category</label><select id="category" value={category} onChange={e => { setCategory(e.target.value); setOffset(0); setPlanning(false); setPanelExpanded(true) }}><option value="">All places</option>{['building', 'library', 'cafe', 'water', 'washroom', 'entrance', 'garden', 'help', 'room', 'office', 'laboratory', 'facility', 'indoor_destination'].map(kind => <option key={kind} value={kind}>{kind[0].toUpperCase() + kind.slice(1)}</option>)}</select></div></div>
+      <div className="directory-controls"><div><label htmlFor="search">Search destinations</label><input id="search" type="search" placeholder="Try library, coffee, or a building code" value={q} maxLength={120} onChange={e => { setQ(e.target.value); setOffset(0) }} /></div>
+        <div><label htmlFor="category">Category</label><select id="category" value={category} onChange={e => { setCategory(e.target.value); setOffset(0) }}><option value="">All places</option>{['building', 'library', 'cafe', 'water', 'washroom', 'entrance', 'garden', 'help', 'room', 'office', 'laboratory', 'facility', 'indoor_destination'].map(kind => <option key={kind} value={kind}>{kind[0].toUpperCase() + kind.slice(1)}</option>)}</select></div></div>
       {directory.isPending && <p role="status">Searching destinations…</p>}
       {directory.error && <Failure error={directory.error} retry={() => void directory.refetch()} />}
-        <div className="explorer-mode"><button aria-pressed={!planning} onClick={() => { setPlanning(false); setPanelExpanded(true); requestAnimationFrame(() => document.getElementById('search')?.focus()) }}>Browse places</button><button aria-pressed={planning} onClick={() => { setPlanning(true); setPanelExpanded(true); focusPlanner('destination') }}>Plan route</button></div>
-        <div id="explorer-panel" hidden={!panelExpanded}>
-      <div hidden={planning}><ExplorerPlaces data={directory.data} selected={selected?.id} pending={route.isPending} onSelect={selectPlace} onRoute={choose} onStart={startAt} /></div>
+      <div className="places-grid">{directory.data?.items.map(place => <article className="place-card" key={place.id}><div className="destination-graphic" aria-hidden="true"><span>{place.name.trim().slice(0, 1)}</span><small>{place.code}</small><span className="tile-arrow">↗</span></div>
+        <div className="place-card-body"><p className="eyebrow">{place.kind}</p><h3>{place.name}</h3><p>{place.building_name ?? 'Outdoor destination'}</p><details><summary>Place details</summary><p>{place.description}</p>{place.aliases.length > 0 && <p>Also known as: {place.aliases.join(', ')}</p>}<p>Code: {place.code} · Accessibility: unknown until surveyed.</p></details>
+          {place.floor_label && <p>Floor: {place.floor_label} · Room {place.room_code}</p>}
+          {!place.routable && <p className="unavailable">{place.navigation_mode === 'indoor_catalog_only' ? 'Indoor catalog only · no reviewed routing capability or eligible door' : 'Entrance not mapped · routing unavailable'}</p>}
+          <button disabled={route.isPending} className="text-button" onClick={() => choose(place)} aria-label={`Route to ${place.name}`}>Route here <span aria-hidden="true">↗</span></button>
+          <button disabled={route.isPending} className="text-button start-here" onClick={() => { setSelectedPlaces(current => [...current, place]); setGPS(null); setLocationEpoch(n => n + 1); setSource(place.id); clear(); focusPlanner('source') }} aria-label={`Start at ${place.name}`}>Start here</button>
+        </div></article>)}</div>
       {directory.data?.total === 0 && <p className="empty-state">No matching places. Try another name, alias, or category.</p>}
-      {directory.data && <div className="pagination"><span aria-live="polite">{directory.data.total} public destinations{directory.data.total > 0 ? ` · showing ${offset + 1}–${Math.min(offset + 6, directory.data.total)}` : ''}</span><button hidden={planning} disabled={offset === 0} onClick={() => setOffset(offset - 6)}>Previous</button><button hidden={planning} disabled={offset + 6 >= directory.data.total} onClick={() => setOffset(offset + 6)}>Next</button></div>}
-
+      {directory.data && <div className="pagination"><span aria-live="polite">{directory.data.total} public destinations{directory.data.total > 0 ? ` · showing ${offset + 1}–${Math.min(offset + 6, directory.data.total)}` : ''}</span><button disabled={offset === 0} onClick={() => setOffset(offset - 6)}>Previous</button><button disabled={offset + 6 >= directory.data.total} onClick={() => setOffset(offset + 6)}>Next</button></div>}
+    </section>
+    <section id="explorer" data-explorer-ready tabIndex={-1} className="editorial-section explorer-section" aria-labelledby="explorer-heading">
+      <div className="explorer-heading"><div><p className="section-index">04 — THE INTERACTIVE EXPLORER</p><h2 id="explorer-heading" className="display-heading">Your way through.</h2></div><p>{campus.name}{campus.is_demo ? ' · Synthetic data only' : ' · Published campus map'}<br />Choose a known start. Check restrictions before walking.</p></div>
+    {qrNotice && <div className="qr-confirmed">{qrNotice}</div>}
+    <div className="explorer-grid">
       <section id="planner" tabIndex={-1} className="planner-card" aria-labelledby="plan-heading">
         <div className="section-title"><span className="eyebrow">ROUTE / START → DESTINATION</span><span aria-hidden="true">↗</span></div><h2 id="plan-heading">Plan your walk</h2><p className="muted">Routes follow eligible stored paths, never straight-line shortcuts.</p>
-        <details className="route-controls" open={planning} onToggle={e => setPlanning(e.currentTarget.open)}><summary>Route controls <span aria-hidden="true">＋ / −</span></summary>
+        <details className="route-controls" open><summary>Route controls <span aria-hidden="true">＋ / −</span></summary>
+        <aside className="notice restriction-status" aria-label="Operational restrictions"><p>{closures.fresh ? `Live restrictions checked · overlay v${closures.data?.closure_overlay_version}` : 'Current closures unavailable. A connection and successful check are required for a new route.'}</p><button type="button" disabled={!online || closures.isFetching} onClick={() => void closures.refetch()}>Check restrictions</button>{closures.error && <p role="alert">{closures.error.message}</p>}{closures.data?.unresolved_count ? <p role="alert">A retained restriction needs operator review; routing is paused.</p> : null}{closures.data?.items.map(item => <p key={item.id}>{item.label} · {item.state} · {item.reason}. Estimated end {item.estimated_end_at ? new Date(item.estimated_end_at).toLocaleString() : 'unknown'}; operator verification required.</p>)}</aside>
         <OutdoorLocation key={`${locationContext}:${locationEpoch}`} campus={campus.id} release={release.id} overlay={closures.data?.closure_overlay_version ?? 0} profile={profile} ready={online && closures.fresh && !closures.isFetching && !route.isPending} onInvalidate={discardGPS} onConfirm={(start, expires) => { setGPS({ context: locationContext, source: start, expires }); setSource(gpsValue); clear() }} />
         <form onSubmit={submit}>
           <fieldset className="planner-fields" disabled={route.isPending}>
@@ -214,28 +177,32 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice, campuses
           <p id="routing-policy" className="muted">{costMode === 'directions_only' ? 'Directions only minimises eligible traversals, not distance or time. Displayed distances describe the selected route. Step-free still requires verified access; live restrictions still apply.' : 'Metric routes use stored path distances or supported time estimates. Outdoor lengths, including OSM data, may be estimated; metric eligibility is not field verification.'}</p>
           {formError && <p role="alert" className="error-text">{formError}</p>}
         </form></details>
+        <div className="planner-feedback">
+        {route.isPending && <p role="status" className="loading">Calculating a route through mapped paths…</p>}
+        {route.error && <div role="alert" className="error-box"><strong>Route unavailable</strong><p>{route.error.message}</p></div>}
+          {linkedPlaces.error && <Failure error={linkedPlaces.error} retry={() => void linkedPlaces.refetch()} />}
+        </div>
+        {source === gpsValue && <p role="status" className="notice">{validGPS ? 'Outdoor landmark confirmed. Route distance begins at that landmark; request a fresh fix when confirmation expires.' : 'Location confirmation expired or context changed. Request location again or choose a manual/QR start.'}</p>}
         {!route.data && !route.error && <div className="planner-hint"><span aria-hidden="true">◎</span><p>Start from a known landmark.<br /><small>Reviewed public routes · no sign-in needed</small></p></div>}
       </section>
-    <div className="route-results">
-        {visibleRoute && <><div role="status" className="sr-only">Route ready. {visibleRoute.distance_m == null ? 'Distance unknown.' : `${Math.round(visibleRoute.distance_m)} metres.`}</div><RouteDetails route={visibleRoute} onView={showView} /><button className="secondary-button" onClick={() => { clear(); discardGPS(); setLocationEpoch(n => n + 1); if (source === gpsValue) setSource('') }}>Clear route</button></>}
-    </div>
-      </div></aside>
       <div className="map-column"><div className="map-toolbar"><span>{campus.name} <span className="muted">/ {view === 'outdoor' ? 'Outdoor' : floors.data?.floors.find(f => f.id === view)?.label ?? 'Floor'}</span></span><button className="text-button" onClick={() => setMapVisible(!mapVisible)}>{mapVisible ? 'Hide map' : 'Show map'}</button></div>
         <div className="view-controls"><label htmlFor="public-floor">Building and floor view</label><select id="public-floor" value={view} onChange={e => showView(e.target.value)}><option value="outdoor">Outdoor campus</option>{floors.data?.floors.map(f => <option key={f.id} value={f.id}>{f.building_name} · {f.label} · {f.navigation_mode.replaceAll('_', ' ')}</option>)}</select></div>
-        {floors.error && <Failure error={floors.error} retry={() => void floors.refetch()} />}{linkedPlaces.error && <Failure error={linkedPlaces.error} retry={() => void linkedPlaces.refetch()} />}
+        {floors.error && <Failure error={floors.error} retry={() => void floors.refetch()} />}
         {params.get('release') && !linked && <p role="status" className="notice">The shared route belongs to a different release. Choose destinations on the current release; the previous route has not been reused.</p>}
         <MapFailureBoundary key={view}>
-        {mapVisible && view !== 'outdoor' && floors.data?.floors.find(f => f.id === view) && <Suspense fallback={<p className="loading" role="status">Loading floor route viewer…</p>}><FloorRouteMap key={view} floor={floors.data.floors.find(f => f.id === view)!} route={visibleRoute} places={choices} selectedId={selected?.id} onSelect={selectPlace} /></Suspense>}
+        {mapVisible && view !== 'outdoor' && floors.data?.floors.find(f => f.id === view) && <Suspense fallback={<p className="loading" role="status">Loading floor route viewer…</p>}><FloorRouteMap key={view} floor={floors.data.floors.find(f => f.id === view)!} route={visibleRoute} places={choices} /></Suspense>}
         {mapVisible && view === 'outdoor' && <>{map.error && <Failure error={map.error} retry={() => void map.refetch()} />}
-          {map.data && <Suspense fallback={<p className="loading" role="status">Loading map…</p>}><OutdoorMap campus={campus} data={map.data} places={choices} route={visibleRoute} selectedId={selected?.id} onSelect={selectPlace} /></Suspense>}
+          {map.data && <Suspense fallback={<p className="loading" role="status">Loading map…</p>}><OutdoorMap campus={campus} data={map.data} places={initial.items} route={visibleRoute} onDestination={choose} /></Suspense>}
           {map.isPending && <p role="status" className="loading">Loading campus paths…</p>}</>}
         </MapFailureBoundary>
         {!mapVisible && <p className="empty-state">Map hidden. Plan your walk and follow the text directions.</p>}
-        {selected && <ExplorerPlaceCard place={selected} pending={route.isPending} onClose={closePlace} onRoute={() => choose(selected)} onStart={() => startAt(selected)} />}
         <div className="map-footnote"><span>↗ Routes follow mapped paths</span><span>{`Published release ${release.version}`}</span></div>
       </div>
     </div>
-</section>
+    <div className="route-results">
+        {route.data && !visibleRoute && <p role="alert" className="notice">Previous route hidden: restrictions changed or current closure information is unavailable. Your selections are retained. Check restrictions and calculate again before walking.</p>}
+        {visibleRoute && <><div role="status" className="sr-only">Route ready. {visibleRoute.distance_m == null ? 'Distance unknown.' : `${Math.round(visibleRoute.distance_m)} metres.`}</div><RouteDetails route={visibleRoute} onView={showView} /><button className="secondary-button" onClick={() => { clear(); discardGPS(); setLocationEpoch(n => n + 1); if (source === gpsValue) setSource('') }}>Clear route</button></>}
+    </div></section>
 
 
   </>

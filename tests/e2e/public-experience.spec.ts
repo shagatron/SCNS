@@ -109,7 +109,7 @@ test('public styles do not restyle the existing anonymous admin login', async ({
   await page.goto('/#explorer')
   await expect(page.getByLabel('Destination', { exact: true })).toBeVisible()
   const publicStyle = await page.getByRole('button', { name: 'Find walking route' }).evaluate(el => getComputedStyle(el).borderRadius)
-  expect(publicStyle).toBe('2px')
+  expect(publicStyle).toBe('10px')
   await page.goto('/admin')
   await expect(page.getByRole('heading', { name: 'Admin sign in' })).toBeVisible()
   await expect(page.locator('.public-app')).toHaveCount(0)

@@ -15,6 +15,7 @@ test('matched baseline preservation observation', async ({ page }, info) => {
   await page.goto('/')
   await expect(page.getByLabel('Destination', { exact: true })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Find walking route' })).toBeEnabled()
+  await expect(page.getByRole('button',{name:'Fit campus',exact:true})).toBeVisible()
   const observations: Record<string, unknown> = {}
   const save = () => writeFileSync(`${dir}/observations.json`, JSON.stringify(observations,null,2)+'\n')
   observations.structure = await page.evaluate(() => ({
@@ -27,6 +28,7 @@ test('matched baseline preservation observation', async ({ page }, info) => {
     profile: document.querySelector<HTMLSelectElement>('#profile')?.value,
     policy: document.querySelector<HTMLSelectElement>('#cost-mode')?.value,
     controlsOpen: document.querySelector<HTMLDetailsElement>('.route-controls')?.open,
+    mapFocusOrder: [...document.querySelectorAll('.map-panel *')].filter(e => e instanceof HTMLElement && e.tabIndex >= 0).map(e => ({tag:e.tagName,role:e.getAttribute('role'),label:e.getAttribute('aria-label') ?? (e.tagName === 'DIV' ? 'Map' : e.textContent)})),
     navigation: [...document.querySelectorAll('nav[aria-label="Main navigation"] a')].map(a => [a.textContent, a.getAttribute('href')]),
   }))
   save()
@@ -49,6 +51,7 @@ test('matched baseline preservation observation', async ({ page }, info) => {
   await page.getByRole('button', { name: 'Find walking route' }).click()
   await expect(page.getByText('Arrive at Library.', { exact: true })).toBeVisible()
   observations.route = await page.evaluate(() => ({ metrics: document.querySelector('.route-metrics')?.textContent, directions: document.querySelector('.directions')?.textContent, resultParent: document.querySelector('.route-results')?.parentElement?.id }))
+  await page.locator('#planner').screenshot({ path:`${dir}/planner.png`,style:'.public-navigation, .skip-link { visibility:hidden !important; }' })
   await page.locator('#explorer').screenshot({ path: `${dir}/route.png`, style: '.public-navigation, .skip-link { visibility:hidden !important; }' })
   await page.getByRole('button', { name: 'Hide map', exact: true }).click()
   await expect(page.getByRole('region', { name: 'Route directions' })).toBeVisible()
@@ -71,7 +74,7 @@ test('matched baseline preservation observation', async ({ page }, info) => {
   if (variant === 'corrected') {
     // Actual runtime contract captured from archived baseline, not rewritten to
     // match the redesign. Only the explicitly requested error placement differs.
-    const baseline = JSON.parse(readFileSync(resolve('../tests/fixtures/public-baseline-a30810d.json'), 'utf8'))
+    const baseline = JSON.parse(readFileSync(resolve('../tests/fixtures/public-baseline-a30810d.json'), 'utf8')).projects[info.project.name]
     for (const key of ['structure','placesNavigation','search','startAction','routeActionStillVisibleAfterStart','route','hiddenMap','searchError']) {
       expect(observations[key], key).toEqual(baseline[key])
     }

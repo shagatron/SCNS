@@ -1,4 +1,6 @@
-# Public map explorer: rendered previews
+# Historical structural redesign previews
+
+**Superseded:** these images describe the rejected broader redesign at6baeaad, not the corrected interface. Preserved for audit/history. See [matched baseline/corrected evidence](../map-preservation/README.md) and [preservation audit](../../testing/map-preservation-audit.md).
 
 Captured 17 October 2026 from the final **built nginx frontend**, image SHA256 `3f041fa78566f3e08de415059eb09ef2f999233263cfdf665de5d7f76b59d5a4`, with an isolated API/worker, disposable database and temporary storage. All 16 non-empty PNGs were decoded/loaded and copied byte-for-byte; dimensions, sizes and SHA256 are in [manifest.json](manifest.json).
 

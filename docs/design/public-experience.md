@@ -1,6 +1,6 @@
 # SCNS public experience: editorial design
 
-The subsequent [map explorer design](map-explorer.md) scopes a dark navigation workspace to the explorer/place/route panels; the scrolling editorial homepage remains. Its operations and verification are tracked separately. The layout details below describe the original editorial pass.
+The subsequent [outdoor map presentation](map-explorer.md) now preserves baseline surrounding behavior after a full [preservation audit](../testing/map-preservation-audit.md). The earlier dark sidebar replacement was withdrawn; only outdoor map surfaces/vectors/route/category styling and explicitly documented contextual error placement differ. Original editorial layout details below remain applicable.
 
 Based on the four supplied reference images inspected13October2026: right-heavy oversized hero with a narrow yellow information panel/faint lettering; ruled large numbers; asymmetric numbered process rows/rectangular accent illustration; strong letter-based destination tiles. The composition is adapted to original SCNS copy and working public APIs. No forge identity, business statistics, portfolio names, campus photographs or stock marketing claims are copied.
 

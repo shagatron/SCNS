@@ -1,3 +1,7 @@
+# Preservation correction — verification in progress
+
+Functional authority is a30810d; the [full parity audit](map-preservation-audit.md) supersedes the original structural-redesign preservation claims below. The old test results remain historical evidence for that implementation only. In particular, adding a Select step to the indoor assertion concealed lost direct visibility; changing the planner radius expectation accepted an out-of-scope change. Both are now restored to baseline. Matched original/baseline/corrected runtime evidence, final regressions and current limitations will be recorded here on completion. No previous count is being used as proof of feature parity.
+
 # Dark public map explorer verification — 17 October 2026
 
 Presentation follow-up on `redesign/map-explorer` from verified parent `a30810d5b73ffd2d757f2c05de1ed2a59f2e39aa` (`feat/muj-connectivity-review`). Continued existing checkpoints, preserving the final entrance-transition indicator and original behavioral assertions. No backend application/API/schema/permission/algorithm/dependency or dataset changes. Existing homepage/editorial sections and admin remain. This is not another numbered milestone, new data publication or deployment.

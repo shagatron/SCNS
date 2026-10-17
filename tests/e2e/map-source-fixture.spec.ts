@@ -34,7 +34,7 @@ test('source-derived MUJ footprints/path context and unresolved names in a simul
   const unresolved=records.find(r=>r.entity==='places' && r.external_id==='osm-node-10828149259')!
   await page.getByLabel('Search destinations').fill(String(unresolved.data.name))
   await expect(page.locator('#directory').getByRole('heading',{name:String(unresolved.data.name),exact:true})).toBeVisible()
-  await page.getByRole('button',{name:`Map destination: ${unresolved.data.name}`,exact:true}).click()
+  await page.getByTitle(`Map destination: ${unresolved.data.name}`,{exact:true}).click()
   await expect(page.getByLabel('Destination',{exact:true})).toHaveValue(uuid(unresolved.external_id))
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
   // Capture the complete map/context/attribution rather than just the tall mobile controls.

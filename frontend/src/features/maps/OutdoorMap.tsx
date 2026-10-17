@@ -47,9 +47,9 @@ export default function OutdoorMap({ campus, data, places, route, onDestination 
         ? { color: '#788780', fillColor: '#4b5751', fillOpacity: 0.8, weight: 1 }
         : feature?.properties.layer === 'overlay' ? { color: '#66726b', fillColor: '#3a4540', weight: 2, fillOpacity: 0.3 } : { color: feature?.properties.open ? '#7b8982' : '#e6a388', weight: 5, dashArray: feature?.properties.open ? undefined : '5 8' }} />
       {places.filter(place => place.point).map(place => <Marker key={place.id} position={toLeaflet(place.point!.coordinates as [number, number])}
-        title={`Map destination: ${place.name}`} alt={place.name} keyboard
+        title={`Map destination: ${place.name}`} alt={place.name} keyboard={false}
         icon={divIcon({ className: `scns-pin kind-${place.kind}`, html: iconMarkup(place.kind), iconSize: [30, 30], iconAnchor: [15, 15] })}
-        eventHandlers={{ click: () => onDestination(place), keypress: event => { if (['Enter', ' '].includes(event.originalEvent.key)) { event.originalEvent.preventDefault(); onDestination(place) } } }}>
+        eventHandlers={{ click: () => onDestination(place) }}>
         <Tooltip direction="top" permanent className="place-label">{place.name}</Tooltip>
       </Marker>)}
       {route?.segments.filter(segment => segment.kind === 'outdoor' && segment.geometry).map(segment => <Polyline key={`halo:${segment.edge_id}`}

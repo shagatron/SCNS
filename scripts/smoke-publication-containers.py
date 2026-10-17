@@ -19,14 +19,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def run(args, env=None):
-    result = subprocess.run(
-        args, cwd=ROOT, env=env, capture_output=True, text=True, check=False
-    )
+    result = subprocess.run(args, cwd=ROOT, env=env, capture_output=True, text=True, check=False)
     if result.returncode:
         # Never emit environment/credentials, command argv or private upload content.
-        raise RuntimeError(
-            f"Container smoke command failed ({args[0]}), exit {result.returncode}"
-        )
+        raise RuntimeError(f"Container smoke command failed ({args[0]}), exit {result.returncode}")
     return result.stdout.strip()
 
 
@@ -51,9 +47,7 @@ def main():
     api, frontend = f"{network}-api", f"{network}-frontend"
     db_id = run(["docker", "compose", "ps", "-q", "db"])
     if not db_id:
-        raise RuntimeError(
-            "Start the existing Compose db first; no volumes will be deleted."
-        )
+        raise RuntimeError("Start the existing Compose db first; no volumes will be deleted.")
     created_db = created_network = connected = False
     containers = []
     try:
@@ -137,9 +131,7 @@ def main():
         deadline = time.monotonic() + 60
         while True:
             try:
-                with urllib.request.urlopen(
-                    "http://127.0.0.1:5174/admin", timeout=2
-                ) as response:
+                with urllib.request.urlopen("http://127.0.0.1:5174/admin", timeout=2) as response:
                     assert response.status == 200
                 break
             except (OSError, AssertionError):
@@ -202,9 +194,16 @@ def main():
                 *(
                     ["muj.spec.ts"]
                     if args.muj_only
-                    else ["map-explorer.spec.ts", "map-source-fixture.spec.ts", "preservation-observation.spec.ts", "public-experience.spec.ts"]
+                    else [
+                        "map-explorer.spec.ts",
+                        "map-source-fixture.spec.ts",
+                        "preservation-observation.spec.ts",
+                        "public-experience.spec.ts",
+                        "muj-homepage.spec.ts",
+                    ]
                     if args.explorer_only
                     else [
+                        "muj-homepage.spec.ts",
                         "public-experience.spec.ts",
                         "map-explorer.spec.ts",
                         "map-source-fixture.spec.ts",
@@ -237,9 +236,7 @@ def main():
             ("/data/raw/source.geojson", 404),
         ):
             try:
-                with urllib.request.urlopen(
-                    "http://127.0.0.1:5174" + path, timeout=5
-                ) as response:
+                with urllib.request.urlopen("http://127.0.0.1:5174" + path, timeout=5) as response:
                     status = response.status
             except urllib.error.HTTPError as error:
                 status = error.code

@@ -1,5 +1,7 @@
 # SCNS public experience: editorial design
 
+The subsequent [map explorer design](map-explorer.md) scopes a dark navigation workspace to the explorer/place/route panels; the scrolling editorial homepage remains. Its operations and verification are tracked separately. The layout details below describe the original editorial pass.
+
 Based on the four supplied reference images inspected13October2026: right-heavy oversized hero with a narrow yellow information panel/faint lettering; ruled large numbers; asymmetric numbered process rows/rectangular accent illustration; strong letter-based destination tiles. The composition is adapted to original SCNS copy and working public APIs. No forge identity, business statistics, portfolio names, campus photographs or stock marketing claims are copied.
 
 Near-black framing/text, off-white sections and acid-yellow #E4FB02 form the public palette. Thin rules and generous whitespace separate sections; only the outer surface, floating pill navigation and circular arrow receive deliberate rounding. The selected route uses a high-contrast black stroke, with labelled yellow start/white destination markers where the endpoint belongs to the displayed geographic/floor frame. A labelled graph illustration explains connections without pretending to be a navigable map.

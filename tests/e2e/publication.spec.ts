@@ -150,7 +150,7 @@ test('independent review publishes coherent public data, stale client recovers a
     expect(await artifact.text()).not.toContain('PRIVATE-GEOMETRY-LABEL')
     expect(await artifact.text()).toContain('Approved synthetic overlay')
     await expect(publicUser.page.locator('.map-panel .leaflet-marker-pane img')).toHaveCount(0) // approved point vectors never depend on missing marker PNG files
-    expect(await publicUser.page.locator('.map-panel path[stroke="#64728a"]').count()).toBeGreaterThan(0)
+    expect(await publicUser.page.locator('.map-panel path[stroke="#66726b"]').count()).toBeGreaterThan(0)
     await reviewer.page.getByRole('textbox', { name: 'Rollback reason', exact: true }).fill('Restore earlier synthetic release following isolated acceptance test.')
     await reviewer.page.getByRole('button', { name: 'Prepare rollback', exact: true }).click()
     await reviewer.page.getByRole('checkbox', { name: 'I understand public navigation will use the earlier release' }).check()

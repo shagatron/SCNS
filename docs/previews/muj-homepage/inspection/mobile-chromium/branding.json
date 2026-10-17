@@ -1,0 +1,87 @@
+[
+  {
+    "width": 320,
+    "crop": {
+      "width": 300,
+      "domeLeft": 18.599033816425163,
+      "domeRight": 289.1304347826087,
+      "finialY": 100.4830917874396,
+      "height": 800,
+      "current": "http://127.0.0.1:5174/branding/muj/campus-mobile.webp"
+    },
+    "logo": {
+      "x": 41,
+      "y": 115,
+      "width": 70,
+      "height": 80.90625
+    }
+  },
+  {
+    "width": 360,
+    "crop": {
+      "width": 340,
+      "domeLeft": 22.173913043478308,
+      "domeRight": 326.5217391304348,
+      "finialY": 113.04347826086956,
+      "height": 900,
+      "current": "http://127.0.0.1:5174/branding/muj/campus-mobile.webp"
+    },
+    "logo": {
+      "x": 41,
+      "y": 115,
+      "width": 70,
+      "height": 80.90625
+    }
+  },
+  {
+    "width": 390,
+    "crop": {
+      "width": 370,
+      "domeLeft": 24.855072463768124,
+      "domeRight": 354.5652173913044,
+      "finialY": 122.46376811594202,
+      "height": 975,
+      "current": "http://127.0.0.1:5174/branding/muj/campus-mobile.webp"
+    },
+    "logo": {
+      "x": 41,
+      "y": 115,
+      "width": 70,
+      "height": 80.90625
+    }
+  },
+  {
+    "width": 768,
+    "crop": {
+      "width": 720,
+      "domeLeft": 182.66666666666663,
+      "domeRight": 478.2222222222222,
+      "finialY": 109.77777777777779,
+      "height": 912,
+      "current": "http://127.0.0.1:5174/branding/muj/campus-736.webp"
+    },
+    "logo": {
+      "x": 71.546875,
+      "y": 141,
+      "width": 88,
+      "height": 101.71875
+    }
+  },
+  {
+    "width": 1440,
+    "crop": {
+      "width": 1392,
+      "domeLeft": 223.09023485784917,
+      "domeRight": 380.91470951792337,
+      "finialY": 58.62051915945612,
+      "height": 912,
+      "current": "http://127.0.0.1:5174/branding/muj/campus-736.webp"
+    },
+    "logo": {
+      "x": 101.796875,
+      "y": 141,
+      "width": 88,
+      "height": 101.71875
+    }
+  }
+]

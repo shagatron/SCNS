@@ -1,7 +1,7 @@
 /* Public-only editorial system. Admin continues to use its existing styles. */
 @font-face { font-family: 'SCNS Inter'; src: url('/fonts/InterVariable.woff2') format('woff2'); font-style: normal; font-weight: 100 900; font-display: swap; }
 html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
-.public-app { --ink: #111110; --paper: #f0f0ed; --yellow: #e4fb02; --line: #c9c9c2; --muted: #565650; color: var(--ink); background: var(--ink); font-family: 'SCNS Inter', Arial, sans-serif; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; padding: 24px; min-height: 100vh; }
+.public-app { --ink: #111110; --paper: #f3f0e8; --yellow: #e9c99f; --line: #cfc8bc; --muted: #565650; color: var(--ink); background: var(--ink); font-family: 'SCNS Inter', Arial, sans-serif; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; padding: 24px; min-height: 100vh; }
 .public-app * { min-width: 0; }
 .public-app h1, .public-app h2, .public-app h3 { color: inherit; font-weight: 760; word-spacing: .08em; }
 .public-app p { line-height: 1.6; }
@@ -31,7 +31,7 @@ html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .public-app .opening-note > strong { font-size: 22px; font-weight: 760; line-height: 1.1; letter-spacing: -.04em; margin-bottom: 20px; }
 .public-app .opening-note p { font-size: 12px; line-height: 1.6; }
 .public-app .campus-control { width: 100%; margin: 12px 0; }
-.public-app .campus-control select { background: transparent; border-color: #758300; font-size: 12px; }
+.public-app .campus-control select { background: transparent; border-color: #7a684c; font-size: 12px; }
 .public-app .opening-note > a { display: flex; justify-content: space-between; min-height: 44px; align-items: center; margin-top: auto; font-size: 12px; font-weight: 700; }
 .public-app .opening-title { position: relative; z-index: 1; text-align: right; align-self: center; }
 .public-app .opening-title h1 { font-size: clamp(80px, 9.3vw, 142px); line-height: .91; letter-spacing: -.055em; margin: 20px 0 40px; font-weight: 800; }
@@ -223,3 +223,36 @@ html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
 }
 .public-app input, .public-app select, .public-app button, .public-app summary { scroll-margin-top: 12px; }
 .public-app .planner-card { scroll-margin-top: 0; }
+
+/* Owner-supplied MUJ branding: presentation only; original sections/actions remain. */
+.public-app .campus-opening-muj { background: #15271e; color: #fffdf7; }
+.public-app .muj-hero-photo { position: absolute; inset: 0; pointer-events: none; background: #15271e; }
+.public-app .muj-hero-photo picture, .public-app .muj-hero-photo img { display: block; width: 100%; height: 100%; }
+.public-app .muj-hero-photo img { object-fit: cover; object-position: 50% 0; }
+.public-app .muj-hero-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #0b1511ad, #0b151187 38%, #0b1511d1); }
+.public-app .campus-opening-muj .opening-watermark { display: none; }
+.public-app .muj-brand { display: flex; align-items: center; gap: 20px; max-width: 480px; }
+.public-app .muj-emblem { flex: none; box-sizing: content-box; width: 88px; height: 101.73px; padding: 12px; background: #fff8eb; border: 1px solid #d8c5a5; border-radius: 3px; }
+.public-app .muj-emblem img { display: block; width: 88px; height: auto; }
+.public-app .muj-emblem-fallback { display: grid; place-items: center; height: 100%; font-size: 11px; line-height: 1.4; color: #332718; text-align: center; }
+.public-app .muj-brand .project-attribution { max-width: 28ch; margin: 10px 0 0; text-align: left; font-size: 12px; line-height: 1.5; }
+.public-app .campus-opening-muj .section-index, .public-app .campus-opening-muj .connection { color: inherit; }
+.public-app .campus-opening-muj .opening-note { background: #f2e2c8; color: var(--ink); border: 1px solid #d6bc97; }
+.public-app .campus-opening-muj .arrow-disc { background: #f2e2c8; color: var(--ink); }
+.public-app .campus-opening-muj .explore-action:hover .arrow-disc { background: #fffdf7; }
+.public-app .campus-opening-muj .status-dot { background: #c0d68e; }
+.public-app .campus-opening-muj .status-dot.offline { background: #ffc6a3; }
+.public-app .campus-opening-muj :focus-visible { outline-color: #fffdf7; }
+.public-app .campus-opening-muj .opening-note :focus-visible { outline-color: #3556db; }
+.public-app button, .public-app input, .public-app select { border-color: #827969; }
+.public-app .place-card-body p { max-width: 65ch; }
+.public-app .public-navigation { box-shadow: 0 3px 14px #1111100c; }
+@media (max-width: 760px) {
+  .public-app .muj-brand { gap: 14px; }
+  .public-app .muj-brand > div:last-child { flex: 1; }
+  .public-app .muj-emblem { width: 70px; height: 80.92px; padding: 10px; }
+  .public-app .muj-emblem img { width: 70px; }
+  .public-app .muj-brand .section-index { font-size: 10px; }
+  .public-app .muj-brand .project-attribution { font-size: 11px; }
+  .public-app .campus-opening-muj .opening-top > p { max-width: 42ch; }
+}

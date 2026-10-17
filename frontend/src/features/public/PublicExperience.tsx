@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Campus, MapData, Search } from '../../api/client'
 import type { components } from '../../api/generated'
+import { hasMujBranding, MujEmblem, MujHeroPhoto } from './MujBranding'
 
 const sections = ['intro', 'overview', 'how', 'directory', 'explorer'] as const
 export function PublicNavigation() {
@@ -51,8 +52,10 @@ export function PublicMotion({ direct }: { direct: boolean }) {
 }
 
 export function CampusOpening({ campus, campuses, locked, onCampus, online, connected, unavailable = false }: { campus?: Campus; campuses?: Campus[]; locked: boolean; onCampus: (id: string) => void; online: boolean; connected: boolean; unavailable?: boolean }) {
-  return <section className="campus-opening editorial-section" id="intro" tabIndex={-1} aria-labelledby="intro-heading">
-    <div className="opening-top"><span className="section-index">SCNS — SMART CAMPUS NAVIGATION</span><p>{campus?.name ?? 'Campus navigation'}<br />Published places. Connected paths.</p></div>
+  const muj = hasMujBranding(campus)
+  return <section className={`campus-opening editorial-section${muj ? ' campus-opening-muj' : ''}`} id="intro" tabIndex={-1} aria-labelledby="intro-heading">
+    {muj && <MujHeroPhoto key={campus?.id} />}
+    <div className="opening-top">{muj ? <div className="muj-brand"><MujEmblem key={campus?.id} /><div><span className="section-index">SCNS — SMART CAMPUS NAVIGATION</span><p className="project-attribution">Student project · not an official university service.</p></div></div> : <span className="section-index">SCNS — SMART CAMPUS NAVIGATION</span>}<p>{campus?.name ?? 'Campus navigation'}<br />Published places. Connected paths.</p></div>
     <span className="opening-watermark" aria-hidden="true" />
     <div className="opening-note"><strong>A campus.<br />A clearer way through.</strong><p>Find a place, choose your starting point and follow a route through mapped paths.</p>
       <div className="campus-control"><label htmlFor="campus">Explore campus</label><select id="campus" disabled={locked || !campuses?.length} value={campus?.id ?? ''} onChange={e => onCampus(e.target.value)}>{!campuses?.length && <option value="">{campuses ? 'No published campus' : 'Loading campus…'}</option>}{campuses?.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>

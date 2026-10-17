@@ -2,9 +2,17 @@
 
 This is a source naming assessment and optional draft-only correction, not a new campus import or publication. Existing Windows MUJ is published and owner-reported acceptance passed. The owner additionally reports the updated metric/traversal controls work: University Entrance → Mapped entrance10828149259 is approximately513m under metric shortest and799m/9edges under Directions only. These are owner-reported Windows software results, not cloud inspection, field measurements or independent human/institutional approval.
 
-## Authorized E22: one update-and-run command block
+## E22 naming publication: owner-reported Windows completion — 17 October 2026
 
-Owner authorization covers **one new naming draft** from the current local published release and exactly these existing entities:
+The owner reports Draft2 `bf1e8e0f-f400-4f5f-a16e-25ac11503392` was submitted by `campus-owner` with 145 individual reasons, approved through the helper by `muj-reviewer` at version5, then published through the normal admin UI. Explorer now displays **TMA Pai Auditorium entrance**. University Entrance → Mapped entrance10828149259 under **metric shortest** remains approximately513m; Demo Campus Main Gate → Library remains approximately257m/4min. E05 and all other unresolved identities were intentionally unchanged.
+
+These are **owner-reported Windows checks**, not automated cloud evidence, independent human/institutional review, physical-route or accessibility verification. Both application accounts were owner-operated. New release UUID and artifact checksum were not supplied; do not reuse the previous release identity or confuse the dataset content checksum with the artifact checksum. Full validation/submission/content identifiers and the startup-only block are in [publication completion and startup notes](muj-publication-preparation.md#e22-publication-completed-owner-reported-windows-results--17-october-2026).
+
+The creation/application/review instructions below are historical reference for this completed E22 change. **Do not replay helpers, create another draft or republish.** For normal startup, start/check the retained database before API readiness and start the frontend before checking localhost5173. Owner observed database-related503s when database/frontend were stopped and an API-only --no-deps command waited on readiness; starting the existing services resolved it. No startup replay was performed for this documentation task.
+
+## Historical E22 creation/application workflow
+
+The original owner authorization covered **one new naming draft** from the current local published release and exactly these existing entities:
 
 |Entity|Stable UUID|Change|
 |---|---|---|
@@ -13,7 +21,7 @@ Owner authorization covers **one new naming draft** from the current local publi
 
 Actual current labels/release are fetched before confirmation. All17unresolved identities, including E05, remain unchanged. The source-supported name omits “main” and makes no floor/accessibility/institutional claim. The workflow has a fixed E22 allowlist; an expanded inventory cannot broaden it silently. No manual draft creation or UUID copying is needed for this mode.
 
-Run in the existing clean Windows repository with Docker Desktop running Linux containers. This builds/replaces only the API/web containers using retained volumes; the database and existing worker remain in place. There is no migration for this helper extension.
+Run in the existing clean Windows repository with Docker Desktop running Linux containers. This starts/checks the retained database before building/replacing API/web containers; the existing worker and volumes remain in place. There is no migration for this helper extension.
 
 ```powershell
 $ErrorActionPreference = 'Stop'
@@ -29,6 +37,8 @@ Invoke-ScnsStep { git switch feat/muj-connectivity-review }
 Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
 Invoke-ScnsStep { git merge-base --is-ancestor ff40e3c HEAD }
 Invoke-ScnsStep { docker compose build api frontend }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build db }
+Invoke-ScnsStep { docker compose ps db }
 Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build --force-recreate api frontend }
 Invoke-ScnsStep { docker compose ps }
 Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
@@ -57,7 +67,7 @@ Each node/place update is a normal transaction; interruption can leave one name 
 
 If release/restrictions changed, the draft is locked, a different account is used, source/owner labels conflict or creation parent differs, the helper stops and preserves the saved intent/UUID. If the creation response was lost and no UUID reached local storage, locate the original draft by the saved creation key/actor in **Audit records**, rather than creating a replacement. It never creates a replacement automatically. Creation verification is deliberately bounded to the latest50campus audit entries. If the matching entry is missing/older, it stops: open **Admin → Assigned campus → MUJ → Audit records → Next audit page**, locate `draft.create` with the saved key/actor/UUID/parent and retain that evidence for recovery. Do not delete/edit the journal, change keys/accounts, assume a failed request rolled back, or bypass the blocker. A stale/missing audit requires read-only recovery assessment before application. You can still inspect the retained draft with the existing default/`--draft` read-only helper; final publication is never part of this workflow.
 
-After success, open **Admin → Assigned campus → MUJ → Draft catalog**, select the printed **Draft number**, then **Places** and **Outdoor graph** to inspect E22. The existing public explorer must retain its old release/name until a separately authorized normal review/publication. Sources, topology, geometry, costs, anchors and accessibility are preserved; all other drafts/releases/accounts/uploads/.env/volumes remain intact. No submission/approval/publication is performed. Actual Windows execution remains owner-run and unverified until reported.
+After success, open **Admin → Assigned campus → MUJ → Draft catalog**, select the printed **Draft number**, then **Places** and **Outdoor graph** to inspect E22. The existing public explorer must retain its old release/name until a separately authorized normal review/publication. Sources, topology, geometry, costs, anchors and accessibility are preserved; all other drafts/releases/accounts/uploads/.env/volumes remain intact. No submission/approval/publication is performed. The owner subsequently reported completion of this E22 workflow above; cloud tests did not inspect Windows directly.
 
 ## Inspect the evidence first
 
@@ -90,6 +100,8 @@ Invoke-ScnsStep { git switch feat/muj-connectivity-review }
 Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
 Invoke-ScnsStep { git merge-base --is-ancestor 278db69 HEAD }
 Invoke-ScnsStep { docker compose build api frontend }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build db }
+Invoke-ScnsStep { docker compose ps db }
 Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build api frontend }
 Invoke-ScnsStep { docker compose ps }
 Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'

@@ -6,9 +6,50 @@ Owner-reported Windows evidence: v2 correction applied at6, receipt recovered wi
 
 **Subsequent owner report (16October2026):** MUJ is now published locally and all requested public acceptance checks passed. Source/submission/approval used separate application accounts operated by the owner; no independent human or institutional approval is claimed. The steps below remain reference for the workflow, **not an instruction to republish**. For the current wording-only update use [routing-policy update instructions](muj-routing-policy-update.md).
 
+## E22 publication completed: owner-reported Windows results — 17 October 2026
+
+The owner reports that the E22 naming draft was submitted, approved and published locally through the normal workflow. This is **owner-reported Windows software evidence**, separate from the automated cloud fixtures below. Both `campus-owner` and `muj-reviewer` application accounts were operated by the owner; account separation is not independent human, institutional, physical-route or accessibility verification.
+
+| Recorded item | Owner-reported value |
+|---|---|
+| Draft | `bf1e8e0f-f400-4f5f-a16e-25ac11503392` |
+| Validation | `9da479c1-6971-4ee3-984f-d0e46ba315a8` |
+| Content checksum (dataset, not public artifact) | `99879289d754320e6242f1768bf8abc139b3de32841db442a3b2b55640304f16` |
+| Submission | `12e02c58-81a7-40c8-ab91-92646ab6195d` |
+| Submission/review | `campus-owner` submitted the exact draft with 145 individual reasons; `muj-reviewer` approved through the helper, reaching version **5 at approval**. |
+| Publication | Owner subsequently completed publication through the normal admin UI. The post-publication edit version was not supplied. |
+| Public acceptance | Explorer displays **TMA Pai Auditorium entrance**; University Entrance → Mapped entrance 10828149259, **metric shortest**, remains approximately **513m**; Demo Campus Main Gate → Library remains approximately **257m / 4min**. |
+| Unresolved identities | E05 and all other unresolved identities were intentionally unchanged. |
+| New release UUID / artifact checksum | **Not supplied.** Do not substitute the previous release UUID, validation UUID, submission UUID or dataset checksum. |
+
+The E22 create/submit/approve/publication steps below are retained as historical operations reference, **not instructions to replay them on the completed release**. The helper's old-parent safeguards may correctly stop after publication changes the active release. Preserve the completed draft, receipts, reasons and release; do not recreate, resubmit or republish to obtain evidence. No helper replay or server action is needed to record this report.
+
+### Starting the retained Windows installation
+
+Owner-reported startup incident: the database and frontend were stopped. An API-only `--no-deps` startup waited on readiness and returned database-related **503** responses; starting the existing database and app services resolved it. This incident was not reproduced in cloud tests. `--no-deps` does not start dependencies, so check database health **before** API readiness and start the frontend before checking its localhost URL.
+
+For an already built, existing installation, this **startup-only** PowerShell block starts retained services without helpers, migrations, seeding, account changes or publication. It does not remove volumes or change `.env`:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+function Invoke-ScnsStep {
+    param([Parameter(Mandatory=$true)][scriptblock]$Action)
+    & $Action
+    if ($LASTEXITCODE -ne 0) { throw 'SCNS startup failed. Stop and preserve existing data and volumes.' }
+}
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build db }
+Invoke-ScnsStep { docker compose ps db }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build api }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build frontend }
+Invoke-ScnsStep { docker compose ps db api frontend }
+Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
+```
+
+If the database health step fails, stop there; do not reset/reseed, remove volumes or treat API 503s as a reason to replay publication. These commands were reviewed against `compose.yaml` for this documentation-only change, not executed against Windows or cloud services in this task.
+
 ## Existing Windows E22 naming Draft2: read-only review preparation
 
-Use this section for the existing naming draft **bf1e8e0f-f400-4f5f-a16e-25ac11503392**. Do not create another draft or replay naming. Owner-reported last edit3/sourceApproved; validation **9da479c1-6971-4ee3-984f-d0e46ba315a8** has0errors145warnings. The helper fetches current state and rejects stale validation; it never assumes edit3 is still current. Source approval inherited from the parent must be preserved; no source-approval action is required by this command.
+Historical pre-publication instructions for naming draft **bf1e8e0f-f400-4f5f-a16e-25ac11503392**; publication is now owner-reported complete above. Do not replay this workflow. Do not create another draft or replay naming. At the preparation stage, the owner reported edit3/sourceApproved; validation **9da479c1-6971-4ee3-984f-d0e46ba315a8** has0errors145warnings. The helper fetches current state and rejects stale validation; it never assumes edit3 is still current. Source approval inherited from the parent must be preserved; no source-approval action is required by this command.
 
 Owner-pasted145warning evidence was parsed separately (SHA256e972a5dcf3550bf2af8979712bcd8ac1cbfd3e6002c9f213afd98843d1d723ee). This is owner-supplied evidence, not an agent query of Windows. It agrees with the reported delta, which the helper independently verifies against actual authenticated server history:
 
@@ -23,7 +64,7 @@ Expected categories remain52connectivity_shortest,55connectivity_step_free,33unm
 
 ### Complete update/report command block
 
-PowerShell in the existing clean repository, Docker Desktop Linux containers running. This rebuilds/replaces only API/web containers using retained volumes; database/worker/accounts/.env/uploads/drafts/releases remain in place. No migration, validation creation, draft creation, naming, acknowledgements, submission, approval or publication is performed. Password stays hidden in the terminal; no `-T`, pipes, transcripts, credentials in commands/files/chat.
+PowerShell in the existing clean repository, Docker Desktop Linux containers running. This starts/checks the retained database before rebuilding/replacing API/web containers; worker/accounts/.env/uploads/drafts/releases remain in place. No migration, validation creation, draft creation, naming, acknowledgements, submission, approval or publication is performed. Password stays hidden in the terminal; no `-T`, pipes, transcripts, credentials in commands/files/chat.
 
 ```powershell
 $ErrorActionPreference = 'Stop'
@@ -39,6 +80,8 @@ Invoke-ScnsStep { git switch feat/muj-connectivity-review }
 Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
 Invoke-ScnsStep { git merge-base --is-ancestor 8adf3a2 HEAD }
 Invoke-ScnsStep { docker compose build api frontend }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build db }
+Invoke-ScnsStep { docker compose ps db }
 Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build --force-recreate api frontend }
 Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
 $E22Draft = 'bf1e8e0f-f400-4f5f-a16e-25ac11503392'
@@ -88,7 +131,10 @@ Invoke-ScnsStep { git switch feat/muj-connectivity-review }
 Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
 Invoke-ScnsStep { git merge-base --is-ancestor 8eed084 HEAD }
 Invoke-ScnsStep { docker compose build api }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build db }
+Invoke-ScnsStep { docker compose ps db }
 Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build --force-recreate api }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build frontend }
 Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
 $E22Draft = 'bf1e8e0f-f400-4f5f-a16e-25ac11503392'
 $E22Validation = '9da479c1-6971-4ee3-984f-d0e46ba315a8'
@@ -133,7 +179,10 @@ Invoke-ScnsStep { git switch feat/muj-connectivity-review }
 Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
 Invoke-ScnsStep { git merge-base --is-ancestor ab3424f HEAD }
 Invoke-ScnsStep { docker compose build api }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build db }
+Invoke-ScnsStep { docker compose ps db }
 Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build --force-recreate api }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build frontend }
 Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
 $E22Draft = 'bf1e8e0f-f400-4f5f-a16e-25ac11503392'
 $E22Submission = '12e02c58-81a7-40c8-ab91-92646ab6195d'
@@ -190,7 +239,9 @@ Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
 Invoke-ScnsStep { git merge-base --is-ancestor ee97dbc HEAD }
 Invoke-ScnsStep { docker compose build api }
 Invoke-ScnsStep { docker compose stop api frontend import-worker }
-Invoke-ScnsStep { docker compose up -d --wait --no-build db api frontend import-worker }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build db }
+Invoke-ScnsStep { docker compose ps db }
+Invoke-ScnsStep { docker compose up -d --wait --no-build api frontend import-worker }
 Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
 $scnsMujDraft = 'd1a8bb10-cd34-4fe3-905b-53996334dd40'
 $scnsValidation = 'cba61b0b-045a-4978-a9b2-1f2f1ff064c0'

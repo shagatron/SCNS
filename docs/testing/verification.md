@@ -1,3 +1,25 @@
+# Owner-reported Windows E22 publication and acceptance — 17 October 2026
+
+This section records **owner-reported Windows software checks**, separate from the automated evidence retained below. The agent did not access the Windows database, rerun these journeys, approve or publish anything. `campus-owner` and `muj-reviewer` were separate application accounts operated by the owner; this is not independent human/institutional review or physical-route/accessibility verification.
+
+| Item | Owner-reported result |
+|---|---|
+| Draft | `bf1e8e0f-f400-4f5f-a16e-25ac11503392` |
+| Validation | `9da479c1-6971-4ee3-984f-d0e46ba315a8` |
+| Dataset content checksum | `99879289d754320e6242f1768bf8abc139b3de32841db442a3b2b55640304f16` — not a supplied public artifact checksum. |
+| Submission | `12e02c58-81a7-40c8-ab91-92646ab6195d`; campus-owner submitted the exact draft with **145 individual reasons**. |
+| Approval / publication | muj-reviewer approved through the helper, reaching **version5 at approval**; owner subsequently published through the normal admin UI. |
+| Public E22 name | Explorer now displays **TMA Pai Auditorium entrance**. |
+| MUJ regression | University Entrance → Mapped entrance10828149259, **metric shortest**, remains approximately **513m**. |
+| Demo regression | Demo Campus Main Gate → Library remains approximately **257m / 4min**. |
+| Unresolved identities | E05 and all other unresolved identities were intentionally unchanged. |
+
+**Unknowns:** new release UUID and artifact checksum were not supplied. Do not reuse the previous release UUID or substitute the draft/validation/submission UUID or dataset checksum. The post-publication edit version was also not supplied; version5 is the reported approval result. No additional routes, real-device GPS, field measurements or verified step-free results are implied by this report.
+
+**Owner-reported startup incident:** database and frontend were stopped. API-only startup with --no-deps waited on readiness and returned database-related503s. Starting the existing database and app services resolved it. Not reproduced in cloud; no application change made. Windows instructions now start/check the retained database before API readiness, then start/check the frontend before the localhost5173 readiness request. Historical E22 create/submit/approve steps are marked as completed reference, not a request to replay helpers after publication.
+
+**Documentation-only verification:** reviewed service names/dependencies/healthchecks against existing compose.yaml; checked Markdown diff/links/code fences and database→API→frontend→readiness ordering in the changed E22 instructions. No services/helpers, migrations, database queries, seeding, account changes, review or publication were run in this task. Retain prior243unit tests,1extended API/CLI journey,7workflow regressions and static/container evidence below; those are earlier results, not rerun for these documentation changes. See [publication completion/startup notes](../operations/muj-publication-preparation.md#e22-publication-completed-owner-reported-windows-results--17-october-2026).
+
 # E22 naming-clone explicit separate-account approval — 17 October 2026
 
 Continued clean local/remote38e2c26 on feat/muj-connectivity-review. Owner identifies Windows Draft2bf1e8e0f-f400-4f5f-a16e-25ac11503392/submission12e02c58-81a7-40c8-ab91-92646ab6195d/checksum99879289d754320e6242f1768bf8abc139b3de32841db442a3b2b55640304f16/validation9da479c1-6971-4ee3-984f-d0e46ba315a8. Read-only cloud developer query found no such draft; cloud API/frontend remain stopped. Live Windows state is inaccessible here and must be inspected by the command locally. This is a bounded CLI extension, not a new milestone or a cloud approval/publication.

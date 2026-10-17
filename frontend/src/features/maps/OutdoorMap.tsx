@@ -4,6 +4,7 @@ import type { FeatureCollection } from 'geojson'
 import { circleMarker, divIcon } from 'leaflet'
 import type { Campus, MapData, Place, Route } from '../../api/client'
 import { iconMarkup } from '../public/placeSymbols'
+import { outdoorTransitions } from './routePresentation'
 import { toLeaflet } from './coordinates'
 import 'leaflet/dist/leaflet.css'
 
@@ -69,6 +70,7 @@ export default function OutdoorMap({ campus, data, places, route, selectedId, on
       {outdoor.map(segment => <Polyline key={`halo:${segment.edge_id}`} positions={segment.geometry!.coordinates.map(p => toLeaflet(p as [number, number]))} pathOptions={{ color: '#91edc5', weight: 14, opacity: 0.16, interactive: false }} />)}
       {outdoor.map(segment => <Polyline key={segment.edge_id} positions={segment.geometry!.coordinates.map(p => toLeaflet(p as [number, number]))} pathOptions={{ color: '#9bf3ce', weight: 6, opacity: 1 }}><Tooltip>{segment.instruction}</Tooltip></Polyline>)}
       {transitions.map(s => <Polyline key={s.edge_id} positions={s.geometry!.coordinates.map(p => toLeaflet(p as [number, number]))} pathOptions={{ color: '#f0cb91', weight: 5, dashArray: '3 7' }}><Tooltip>Entrance transition · {s.instruction}</Tooltip></Polyline>)}
+      {outdoorTransitions(route).map(t => <CircleMarker key={`transition:${t.id}`} center={toLeaflet(t.point as [number, number])} radius={9} pathOptions={{ color: '#17211b', fillColor: '#f0cb91', fillOpacity: 1, weight: 3 }}><Tooltip permanent direction="right">Entrance transition · {t.instruction}</Tooltip></CircleMarker>)}
       {start && <CircleMarker center={toLeaflet(start as [number, number])} radius={10} pathOptions={{ color: '#17211d', fillColor: '#9bf3ce', fillOpacity: 1, weight: 3 }}><Tooltip permanent direction="bottom">Route start</Tooltip></CircleMarker>}
       {end && <CircleMarker center={toLeaflet(end as [number, number])} radius={10} pathOptions={{ color: '#17211d', fillColor: '#fff', fillOpacity: 1, weight: 3 }}><Tooltip permanent direction="bottom">Route destination</Tooltip></CircleMarker>}
       <FitView campus={campus} route={route} />

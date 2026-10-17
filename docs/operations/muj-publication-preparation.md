@@ -109,7 +109,57 @@ Expected first success: prints the actual **submission UUID**, saves private `in
 
 A missing/stale/extra warning ID, duplicate JSON key, empty/short reason, other operator's bundle, unexpected dataset/provenance change or changed report/proposal during confirmation stops without a workflow write. Text is never automatically replaced, truncated or filled during submission. Authentication still records normal login/logout audits. No passwords/session tokens are persisted in helper files.
 
-After submission, open **Admin → Assigned campus → MUJ → Selected draft (Draft2) → Review and releases** and verify the actual submission, unchanged145 reasons and locked state. A separately authenticated eligible reviewer account must assess the current findings, provide review notes/reasons and explicitly choose **Approve exact reviewed content**. Separate owner-operated accounts are application account separation, not independent human/institutional approval. Final publication remains a separate explicit workflow; do not publish as part of this task.
+After submission, open **Admin → Assigned campus → MUJ → Selected draft (Draft2) → Review and releases** and verify the actual submission, unchanged145 reasons and locked state. A separately authenticated eligible reviewer account must assess the current findings and reasons, then use the explicit E22 approval command below or provide review notes/reasons and choose **Approve exact reviewed content**. Separate owner-operated accounts are application account separation, not independent human/institutional approval. Final publication remains a separate explicit workflow; do not publish as part of this task.
+
+### Explicit E22 approval: owner-operated muj-reviewer account
+
+Owner identifies the already submitted **Draft2 bf1e8e0f-f400-4f5f-a16e-25ac11503392**, submission **12e02c58-81a7-40c8-ab91-92646ab6195d**, validation **9da479c1-6971-4ee3-984f-d0e46ba315a8**, dataset checksum **99879289d754320e6242f1768bf8abc139b3de32841db442a3b2b55640304f16**. Windows is separate: cloud tests cannot inspect that live submission or approve it. Run the following only locally, using the existing **muj-reviewer** application account and its private password. Do not use the submitter account, add `-T`, pipe the command, enable a transcript or put credentials in arguments/files/chat.
+
+Select the **existing private bundle** that contains the prepared `reviewer-proposal.json` and unchanged full preflight report. An original submitter-prepared version3 bundle is supported; a separately prepared current reviewer bundle also works. The helper verifies its preparer is either this reviewer or the actual submission's submitter. It reads only **reviewer-proposal.json** for candidate reasons: it never substitutes `proposal.json`, accepts current submitter acknowledgements, seeds missing reasons or edits the candidate. If your reviewed candidate changes exist only in a local copy, deliberately copy that exact reviewed JSON back to the original private bundle after retaining backups; the command does not upload/replace it automatically.
+
+PowerShell from the existing repository with retained Docker services running:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+function Invoke-ScnsStep {
+    param([Parameter(Mandatory=$true)][scriptblock]$Action)
+    & $Action
+    if ($LASTEXITCODE -ne 0) { throw 'SCNS command failed. Stop; preserve the submitted draft, candidate reasons and approval journal.' }
+}
+Invoke-ScnsStep { git status --short }
+if (git status --porcelain) { throw 'Preserve local changes first; nothing reset.' }
+Invoke-ScnsStep { git fetch origin feat/muj-connectivity-review }
+Invoke-ScnsStep { git switch feat/muj-connectivity-review }
+Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
+Invoke-ScnsStep { git merge-base --is-ancestor ab3424f HEAD }
+Invoke-ScnsStep { docker compose build api }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build --force-recreate api }
+Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
+$E22Draft = 'bf1e8e0f-f400-4f5f-a16e-25ac11503392'
+$E22Submission = '12e02c58-81a7-40c8-ab91-92646ab6195d'
+$E22Validation = '9da479c1-6971-4ee3-984f-d0e46ba315a8'
+$E22Checksum = '99879289d754320e6242f1768bf8abc139b3de32841db442a3b2b55640304f16'
+$E22Bundle = (Read-Host 'Paste the existing private bundle directory containing reviewer-proposal.json (or its report.md path)').Trim() -replace '/report\.md$', ''
+Invoke-ScnsStep {
+    docker compose run --rm --no-deps api python -m app.cli.muj_publication --naming-clone --action approve --draft $E22Draft --submission $E22Submission --validation $E22Validation --expected-checksum $E22Checksum --bundle $E22Bundle
+}
+```
+
+The helper first re-fetches full parent/release/artifact/diff/source/import/validation/finding evidence and the exact current submission. It requires **muj-reviewer** to have current MUJ `review_decide`, `review_read` and `audit_read` permissions, a different user ID from the submitter, and no contribution to this revision. It reads the complete campus audit history through bounded normal pagination (up to10050entries; incomplete/changing/unavailable history stops), using the same contribution categories as the server; the normal decision API remains authoritative, including races, revoked grants and contributor separation for system administrators. No permission or source approval is granted by this helper.
+
+**Current version is fetched**, never assumed to remain4. The submission must be locked for review with exact UUID/validation/checksum/current version and all145current warning IDs. An optional `--expected-version 4` adds a caller version pin if deliberately desired, but is unnecessary for the command above. Any unexpected state/diff/provenance/finding/permission change stops while preserving the submitted draft and both reason files.
+
+Enter substantive review notes (10–4000characters) only after inspecting the current evidence and every reviewer candidate, including both unresolved near-duplicate pairs. Example wording **only if true after your review**:
+
+> Owner-operated muj-reviewer separate-account review of the E22 naming-only draft and all145 current warnings. The two source-stub near-duplicate relationships remain unresolved; source/topology/accessibility limitations are retained. No independent human, institutional or field-survey approval is claimed. See the individual reviewer reasons.
+
+The normal API trims surrounding note whitespace; the helper displays that exact normalized note text and the full **145 selected reviewer reasons**, their payload hash, actual actor, submission and fetched current version. Candidate reason text itself is retained verbatim. Type **`APPROVE E22`** only after that explicit review; any other response cancels without approval. The full safeguards/current permissions/history/files are checked again after confirmation. It posts only `decision: approve` to the normal decision endpoint with current `If-Match`, Origin/CSRF and normal audit recording. There is no submit/publish/withdraw/reject/create/data-edit action in this approval path.
+
+Expected first success on an unchanged version4 submission: normal approval advances Draft2/submission to **version5**, submission status **approved**, draft remains **review**, same dataset checksum and unchanged active public release. Actual current version is printed and bound to the request. Files are stored separately under `<bundle>/approval/<reviewer-user-id>/<submission-id>/`: durable `intent.json` before POST, `receipt.json` after the actual response. Submitter reasons and prepared reviewer candidate remain untouched. This is **owner-operated separate-account review**, not independent human or institutional approval.
+
+**Interrupted retry:** rerun the identical command and same bundle as muj-reviewer. The journal retains your exact selected reasons and normalized notes; the helper rechecks full evidence and matches the real server decision's actor, notes, all145reasons and expected version increment. An exact match writes `receipt-recovery.json` and performs no new decision POST or approval audit, no repeated confirmation or notes prompt. It retains an existing successful response receipt and never invents an original request ID. If the original decision did not commit and the exact review state remains, it shows the same saved payload and requires APPROVE E22 again before retry. Changed candidate/intent, a different decision/account, missing intent for an already approved submission, stale source/release/version or unavailable history stops for inspection—do not erase the journal, overwrite reasons, recreate or resubmit the draft. No approval replay is used to repair uncertainty.
+
+Finally open **Admin → Assigned campus → MUJ → Selected draft (Draft2) → Review and releases**. Verify the exact submission UUID, approved status, actual reviewer account, notes, individual reasons and unchanged checksum. Confirm the public explorer still uses the previous release. **Do not choose Prepare publication or Confirm publish immutable release.** Publication remains a separate explicitly authorized workflow.
 
 ### Verification boundaries and explicit next steps
 

@@ -13,13 +13,14 @@ import pytest
 from sqlalchemy import select
 
 from app.cli import muj_naming as naming
+from app.cli import muj_naming_approval as approval_cli
 from app.cli import muj_naming_review as cli
 from app.cli import muj_publication as original
 from app.cli.indoor_demo import DemoError
 from app.core.config import get_settings
 from app.models import ActiveRelease
 from app.models.admin import AuditEvent, RoleAssignment
-from app.models.publication import ReviewSubmission
+from app.models.publication import ReviewDecision, ReviewSubmission
 from app.services.muj_update import apply_reviewed, plan
 from tests.integration.test_admin import sign_in, version
 from tests.integration.test_imports import apply, preview
@@ -352,6 +353,173 @@ def test_normal_parent_history_clone_diff_current_reasons_and_read_only_retries(
             monkeypatch.setattr(cli, "persist", actual_persist)
             monkeypatch.setattr("builtins.input", lambda _: "SUBMIT E22")
             login()
+    # Approval uses the existing distinct application account and ONLY reviewer
+    # candidates, through the actual CLI/auth/decision API. No live dataset involved.
+    reviewer[0].username = "muj-reviewer"  # Isolated test account only.
+    db.flush()
+    selected_path = folder / "reviewer-proposal.json"
+    reviewer_proposal = json.loads(selected_path.read_text())
+    reviewer_proposal["acknowledgements"][warning] = (
+        "Reviewer separately inspected this unresolved source-only finding; no field or institutional approval."
+    )
+    actual_persist(selected_path, reviewer_proposal)
+    submitter_bytes = (folder / "proposal.json").read_bytes()
+
+    def reviewer_login(*args):
+        auth[0] = sign_in(client, reviewer)
+        http.session = client.get("/api/v1/admin/session").json()
+        assert http.session["username"] == "muj-reviewer" and "user" not in http.session
+
+    for interruption in ("response", "receipt"):
+        transaction = db.begin_nested()
+        posts, request_ids = [], []
+        failure = [True]
+        try:
+            login()
+            r = client.post(clone_base + "/submissions", json=proposal, headers=version(auth[0], 3))
+            assert r.status_code == 200, r.text
+            submission_id = r.json()["id"]
+            decision_path = clone_base + f"/submissions/{submission_id}/decision"
+            journal = folder / "approval" / str(reviewer[0].id) / submission_id
+            # Even the submitter/system admin cannot approve through the real API.
+            decision = {
+                "decision": "approve",
+                "notes": "Owner-operated separate-account fixture review only.",
+                "acknowledgements": reviewer_proposal["acknowledgements"],
+            }
+            assert (
+                client.post(decision_path, json=decision, headers=version(auth[0], 4)).status_code
+                == 403
+            )
+            reviewer_login()
+            assert (
+                client.post(
+                    decision_path,
+                    json=decision,
+                    headers={**auth[0], "If-Match": '"4"', "X-CSRF-Token": "invalid"},
+                ).status_code
+                == 403
+            )
+            assert (
+                client.post(decision_path, json=decision, headers=version(auth[0], 3)).status_code
+                == 409
+            )
+
+            def approval_transport(
+                method,
+                target,
+                *args,
+                posts=posts,
+                request_ids=request_ids,
+                failure=failure,
+                interruption=interruption,
+                decision_path=decision_path,
+                **kwargs,
+            ):
+                if method != "GET":
+                    assert method == "POST" and target == decision_path
+                    posts.append(target)
+                result = real_request(method, target, *args, **kwargs)
+                if method == "POST":
+                    request_ids.append(http.last_request_id)
+                    if interruption == "response" and failure[0]:
+                        failure[0] = False
+                        raise DemoError("Simulated lost committed approval response")
+                return result
+
+            def approval_save(target, value, interruption=interruption, failure=failure):
+                if target.name == "receipt.json" and interruption == "receipt" and failure[0]:
+                    failure[0] = False
+                    raise OSError("Simulated failed approval receipt persistence")
+                return actual_persist(target, value)
+
+            monkeypatch.setattr(http, "request", approval_transport)
+            monkeypatch.setattr(approval_cli, "persist", approval_save)
+            monkeypatch.setattr(original, "prompt_login", reviewer_login)
+            monkeypatch.setattr(
+                sys,
+                "argv",
+                [
+                    "muj_publication",
+                    "--naming-clone",
+                    "--action",
+                    "approve",
+                    "--draft",
+                    draft,
+                    "--validation",
+                    validation["id"],
+                    "--submission",
+                    submission_id,
+                    "--expected-checksum",
+                    packet["checksum"],
+                    "--bundle",
+                    str(folder),
+                ],
+            )
+            monkeypatch.setattr(
+                "builtins.input",
+                lambda prompt, decision=decision: (
+                    decision["notes"] if prompt.startswith("Enter your review") else "APPROVE E22"
+                ),
+            )
+            with pytest.raises(SystemExit, match="may have committed"):
+                original.main()
+            events = list(
+                db.scalars(
+                    select(AuditEvent).where(
+                        AuditEvent.revision_id == UUID(draft), AuditEvent.action == "review.approve"
+                    )
+                )
+            )
+            decisions = list(
+                db.scalars(
+                    select(ReviewDecision).where(
+                        ReviewDecision.submission_id == UUID(submission_id)
+                    )
+                )
+            )
+            assert len(events) == len(decisions) == len(posts) == 1
+            assert events[0].actor_id == reviewer[0].id and events[0].request_id == request_ids[0]
+            assert decisions[0].acknowledgements == reviewer_proposal["acknowledgements"]
+            assert decisions[0].acknowledgements != proposal["acknowledgements"]
+            assert not (journal / "receipt.json").exists()
+            monkeypatch.setattr(
+                "builtins.input",
+                lambda _: pytest.fail("Exact approval retry must not prompt or write"),
+            )
+            original.main()
+            original.main()
+            recovery = json.loads((journal / "receipt-recovery.json").read_text())
+            assert recovery["decision_id"] == str(decisions[0].id) and "request_id" not in recovery
+            assert len(posts) == 1
+            reviewer_login()
+            state = client.get(clone_base + "/review").json()
+            assert state["edit_version"] == 5 and state["status"] == "review"
+            assert state["diff"] == packet["diff"] and state["sources"] == packet["sources"]
+            assert state["checksum"] == packet["checksum"]
+            assert list(db.scalars(select(ActiveRelease.release_id))) == before
+            assert (folder / "proposal.json").read_bytes() == submitter_bytes
+            assert json.loads(selected_path.read_text()) == reviewer_proposal
+            assert (
+                len(
+                    list(
+                        db.scalars(
+                            select(AuditEvent).where(
+                                AuditEvent.revision_id == UUID(draft),
+                                AuditEvent.action == "review.approve",
+                            )
+                        )
+                    )
+                )
+                == 1
+            )
+        finally:
+            transaction.rollback()
+            db.expire_all()
+            monkeypatch.setattr(approval_cli, "persist", actual_persist)
+            monkeypatch.setattr(original, "prompt_login", login)
+            login()
+    monkeypatch.setattr(http, "request", real_request)
     # Normal endpoint still enforces permission, CSRF and CAS. No helper bypass.
     with db.begin_nested() as guard_tx:
         grants = list(

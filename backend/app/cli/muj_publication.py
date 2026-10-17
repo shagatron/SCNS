@@ -544,7 +544,7 @@ def perform(client, folder, action, confirm=None):
     saved = json.loads((folder / "report.json").read_text())
     if saved.get("scope_type") == "e22-naming-clone":
         raise DemoError(
-            "Original pinned action path refuses naming-clone bundles; use --naming-clone --action submit for explicit owner submission. Approval stays in the normal UI."
+            "Original pinned action path refuses naming-clone bundles; use separate --naming-clone mode for explicitly confirmed submit/approve. No publication."
         )
     payload = json.loads((folder / "proposal.json").read_text())
     if saved["prepared_by"] != str(UUID(client.session["user_id"])) or saved["action"] != action:

@@ -32,10 +32,16 @@ def run(args, env=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument(
         "--muj-only",
         action="store_true",
         help="Rerun just the affected MUJ desktop/mobile cases after a converter-only change",
+    )
+    selection.add_argument(
+        "--explorer-only",
+        action="store_true",
+        help="Rerun affected explorer, source-visual and public-experience cases after a presentation-only change",
     )
     args = parser.parse_args()
     private = tempfile.TemporaryDirectory(prefix="scns-owned-built-")
@@ -196,6 +202,8 @@ def main():
                 *(
                     ["muj.spec.ts"]
                     if args.muj_only
+                    else ["map-explorer.spec.ts", "map-source-fixture.spec.ts", "public-experience.spec.ts"]
+                    if args.explorer_only
                     else [
                         "public-experience.spec.ts",
                         "map-explorer.spec.ts",
@@ -238,6 +246,8 @@ def main():
         print(
             "Built MUJ desktop/mobile draft import/map/route/isolation journeys passed."
             if args.muj_only
+            else "Built explorer/public-experience journeys passed; private/readiness boundaries verified."
+            if args.explorer_only
             else "Built nginx/API/worker floorplan, publication and public-navigation journeys passed; private boundaries verified."
         )
         return 0

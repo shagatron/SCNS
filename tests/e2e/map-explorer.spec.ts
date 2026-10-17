@@ -57,6 +57,12 @@ test('five viewport workspace captures, touch controls, attribution and no keybo
     expect(search!.x).toBeGreaterThanOrEqual(0); expect(search!.x + search!.width).toBeLessThanOrEqual(width)
     await page.locator('.place-select').filter({ hasText: 'Library' }).click()
     await expect(page.getByRole('region', { name: 'Selected place details' })).toBeVisible()
+    if (width === 1440) {
+      const card = await page.getByRole('region', { name: 'Selected place details' }).boundingBox()
+      const zoom = await page.locator('.leaflet-control-zoom').boundingBox()
+      expect(card && zoom).toBeTruthy()
+      expect(card!.x >= zoom!.x + zoom!.width || card!.y >= zoom!.y + zoom!.height || card!.x + card!.width <= zoom!.x || card!.y + card!.height <= zoom!.y).toBe(true)
+    }
     if ([390,1440].includes(width)) await page.screenshot({ path: `test-results/map-explorer/${width}-selected.png`, style: '.public-navigation, .skip-link { visibility: hidden !important; }' })
     await page.getByRole('region', { name: 'Selected place details' }).getByRole('button', { name: 'Close place details' }).click()
     await page.getByLabel('Search destinations').fill('')

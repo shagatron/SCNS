@@ -1,3 +1,37 @@
+# Dark public map explorer verification — 17 October 2026
+
+Presentation follow-up on `redesign/map-explorer` from verified parent `a30810d5b73ffd2d757f2c05de1ed2a59f2e39aa` (`feat/muj-connectivity-review`). Continued existing checkpoints, preserving the final entrance-transition indicator and original behavioral assertions. No backend application/API/schema/permission/algorithm/dependency or dataset changes. Existing homepage/editorial sections and admin remain. This is not another numbered milestone, new data publication or deployment.
+
+## Automated evidence
+
+| Check | Actual result |
+|---|---|
+| Frontend `npm run check --workspace frontend` | TypeScript and ESLint pass against final application code. |
+| Frontend `npm run test --workspace frontend` | **67 passed /15files**,7.20s. Includes selection/action separation, unknown/unmapped qualifications, selected-card focus/Escape, renderer failure retaining text navigation and frame-safe entrance indicators. |
+| Frontend `npm run build --workspace frontend` | Production TypeScript/Vite build passes. |
+| Unchanged floorplan/QR/publication/indoor/closure contract units | **56 passed**,5.99s. Generated contracts and backend application files unchanged. |
+| Source browser regression | First98case run:93passed,4failed,1intentional skip7.1m. Four failures were old compact-room presentation/overlay-colour expectations in two projects; corrected expectations retain original catalog-only, source privacy, approval, stale/review/rollback assertions. Final affected34case rerun: **33passed/1skip**,3.1m. Additional reduced-height viewport test: **2passed**,8.4s. Together these cover all99active source cases; do not describe this as one uninterrupted100case passing source run. |
+| Frozen built images | API/frontend images build successfully; final frontend image SHA256 `70325838d91efba0e4e48faae5651300a40a64b03ea132c63019f4be986a36f3`. No new dependency/provider. |
+| Built nginx/API/worker | Pending final100case regression and private/readiness checks; replace this entry only after actual completion. |
+| Migrations | No migration changes. Source runners completed existing Alembic downgrade/base/upgrade/head against owned `_e2e_test` databases only; built runner repeats this on a uniquely named disposable database. No migration on retained developer data. |
+| Retained developer data | Read-only count/content-digest comparison after source checks exactly matches the pre-change baseline across22nonspatial application/migration tables. `.env` absent before/after; no replacement created. Final post-container comparison pending. |
+
+The source/built runners use random ephemeral accounts and temporary private storage; no passwords, sessions, private originals or developer records are attached to screenshots/log receipts. New browser files are `tests/e2e/map-explorer.spec.ts` and `map-source-fixture.spec.ts`; the built runner includes both. All original navigation/admin/import/graph/indoor/publication/GPS/QR/closure assertions remain except explicit presentation expectations for the intentional new layout/theme. Initial keyboard map-pin selection and tooltip sizing issues were fixed before the final source reruns; no failed check was disabled to make a passing claim.
+
+## Rendered inspection and evidence boundaries
+
+Final built screenshot/inspection index: [map explorer previews](../previews/map-explorer/README.md). Pending final capture/PNG verification at320,360,390,768,1440px. Tests check horizontal overflow, visible attribution, keyboard selection/focus restoration, panel recovery,44px panel controls, unfiltered maps, reduced motion and axe WCAG2/2.1/2.2A/AA at all five widths. A390×440viewport models keyboard space pressure, not a real phone keyboard. No actual-device or human assistive-technology certification is claimed.
+
+Synthetic Demo routes are computed through the real API/Dijkstra against disposable stored fixtures, including Main Gate→Library256.88m/3edges (~257m/4min), indoor18m/36m/57m and mixed floor/outdoor transitions. Map chunk/API/image failures preserve text navigation. Restrictions, release changes, stale results, offline state, QR confirmation/revocation and deterministic simulated GPS retain their existing checks. GPS checks are simulated browser evidence, never live GPS or indoor position inference.
+
+The MUJ visual case intercepts **public read responses only**, using committed original `data/muj/` preparation: source footprints/stored paths, source extent/attribution and unresolved E05. Its campus name and attribution explicitly say **simulated release/source visual fixture**. This is not an actual cloud MUJ release/database, the owner's corrected/published Windows E22 dataset, an API-contract completeness test, a MUJ route calculation or physical/accessibility verification. Separate real API MUJ import/isolation browser fixtures use disposable databases. No synthetic paths or guessed building identities were added to application rendering. Prior owner-reported Windows E22 acceptance remains recorded separately below; it does not verify this redesign on Windows.
+
+## Operations and limits
+
+[Windows update and manual checks](../operations/map-explorer.md) preserve the existing temporary phone-access Compose override unchanged when present, start/check the retained database before API readiness and rebuild only the frontend. No reseed, reimport, helper replay, warning acknowledgement, publication, volume deletion, LAN/firewall/IP setup or deployment. PowerShell is unavailable here: commands were reviewed against Compose, not executed on Windows. Real Windows/phone/browser-bar/keyboard, actual published MUJ database, configured external basemap provider, human AT, field-route and real-device GPS checks remain unverified. No broad backend unit/integration rerun is claimed; unchanged backend evidence is reused, with affected contracts and real API browser workflows rerun.
+
+---
+
 # Owner-reported Windows E22 publication and acceptance — 17 October 2026
 
 This section records **owner-reported Windows software checks**, separate from the automated evidence retained below. The agent did not access the Windows database, rerun these journeys, approve or publish anything. `campus-owner` and `muj-reviewer` were separate application accounts operated by the owner; this is not independent human/institutional review or physical-route/accessibility verification.

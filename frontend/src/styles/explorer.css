@@ -102,7 +102,7 @@
 .public-app .map-workspace .directions li { font-size: 13px; padding: 14px 0 14px 34px; }
 .public-app .map-workspace .directions li::before { color: #a6d4b7; font-size: 11px; }
 .public-app .map-workspace .directions small { color: #bdc9c1; font-size: 11px; }
-@media(min-width:1100px) { .public-app .map-workspace .explorer-place-card { position: absolute; z-index: 600; top: 200px; left: 40px; width: min(340px, calc(100% - 80px)); max-height: 50svh; overflow-y: auto; } }
+@media(min-width:1100px) { .public-app .map-workspace .explorer-place-card { position: absolute; z-index: 600; top: 200px; right: 24px; width: min(340px, calc(100% - 48px)); max-height: 50svh; overflow-y: auto; } }
 @media(max-width:1000px) { .public-app .map-workspace { padding: 20px; } .public-app .map-workspace .explorer-grid { grid-template-columns: 310px minmax(0,1fr); } .public-app .map-workspace .explorer-sidebar { padding-right: 16px; } .public-app .map-workspace .map-column { padding-left: 16px; } }
 @media(max-width:760px) {
   .public-app .map-workspace { padding: 16px 12px; border-radius: 18px; }

@@ -696,15 +696,31 @@ def main():
     parser.add_argument(
         "--naming-clone",
         action="store_true",
-        help="E22 clone full-parent/diff preflight (default), or explicitly confirmed submit",
+        help="E22 clone full-parent/diff preflight (default), explicit submit or separate-account approval",
     )
     parser.add_argument("--expected-version", type=int)
     parser.add_argument("--expected-checksum")
+    parser.add_argument("--submission", type=UUID)
     args = parser.parse_args()
-    if args.naming_clone and (
-        args.action == "approve" or (args.action == "preflight" and args.bundle)
+    if args.naming_clone and args.action == "preflight" and args.bundle:
+        parser.error("Default clone preflight does not select a workflow bundle")
+    if args.submission is not None and not (args.naming_clone and args.action == "approve"):
+        parser.error("--submission is only for explicit naming-clone approval")
+    if (
+        args.naming_clone
+        and args.action == "approve"
+        and (
+            args.submission is None
+            or args.validation is None
+            or args.expected_checksum is None
+            or len(args.expected_checksum) != 64
+            or any(c not in "0123456789abcdef" for c in args.expected_checksum)
+            or (args.expected_version is not None and args.expected_version < 1)
+        )
     ):
-        parser.error("Naming-clone supports default preflight or explicit submit only; no approval")
+        parser.error(
+            "Clone approval requires --submission, --validation and full --expected-checksum"
+        )
     if (
         args.naming_clone
         and args.action == "submit"
@@ -721,16 +737,18 @@ def main():
             "Clone submit requires --validation, --expected-version and full --expected-checksum"
         )
     if (args.expected_version is not None or args.expected_checksum is not None) and not (
-        args.naming_clone and args.action == "submit"
+        args.naming_clone and args.action in {"submit", "approve"}
     ):
-        parser.error("Expected-version/checksum flags are only for explicit naming-clone submit")
+        parser.error("Expected-version/checksum flags are only for explicit naming-clone actions")
     if args.action != "preflight" and not args.bundle:
         parser.error("Explicit action requires the previously inspected --bundle path")
     client = Client(origin=os.environ.get("PUBLIC_APP_URL", "http://localhost:5173"))
     try:
         prompt_login(
             client,
-            "MUJ owner/editor or reviewer application account"
+            "Existing muj-reviewer owner-operated separate application account"
+            if args.naming_clone and args.action == "approve"
+            else "MUJ owner/editor or reviewer application account"
             if args.naming_clone
             else "MUJ owner/editor or independent reviewer (as appropriate for this action)",
         )
@@ -741,6 +759,18 @@ def main():
 
             if args.action == "preflight":
                 naming_preflight(client, args.draft, args.validation)
+            elif args.action == "approve":
+                from app.cli.muj_naming_approval import approve as naming_approve
+
+                naming_approve(
+                    client,
+                    args.draft,
+                    args.validation,
+                    args.submission,
+                    args.bundle,
+                    args.expected_checksum,
+                    args.expected_version,
+                )
             else:
                 naming_submit(
                     client,

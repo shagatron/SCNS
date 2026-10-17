@@ -1,6 +1,6 @@
-"""Read-only exact-parent/full-diff review preparation for the E22 naming clone.
+"""Exact-parent/full-diff E22 preparation and explicitly confirmed submission.
 
-No mutation capability. Original import-preparation checks remain unchanged.
+Read-only by default. No graph edits, approval or publication capability.
 """
 
 import json
@@ -388,6 +388,7 @@ def collect(client, draft, validation=None):
         "draft_id": str(draft),
         "campus_id": str(CAMPUS_ID),
         "version": packet["edit_version"],
+        "status": packet["status"],
         "checksum": packet["checksum"],
         "validation_id": run["id"],
         "parent_release": release,
@@ -504,3 +505,206 @@ def preflight(client, draft, validation=None):
         f"145counterparts:143unchanged +2E22label/ID updates;3original import warnings absent in clone (original receipts/bindings verified, no new imports). Inspect {folder}/report.md and proposal.json before any normal UI action."
     )
     return folder, report
+
+
+# Immutable proof fields must still match the inspected bundle, not merely two names.
+SUBMIT_PROOF = (
+    "scope_type",
+    "campus_id",
+    "draft_id",
+    "checksum",
+    "validation_id",
+    "parent_release",
+    "creation_audit",
+    "parent_submission_id",
+    "previous_validation",
+    "previous_submission",
+    "near_duplicate_pairs",
+    "full_diff",
+    "validation",
+    "sources",
+    "original_imports",
+    "warning_counts",
+    "counterparts",
+    "removed_import_findings",
+    "proposed_reasons",
+    "reviewer_proposed_reasons",
+    "unjustified_findings",
+)
+
+
+def submit(client, draft, validation, folder, expected_version, expected_checksum, confirm=None):
+    """Submit the existing reviewed owner payload, never regenerate or approve it."""
+    from app.schemas.publication import SubmitInput
+
+    confirm = confirm or input
+    user = str(UUID(client.session["user_id"]))  # SessionOut is top-level, never ['user']['id'].
+    draft, validation = str(UUID(str(draft))), str(UUID(str(validation)))
+    root = (
+        Path(get_settings().storage_root) / "private/muj-naming-review" / draft / user
+    ).resolve()
+    folder = Path(folder).resolve()
+    require(folder.parent == root, "Select this authenticated owner's exact naming-clone bundle")
+    saved_bytes = (folder / "report.json").read_bytes()
+    saved = json.loads(saved_bytes)
+    require(
+        saved["scope_type"] == "e22-naming-clone"
+        and saved["prepared_by"] == user
+        and saved["draft_id"] == draft
+        and saved["campus_id"] == str(CAMPUS_ID)
+        and saved["version"] == expected_version
+        and saved["checksum"] == expected_checksum
+        and saved["validation_id"] == validation
+        and folder.name == f"v{expected_version}-{expected_checksum}-{validation}",
+        "Command, owner, bundle and expected draft evidence must match exactly",
+    )
+    require(
+        not saved["blockers"], "Saved preflight has blockers; reconcile without discarding reasons"
+    )
+    path = folder / "proposal.json"
+    payload_bytes = path.read_bytes()
+
+    # Reject ambiguous duplicate JSON keys instead of silently picking a reason.
+    def unique_keys(pairs):
+        result = {}
+        for key, value in pairs:
+            require(key not in result, "Duplicate proposal JSON key")
+            result[key] = value
+        return result
+
+    selected = json.loads(payload_bytes, object_pairs_hook=unique_keys)
+    require(
+        isinstance(selected, dict)
+        and set(selected) == {"validation_id", "acknowledgements"}
+        and isinstance(selected["acknowledgements"], dict)
+        and selected["validation_id"] == validation,
+        "Select the exact current validation and warning-reason payload",
+    )
+    payload = SubmitInput.model_validate(selected).model_dump(mode="json")
+    require(
+        len(payload["acknowledgements"]) == 145
+        and set(payload["acknowledgements"]) == set(saved["proposed_reasons"])
+        and all(
+            isinstance(v, str) and 10 <= len(v.strip()) <= 2000
+            for v in payload["acknowledgements"].values()
+        ),
+        "Provide substantive reasons for exactly all 145 current warning IDs; preserve edited text",
+    )
+    intent = {
+        "scope_type": "e22-naming-clone",
+        "draft_id": draft,
+        "actor_id": user,
+        "version": expected_version,
+        "checksum": expected_checksum,
+        "validation_id": validation,
+        "payload_checksum": checksum(payload),
+    }
+    intent_path = folder / "intent-submit.json"
+    if intent_path.exists():
+        require(
+            json.loads(intent_path.read_bytes()) == intent,
+            "Submission intent differs; preserve bundle and inspect server history before reconciliation",
+        )
+
+    def checked():
+        current = collect(client, UUID(draft), UUID(validation))
+        require(
+            not current["blockers"] and all(current[k] == saved[k] for k in SUBMIT_PROOF),
+            "Parent, full diff, source/provenance, validation or findings changed since reviewed preflight",
+        )
+        return current
+
+    def recover(current):
+        submissions = current["existing_submissions"]
+        if not submissions:
+            return False
+        exact = [
+            s
+            for s in submissions
+            if s["status"] in {"submitted", "approved"}
+            and s["submitter_id"] == user
+            and s["validation_id"] == validation
+            and s["checksum"] == expected_checksum
+            and s["edit_version"] == expected_version + 1
+            and s["acknowledgements"] == payload["acknowledgements"]
+        ]
+        require(
+            len(exact) == 1 and len(submissions) == 1,
+            "Existing submission differs or history is ambiguous; no duplicate submission",
+        )
+        persist(
+            folder / "receipt-submit-recovery.json",
+            {
+                "state": "existing_submission_verified",
+                "submission_id": exact[0]["id"],
+                "status": exact[0]["status"],
+                "verified_by": user,
+                "version": current["version"],
+                "checksum": expected_checksum,
+                "payload_checksum": checksum(payload),
+                "evidence_limit": "Exact server submission verified read-only. No new workflow write; original request ID not reconstructed.",
+            },
+        )
+        print(
+            f"Existing exact submission {exact[0]['id']} verified; no duplicate write. No approval/publication."
+        )
+        return True
+
+    current = checked()
+    if recover(current):
+        return
+    require(
+        current["version"] == expected_version and current["status"] == "draft",
+        "Draft version/status changed; stop and preserve reasons",
+    )
+    print(
+        f"Selected bundle: {folder}\nDraft: {draft}; version: {expected_version}; checksum: {expected_checksum}"
+    )
+    print(
+        f"Exact selected payload SHA256: {checksum(payload)}; 145 individual reasons:\n"
+        + json.dumps(payload, indent=2, ensure_ascii=False)
+    )
+    if (
+        confirm(
+            "Review every selected reason. Type SUBMIT E22 to lock and submit this exact draft (no approval/publication): "
+        ).strip()
+        != "SUBMIT E22"
+    ):
+        print("Stopped; no workflow write.")
+        return
+    require(
+        path.read_bytes() == payload_bytes and (folder / "report.json").read_bytes() == saved_bytes,
+        "Payload/report changed during confirmation; input preserved, review again",
+    )
+    fresh = checked()  # Full safeguards again after the human review interval.
+    if recover(fresh):
+        return
+    require(
+        fresh["version"] == expected_version and fresh["status"] == "draft",
+        "Draft changed during confirmation; no submission",
+    )
+    persist(intent_path, intent)  # Durable intent before the only workflow POST.
+    try:
+        response = client.request(
+            "POST",
+            f"/api/v1/admin/campuses/{CAMPUS_ID}/drafts/{draft}/submissions",
+            payload,
+            headers={"If-Match": f'"{expected_version}"'},
+        )
+        persist(
+            folder / "receipt-submit.json",
+            {
+                "state": "action_response_received",
+                "response": response,
+                "actor_id": user,
+                "request_id": client.last_request_id,
+                "payload_checksum": checksum(payload),
+            },
+        )
+    except (DemoError, OSError):
+        raise DemoError(
+            "Submission/receipt interrupted and may have committed. Preserve this exact bundle and rerun the SAME command: full checks and exact server reconciliation precede any retry. Do not create another draft or invent audit evidence."
+        ) from None
+    print(
+        f"Submitted {response['id']} through normal API; draft locked for review. No approval/publication. Receipt: {folder}/receipt-submit.json"
+    )

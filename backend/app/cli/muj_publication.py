@@ -696,13 +696,34 @@ def main():
     parser.add_argument(
         "--naming-clone",
         action="store_true",
-        help="Read-only full-parent/diff and warning counterpart assessment for the E22 clone",
+        help="E22 clone full-parent/diff preflight (default), or explicitly confirmed submit",
     )
+    parser.add_argument("--expected-version", type=int)
+    parser.add_argument("--expected-checksum")
     args = parser.parse_args()
-    if args.naming_clone and (args.action != "preflight" or args.bundle):
-        parser.error(
-            "--naming-clone is read-only; submit/review/publication remain explicit through the normal UI"
+    if args.naming_clone and (
+        args.action == "approve" or (args.action == "preflight" and args.bundle)
+    ):
+        parser.error("Naming-clone supports default preflight or explicit submit only; no approval")
+    if (
+        args.naming_clone
+        and args.action == "submit"
+        and (
+            args.validation is None
+            or args.expected_version is None
+            or args.expected_version < 1
+            or args.expected_checksum is None
+            or len(args.expected_checksum) != 64
+            or any(c not in "0123456789abcdef" for c in args.expected_checksum)
         )
+    ):
+        parser.error(
+            "Clone submit requires --validation, --expected-version and full --expected-checksum"
+        )
+    if (args.expected_version is not None or args.expected_checksum is not None) and not (
+        args.naming_clone and args.action == "submit"
+    ):
+        parser.error("Expected-version/checksum flags are only for explicit naming-clone submit")
     if args.action != "preflight" and not args.bundle:
         parser.error("Explicit action requires the previously inspected --bundle path")
     client = Client(origin=os.environ.get("PUBLIC_APP_URL", "http://localhost:5173"))
@@ -716,8 +737,19 @@ def main():
         UUID(client.session["user_id"])
         if args.naming_clone:
             from app.cli.muj_naming_review import preflight as naming_preflight
+            from app.cli.muj_naming_review import submit as naming_submit
 
-            naming_preflight(client, args.draft, args.validation)
+            if args.action == "preflight":
+                naming_preflight(client, args.draft, args.validation)
+            else:
+                naming_submit(
+                    client,
+                    args.draft,
+                    args.validation,
+                    args.bundle,
+                    args.expected_version,
+                    args.expected_checksum,
+                )
         elif args.action == "preflight":
             preflight(client, args.draft, args.validation)
         else:

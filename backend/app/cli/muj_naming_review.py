@@ -683,6 +683,10 @@ def submit(client, draft, validation, folder, expected_version, expected_checksu
         fresh["version"] == expected_version and fresh["status"] == "draft",
         "Draft changed during confirmation; no submission",
     )
+    require(
+        path.read_bytes() == payload_bytes and (folder / "report.json").read_bytes() == saved_bytes,
+        "Payload/report changed during final safeguards; preserve edits and review again",
+    )
     persist(intent_path, intent)  # Durable intent before the only workflow POST.
     try:
         response = client.request(

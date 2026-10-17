@@ -68,13 +68,56 @@ Files under `/app/storage/private/muj-naming-review/<draft>/<operator>/v<actual-
 
 Repeated reads at the same version/checksum/validation preserve private edited reasons and stale keys for inspection. Current server submission/approval wording is seeded when available; existing private text takes precedence. Missing/invalid/stale IDs/reasons become blockers, never silently deleted. A changed version gets a separate bundle; earlier owner files remain. Browser-unsaved textarea contents are not on the server; preserve them privately yourself. Local copied-file edits are also not automatically uploaded or applied. If intentionally editing the private server proposal, copy only the reviewed JSON back to its exact current `$E22Bundle` and rerun the same preflight; this changes a helper file, not the dataset or server acknowledgements. Retain all prior copies.
 
+### Explicit submission of the already reviewed E22 proposal
+
+The owner reports that Draft2 preflight passed with zero blockers and `proposal.json` now has **145 individually reviewed reasons**, including explicit unresolved near-duplicate assessments. This is owner-reported Windows evidence, not cloud access. The following **explicit submit** path uses that existing file unchanged; default `--naming-clone` remains read-only. No new draft, naming replay, validation creation, source approval, decision or publication occurs.
+
+Run this complete block in PowerShell in the existing repository. Docker Desktop must already have the retained local database/services running. Use the **same existing owner application account that prepared the bundle**; enter credentials privately when prompted. Never add `-T`, pipe the interactive command, use a transcript or paste credentials into chat. Select the existing **server-side private bundle containing your final reviewed proposal**, not an older local copy. If your final reasons are only in a local copied file, first deliberately copy that exact reviewed `proposal.json` back to its original private bundle with `docker compose cp`; retain a backup. This block never uploads or replaces reasons on your behalf.
+
+```powershell
+$ErrorActionPreference = 'Stop'
+function Invoke-ScnsStep {
+    param([Parameter(Mandatory=$true)][scriptblock]$Action)
+    & $Action
+    if ($LASTEXITCODE -ne 0) { throw 'SCNS command failed. Preserve this bundle and all existing data; stop here.' }
+}
+Invoke-ScnsStep { git status --short }
+if (git status --porcelain) { throw 'Preserve local changes first; nothing reset.' }
+Invoke-ScnsStep { git fetch origin feat/muj-connectivity-review }
+Invoke-ScnsStep { git switch feat/muj-connectivity-review }
+Invoke-ScnsStep { git pull --ff-only origin feat/muj-connectivity-review }
+Invoke-ScnsStep { git merge-base --is-ancestor 8eed084 HEAD }
+Invoke-ScnsStep { docker compose build api }
+Invoke-ScnsStep { docker compose up -d --wait --no-deps --no-build --force-recreate api }
+Invoke-RestMethod 'http://localhost:5173/api/v1/health/ready'
+$E22Draft = 'bf1e8e0f-f400-4f5f-a16e-25ac11503392'
+$E22Validation = '9da479c1-6971-4ee3-984f-d0e46ba315a8'
+$E22Checksum = '99879289d754320e6242f1768bf8abc139b3de32841db442a3b2b55640304f16'
+$E22Bundle = (Read-Host 'Paste the existing private bundle directory containing your 145 reviewed reasons (or its report.md path)').Trim() -replace '/report\.md$', ''
+$E22Pattern = '^/app/storage/private/muj-naming-review/' + $E22Draft + '/[0-9a-f-]{36}/v3-' + $E22Checksum + '-' + $E22Validation + '$'
+if ($E22Bundle -notmatch $E22Pattern) { throw 'Bundle does not match the reviewed Draft2/version3/checksum/validation. Stop and preserve reasons.' }
+Invoke-ScnsStep {
+    docker compose run --rm --no-deps api python -m app.cli.muj_publication --naming-clone --action submit --draft $E22Draft --validation $E22Validation --expected-version 3 --expected-checksum $E22Checksum --bundle $E22Bundle
+}
+```
+
+The helper prints the selected bundle, draft/version/checksum, exact JSON payload and its canonical SHA256. **Read all145 selected reasons, including both unresolved near-duplicate findings.** Type **`SUBMIT E22`** only if this is your reviewed payload. Anything else stops without submission. It re-fetches the entire parent/clone/provenance/validation proof after confirmation and checks that report/proposal files have not changed, then posts once through the normal authenticated `/submissions` endpoint with `If-Match: "3"`. Session, Origin/CSRF, campus permission, validation and audit rules remain server-enforced. No graph/catalog/source/anchor data is written.
+
+Expected first success: prints the actual **submission UUID**, saves private `intent-submit.json` before POST and `receipt-submit.json` after the real response, and locks existing Draft2 for review (normally version3→4 with **the same dataset checksum**). The two already-applied E22 names remain the only dataset changes. E05/all other identities and the current public release remain unchanged. This is submission only, not approval or publication.
+
+**Safe retry/recovery:** if the response or local receipt saving fails, rerun the **identical submit command with the same bundle, validation, expected-version3 and checksum**. Do not change the command to version4 or rerun creation/naming/import. Full safeguards run again; the helper verifies an exact server submission with the same actor/validation/checksum/145 reasons and submission version4 before any POST. A match prints its real UUID and writes `receipt-submit-recovery.json`, with no duplicate submission, new submit audit or confirmation prompt. Recovery explicitly does **not** claim the original request audit ID; an existing successful response receipt is retained. If no submission exists and the unchanged draft remains editable at3, another explicit `SUBMIT E22` is required before retry. If intent/payload/history differs, evidence is stale, or parent/release changed, it stops—preserve all files and inspect **Review and releases**; do not delete the journal, overwrite reasons or create another draft to force a retry. Changed reasons after a committed submission require the normal explicit return-to-draft/revalidation/review workflow, outside this command.
+
+A missing/stale/extra warning ID, duplicate JSON key, empty/short reason, other operator's bundle, unexpected dataset/provenance change or changed report/proposal during confirmation stops without a workflow write. Text is never automatically replaced, truncated or filled during submission. Authentication still records normal login/logout audits. No passwords/session tokens are persisted in helper files.
+
+After submission, open **Admin → Assigned campus → MUJ → Selected draft (Draft2) → Review and releases** and verify the actual submission, unchanged145 reasons and locked state. A separately authenticated eligible reviewer account must assess the current findings, provide review notes/reasons and explicitly choose **Approve exact reviewed content**. Separate owner-operated accounts are application account separation, not independent human/institutional approval. Final publication remains a separate explicit workflow; do not publish as part of this task.
+
 ### Verification boundaries and explicit next steps
 
 The helper verifies the draft's actual creation parent via paginated normal audit GETs (up to10050entries; unavailable audit stops), reconstructs the complete original parent from its authenticated review diff, and checks its full checksum and public artifact. If the parent is itself a clone/incomplete history, it stops for separate assessment. It then reconstructs the entire naming draft and requires the exact two E22 records plus correct derived search_text regeneration; any extra owner/source/binding/frame/catalog/graph change or hidden checksum difference is flagged and preserved. Parent/current route evidence must remain equivalent (human explanation text may differ), with the same validator and exact finding semantics except the allowed name/ID delta. A change in route inputs/policy/results, validator, warning content/counts, source approval or active release stops rather than asserting equivalence. Original pinned-dataset mode is unchanged and still rejects the clone; clone bundles cannot enter its submit/approve path.
 
 On stale validation, open **Admin → Assigned campus → MUJ → Selected draft (Draft2) → Review and releases → Run authoritative validation** using the intended route evidence; preserve meaningful expected no-route cases. Rerun with the new actual validation ID. Do not force the old ID/version/checksum or assume a new validation alone resolves an unexpected data diff. If route-policy/evidence changed, inspect it against the parent's exact displayed evidence rather than fabricating matching outcomes. Any data/source diff needs separate review; this tool never repairs it.
 
-After the report is justified, the owner explicitly enters the individual reasons in **Reason for warning <current ID>** and chooses **Submit exact validated version for review**. A separately authenticated eligible reviewer account must independently assess each current finding/reason and choose **Approve exact reviewed content**; owner-operated account separation is not a separate human review. Final **Prepare publication / Confirm publish immutable release** remains a separate explicit owner action, outside this preparation task. Do not bulk-acknowledge undisclosed warnings, run the old create/naming/import helper, or publish merely because a candidate proposal exists. MUJ's active public release and Demo remain unchanged throughout preflight.
+After the report is justified, use the explicit confirmed naming-clone submission above, or enter each individual reason in **Reason for warning <current ID>** and choose **Submit exact validated version for review**. A separately authenticated eligible reviewer account must independently assess each current finding/reason and choose **Approve exact reviewed content**; owner-operated account separation is not a separate human review. Final **Prepare publication / Confirm publish immutable release** remains a separate explicit owner action, outside this preparation task. Do not bulk-acknowledge undisclosed warnings, run the old create/naming/import helper, or publish merely because a candidate proposal exists. MUJ's active public release and Demo remain unchanged throughout preflight.
 
 The sections below describe the original first-publication helper and remain historical workflow reference. They do not authorize a new submission/publication of the old draft or apply automatically to the naming clone.
 

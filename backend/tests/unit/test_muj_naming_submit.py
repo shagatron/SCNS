@@ -166,3 +166,40 @@ def test_success_exact_payload_and_retry_receipts(prepared, capsys):
     with pytest.raises(DemoError, match="intent differs"):
         cli.submit(*p.args)
     assert len(p.posts) == 1
+
+
+def test_server_reconciliation_does_not_depend_on_local_intent_or_invent_audit(prepared):
+    p = prepared
+    cli.submit(*p.args, confirm=lambda _: "SUBMIT E22")
+    (p.folder / "intent-submit.json").unlink()  # Isolated fixture simulates lost local journal.
+    cli.submit(*p.args, confirm=lambda _: pytest.fail("No repeat submission"))
+    recovered = json.loads((p.folder / "receipt-submit-recovery.json").read_text())
+    assert len(p.posts) == 1 and "request_id" not in recovered
+    assert recovered["submission_id"] == p.current["existing_submissions"][0]["id"]
+
+
+@pytest.mark.parametrize(
+    "omit", ["--bundle", "--validation", "--expected-version", "--expected-checksum"]
+)
+def test_clone_submit_requires_explicit_bindings_before_authentication(monkeypatch, omit):
+    import sys
+
+    from app.cli import muj_publication as original
+
+    flags = {
+        "--bundle": "/unused",
+        "--validation": str(uuid4()),
+        "--expected-version": "3",
+        "--expected-checksum": "a" * 64,
+    }
+    args = ["muj_publication", "--naming-clone", "--action", "submit", "--draft", str(uuid4())]
+    for key, value in flags.items():
+        if key != omit:
+            args.extend([key, value])
+    monkeypatch.setattr(sys, "argv", args)
+    monkeypatch.setattr(
+        original, "Client", lambda **kwargs: pytest.fail("Must reject before authentication")
+    )
+    with pytest.raises(SystemExit) as error:
+        original.main()
+    assert error.value.code == 2

@@ -271,7 +271,7 @@ def test_original_action_path_explicitly_refuses_copied_clone_bundle(tmp_path, m
     folder.mkdir(parents=True)
     (folder / "report.json").write_text(json.dumps({"scope_type": "e22-naming-clone"}))
     monkeypatch.setattr(original, "get_settings", lambda: SimpleNamespace(storage_root=tmp_path))
-    with pytest.raises(DemoError, match="read-only"):
+    with pytest.raises(DemoError, match="Original pinned action path refuses"):
         original.perform(SimpleNamespace(), folder, "submit")
 
 

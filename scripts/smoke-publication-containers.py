@@ -198,6 +198,8 @@ def main():
                     if args.muj_only
                     else [
                         "public-experience.spec.ts",
+                        "map-explorer.spec.ts",
+                        "map-source-fixture.spec.ts",
                         "muj.spec.ts",
                         "imports.spec.ts",
                         "admin.spec.ts",

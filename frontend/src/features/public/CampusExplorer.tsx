@@ -9,6 +9,7 @@ import type { ConfirmedQR } from '../qr/QRStart'
 import RouteDetails from '../routing/RouteDetails'
 import '../../styles/public.css'
 import '../../styles/explorer.css'
+import MapFailureBoundary from '../maps/MapFailureBoundary'
 import { ExplorerPlaces, ExplorerPlaceCard } from './ExplorerPlaces'
 import OutdoorLocation, { type GPSStart } from '../location/OutdoorLocation'
 
@@ -187,12 +188,12 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice, campuses
       <aside className="explorer-sidebar" aria-label="Campus navigation workspace">
         <div className="workspace-brand"><span aria-hidden="true">↗</span><strong>scns<span> / explorer</span></strong><button className="panel-toggle" aria-expanded={panelExpanded} aria-controls="explorer-panel" onClick={() => setPanelExpanded(!panelExpanded)}>{panelExpanded ? 'Collapse panel' : 'Expand panel'}</button></div>
         {onCampus && <div className="explorer-campus"><label htmlFor="explorer-campus">Explorer campus</label><select id="explorer-campus" value={campus.id} disabled={locked} onChange={e => onCampus(e.target.value)}>{campuses?.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>}
-        <div className="explorer-mode"><button aria-pressed={!planning} onClick={() => { setPlanning(false); setPanelExpanded(true); requestAnimationFrame(() => document.getElementById('search')?.focus()) }}>Browse places</button><button aria-pressed={planning} onClick={() => { setPlanning(true); setPanelExpanded(true); focusPlanner('destination') }}>Plan route</button></div>
-        <div id="explorer-panel" hidden={!panelExpanded}>
               <div className="directory-controls"><div><label htmlFor="search">Search destinations</label><input id="search" type="search" placeholder="Try library, coffee, or a building code" value={q} maxLength={120} onChange={e => { setQ(e.target.value); setOffset(0); setPlanning(false); setPanelExpanded(true) }} /></div>
         <div><label htmlFor="category">Category</label><select id="category" value={category} onChange={e => { setCategory(e.target.value); setOffset(0); setPlanning(false); setPanelExpanded(true) }}><option value="">All places</option>{['building', 'library', 'cafe', 'water', 'washroom', 'entrance', 'garden', 'help', 'room', 'office', 'laboratory', 'facility', 'indoor_destination'].map(kind => <option key={kind} value={kind}>{kind[0].toUpperCase() + kind.slice(1)}</option>)}</select></div></div>
       {directory.isPending && <p role="status">Searching destinations…</p>}
       {directory.error && <Failure error={directory.error} retry={() => void directory.refetch()} />}
+        <div className="explorer-mode"><button aria-pressed={!planning} onClick={() => { setPlanning(false); setPanelExpanded(true); requestAnimationFrame(() => document.getElementById('search')?.focus()) }}>Browse places</button><button aria-pressed={planning} onClick={() => { setPlanning(true); setPanelExpanded(true); focusPlanner('destination') }}>Plan route</button></div>
+        <div id="explorer-panel" hidden={!panelExpanded}>
       <div hidden={planning}><ExplorerPlaces data={directory.data} selected={selected?.id} pending={route.isPending} onSelect={selectPlace} onRoute={choose} onStart={startAt} /></div>
       {directory.data?.total === 0 && <p className="empty-state">No matching places. Try another name, alias, or category.</p>}
       {directory.data && <div className="pagination"><span aria-live="polite">{directory.data.total} public destinations{directory.data.total > 0 ? ` · showing ${offset + 1}–${Math.min(offset + 6, directory.data.total)}` : ''}</span><button hidden={planning} disabled={offset === 0} onClick={() => setOffset(offset - 6)}>Previous</button><button hidden={planning} disabled={offset + 6 >= directory.data.total} onClick={() => setOffset(offset + 6)}>Next</button></div>}
@@ -223,10 +224,12 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice, campuses
         <div className="view-controls"><label htmlFor="public-floor">Building and floor view</label><select id="public-floor" value={view} onChange={e => showView(e.target.value)}><option value="outdoor">Outdoor campus</option>{floors.data?.floors.map(f => <option key={f.id} value={f.id}>{f.building_name} · {f.label} · {f.navigation_mode.replaceAll('_', ' ')}</option>)}</select></div>
         {floors.error && <Failure error={floors.error} retry={() => void floors.refetch()} />}{linkedPlaces.error && <Failure error={linkedPlaces.error} retry={() => void linkedPlaces.refetch()} />}
         {params.get('release') && !linked && <p role="status" className="notice">The shared route belongs to a different release. Choose destinations on the current release; the previous route has not been reused.</p>}
+        <MapFailureBoundary key={view}>
         {mapVisible && view !== 'outdoor' && floors.data?.floors.find(f => f.id === view) && <Suspense fallback={<p className="loading" role="status">Loading floor route viewer…</p>}><FloorRouteMap key={view} floor={floors.data.floors.find(f => f.id === view)!} route={visibleRoute} places={choices} selectedId={selected?.id} onSelect={selectPlace} /></Suspense>}
         {mapVisible && view === 'outdoor' && <>{map.error && <Failure error={map.error} retry={() => void map.refetch()} />}
           {map.data && <Suspense fallback={<p className="loading" role="status">Loading map…</p>}><OutdoorMap campus={campus} data={map.data} places={choices} route={visibleRoute} selectedId={selected?.id} onSelect={selectPlace} /></Suspense>}
           {map.isPending && <p role="status" className="loading">Loading campus paths…</p>}</>}
+        </MapFailureBoundary>
         {!mapVisible && <p className="empty-state">Map hidden. Plan your walk and follow the text directions.</p>}
         {selected && <ExplorerPlaceCard place={selected} pending={route.isPending} onClose={closePlace} onRoute={() => choose(selected)} onStart={() => startAt(selected)} />}
         <div className="map-footnote"><span>↗ Routes follow mapped paths</span><span>{`Published release ${release.version}`}</span></div>

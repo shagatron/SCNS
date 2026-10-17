@@ -128,3 +128,31 @@
 .public-app .map-workspace .pagination [hidden] { display: none; }
 .public-app .map-workspace .planner-card { padding-top: 4px; }
 .public-app .map-workspace .location-start p { margin: 8px 0 0; }
+@media(max-width:760px) {
+  /* One shared control tree, laid out above the map and below as a native sheet. */
+  .public-app .map-workspace .explorer-grid { display: grid; grid-template-columns: minmax(0,1fr); }
+  .public-app .map-workspace .explorer-sidebar { display: contents; }
+  .public-app .map-workspace .workspace-brand { grid-row: 1; margin: 8px 0 12px; }
+  .public-app .map-workspace .explorer-campus { grid-row: 2; margin-bottom: 12px; }
+  .public-app .map-workspace .directory-controls { grid-row: 3; }
+  .public-app .map-workspace .explorer-mode { grid-row: 4; margin-bottom: 12px; }
+  .public-app .map-workspace .map-column { grid-row: 5; }
+  .public-app .map-workspace #explorer-panel { grid-row: 6; margin-top: 14px; padding: 16px 12px max(16px,env(safe-area-inset-bottom)); border: 1px solid #53695a; border-radius: 20px 20px 14px 14px; background: #1e2821; }
+  .public-app .map-workspace .campus-map.leaflet-container { height: clamp(300px,48svh,420px); }
+}
+@media(max-width:760px) {
+  .public-app .map-workspace .explorer-heading { margin-bottom: 12px; }
+  .public-app .map-workspace .explorer-heading .section-index { display: none; }
+  .public-app .map-workspace .explorer-heading .display-heading { font-size: 26px; margin: 2px 0 6px; }
+  .public-app .map-workspace .explorer-heading > p { font-size: 10px; line-height: 1.4; margin-top: 0; }
+  .public-app .map-workspace .restriction-status { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; }
+  .public-app .map-workspace .restriction-status p { font-size: 10px; }
+  .public-app .map-workspace .restriction-status p:not(:first-child) { grid-column: 1/-1; }
+  .public-app .map-workspace .workspace-brand { margin: 0 0 8px; }
+  .public-app .map-workspace .directory-controls { margin: 0 0 12px; }
+  .public-app .map-workspace .map-column { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; }
+  .public-app .map-workspace .map-toolbar { grid-column: 2; grid-row: 1; align-self: end; margin: 0; }
+  .public-app .map-workspace .map-toolbar > span { display: none; }
+  .public-app .map-workspace .view-controls { grid-column: 1; grid-row: 1; margin: 0; }
+  .public-app .map-workspace .map-column > :not(.map-toolbar):not(.view-controls) { grid-column: 1/-1; }
+}

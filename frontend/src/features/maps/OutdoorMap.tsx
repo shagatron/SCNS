@@ -3,7 +3,7 @@ import { CircleMarker, GeoJSON, MapContainer, Marker, Polyline, TileLayer, Toolt
 import type { FeatureCollection } from 'geojson'
 import { circleMarker, divIcon } from 'leaflet'
 import type { Campus, MapData, Place, Route } from '../../api/client'
-import { iconMarkup } from '../public/PlaceIcon'
+import { iconMarkup } from '../public/placeSymbols'
 import { toLeaflet } from './coordinates'
 import 'leaflet/dist/leaflet.css'
 
@@ -43,7 +43,7 @@ function PlacePins({ places, selectedId, onSelect }: Pick<Props, 'places' | 'sel
     title={`Select ${place.name}`} alt={place.name} keyboard
     zIndexOffset={place.id === selectedId ? 500 : 0}
     icon={divIcon({ className: `scns-pin kind-${place.kind}${place.id === selectedId ? ' selected-pin' : ''}`, html: iconMarkup(place.kind), iconSize: [36, 36], iconAnchor: [18, 18] })}
-    eventHandlers={{ click: () => onSelect(place), keypress: e => { if (e.originalEvent.key === ' ') { e.originalEvent.preventDefault(); onSelect(place) } } }}>
+    eventHandlers={{ click: () => onSelect(place), keypress: e => { if ([' ', 'Enter'].includes(e.originalEvent.key)) { e.originalEvent.preventDefault(); onSelect(place) } } }}>
     <Tooltip direction="top" permanent={place.id === selectedId} className="place-label">{place.name}</Tooltip>
   </Marker>)}</>
 }

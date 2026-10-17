@@ -185,30 +185,6 @@ def test_actual_cli_current_e22_release_permissions_retries_and_no_dataset_write
     )
     assert r.status_code == 200
     headers = sign_in(client, identity)
-    # Apply the authorized E22 naming overlay before fixture publication, using
-    # the existing naming API guard. Public artifact does not exist yet; provide
-    # its unmodified source graph solely to the naming preview in this fixture.
-    graph = client.get(base + "/graph").json()
-    from app.cli.muj_naming import supported_changes, writable
-
-    for row in supported_changes():
-        entity, node = row["entity"], row["id"]
-        fields = writable(entity, graph[entity][node])
-        fields["label" if entity == "nodes" else "name"] = row["proposed_name"]
-        if entity == "nodes":
-            r = client.post(
-                base + "/graph",
-                json={"changes": [{"entity": entity, "id": node, "data": fields}]},
-                headers=version(headers, graph["revision_version"]),
-            )
-        else:
-            r = client.put(
-                base + f"/catalog/places/{node}",
-                json={"entity": "places", "data": fields},
-                headers=version(headers, graph["revision_version"]),
-            )
-        assert r.status_code == 200, r.text
-        graph = client.get(base + "/graph").json()
     p = client.get(base + "/review").json()
     r = client.post(
         base + "/validations",
@@ -279,6 +255,30 @@ def test_actual_cli_current_e22_release_permissions_retries_and_no_dataset_write
     base = f"/api/v1/admin/campuses/{CAMPUS_ID}/drafts/{draft}"
     cloned = client.get(base + "/review").json()
     assert cloned["diff"] == []
+    # The clone changes exactly the two E22 names through normal CAS APIs.
+    graph = client.get(base + "/graph").json()
+    from app.cli.muj_naming import supported_changes, writable
+
+    for row in supported_changes():
+        entity, node = row["entity"], row["id"]
+        fields = writable(entity, graph[entity][node])
+        fields["label" if entity == "nodes" else "name"] = row["proposed_name"]
+        if entity == "nodes":
+            r = client.post(
+                base + "/graph",
+                json={"changes": [{"entity": entity, "id": node, "data": fields}]},
+                headers=version(headers, graph["revision_version"]),
+            )
+        else:
+            r = client.put(
+                base + f"/catalog/places/{node}",
+                json={"entity": "places", "data": fields},
+                headers=version(headers, graph["revision_version"]),
+            )
+        assert r.status_code == 200, r.text
+        graph = client.get(base + "/graph").json()
+    cloned = client.get(base + "/review").json()
+    assert len(cloned["diff"]) == 2 and cloned["edit_version"] == 3
     validation_payload = {
         "routes": [
             {

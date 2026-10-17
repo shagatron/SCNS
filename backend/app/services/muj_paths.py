@@ -293,9 +293,13 @@ def draw(report, raw, bounds, questions, title):
         for identity, p in pp.items():
             if west <= p[0] <= east and south <= p[1] <= north:
                 x, y = xy(p)
-                svg.append(f'<circle cx="{x:.2f}" cy="{y:.2f}" r="2" fill="#222"/><text x="{x + 4:.2f}" y="{y:.2f}" font-family="sans-serif" font-size="8">{identity}</text>')
+                svg.append(
+                    f'<circle cx="{x:.2f}" cy="{y:.2f}" r="2" fill="#222"/><text x="{x + 4:.2f}" y="{y:.2f}" font-family="sans-serif" font-size="8">{identity}</text>'
+                )
     for q in questions:
         x, y = xy(q["point"])
+        if east - west < 0.001:
+            x, y = x - 24, y + 22  # annotation only; do not obscure the source stubs
         svg.append(
             f'<circle cx="{x:.2f}" cy="{y:.2f}" r="13" fill="#fff" stroke="#222"/><text x="{x:.2f}" y="{y + 4:.2f}" text-anchor="middle" font-family="sans-serif" font-size="12">{q["id"]}</text>'
         )
@@ -365,6 +369,12 @@ def write_atlas(report, raw, output):
             "ways1141643441/1141643442/1141643443 (C6)",
             "Identify a continuous permitted approach to the source-labelled jogging loop if needed. No excluded highway shares its retained nodes; no nearby-road shortcut is supported.",
         ),
+        (
+            9,
+            10808416020,
+            "ways1158192973/1162173988/1162173989/1162174581/1164502064/1166283920/1198234116; building ways1141643440/1151360712/1151360713/1151360714/1158515143/1158516081",
+            "Clarify ground passage versus building/overhang overlap on the retained hostel paths. Some outlines have layer=1, others lack level evidence. Explicit source highway geometry does not by itself prove an indoor arrival or floor; do not create additional through-building joins. Academic room-overlap cases are grouped with question4 and enumerated per pair in the inventory.",
+        ),
     ]
     questions = [
         {"id": identity, "point": nodes[node], "source_ids": sources, "question": text}
@@ -373,7 +383,7 @@ def write_atlas(report, raw, output):
     (output / "questions.json").write_bytes(encode(questions))
     bounds = shape(report["scope"]["extent"]).bounds
     maps = {
-        "overview": (bounds, "All-source MUJ path accounting · questions1–8"),
+        "overview": (bounds, "All-source MUJ path accounting · questions1–9"),
         "academic": (
             (75.5631, 26.8409, 75.5676, 26.8441),
             "Academic paths, Library context and corridor questions",
@@ -387,7 +397,7 @@ def write_atlas(report, raw, output):
             "Northern campus / sports-path source context",
         ),
         "near-pairs": (
-            (75.56405, 26.8428, 75.56455, 26.84325),
+            (75.564235, 26.842985, 75.564325, 26.843045),
             "Distinct source stubs · no proximity merge (question5)",
         ),
     }

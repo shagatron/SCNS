@@ -1,11 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 810" role="img"><title>All-source MUJ path accounting · questions1–8</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 810" role="img"><title>All-source MUJ path accounting · questions1–9</title>
 <defs><clipPath id="map"><rect x="30" y="80" width="1080" height="675"/></clipPath></defs>
 <rect width="1140" height="810" fill="#faf9f4"/>
-<text x="30" y="30" font-family="sans-serif" font-size="22">All-source MUJ path accounting · questions1–8</text>
+<text x="30" y="30" font-family="sans-serif" font-size="22">All-source MUJ path accounting · questions1–9</text>
 <text x="30" y="54" font-family="sans-serif" font-size="13">Green: retained source paths · dashed red: excluded/review · numbered questions · no proposed additions</text>
 <g clip-path="url(#map)">
+<polyline points="346.25,157.22 334.47,167.02 325.94,179.75 321.33,194.37 321.03,209.69 325.06,224.48 333.09,237.53 344.47,247.79 358.28,254.42 373.41,256.90 388.62,255.02 402.68,248.93 414.46,239.12 422.99,226.40 427.60,211.78 427.90,196.46 423.87,181.67 415.84,168.62 404.46,158.36 390.64,151.72 375.52,149.24 360.31,151.13 346.25,157.22" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="346.25" y="157.22" font-size="8" font-family="sans-serif" fill="#777">Cricket Ground</text>
+<polyline points="172.66,485.69 193.84,478.30 197.47,488.68 176.29,496.08 172.66,485.69" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="172.66" y="485.69" font-size="8" font-family="sans-serif" fill="#777">B7 Futsal Ground</text>
 <polyline points="185.12,449.55 140.82,465.40 153.34,500.38 168.28,495.04 169.55,498.59 176.29,496.08 197.47,488.68 193.84,478.30 193.34,477.03 158.08,489.64 151.06,470.00 187.74,456.88 185.12,449.55" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="185.12" y="449.55" font-size="8" font-family="sans-serif" fill="#777">B7 Boy&#x27;s Block</text>
+<polyline points="226.34,639.76 241.68,633.55 244.86,641.39 229.51,647.60 226.34,639.76" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="226.34" y="639.76" font-size="8" font-family="sans-serif" fill="#777">Swimming Pool</text>
 <polyline points="179.57,515.65 206.30,505.94 218.53,539.65 191.80,549.35 179.57,515.65" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="179.57" y="515.65" font-size="8" font-family="sans-serif" fill="#777">Quess Mess &amp; Gym complex</text>
 <polyline points="247.64,510.77 254.31,527.10 275.05,518.63 265.38,494.97 266.56,494.48 264.31,488.97 262.94,489.54 260.47,483.48 255.64,485.46 258.17,491.66 243.28,497.74 246.55,505.75 260.11,500.21 264.59,511.17 257.91,513.90 255.35,507.62 247.64,510.77" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
@@ -27,22 +33,44 @@
 <polyline points="225.39,538.58 245.98,530.34 243.77,525.01 246.56,524.14 237.19,500.70 233.55,502.15 233.19,501.25 218.68,507.05 220.18,510.80 216.22,512.38 221.97,526.78 229.00,523.96 224.99,513.91 232.71,510.83 238.02,524.11 222.14,530.45 225.39,538.58" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="210.38,483.64 215.97,481.70 220.62,491.45 228.31,488.11 221.93,472.27 229.40,470.08 238.87,492.75 221.39,499.39 219.93,496.39 216.38,497.11 210.38,483.64" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="210.38" y="483.64" font-size="8" font-family="sans-serif" fill="#777">B5 block</text>
+<polyline points="248.09,591.36 251.58,589.96 254.73,597.89 251.24,599.28 248.09,591.36" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="248.09" y="591.36" font-size="8" font-family="sans-serif" fill="#777">G4 badminton court</text>
+<polyline points="447.68,429.91 454.80,427.16 467.18,422.06 474.22,419.37 479.70,430.91 451.45,442.18 447.68,429.91" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="447.68" y="429.91" font-size="8" font-family="sans-serif" fill="#777">Grand Staircase</text>
 <polyline points="430.61,498.45 435.97,498.16 436.04,499.16 472.70,495.97 472.70,494.59 476.52,494.43 477.57,491.61 478.98,489.97 480.48,487.96 483.12,486.08 486.28,484.35 490.67,483.21 494.81,483.03 497.45,483.32 500.07,485.01 503.61,481.82 505.00,483.23 534.13,461.75 533.35,460.70 537.52,457.75 550.79,474.67 547.51,477.13 546.60,476.32 507.51,505.49 508.19,507.17 506.78,507.71 509.28,514.99 493.08,520.64 490.90,513.81 489.03,514.41 488.54,512.90 437.24,517.95 437.29,519.41 432.36,519.69 430.61,498.45" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="430.61" y="498.45" font-size="8" font-family="sans-serif" fill="#777">Administrative Block</text>
+<polyline points="158.40,476.05 161.95,485.63 156.34,487.71 152.80,478.12 158.40,476.05" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="158.40" y="476.05" font-size="8" font-family="sans-serif" fill="#777">B7 Badminton court</text>
+<polyline points="175.33,469.78 185.83,465.41 188.77,474.74 177.68,478.62 175.33,469.78" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="175.33" y="469.78" font-size="8" font-family="sans-serif" fill="#777">B7 Basketball court</text>
+<polyline points="160.40,478.39 170.65,474.62 174.30,484.59 164.05,488.34 160.40,478.39" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="160.40" y="478.39" font-size="8" font-family="sans-serif" fill="#777">B7 Basketball court</text>
+<polyline points="167.55,465.08 177.45,461.39 180.19,466.83 169.21,470.95 167.55,465.08" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="167.55" y="465.08" font-size="8" font-family="sans-serif" fill="#777">B7 Badminton court</text>
 <polyline points="137.66,515.15 145.01,512.28 153.22,533.27 141.44,537.88 139.86,533.84 141.30,533.28 138.55,526.26 141.54,525.09 137.66,515.15" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="137.66" y="515.15" font-size="8" font-family="sans-serif" fill="#777">Chiller Panel Room</text>
 <polyline points="133.93,496.47 139.43,494.75 141.80,500.16 140.48,500.62 145.25,511.95 139.02,514.45 133.33,499.39 134.88,499.03 133.93,496.47" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="133.93" y="496.47" font-size="8" font-family="sans-serif" fill="#777">Transformer</text>
 <polyline points="217.12,632.95 242.71,622.83 251.28,644.51 225.69,654.64 217.12,632.95" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="217.12" y="632.95" font-size="8" font-family="sans-serif" fill="#777">Ocean Hills Pool</text>
+<polyline points="333.42,667.46 344.03,664.90 346.53,675.21 335.92,677.77 333.42,667.46" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="333.42" y="667.46" font-size="8" font-family="sans-serif" fill="#777">Faculty Basketball court</text>
 <polyline points="353.64,631.49 360.54,628.69 364.35,638.08 372.70,634.69 369.06,625.73 376.17,622.84 381.97,637.12 379.39,638.17 380.13,640.00 362.70,647.08 362.00,645.35 359.66,646.30 353.64,631.49" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="353.64" y="631.49" font-size="8" font-family="sans-serif" fill="#777">Faculty Apartment</text>
+<polyline points="345.56,664.10 351.51,662.59 354.23,673.35 348.29,674.85 345.56,664.10" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="345.56" y="664.10" font-size="8" font-family="sans-serif" fill="#777">Badminton Court</text>
+<polyline points="325.46,669.23 331.40,667.72 334.13,678.47 328.19,679.98 325.46,669.23" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="325.46" y="669.23" font-size="8" font-family="sans-serif" fill="#777">Badminton Court</text>
 <polyline points="331.25,456.37 334.91,454.45 336.14,456.80 332.51,458.78 331.25,456.37" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="331.25" y="456.37" font-size="8" font-family="sans-serif" fill="#777">CCTV room</text>
 <polyline points="335.57,457.13 342.11,470.25 343.69,473.42 340.61,474.96 332.51,458.78 335.57,457.13" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="335.57" y="457.13" font-size="8" font-family="sans-serif" fill="#777">Subway</text>
 <polyline points="310.22,465.30 319.96,485.45 315.94,487.22 315.55,486.30 306.48,467.25 310.22,465.30" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="310.22" y="465.30" font-size="8" font-family="sans-serif" fill="#777">Subway</text>
+<polyline points="268.80,441.85 277.13,438.67 279.96,446.08 271.63,449.26 268.80,441.85" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="268.80" y="441.85" font-size="8" font-family="sans-serif" fill="#777">B2 volleyball court</text>
+<polyline points="266.02,456.82 269.36,466.13 263.26,468.32 259.92,459.01 266.02,456.82" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="266.02" y="456.82" font-size="8" font-family="sans-serif" fill="#777">B1 Basketball Court</text>
 <polyline points="422.86,363.11 441.55,355.48 453.61,351.17 479.26,416.90 474.22,419.37 467.18,422.06 454.80,427.16 447.68,429.91 447.57,425.91 422.86,363.11" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="422.86" y="363.11" font-size="8" font-family="sans-serif" fill="#777">Old Mess</text>
 <polyline points="592.47,323.76 601.38,328.39 599.62,331.78 604.73,334.42 612.87,318.75 598.85,311.47 592.47,323.76" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
@@ -76,6 +104,7 @@
 <polyline points="-87.01,236.85 -73.30,241.25 -74.90,246.22 -72.17,247.11 -72.57,248.36 -64.85,250.84 -67.75,259.88 -68.81,260.99 -70.58,261.71 -72.63,261.53 -74.26,260.76 -74.90,259.53 -75.31,258.17 -74.81,256.75 -78.55,255.71 -77.81,253.96 -91.13,249.68 -87.01,236.85" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="571.99,188.85 571.08,192.60 577.54,194.17 578.45,190.42 571.99,188.85" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="569.94,196.81 569.73,197.77 568.53,197.51 568.24,198.86 569.39,199.11 569.20,200.03 575.37,201.35 576.05,198.12 569.94,196.81" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="393.76,255.71 400.43,252.74 406.66,248.94 413.50,243.48 417.24,239.20 421.46,233.47 424.91,227.25 427.53,220.64 429.30,213.75 430.18,206.69 431.02,198.12 429.11,192.05 427.06,184.74 424.05,177.77 420.11,171.28 413.73,163.78 409.83,160.23 403.69,155.86 397.02,152.36 389.93,149.79 382.57,148.20 375.05,147.62 367.53,148.06 360.13,149.50 353.00,151.93 346.26,155.30 340.04,159.56 334.44,164.61 329.58,170.36 325.53,176.72 322.38,183.57 320.19,190.78 318.99,198.22 318.80,207.00 319.63,213.25 321.46,220.55 324.26,227.55 327.98,234.11 332.55,240.10 337.88,245.42 343.89,249.97 350.45,253.68 357.46,256.46 364.77,258.28 371.10,258.95 379.56,258.91 386.77,257.77 393.76,255.71" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="573.79,369.98 576.64,376.60 580.54,374.92 577.69,368.30 573.79,369.98" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="563.14,370.92 571.86,367.01 576.15,376.54 567.43,380.47 563.14,370.92" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="272.81,220.71 300.38,214.61 303.10,226.90 275.53,232.99 272.81,220.71" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
@@ -83,6 +112,8 @@
 <polyline points="-137.30,186.56 -137.59,186.46 -135.56,180.17 -126.69,183.04 -128.72,189.33 -133.05,187.93 -138.62,205.62 -142.88,204.29 -137.30,186.56" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="45.99,301.60 45.92,301.34 48.12,300.71 48.38,301.63 49.28,301.37 50.21,304.55 49.30,304.81 50.05,307.42 48.96,307.73 49.52,309.71 46.33,310.62 46.83,312.37 43.40,313.36 43.66,314.27 39.20,315.56 38.02,311.45 40.07,310.86 38.82,306.49 43.34,305.19 42.60,302.58 45.99,301.60" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="-106.76,304.85 -92.10,309.18 -92.00,309.21 -91.60,308.61 -90.83,307.65 -89.65,306.99 -88.19,306.85 -86.74,307.15 -85.46,308.06 -84.75,309.24 -84.37,310.59 -84.66,311.68 -84.14,311.86 -88.05,323.42 -95.76,320.81 -95.29,319.46 -109.80,315.18 -106.76,304.85" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="284.97,508.20 294.55,504.95 290.73,493.69 281.15,496.94 284.97,508.20" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<text x="284.97" y="508.20" font-size="8" font-family="sans-serif" fill="#777">B1 badminton court</text>
 <polyline points="331.91,280.47 370.94,266.20 402.25,346.29 355.50,364.63 348.08,346.14 374.00,336.83 377.35,345.70 382.88,343.96 376.97,329.46 374.29,322.85 355.21,329.84 346.91,310.17 366.13,302.90 360.31,286.88 356.67,288.48 359.43,294.45 339.05,302.31 331.91,280.47" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="331.91" y="280.47" font-size="8" font-family="sans-serif" fill="#777">Academic Block -3</text>
 <polyline points="369.58,390.71 376.29,388.07 378.55,393.41 371.68,396.14 369.58,390.71" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
@@ -192,6 +223,18 @@
 <polyline points="375.53,468.30 378.97,466.91 374.68,456.29 371.24,457.68 375.53,468.30" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="374.95,456.25 379.23,454.45 383.65,464.95 379.36,466.75 374.95,456.25" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="384.03,464.98 387.89,463.40 383.55,452.89 379.70,454.48 384.03,464.98" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="420.90,138.70 421.61,157.49 431.77,157.11 431.05,138.32 420.90,138.70" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="434.51,137.78 435.21,156.57 445.37,156.18 444.66,137.39 434.51,137.78" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="451.16,137.14 451.87,155.93 462.02,155.55 461.31,136.75 451.16,137.14" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="464.63,136.59 465.34,155.38 475.49,155.00 474.79,136.21 464.63,136.59" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="436.04,171.38 437.18,187.08 444.55,186.54 443.41,170.84 436.04,171.38" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="449.97,170.61 451.12,186.31 458.49,185.77 457.34,170.07 449.97,170.61" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="462.98,170.16 464.13,185.86 471.49,185.32 470.35,169.63 462.98,170.16" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="475.63,169.16 476.78,184.86 484.15,184.32 483.00,168.62 475.63,169.16" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="466.40,198.23 467.44,213.09 476.55,212.45 475.51,197.59 466.40,198.23" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="456.52,199.11 457.56,213.98 466.68,213.34 465.63,198.48 456.52,199.11" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="438.83,200.10 439.61,214.49 456.56,213.58 455.79,199.19 438.83,200.10" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
+<polyline points="424.74,259.09 455.64,336.68 489.65,323.12 458.73,245.55 424.74,259.09" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <polyline points="198.19,578.95 216.06,572.33 227.98,604.12 210.10,610.96 198.19,578.95" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
 <text x="198.19" y="578.95" font-size="8" font-family="sans-serif" fill="#777">BlueDove Mess and BlueDove Gym</text>
 <polyline points="384.83,262.98 411.96,253.73 445.08,340.35 416.74,350.06 384.83,262.98" fill="#e5e2dc" stroke="#c4bfb7" stroke-width="1"/>
@@ -1870,6 +1913,7 @@
 <circle cx="413.73" cy="163.78" r="13" fill="#fff" stroke="#222"/><text x="413.73" y="167.78" text-anchor="middle" font-family="sans-serif" font-size="12">6</text>
 <circle cx="166.24" cy="501.12" r="13" fill="#fff" stroke="#222"/><text x="166.24" y="505.12" text-anchor="middle" font-family="sans-serif" font-size="12">7</text>
 <circle cx="326.10" cy="600.73" r="13" fill="#fff" stroke="#222"/><text x="326.10" y="604.73" text-anchor="middle" font-family="sans-serif" font-size="12">8</text>
+<circle cx="262.23" cy="480.50" r="13" fill="#fff" stroke="#222"/><text x="262.23" y="484.50" text-anchor="middle" font-family="sans-serif" font-size="12">9</text>
 </g>
 <text x="30" y="787" font-family="sans-serif" font-size="12">North up · © OpenStreetMap contributors / ODbL1.0 · source topology only, not physical/accessibility verification</text>
 </svg>

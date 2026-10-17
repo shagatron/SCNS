@@ -70,5 +70,14 @@
     ],
     "question": "Identify a continuous permitted approach to the source-labelled jogging loop if needed. No excluded highway shares its retained nodes; no nearby-road shortcut is supported.",
     "source_ids": "ways1141643441/1141643442/1141643443 (C6)"
+  },
+  {
+    "id": 9,
+    "point": [
+      75.5625215,
+      26.841864
+    ],
+    "question": "Clarify ground passage versus building/overhang overlap on the retained hostel paths. Some outlines have layer=1, others lack level evidence. Explicit source highway geometry does not by itself prove an indoor arrival or floor; do not create additional through-building joins. Academic room-overlap cases are grouped with question4 and enumerated per pair in the inventory.",
+    "source_ids": "ways1158192973/1162173988/1162173989/1162174581/1164502064/1166283920/1198234116; building ways1141643440/1151360712/1151360713/1151360714/1158515143/1158516081"
   }
 ]

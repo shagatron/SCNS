@@ -260,7 +260,9 @@ def main():
                 ensure_ascii=False,
             )
         )
-        print(f"Private report: {path}. No draft created, graph writes, approval or publication.")
+        print(
+            f"Private report: {path}. No draft created; zero graph writes; no approval or publication."
+        )
         if report["blockers"]:
             raise DemoError("Preflight differences require inspection; preserve existing dataset.")
     except (DemoError, ValueError) as exc:

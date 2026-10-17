@@ -248,3 +248,70 @@ def test_no_unsafe_session_or_write_action(monkeypatch):
     monkeypatch.setattr("sys.argv", ["muj_paths", "apply"])
     with pytest.raises(SystemExit):
         muj_paths.main()
+
+
+@pytest.mark.parametrize("fault", ["none", "before_image", "checksum", "audit", "cycle"])
+def test_frozen_ancestry_two_record_diff_integrity_and_failure_recovery(fault):
+    from app.services.publication import TABLES, checksum, public_projection
+
+    root_id, clone_id = str(uuid4()), str(uuid4())
+    before = {"campus": {"id": str(CAMPUS_ID)}, **{k: {} for k in TABLES}}
+    before["frames"] = {
+        "a": {"id": "a", "kind": "outdoor", "code": "old"},
+        "b": {"id": "b", "kind": "outdoor", "code": "old"},
+    }
+    after = deepcopy(before)
+    for row in after["frames"].values():
+        row["code"] = "new"
+    root = {
+        "id": root_id,
+        "status": "frozen",
+        "checksum": checksum(before),
+        "sources": {},
+        "edit_version": 5,
+        "diff": [
+            {"entity": "frames", "id": i, "before": None, "after": r}
+            for i, r in before["frames"].items()
+        ],
+    }
+    clone = {
+        "id": clone_id,
+        "status": "frozen",
+        "checksum": checksum(after),
+        "sources": {},
+        "edit_version": 6,
+        "diff": [
+            {"entity": "frames", "id": i, "before": before["frames"][i], "after": r}
+            for i, r in after["frames"].items()
+        ],
+    }
+    if fault == "before_image":
+        clone["diff"][0]["before"]["code"] = "unexpected"
+    if fault == "checksum":
+        clone["checksum"] = "0" * 64
+
+    class HTTP:
+        def request(self, method, path, **kwargs):
+            assert method == "GET"
+            if path.endswith("/audit"):
+                return (
+                    []
+                    if fault == "audit"
+                    else [
+                        {
+                            "action": "draft.create",
+                            "revision_id": clone_id,
+                            "after": {"parent_id": clone_id if fault == "cycle" else root_id},
+                        }
+                    ]
+                )
+            return deepcopy(clone if fault == "cycle" else root)
+
+    original = deepcopy(clone)
+    if fault == "none":
+        graph, ancestry = muj_paths.release_graph(HTTP(), clone, public_projection(after))
+        assert graph["frames"] == after["frames"] and len(ancestry) == 2
+    else:
+        with pytest.raises(DemoError):
+            muj_paths.release_graph(HTTP(), clone, public_projection(after))
+    assert clone == original

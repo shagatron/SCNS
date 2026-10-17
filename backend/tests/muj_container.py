@@ -12,6 +12,7 @@ from sqlalchemy import create_engine, func, select
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session
 
+from app.cli import muj_paths as path_helper
 from app.cli import muj_publication as publication_helper
 from app.cli import muj_update as updater
 from app.cli.admin import bootstrap
@@ -316,6 +317,32 @@ def main():
             assert db.get(ActiveRelease, (CAMPUS_ID, "public")) is None
         print(
             "PASS built publication CLI preflight: real session/API, current version after independent source approval,148actual warning IDs,146proposed reasons +2explicit manual findings, private report, no dataset/workflow/publication write."
+        )
+        # No fabricated MUJ publication to make the new read-only helper pass.
+        # Its normal actual-API failure must preserve the unpublished fixture.
+        with (
+            patch.object(path_helper, "Client", lambda **kwargs: client),
+            patch.object(path_helper, "prompt_login", lambda *_: None),
+            patch.object(client, "logout", lambda: None),
+            patch("sys.argv", ["muj_paths", "preflight"]),
+        ):
+            assert "user_id" in client.session and "user" not in client.session
+            try:
+                path_helper.main()
+            except SystemExit as exc:
+                assert "404" in str(exc), str(exc)
+            else:
+                raise AssertionError(
+                    "Unpublished MUJ must not acquire a fabricated public preflight"
+                )
+        with Session(engine) as db:
+            assert db.get(ActiveRelease, (CAMPUS_ID, "public")) is None
+            assert (
+                list(db.scalars(select(AuditEvent.id).where(AuditEvent.campus_id == CAMPUS_ID)))
+                == before_preflight
+            )
+        print(
+            "PASS built path CLI: real SessionOut, unpublished-release404 stops safely; no draft creation, graph/workflow writes or publication."
         )
         print(
             "PASS built v2 correction: exact preview, one atomic graph POST, 22 actor audits, explicit replaced-edge removal, retry no-op, old-helper guard, unapproved source/public release isolation."

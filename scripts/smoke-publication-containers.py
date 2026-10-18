@@ -199,6 +199,7 @@ def main():
                 *(
                     [
                         "educational-indoor.spec.ts",
+                        "educational-explorer.spec.ts",
                         "navigation.spec.ts",
                         "indoor-routing.spec.ts",
                         "admin.spec.ts",
@@ -217,6 +218,7 @@ def main():
                     if args.explorer_only
                     else [
                         "educational-indoor.spec.ts",
+                        "educational-explorer.spec.ts",
                         "muj-homepage.spec.ts",
                         "public-experience.spec.ts",
                         "map-explorer.spec.ts",

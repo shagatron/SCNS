@@ -41,7 +41,6 @@ export default function EducationalIndoor({ embedded = false }: { embedded?: boo
     if (routed) params.set(key('route'), '1'); else params.delete(key('route'))
     const url = new URL(window.location.href)
     url.search = params.toString()
-    if (embedded) url.hash = 'explorer'
     window.history.replaceState(null, '', url)
   }
   function selectFloor(id: string) { setFloorId(id); if (from && to) remember(from.id, to.id, id, !!request) }

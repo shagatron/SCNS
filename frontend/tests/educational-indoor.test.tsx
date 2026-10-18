@@ -12,7 +12,7 @@ const floors = [0,1].map(n => ({id:id(n+1), label:n?'First floor':'Ground floor'
 const rooms = [{id:id(20), name:'Demo Classroom A',floor_id:floors[0].id},{id:id(21),name:'Demo Library',floor_id:floors[1].id}]
 const data = {version:'indoor-school-v1',floors,rooms,source:'Original educational graph; production Dijkstra.'}
 const clients:QueryClient[]=[]
-function mount() { const client=new QueryClient({defaultOptions:{queries:{retry:false}}});clients.push(client);return render(<QueryClientProvider client={client}><EducationalIndoor /></QueryClientProvider>) }
+function mount(embedded = false) { const client=new QueryClient({defaultOptions:{queries:{retry:false}}});clients.push(client);return render(<QueryClientProvider client={client}><EducationalIndoor embedded={embedded} /></QueryClientProvider>) }
 beforeEach(()=>{vi.mocked(api).mockReset();history.replaceState(null,'','/indoor-demo')})
 afterEach(()=>{cleanup();clients.splice(0).forEach(c=>c.clear());vi.restoreAllMocks()})
 
@@ -53,13 +53,29 @@ it('keeps a route error beside the planner and retains both selections',async()=
   expect((screen.getByLabelText('Start room') as HTMLSelectElement).value).toBe(rooms[0].id)
   expect((screen.getByLabelText('Destination room') as HTMLSelectElement).value).toBe(rooms[1].id)
 })
-it('adds the entry only to published MUJ metadata, keeping original actions',()=>{
+it('retains original homepage actions without a separate primary demo entry',()=>{
   const campus:Campus={id:id(99),name:'MUJ preview',code:'MUJ',is_demo:false,timezone:'Asia/Kolkata',center:{type:'Point',coordinates:[75,26]},boundary:{type:'Polygon',coordinates:[[[75,26],[76,26],[76,27],[75,26]]]}}
   const props={campuses:[campus],locked:false,onCampus:vi.fn(),online:true,connected:true}
   const view=render(<CampusOpening {...props} campus={campus} />)
-  expect(screen.getByRole('link',{name:'Indoor navigation demo ↗'}).getAttribute('href')).toContain('returnCampus='+campus.id)
+  expect(screen.queryByRole('link',{name:'Indoor navigation demo ↗'})).toBeNull()
   expect(screen.getByRole('link',{name:'Explore campus'})).toBeTruthy()
   expect(screen.getByRole('link',{name:'About the data'})).toBeTruthy()
   view.rerender(<CampusOpening {...props} campus={{...campus,is_demo:true}} />)
   expect(screen.queryByRole('link',{name:'Indoor navigation demo ↗'})).toBeNull()
+})
+
+it('namespaces embedded choices and preserves the outdoor share state',async()=>{
+  history.replaceState(null,'','/?campus='+id(99)+'&release='+id(98)+'&from='+id(70)+'&to='+id(71)+'&routed=1&explorer=indoor-demo')
+  vi.mocked(api).mockResolvedValue(data);mount(true)
+  fireEvent.change(await screen.findByLabelText('Start room'),{target:{value:rooms[1].id}})
+  const params=new URLSearchParams(location.search)
+  expect(params.get('from')).toBe(id(70))
+  expect(params.get('to')).toBe(id(71))
+  expect(params.get('release')).toBe(id(98))
+  expect(params.get('routed')).toBe('1')
+  expect(params.get('demo_from')).toBe(rooms[1].id)
+  expect(params.get('explorer')).toBe('indoor-demo')
+  expect(location.pathname).toBe('/')
+  expect(location.hash).toBe('')
+  expect(screen.queryByRole('main')).toBeNull()
 })

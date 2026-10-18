@@ -80,7 +80,7 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice }: { camp
     if (next === 'indoor-demo') setDemoOpened(true)
     const url = new URL(window.location.href)
     url.searchParams.set('campus', campus.id)
-    if (next === 'indoor-demo') url.searchParams.set('explorer', next)
+    if (next === 'indoor-demo') { url.searchParams.set('explorer', next); if (url.hash !== '#explorer') url.hash = '' }
     else url.searchParams.delete('explorer')
     window.history.replaceState(null, '', url)
   }
@@ -233,7 +233,7 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice }: { camp
         {route.data && !visibleRoute && <p role="alert" className="notice">Previous route hidden: restrictions changed or current closure information is unavailable. Your selections are retained. Check restrictions and calculate again before walking.</p>}
         {visibleRoute && <><div role="status" className="sr-only">Route ready. {visibleRoute.distance_m == null ? 'Distance unknown.' : `${Math.round(visibleRoute.distance_m)} metres.`}</div><RouteDetails route={visibleRoute} onView={showView} /><button className="secondary-button" onClick={() => { clear(); discardGPS(); setLocationEpoch(n => n + 1); if (source === gpsValue) setSource('') }}>Clear route</button></>}
     </div></div>
-    {hasDemo && <div id="indoor-demo-panel" className="explorer-mode-panel" role="tabpanel" aria-labelledby="indoor-demo-tab" hidden={explorerMode !== 'indoor-demo'}>
+    {hasDemo && <div id="indoor-demo-panel" tabIndex={-1} className="explorer-mode-panel" role="tabpanel" aria-labelledby="indoor-demo-tab" hidden={explorerMode !== 'indoor-demo'}>
       {demoOpened && <Suspense fallback={<p role="status">Loading indoor demonstration…</p>}><EducationalIndoor embedded /></Suspense>}
     </div>}
     </section>

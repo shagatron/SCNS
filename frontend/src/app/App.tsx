@@ -18,7 +18,8 @@ export default function App({ qrStart, qrNotice }: { qrStart?: ConfirmedQR; qrNo
   const campus = campuses.data?.find(c => c.id === campusId) ?? campuses.data?.[0]
   return <div className="public-app">
     <a className="skip-link" href="#planner" onClick={event => {
-      const demo = document.querySelector<HTMLElement>('#indoor-demo-panel:not([hidden]) #demo-planner')
+      const panel = document.querySelector<HTMLElement>('#indoor-demo-panel:not([hidden])')
+      const demo = panel?.querySelector<HTMLElement>('#demo-planner') ?? panel
       if (demo) { event.preventDefault(); demo.focus(); demo.scrollIntoView({ block: 'start' }) }
     }}>Skip to route planner</a><PublicNavigation />
     <main>

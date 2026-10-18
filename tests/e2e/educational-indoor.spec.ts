@@ -121,21 +121,10 @@ test('loading/error/retry/empty/image failure states retain controls and text',a
   await expect(page.getByLabel('Start room')).toHaveCount(0)
 })
 
-test('MUJ entry is additive, qualification precedes entry, return restores campus; Demo baseline unchanged',async({page},info)=>{
-  // Metadata response simulation over an isolated synthetic published release.
-  // NOT actual Windows/MUJ publication or real-campus dataset verification.
-  let selected=''
-  await page.route('**/api/v1/campuses',async route=>{
-    const response=await route.fetch(),all=await response.json()
-    selected=all[0].id
-    await route.fulfill({response,json:all.map((c:{id:string})=>c.id===selected?{...c,code:'MUJ',is_demo:false,name:'Simulated MUJ educational entry'}:c)})
-  })
-  await page.goto('/')
-  await expect(page.getByRole('link',{name:'Indoor navigation demo ↗',exact:true})).toBeVisible()
-  await expect(page.getByText(qualification,{exact:true})).toBeVisible()
-  await expect(page.getByAltText('Manipal University Jaipur emblem')).toBeVisible()
-  await page.locator('#intro').screenshot({path:`${out(info.project.name)}/muj-entry-simulated.png`})
-  await page.getByRole('link',{name:'Indoor navigation demo ↗',exact:true}).click()
+test('legacy direct link returns to selected campus; Demo baseline unchanged',async({page})=>{
+  const campuses=await (await page.request.get('/api/v1/campuses')).json()
+  const selected=campuses[0].id
+  await page.goto('/indoor-demo?returnCampus='+selected)
   await expect(page.getByRole('heading',{name:'Indoor navigation demo',exact:true})).toBeVisible()
   await page.getByRole('link',{name:'← Return to campus explorer',exact:true}).click()
   await expect(page.getByLabel('Explore campus',{exact:true})).toHaveValue(selected)
@@ -145,8 +134,6 @@ test('MUJ entry is additive, qualification precedes entry, return restores campu
   await expect(page.locator('.route-metrics')).toContainText('257')
   await expect(page.locator('.route-metrics')).toContainText('4')
   await expect(page.getByText('Arrive at Library.',{exact:true})).toBeVisible()
-  await page.unroute('**/api/v1/campuses')
-  await page.goto('/')
   await expect(page.getByText('Synthetic demo.',{exact:true})).toBeVisible()
-  await expect(page.getByRole('link',{name:'Indoor navigation demo ↗',exact:true})).toHaveCount(0)
+  await expect(page.getByRole('tab',{name:'Indoor demo',exact:true})).toHaveCount(0)
 })

@@ -38,13 +38,50 @@ class SafeError(Exception):
     pass
 
 
-def run(args, *, stdin=None, stdout=subprocess.PIPE, env=None, cwd=ROOT):
+def acl_diagnostic(stderr):
+    """Accept only the ACL helper's bounded, structured diagnostics, never raw stderr."""
+    stages = {
+        "validate-directory",
+        "read-owner",
+        "enumerate-profile",
+        "build-dacl",
+        "persist-dacl",
+        "reset-child-dacl",
+        "verify-child-dacl",
+        "verify-root-dacl",
+        "verify-owner",
+    }
+    for line in stderr.decode("utf-8", errors="replace").splitlines():
+        if not line.startswith("SCNS_ACL_ERROR ") or len(line) > 512:
+            continue
+        try:
+            value = json.loads(line.removeprefix("SCNS_ACL_ERROR "))
+        except ValueError:
+            continue
+        if (
+            not isinstance(value, dict)
+            or not isinstance(value.get("stage"), str)
+            or value["stage"] not in stages
+        ):
+            continue
+        code, hresult = value.get("windows_error"), value.get("hresult")
+        if code is not None and (type(code) is not int or not 0 <= code <= 65535):
+            continue
+        if not isinstance(hresult, str) or not re.fullmatch(r"0x[0-9A-Fa-f]{8}", hresult):
+            continue
+        return f" ACL stage {value['stage']}; Windows error {code}; HRESULT {hresult}."
+    return ""
+
+
+def run(args, *, stdin=None, stdout=subprocess.PIPE, env=None, cwd=ROOT, stage=None):
     result = subprocess.run(
         args, input=stdin, stdout=stdout, stderr=subprocess.PIPE, env=env, cwd=cwd, check=False
     )
     if result.returncode:
+        context = f"Native {stage}: " if stage else ""
+        detail = acl_diagnostic(result.stderr) if stage else ""
         raise SafeError(
-            f"{Path(str(args[0])).name} failed (exit {result.returncode}); no unsafe automatic retry. Check tool/service availability; credentials and raw output withheld."
+            f"{context}{Path(str(args[0])).name} failed (exit {result.returncode}).{detail} No unsafe automatic retry. Check tool/service availability; credentials and raw output withheld."
         )
     return result.stdout
 
@@ -66,7 +103,8 @@ def protect(path):
             str(ROOT / "scripts/windows/protect.ps1"),
             "-Path",
             str(path),
-        ]
+        ],
+        stage="protect-state-directory",
     )
 
 
@@ -894,7 +932,10 @@ def setup_decoder():
         value = sid_text(sid)
         # Read/execute runtime files only, never the repo root/.env/storage/native state.
         for path in {Path(sys.base_prefix), ROOT / "backend/.venv", ROOT / "backend/app"}:
-            run(["icacls", str(path), "/grant", f"*{value}:(OI)(CI)(RX)", "/T", "/Q"])
+            run(
+                ["icacls", str(path), "/grant", f"*{value}:(OI)(CI)(RX)", "/T", "/Q"],
+                stage="grant-decoder-runtime-read",
+            )
         run(
             [
                 "pwsh",
@@ -909,7 +950,8 @@ def setup_decoder():
                 "-ReadOnlySid",
                 value,
                 "-Recurse",
-            ]
+            ],
+            stage="protect-decoder-profile",
         )
     finally:
         free_sid(sid)

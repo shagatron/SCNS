@@ -3,6 +3,7 @@
 import importlib.util
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -127,6 +128,105 @@ def test_command_failure_never_echoes_credentials(monkeypatch):
     with pytest.raises(native.SafeError) as error:
         native.run(["pg_restore", "synthetic-sensitive-argument"])
     assert "secret" not in str(error.value) and "sensitive" not in str(error.value)
+
+
+def test_acl_failure_preserves_stage_and_numeric_error_without_raw_output(monkeypatch):
+    diagnostic = {
+        "stage": "persist-dacl",
+        "windows_error": 1314,
+        "hresult": "0x80070522",
+        "message": "password=must-not-escape",
+        "path": "private-account-directory",
+    }
+    stderr = b"private tool output\nSCNS_ACL_ERROR " + json.dumps(diagnostic).encode()
+    monkeypatch.setattr(
+        native.subprocess, "run", lambda *a, **kw: subprocess.CompletedProcess(a, 1, b"", stderr)
+    )
+    with pytest.raises(native.SafeError) as error:
+        native.run(["pwsh", "private-argument"], stage="protect-state-directory")
+    text = str(error.value)
+    assert all(
+        value in text for value in ["protect-state-directory", "persist-dacl", "1314", "0x80070522"]
+    )
+    assert not any(
+        value in text
+        for value in ["must-not-escape", "private-account", "private tool", "private-argument"]
+    )
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        [],
+        {"stage": []},
+        {"stage": "password=secret"},
+        {"stage": "persist-dacl", "windows_error": True, "hresult": "0x80070005"},
+        {"stage": "persist-dacl", "windows_error": -1, "hresult": "0x80070005"},
+        {"stage": "persist-dacl", "windows_error": 5, "hresult": "password=secret"},
+    ],
+)
+def test_acl_diagnostic_refuses_untrusted_or_malformed_details(value):
+    assert native.acl_diagnostic(b"SCNS_ACL_ERROR " + json.dumps(value).encode()) == ""
+    assert native.acl_diagnostic(b"SCNS_ACL_ERROR {bad json password=secret}") == ""
+
+
+def test_acl_diagnostic_empty_and_unstructured_errors_remain_sanitized(monkeypatch):
+    monkeypatch.setattr(
+        native.subprocess,
+        "run",
+        lambda *a, **kw: subprocess.CompletedProcess(a, 5, b"", b"password=secret"),
+    )
+    with pytest.raises(native.SafeError, match="grant-decoder-runtime-read") as error:
+        native.run(["icacls", "private-path"], stage="grant-decoder-runtime-read")
+    assert "exit 5" in str(error.value)
+    assert "secret" not in str(error.value) and "private-path" not in str(error.value)
+
+
+def test_powershell_contracts_and_reuse_dependency_branch(tmp_path):
+    pwsh = os.environ.get("SCNS_TEST_PWSH") or shutil.which("pwsh")
+    if not pwsh:
+        pytest.skip("PowerShell parser/portable mocked-command harness unavailable")
+    result = subprocess.run(
+        [pwsh, "-NoProfile", "-File", str(ROOT / "scripts/windows/script-contracts.ps1")],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "Portable script contracts passed" in result.stdout
+    invalid = subprocess.run(
+        [
+            pwsh,
+            "-NoProfile",
+            "-File",
+            str(ROOT / "scripts/windows/scns.ps1"),
+            "Start",
+            "-ReuseDependencies",
+            "-State",
+            str(tmp_path),
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert invalid.returncode != 0 and "valid only with Setup" in invalid.stderr
+
+
+@pytest.mark.skipif(
+    os.name != "nt", reason="Requires actual non-elevated Windows filesystem ACL persistence"
+)
+def test_actual_windows_non_elevated_repeat_and_decoder_dacl(tmp_path):
+    native.run(
+        [
+            "pwsh",
+            "-NoProfile",
+            "-File",
+            str(ROOT / "scripts/windows/acl.test.ps1"),
+            "-Root",
+            str(tmp_path),
+        ],
+        stage="test-private-dacl-fixture",
+    )
 
 
 def test_windows_decoder_refuses_non_windows_and_no_linux_fallback():

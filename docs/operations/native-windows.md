@@ -4,6 +4,8 @@ Starting point: accepted `polish/muj-homepage` at `ee683e1a61a6584147c3e39b121a8
 
 **Status:** native implementation and isolated Linux verification are delivered; actual Windows execution, AppContainer/DACL/DPAPI behavior and this owner's migration remain **unverified** until the owner runs the gates below. Do not retire Docker or call full native compatibility verified from Linux results. Cloud cannot access the actual Windows database/volumes. No UI, routing/API/permission/publication contract, dependency lock or schema change. No native data is created by downloading the branch or running Setup.
 
+**Owner-reported Windows attempt at `1928d1e`:** PowerShell7.6.7, Python/dependency installation and frontend build succeeded; native PostgreSQL17.11/PostGIS3.6.2 available, listen_addresses=localhost. Setup then failed protecting the existing directory with SeSecurityPrivilege. The DACL-only correction and targeted retry below are delivered, but their actual Windows result is **not yet reported**. These preliminary successes do not establish decoder/native application or migration acceptance.
+
 ## Compatibility and security boundary
 
 | Component | Native approach / prerequisite |
@@ -146,6 +148,44 @@ $ScnsInventory.storage_mounts | Format-List
 ```
 
 Setup builds frontend via npm ci and backend via frozen uv; preserves `.env`, Docker images, uploads and database. It configures decoder-only read ACLs on Python/.venv/app plus read-only private profile; this does **not** grant access to native secrets/storage/repository root. Preflight must report actual Windows isolation and PDF+PNG success. No unsupported unrestricted decoder option exists. Inventory contains actual current public release UUIDs/content/artifact checksums where present, schema, all application row hashes and source mount/config **names**, never container credential values. Each `active_releases` entry is `[campus UUID, release UUID, release content checksum, public artifact checksum or null]`; no missing artifact checksum is invented. It is preliminary while writers may run; Backup repeats after stopping writers.
+
+### Targeted retry after the SeSecurityPrivilege Setup failure
+
+Use an **ordinary, non-elevated PowerShell7** terminal. Keep the existing partial native directory, marker, locks and any configuration/data. Do not delete it or enable privileges. No PostgreSQL/Python/Node reinstall is needed for this retry. Stop if the repository has local work; nothing below resets it.
+
+```powershell
+$ErrorActionPreference = 'Stop'
+Set-Location -LiteralPath 'C:\Users\Aaditya Shah\SCNS'
+function Invoke-ScnsAclStep {
+    param([Parameter(Mandatory=$true)][scriptblock]$Action)
+    & $Action
+    if ($LASTEXITCODE -ne 0) { throw "Command failed ($LASTEXITCODE). Stop and preserve existing state." }
+}
+$ScnsDirty = git status --porcelain
+if ($LASTEXITCODE -ne 0 -or $ScnsDirty) { throw 'Preserve local Git changes before continuing. Nothing reset.' }
+$ScnsBranch = git branch --show-current
+if ($LASTEXITCODE -ne 0 -or $ScnsBranch -ne 'feat/native-windows') { throw 'Expected feat/native-windows. Preserve the existing checkout before selecting that branch.' }
+Invoke-ScnsAclStep { git fetch origin refs/heads/feat/native-windows:refs/remotes/origin/feat/native-windows }
+Invoke-ScnsAclStep { git merge-base --is-ancestor 1928d1ee9bfd5ffd4279ba19bb96eefd4e81988c origin/feat/native-windows }
+Invoke-ScnsAclStep { git pull --ff-only origin feat/native-windows }
+Invoke-ScnsAclStep { git rev-parse HEAD }
+$ScnsState = Join-Path $env:LOCALAPPDATA 'SCNS\native'
+if (-not (Test-Path -LiteralPath $ScnsState -PathType Container)) { throw 'Expected the existing partial native directory. Do not create a substitute state.' }
+# First repeat the exact previously failing operation, DACL-only.
+Invoke-ScnsAclStep { pwsh -NoProfile -ExecutionPolicy RemoteSigned -File .\scripts\windows\protect.ps1 -Path $ScnsState }
+# Only isolated script/DACL fixtures, no database or retained native data.
+Invoke-ScnsAclStep { uv --directory backend run --frozen --no-sync python -m pytest -q tests/unit/test_native_windows.py::test_powershell_contracts_and_reuse_dependency_branch tests/unit/test_native_windows.py::test_actual_windows_non_elevated_repeat_and_decoder_dacl }
+# Read-only frozen environment check; reuse existing frontend/dist and dependencies.
+Invoke-ScnsAclStep { pwsh -NoProfile -ExecutionPolicy RemoteSigned -File .\scripts\windows\scns.ps1 Setup -ReuseDependencies }
+```
+
+Expected: direct protection exits0 without the privilege error; the two focused tests pass on your actual non-elevated Windows token, including repeated protection and synthetic decoder RX inheritance. Setup prints **Reusing installed dependencies and compiled frontend**, then still configures decoder permissions and runs the actual AppContainer/Job/file/network and PDF/PNG gates. `-ReuseDependencies` is valid only for Setup: it runs `uv sync --frozen --check` (no installation), refuses missing outputs or lock mismatch, and never skips security gates. Existing normal Setup is unchanged. PostgreSQL tools are discovered as before; if you normally pass `-PgBin`, reuse that same actual directory on the final command.
+
+This block does not start app services, access Docker, migrate/restore data or publish. Failure preserves existing partial state. Unknown non-native contents without a valid state marker still stop safely; never remove them to silence the guard. After a successful retry you may perform read-only Inventory separately; backup/restore remain distinct explicit steps, not part of this fix.
+
+The cause is PowerShell's FileSystem provider `Set-Acl`, which first attempts all security sections. Its fallback can retain Audit when audit-protection and the existing protected-DACL flag differ. Setup calls protection at entry and again for its lock, so the already-protected repeat is important. The replacement uses direct `.NET FileSystemAclExtensions.SetAccessControl` with **only Access modified**, and explicit Access/Owner reads. It never invokes Set-Acl, writes ownership/group, reads/writes SACLs or enables privileges. Owner/SYSTEM FullControl and protected inheritance remain mandatory; only a validated AppContainer SID may additionally receive RX. Decoder descendants retain the prior DACL-only `icacls /reset` behavior and are checked for exact effective permissions. Existing Python helpers already use `SetFileSecurityW(0x80000004)` (protected DACL only) and `GetNamedSecurityInfoW(...,5)` (owner+DACL only), not SACL operations.
+
+Sanitized failures now emit `SCNS_ACL_ERROR` with a stable stage, numeric Windows error where available and HRESULT. The parent retains these selected fields for state/profile protection and labels runtime RX-grant failures. Exception text, paths, account names and arbitrary tool output stay withheld. Report only that diagnostic line/parent stage if another failure occurs; do not paste configuration or credentials. No Administrator workaround is prescribed.
 
 ## 4. Stop writers and take a verified backup
 

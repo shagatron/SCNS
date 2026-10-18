@@ -7,7 +7,26 @@ from app.cli.muj import retain_original
 from app.core.portable import is_private_file
 
 
-def test_private_original_is_atomic_replayable_and_keeps_inconsistent_history(tmp_path):
+def test_private_original_is_atomic_replayable_and_keeps_inconsistent_history(
+    tmp_path, monkeypatch
+):
+    import app.cli.muj as helper
+
+    streams = []
+    original_temp, original_replace = helper.NamedTemporaryFile, helper.os.replace
+
+    def tracked_temp(*args, **kwargs):
+        stream = original_temp(*args, **kwargs)
+        streams.append(stream)
+        return stream
+
+    def closed_replace(*args):
+        # Exercise Windows' close-before-rename requirement even on Linux.
+        assert streams and all(stream.closed for stream in streams)
+        return original_replace(*args)
+
+    monkeypatch.setattr(helper, "NamedTemporaryFile", tracked_temp)
+    monkeypatch.setattr(helper.os, "replace", closed_replace)
     raw = b"owner-provided source fixture"
     checksum = hashlib.sha256(raw).hexdigest()
     target = tmp_path / (checksum + ".osm")

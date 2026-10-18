@@ -1,3 +1,4 @@
+.public-app.indoor-demo { background: var(--paper); color: var(--ink); }
 .indoor-demo .demo-header { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: 1rem max(4vw, 1rem); border-bottom: 1px solid #d8d5cb; }
 .indoor-demo .demo-header a { display: flex; align-items: center; min-height: 44px; text-decoration: underline; }
 .indoor-demo .demo-header span { align-self: center; font-size: .75rem; letter-spacing: .1em; }
@@ -14,7 +15,7 @@
 .indoor-demo .demo-floor-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
 .indoor-demo .demo-floor-controls .demo-floor-field { flex: 1 1 240px; max-width: 500px; }
 .indoor-demo .map-panel { margin: 0; }
-.indoor-demo .campus-map { height: clamp(330px, 65vh, 620px); }
+.public-app.indoor-demo .campus-map.leaflet-container { height: clamp(330px, 65vh, 620px); }
 .indoor-demo .demo-directions ol { margin: 1rem 0; padding-left: 1.6rem; }
 .indoor-demo .demo-directions li { padding: .8rem .3rem; border-bottom: 1px solid #ddd9cd; }
 .indoor-demo .demo-directions li p { margin-bottom: .6rem; }

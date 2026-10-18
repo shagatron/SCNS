@@ -67,6 +67,8 @@ test('computed same/cross/reverse/disconnected paths, floor sections, reload and
 
 test('keyboard zoom/pan/floor controls, mobile width and accessibility',async({page})=>{
   await open(page)
+  await expect(page.locator('.public-app.indoor-demo')).toHaveCSS('background-color','rgb(243, 240, 232)')
+  await expect(page.getByRole('heading',{name:'Indoor navigation demo',exact:true})).toHaveCSS('color','rgb(17, 17, 16)')
   const map=page.locator('.campus-map'),image=map.locator('.leaflet-image-layer')
   await map.focus()
   const before=await image.getAttribute('style')

@@ -176,6 +176,8 @@ Get-Content -LiteralPath (Join-Path $ScnsState 'verified-copy.json') -Raw | Conv
 
 Restore verifies every backup hash again, source/native PG17/PostGIS compatibility and revision, durably reserves a nonce SQL role/DB/storage path **before** creation, restores transactionally into that new DB and copies to new native storage. Normal account password hashes, permissions, audit rows, graphs/drafts/versions, frozen releases/artifacts, floorplans, QR and restrictions must compare exactly, including sequence state and actual active release IDs. It checks active staged upload references, all private/repository helper file hashes, no invalid constraints. No seed/bootstrap/migration/rename/reimport/approval/publication action. Only the original source copy remains in Docker; native credentials point exclusively to the new copy. Initial Verify is intentionally strict; after legitimate native use, changes to sessions/audits/data make the old snapshot differ. That is **not** permission to restore over existing data.
 
+Floorplan originals/sanitized PNGs and retained source bytes are database binary columns, not missing external files: the full logical dump and all-column row hashes include them. Floor/layer/source/anchor references remain enforced by restored foreign keys. Filesystem import originals and helper journals/receipts are checked separately in the private-storage copies. Nothing is reconstructed from a screenshot or reprocessed to manufacture a matching release.
+
 ## 6. One-command normal startup, stop and reboot recovery
 
 ```powershell

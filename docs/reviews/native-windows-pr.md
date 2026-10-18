@@ -1,0 +1,18 @@
+# Native Windows runtime and guarded separate-copy migration
+
+SCNS previously required Linux-specific sandboxing, helper locks and process startup. Add a local Windows11 x64 runtime for the existing complete app, plus owner-run migration from its existing Docker database into a separately reserved native PostgreSQL17/PostGIS database and private storage. Preserve the accepted MUJ homepage, application accounts, drafts, immutable releases and original Docker rollback copy.
+
+Native Windows execution and the owner's migration remain **unverified** on this Linux environment. Mandatory native AppContainer/Job/DACL/DPAPI and actual PDF/PNG gates fail closed; there is no unrestricted decoder fallback. This PR delivers the implementation, Linux/portable regression evidence and complete owner-run acceptance steps, not a claim that Windows security or DLL behavior was proven by mocks.
+
+- Windows decoder uses zero-capability AppContainer, read-only runtime/profile ACLs, pre-execution bounded Job, explicit read-only input and bounded pipe output. Existing Linux UID/seccomp/resource sandbox retained. Owned-process supervision attaches the Job atomically, checks DB/proxy readiness and stops only owned children.
+- PowerShell Setup/Preflight/Inventory/Backup/Restore/Verify/Start/Stop/Test: frozen dependencies, private prompts, DPAPI-protected separate configuration, protected files/directories, portable journal locking/write-through receipts and close-before-rename handling. Native preview retains nginx private-path/header/body boundaries without changing the public UI.
+- Backup stops source writers, inventories actual releases/checksums and verifies all row/sequence/private-file hashes. Restore reserves only new targets before writes, uses normal logical restore and restricted runtime grants, verifies full data/reference preservation and reconciles interrupted success without duplicate restores. Partial/changed targets stop; explicit separate new-copy recovery preserves prior copies.
+- [Complete numbered PowerShell installation, backup/restore, acceptance, restart and rollback guide](../operations/native-windows.md). [Actual verification and failed-attempt history](../testing/verification.md); [requirements](../product/requirements-checklist.md); [progress](../progress.md).
+
+Validation:293backend units passed/2Windows-only skipped; strengthened affected28passed/2skipped. All79selected PostGIS API/CLI cases have passing final-code evidence across72initial passes and7unchanged serial retries after cloud disk exhaustion (not a clean single79case run). Actual logical restore/recovery and restricted-role API/auth/CSRF/draft/routes tested with disposable databases. Migration rehearsal, frontend69tests/lint/type/build and2actual compiled native-preview checks pass. Final compiled/container and preservation receipt are recorded in verification before completion.
+
+Official PostgreSQL/uv/Microsoft mirrors, winget manifests and Node index checked; the current PostGIS Windows installer listing was proxy403/unverified. Owner must verify actual Stack Builder package/DLL availability and run native Preflight/Test before accepting operation. Existing owner-reported Windows homepage checks remain separate from native support evidence. No actual Windows data access/migration, UI redesign, schema/lock/API contract/routing changes, seed/reimport/helper replay, publication, LAN/firewall change, deployment or Docker/WSL removal. No merge requested.
+
+Base: `polish/muj-homepage` (accepted `ee683e1a61a6584147c3e39b121a8765db5e46ba`). Head: `feat/native-windows`.
+
+Compare/open PR: https://github.com/shagatron/SCNS/compare/polish/muj-homepage...feat/native-windows?expand=1

@@ -8,6 +8,7 @@ from uuid import UUID, uuid4
 
 from app.cli.indoor_demo import Client, DemoError, persist, prompt_login
 from app.core.config import get_settings
+from app.core.portable import private_directory
 from app.services.muj_setup import CAMPUS_ID
 from app.services.muj_update import apply_reviewed, plan
 
@@ -81,6 +82,7 @@ def main():
         )
         folder = Path(get_settings().storage_root) / "private/muj-updates" / str(args.draft)
         folder.mkdir(parents=True, exist_ok=True, mode=0o700)
+        private_directory(folder)
         path = (
             folder
             / f"preview-v{preview['revision_version']}-{preview['to_manifest_sha256'][:12]}.json"

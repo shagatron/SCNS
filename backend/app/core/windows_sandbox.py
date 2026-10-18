@@ -167,8 +167,83 @@ def profile_folder():
         free_sid(sid)
 
 
-def protect_canary(path):
-    """A genuinely owner-private probe file, independent of TEMP's inherited ACL."""
+def current_user_sid():
+    k, a = dll("kernel32"), dll("advapi32")
+    token = w.HANDLE()
+    checked(
+        function(a, "OpenProcessToken", [w.HANDLE, w.DWORD, c.POINTER(w.HANDLE)])(
+            function(k, "GetCurrentProcess", [], w.HANDLE)(), 8, c.byref(token)
+        )
+    )
+    try:
+        size = w.DWORD()
+        info = function(
+            a, "GetTokenInformation", [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.POINTER(w.DWORD)]
+        )
+        info(token, 1, None, 0, c.byref(size))
+        buffer = c.create_string_buffer(size.value)
+        checked(info(token, 1, buffer, size, c.byref(size)))
+        return sid_text(c.cast(buffer, c.POINTER(c.c_void_p))[0])
+    finally:
+        function(k, "CloseHandle", [w.HANDLE])(token)
+
+
+def owner_private(path):
+    a, k = dll("advapi32"), dll("kernel32")
+    dacl, descriptor, owner = c.c_void_p(), c.c_void_p(), c.c_void_p()
+    status = function(
+        a,
+        "GetNamedSecurityInfoW",
+        [
+            w.LPWSTR,
+            c.c_int,
+            w.DWORD,
+            c.POINTER(c.c_void_p),
+            c.c_void_p,
+            c.POINTER(c.c_void_p),
+            c.c_void_p,
+            c.POINTER(c.c_void_p),
+        ],
+        w.DWORD,
+    )(str(path), 1, 5, c.byref(owner), None, c.byref(dacl), None, c.byref(descriptor))
+    if status:
+        raise c.WinError(status)
+    try:
+        user = current_user_sid()
+        if not dacl.value or sid_text(owner) not in {user, "S-1-5-18"}:
+            return False
+
+        class AclInfo(c.Structure):
+            _fields_ = [("count", w.DWORD), ("used", w.DWORD), ("free", w.DWORD)]
+
+        info = AclInfo()
+        checked(
+            function(a, "GetAclInformation", [c.c_void_p, c.c_void_p, w.DWORD, c.c_int])(
+                dacl, c.byref(info), c.sizeof(info), 2
+            )
+        )
+        found = set()
+        for index in range(info.count):
+            ace = c.c_void_p()
+            checked(
+                function(a, "GetAce", [c.c_void_p, w.DWORD, c.POINTER(c.c_void_p)])(
+                    dacl, index, c.byref(ace)
+                )
+            )
+            if c.cast(ace, c.POINTER(c.c_ubyte))[0] != 0:
+                return False
+            identity = sid_text(c.c_void_p(ace.value + 8))
+            mask = c.cast(c.c_void_p(ace.value + 4), c.POINTER(w.DWORD))[0]
+            if identity not in {user, "S-1-5-18"} or mask & 0x1F01FF != 0x1F01FF:
+                return False
+            found.add(identity)
+        return found == {user, "S-1-5-18"}
+    finally:
+        function(k, "LocalFree", [c.c_void_p], c.c_void_p)(descriptor)
+
+
+def protect_owner_file(path, *, directory=False):
+    """Protect generated input/probe files independent of TEMP's inherited ACL."""
     k, a = dll("kernel32"), dll("advapi32")
     token = w.HANDLE()
     checked(
@@ -186,7 +261,8 @@ def protect_canary(path):
         buffer = c.create_string_buffer(size.value)
         checked(info(token, 1, buffer, size, c.byref(size)))
         sid = c.cast(buffer, c.POINTER(c.c_void_p))[0]
-        sddl = f"D:P(A;;FA;;;SY)(A;;FA;;;{sid_text(sid)})"
+        inheritance = "OICI" if directory else ""
+        sddl = f"D:P(A;{inheritance};FA;;;SY)(A;{inheritance};FA;;;{sid_text(sid)})"
         checked(
             function(
                 a,
@@ -452,7 +528,7 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
         ):
             canary = Path(folder) / "owner-private.txt"
             canary.write_text("Synthetic owner-readable isolation canary; no secret.")
-            protect_canary(canary)
+            protect_owner_file(canary)
             listener.bind(("127.0.0.1", 0))
             listener.listen(1)
             return run_decoder(
@@ -495,6 +571,7 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
         ):
             source.write(payload)
             source.seek(0)
+            protect_owner_file(Path(source.name))
             current = function(k, "GetCurrentProcess", [], w.HANDLE)()
             checked(
                 function(

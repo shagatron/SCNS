@@ -78,6 +78,9 @@ def stable_id(campus_id, entity, external_id):
 def storage_dir():
     path = Path(get_settings().storage_root).resolve() / "private" / "imports"
     path.mkdir(parents=True, exist_ok=True, mode=0o700)
+    from app.core.portable import private_directory
+
+    private_directory(path)
     return path
 
 

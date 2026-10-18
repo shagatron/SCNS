@@ -14,6 +14,7 @@ from app.cli.indoor_demo import (
     prompt_login,
     remap,
 )
+from app.core.portable import is_private_file
 
 
 def test_fixture_ids_namespace_and_bindings_preserve_null_unknowns():
@@ -65,7 +66,7 @@ def test_journal_resume_lock_owner_and_fixture_guards(tmp_path):
         state["draft"] = str(uuid4())
         persist(path, state)
         saved = deepcopy(state)
-        assert path.stat().st_mode & 0o777 == 0o600
+        assert is_private_file(path)
         with pytest.raises(DemoError, match="Another demo"):
             with journal(tmp_path, campus, owner):
                 pass

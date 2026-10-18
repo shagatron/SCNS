@@ -271,6 +271,11 @@ def compatible(source, target_major, target_postgis):
 
 def available_postgis(db):
     if os.name == "nt":
+        build = db.execute("select version()").fetchone()[0].lower()
+        if "visual c++" not in build and "mingw" not in build:
+            raise SafeError(
+                "Selected server is not recognized as native Windows PostgreSQL. Do not use the Docker/WSL database as the native target."
+            )
         addresses = db.execute("show listen_addresses").fetchone()[0]
         if not set(address.strip() for address in addresses.split(",")) <= {
             "localhost",
@@ -1029,6 +1034,8 @@ def start(state, config):
                 shutil.which("node"),
                 str(ROOT / "node_modules/vite/bin/vite.js"),
                 "preview",
+                "--config",
+                str(ROOT / "frontend/vite.native.config.mjs"),
                 "--host",
                 "127.0.0.1",
                 "--port",
@@ -1159,9 +1166,9 @@ def main():
     parser.add_argument("--new-target", action="store_true")
     args = parser.parse_args()
     state = args.state.resolve()
-    if len(state.parts) < 4 or state == ROOT or state in ROOT.parents:
+    if len(state.parts) < 4 or state.is_relative_to(ROOT) or state in ROOT.parents:
         raise SafeError(
-            "Use a dedicated native state subdirectory, never a drive/repository/user root."
+            "Use a dedicated native state subdirectory OUTSIDE the repository, never a drive/user root."
         )
     marker = state / "native-state-v1.json"
     if marker.exists() and read(marker).get("format") != "scns-native-state-v1":
@@ -1184,6 +1191,27 @@ def main():
     protect(state)
     if not marker.exists():
         write(marker, {"format": "scns-native-state-v1"})
+    # Controller imports may construct an ORM engine, but must NEVER fall back
+    # to the original Docker .env/database. Real native/test children receive an
+    # explicit copied/test URL; source reads use only the explicit Docker API.
+    os.environ.update(
+        SCNS_ENV_FILE=str(state / "unused-do-not-create.env"),
+        DATABASE_URL="postgresql+psycopg://native_helper@127.0.0.1:1/native_helper_no_runtime_database",
+        STORAGE_ROOT=str(state / "helper-scratch"),
+    )
+    for name in (
+        "PGHOST",
+        "PGHOSTADDR",
+        "PGPORT",
+        "PGDATABASE",
+        "PGUSER",
+        "PGPASSWORD",
+        "PGSERVICE",
+        "PGSERVICEFILE",
+        "PGPASSFILE",
+        "PGOPTIONS",
+    ):
+        os.environ.pop(name, None)
     if args.action == "stop":
         if not (state / "running.json").exists():
             print("No recorded native supervisor. No PID killed or database changed.")
@@ -1277,6 +1305,7 @@ def isolated_tests(state):
             "API_PROXY_TARGET": "http://127.0.0.1:8001",
         }
         commands = [
+            [shutil.which("node"), "--test", str(ROOT / "scripts/windows/preview.test.mjs")],
             [sys.executable, "-m", "pytest", "-q", "tests/unit", "tests/integration"],
             [sys.executable, "-m", "tests.migration_runner"],
             [

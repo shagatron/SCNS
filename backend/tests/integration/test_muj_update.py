@@ -4,6 +4,7 @@ import pytest
 from sqlalchemy import func, select
 
 from app.cli.indoor_demo import DemoError
+from app.core.portable import is_private_file
 from app.models import ActiveRelease
 from app.models.admin import AuditEvent, RoleAssignment
 from app.services.imports import stable_id
@@ -317,7 +318,7 @@ def test_cli_real_session_application_and_read_only_receipt_recovery(
     assert "audit_request_id" not in verified and "requested_by" not in verified
     assert "not recovered" in verified["evidence_limit"]
     for file in folder.glob("*.json"):
-        assert file.stat().st_mode & 0o777 == 0o600
+        assert is_private_file(file)
         text = file.read_text()
         assert identity[1] not in text and "csrf_token" not in text
     output = capsys.readouterr().out

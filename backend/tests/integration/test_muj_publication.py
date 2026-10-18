@@ -11,6 +11,7 @@ from sqlalchemy import func, select
 from app.cli import muj_publication as cli
 from app.cli.indoor_demo import DemoError
 from app.core.config import get_settings
+from app.core.portable import is_private_file
 from app.models import ActiveRelease, Revision
 from app.models.admin import AuditEvent, RoleAssignment
 from app.services import publication
@@ -293,7 +294,7 @@ def test_real_cli_preflight_manual_findings_stale_checks_retry_and_independent_a
         raw = f.read_text()
         safe = identity[1] not in raw and reviewer[1] not in raw and "csrf_token" not in raw
         assert safe
-        assert f.stat().st_mode & 0o777 == 0o600
+        assert is_private_file(f)
     out = capsys.readouterr().out
     safe = identity[1] not in out and reviewer[1] not in out
     assert safe

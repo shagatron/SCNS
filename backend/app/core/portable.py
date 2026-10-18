@@ -1,6 +1,7 @@
 """Cross-platform receipt durability and advisory locks (no API/auth changes)."""
 
 import os
+from pathlib import Path
 
 
 def lock_file(handle):
@@ -22,9 +23,39 @@ def lock_file(handle):
         fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
 
-def private_mode(handle):
-    # Windows access is controlled by the protected native directory's DACL.
-    if os.name != "nt":
+def private_file(path):
+    path = Path(path)
+    if os.name == "nt":
+        from app.core.windows_sandbox import protect_owner_file
+
+        protect_owner_file(path)
+    else:
+        path.chmod(0o600)
+
+
+def private_directory(path):
+    path = Path(path)
+    if os.name == "nt":
+        from app.core.windows_sandbox import protect_owner_file
+
+        protect_owner_file(path, directory=True)
+    else:
+        path.chmod(0o700)
+
+
+def is_private_file(path):
+    path = Path(path)
+    if os.name == "nt":
+        from app.core.windows_sandbox import owner_private
+
+        return path.is_file() and owner_private(path)
+    return path.is_file() and path.stat().st_mode & 0o777 == 0o600
+
+
+def private_mode(handle, path=None):
+    if os.name == "nt":
+        private_file(path or handle.name)
+    else:
         os.fchmod(handle.fileno(), 0o600)
 
 

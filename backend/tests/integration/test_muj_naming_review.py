@@ -18,6 +18,7 @@ from app.cli import muj_naming_review as cli
 from app.cli import muj_publication as original
 from app.cli.indoor_demo import DemoError
 from app.core.config import get_settings
+from app.core.portable import is_private_file
 from app.models import ActiveRelease
 from app.models.admin import AuditEvent, RoleAssignment
 from app.models.publication import ReviewDecision, ReviewSubmission
@@ -583,7 +584,7 @@ def test_normal_parent_history_clone_diff_current_reasons_and_read_only_retries(
     conflict = json.loads((folder.parent / "blocked.json").read_text())
     assert conflict["blockers"] and conflict["details"]["observed_diff"]
     assert any(d["id"] == other for d in conflict["details"]["observed_diff"])
-    assert all(p.stat().st_mode & 0o777 == 0o600 for p in tmp_path.rglob("*.json"))
+    assert all(is_private_file(p) for p in tmp_path.rglob("*.json"))
     assert all(
         identity[1] not in p.read_text() and "csrf_token" not in p.read_text()
         for p in tmp_path.rglob("*.json")

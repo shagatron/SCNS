@@ -10,6 +10,7 @@ from uuid import UUID, uuid4
 from app.cli.indoor_demo import Client, DemoError, persist, prompt_login
 from app.cli.muj_naming import published, supported_changes
 from app.core.config import get_settings
+from app.core.portable import private_directory
 from app.services.muj_setup import CAMPUS_ID, ROOT
 from app.services.muj_update import ROOT2, comparable, correction, graph_records, plan
 from app.services.osm_conversion import encode
@@ -251,6 +252,7 @@ def main():
         report = preflight(client)
         folder = Path(get_settings().storage_root) / "private/muj-path-audit"
         folder.mkdir(parents=True, exist_ok=True, mode=0o700)
+        private_directory(folder)
         path = folder / f"preflight-{uuid4()}.json"
         persist(path, report)
         print(

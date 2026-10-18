@@ -8,7 +8,7 @@ from uuid import UUID, uuid5
 
 from app.cli.indoor_demo import DemoError, persist
 from app.cli.muj_naming import apply_reviewed, preflight, supported_changes
-from app.core.portable import lock_file
+from app.core.portable import lock_file, private_directory
 from app.services.muj_setup import CAMPUS_ID
 
 FORMAT = "scns-muj-e22-create-v1"
@@ -86,6 +86,7 @@ def run(client, owner, folder, record_write):
             "E22-only allowlist differs; no creation/application. Inspect the installed naming inventory."
         )
     folder.mkdir(parents=True, exist_ok=True, mode=0o700)
+    private_directory(folder)
     path = folder / "create-e22.json"
     with (folder / "create-e22.lock").open("a") as lock:
         try:

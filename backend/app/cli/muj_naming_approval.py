@@ -7,6 +7,7 @@ from uuid import UUID
 from app.cli.indoor_demo import DemoError, persist
 from app.cli.muj_naming_review import SUBMIT_PROOF, collect, require
 from app.core.config import get_settings
+from app.core.portable import private_directory
 from app.schemas.publication import DecisionInput
 from app.services.muj_setup import CAMPUS_ID
 from app.services.publication import checksum
@@ -233,6 +234,7 @@ def approve(
             "Existing decision differs; no duplicate approval or invented evidence",
         )
         journal.mkdir(parents=True, exist_ok=True, mode=0o700)
+        private_directory(journal)
         persist(
             journal / "receipt-recovery.json",
             {
@@ -277,6 +279,7 @@ def approve(
         "Reviewer proposal/report changed during final checks; edits preserved",
     )
     journal.mkdir(parents=True, exist_ok=True, mode=0o700)
+    private_directory(journal)
     persist(intent_path, intent)
     try:
         response = client.request(

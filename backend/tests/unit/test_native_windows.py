@@ -142,6 +142,8 @@ def test_windows_decoder_refuses_non_windows_and_no_linux_fallback():
     reason="Requires actual Windows DPAPI and filesystem DACLs, not Linux emulation",
 )
 def test_actual_windows_dpapi_and_private_acl(tmp_path):
+    from app.core.portable import is_private_file, private_file
+
     folder = tmp_path / "native-private"
     native.protect(folder)
     original = b"Synthetic roundtrip only; never an owner credential"
@@ -150,6 +152,13 @@ def test_actual_windows_dpapi_and_private_acl(tmp_path):
     native.save_secret(folder / "config.json", {"synthetic": original.decode()})
     assert original not in (folder / "config.json").read_bytes()
     assert native.load_secret(folder / "config.json") == {"synthetic": original.decode()}
+    assert is_private_file(folder / "config.json")
+    synthetic = tmp_path / "synthetic-acl-no-credentials.txt"
+    synthetic.write_text("Synthetic ACL test only, no secret.")
+    native.run(["icacls", str(synthetic), "/grant", "*S-1-1-0:(R)"])
+    assert not is_private_file(synthetic)
+    private_file(synthetic)
+    assert is_private_file(synthetic)
     with pytest.raises(native.SafeError):
         native.dpapi(encrypted[:-8] + b"corrupt!", decrypt=True)
 

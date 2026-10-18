@@ -13,6 +13,7 @@ from app.cli import muj_publication as original
 from app.cli.indoor_demo import DemoError, persist
 from app.cli.muj_naming import published, supported_changes
 from app.core.config import get_settings
+from app.core.portable import private_directory, private_file
 from app.schemas.imports import ImportOptions
 from app.services.catalog import normalize
 from app.services.muj_setup import CAMPUS_ID, ROOT, prepared
@@ -421,6 +422,7 @@ def preflight(client, draft, validation=None):
     user = str(UUID(client.session["user_id"]))
     root = Path(get_settings().storage_root) / "private/muj-naming-review" / str(draft) / user
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
+    private_directory(root)
     try:
         report = collect(client, draft, validation)
     except DemoError as error:
@@ -437,6 +439,7 @@ def preflight(client, draft, validation=None):
         raise DemoError(f"{error} Inspect {root}/blocked.json.") from None
     folder = root / f"v{report['version']}-{report['checksum']}-{report['validation_id']}"
     folder.mkdir(exist_ok=True, mode=0o700)
+    private_directory(folder)
     effective = {}
     for filename, reasons in [
         ("proposal.json", report["proposed_reasons"]),
@@ -497,7 +500,7 @@ def preflight(client, draft, validation=None):
     )
     path = folder / "report.md"
     path.write_text(text, encoding="utf-8")
-    path.chmod(0o600)
+    private_file(path)
     print(
         f"Read-only E22 review: draft {draft}, current version {report['version']}, checksum {report['checksum']}, validation {report['validation_id']}; {len(report['blockers'])} blockers."
     )

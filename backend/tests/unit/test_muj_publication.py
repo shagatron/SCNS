@@ -6,6 +6,7 @@ import pytest
 
 from app.cli import muj_publication as cli
 from app.cli.indoor_demo import DemoError
+from app.core.portable import is_private_file
 from app.services.muj_update import ROOT2, graph_records
 
 
@@ -147,4 +148,4 @@ def test_preflight_preserves_private_owner_reasons_and_exposes_stale_ids(tmp_pat
     _, updated = cli.preflight(c, draft)
     assert __import__("json").loads(proposed.read_text()) == payload
     assert any("retained untouched" in b for b in updated["blockers"])
-    assert proposed.stat().st_mode & 0o777 == 0o600
+    assert is_private_file(proposed)

@@ -12,6 +12,7 @@ from uuid import UUID, uuid4
 
 from app.cli.indoor_demo import Client, DemoError, persist, prompt_login
 from app.core.config import get_settings
+from app.core.portable import private_directory
 from app.schemas.admin import PlaceFields
 from app.schemas.graph import GraphNodeFields
 from app.services.muj_naming import INVENTORY
@@ -259,6 +260,7 @@ def main():
         preview = preflight(client, args.draft)
         folder = Path(get_settings().storage_root) / "private/muj-naming" / user
         folder.mkdir(parents=True, exist_ok=True, mode=0o700)
+        private_directory(folder)
         report = folder / f"preflight-{uuid4()}.json"
         persist(report, preview)
         print(

@@ -25,7 +25,7 @@ from uuid import UUID, uuid4, uuid5
 
 from PIL import Image
 
-from app.core.portable import durable_replace, lock_file, private_mode
+from app.core.portable import durable_replace, lock_file, private_directory, private_mode
 
 ROOT = Path(__file__).resolve().parents[3] / "data/demo"
 LABEL = "Synthetic 3C routing demo — UNPUBLISHED"
@@ -148,6 +148,7 @@ def persist(path, state):
 @contextmanager
 def journal(directory, campus, owner, root=ROOT):
     directory.mkdir(parents=True, exist_ok=True, mode=0o700)
+    private_directory(directory)
     path = directory / f"{UUID(campus)}.json"
     with path.with_suffix(".lock").open("a") as lock:
         try:

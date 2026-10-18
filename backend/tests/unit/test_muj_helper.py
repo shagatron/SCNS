@@ -4,6 +4,7 @@ import pytest
 
 from app.cli.indoor_demo import DemoError
 from app.cli.muj import retain_original
+from app.core.portable import is_private_file
 
 
 def test_private_original_is_atomic_replayable_and_keeps_inconsistent_history(tmp_path):
@@ -11,7 +12,7 @@ def test_private_original_is_atomic_replayable_and_keeps_inconsistent_history(tm
     checksum = hashlib.sha256(raw).hexdigest()
     target = tmp_path / (checksum + ".osm")
     retain_original(raw, target, checksum)
-    assert target.read_bytes() == raw and target.stat().st_mode & 0o777 == 0o600
+    assert target.read_bytes() == raw and is_private_file(target)
     retain_original(raw, target, checksum)
     assert len(list(tmp_path.iterdir())) == 1
     target.write_bytes(b"interrupted earlier copy")

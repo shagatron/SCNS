@@ -13,6 +13,7 @@ from uuid import UUID, uuid4
 
 from app.cli.indoor_demo import Client, DemoError, prompt_login
 from app.core.config import get_settings
+from app.core.portable import private_directory
 from app.services.imports import stable_id
 from app.services.muj_setup import ROOT, prepared
 from app.services.osm_conversion import convert, encode, write_conversion
@@ -132,9 +133,13 @@ def stage(client, preparation, *, confirm=input, sleep=time.sleep):
         )
     folder = Path(get_settings().storage_root) / "private/muj"
     folder.mkdir(parents=True, exist_ok=True, mode=0o700)
+    private_directory(folder)
     out = folder / "latest-validation.json"
     fd = os.open(out, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     with os.fdopen(fd, "wb") as stream:
+        from app.core.portable import private_mode
+
+        private_mode(stream, out)
         stream.write(
             encode(
                 {
@@ -205,19 +210,24 @@ def retain_original(raw, target, expected_sha256):
             old = stream.read(5 * 1024 * 1024 + 1)
         if hashlib.sha256(old).hexdigest() == expected_sha256:
             return
-    with NamedTemporaryFile(
-        dir=target.parent, prefix="muj-source-", suffix=".partial", delete=False
-    ) as stream:
-        temporary = Path(stream.name)
-        try:
+    from app.core.portable import private_mode
+
+    temporary = None
+    try:
+        with NamedTemporaryFile(
+            dir=target.parent, prefix="muj-source-", suffix=".partial", delete=False
+        ) as stream:
+            temporary = Path(stream.name)
+            private_mode(stream, temporary)
             stream.write(raw)
             stream.flush()
             os.fsync(stream.fileno())
-            if target.exists():
-                # Preserve an inconsistent earlier copy for investigation, never discard it.
-                os.replace(target, target.with_name(target.name + ".retained-" + uuid4().hex))
-            os.replace(temporary, target)
-        finally:
+        # Windows forbids renaming an open ordinary file. Close before both moves.
+        if target.exists():
+            os.replace(target, target.with_name(target.name + ".retained-" + uuid4().hex))
+        os.replace(temporary, target)
+    finally:
+        if temporary is not None:
             temporary.unlink(missing_ok=True)
 
 
@@ -235,6 +245,7 @@ def main():
             raise DemoError("Existing system administrator required")
         folder = Path(get_settings().storage_root) / "private/muj"
         folder.mkdir(parents=True, exist_ok=True, mode=0o700)
+        private_directory(folder)
         target = folder / (manifest["source_sha256"] + ".osm")
         source = args.source or target
         with source.open("rb") as stream:

@@ -16,6 +16,7 @@ from app.cli import muj_naming as cli
 from app.cli import muj_naming_create as create
 from app.cli.indoor_demo import DemoError
 from app.core.config import get_settings
+from app.core.portable import is_private_file
 from app.models import ActiveRelease, Revision
 from app.models.admin import AuditEvent
 from app.services.publication import canonical, public_projection, snapshot
@@ -228,7 +229,7 @@ def test_create_cli_single_confirmation_normal_api_and_durable_interruption_reco
     for path in folder.glob("*.json"):
         text = path.read_text()
         assert identity[1] not in text and "csrf_token" not in text
-        assert path.stat().st_mode & 0o777 == 0o600
+        assert is_private_file(path)
     out = capsys.readouterr().out
     assert identity[1] not in out and str(created_id) in out and "remaining 0" in out
     get_settings.cache_clear()

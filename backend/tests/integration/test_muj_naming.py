@@ -13,6 +13,7 @@ from sqlalchemy import func, select
 from app.cli import muj_naming as cli
 from app.cli.indoor_demo import DemoError
 from app.core.config import get_settings
+from app.core.portable import is_private_file
 from app.models import ActiveRelease, Revision
 from app.models.admin import AuditEvent
 from app.services.muj_update import apply_reviewed, plan
@@ -216,7 +217,7 @@ def test_cli_actual_session_partial_receipt_failure_retry_conflict_permissions_a
     assert len(receipts) == 1  # original failed local receipt is never fabricated
     receipt = json.loads(receipts[0].read_text())
     assert receipt["audit_request_id"] and receipt["requested_by"] == str(identity[0].id)
-    assert all(p.stat().st_mode & 0o777 == 0o600 for p in folder.glob("*.json"))
+    assert all(is_private_file(p) for p in folder.glob("*.json"))
     invoke(published_only=True)
     output = capsys.readouterr().out
     assert identity[1] not in output

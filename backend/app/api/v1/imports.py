@@ -157,6 +157,9 @@ async def upload(
     try:
         descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
         with os.fdopen(descriptor, "wb") as file:
+            from app.core.portable import private_mode
+
+            private_mode(file, path)
             file.write(raw)
         job = ImportJob(
             id=uuid4(),

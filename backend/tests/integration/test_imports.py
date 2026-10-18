@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 
 from app.cli.admin import bootstrap
 from app.core.config import get_settings
+from app.core.portable import is_private_file
 from app.models import Edge, Place, Revision
 from app.models.admin import AuditEvent, Department, RoleAssignment
 from app.models.imports import ImportBinding, ImportJob
@@ -136,7 +137,7 @@ def test_bundle_preview_apply_audit_idempotency_and_public_isolation(client, db,
         db.scalar(select(Department.id).where(Department.dataset_revision_id == draft["id"]))
         is None
     )
-    assert private_path(job).is_file() and private_path(job).stat().st_mode & 0o777 == 0o600
+    assert private_path(job).is_file() and is_private_file(private_path(job))
     path = apply(client, bundle, draft, headers, job)
     assert client.post(path + "/apply", headers=version(headers, 1)).status_code == 200
     assert db.get(Revision, UUID(draft["id"])).edit_version == 2

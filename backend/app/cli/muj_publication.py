@@ -14,6 +14,7 @@ from uuid import UUID
 
 from app.cli.indoor_demo import Client, DemoError, persist, prompt_login
 from app.core.config import get_settings
+from app.core.portable import private_directory, private_file
 from app.schemas.imports import ImportOptions
 from app.schemas.publication import DecisionInput, SubmitInput
 from app.services.imports import stable_id
@@ -456,7 +457,7 @@ def preflight(client, draft, validation=None):
         if directory.name == "private":
             continue
         directory.mkdir(parents=True, exist_ok=True, mode=0o700)
-        directory.chmod(0o700)
+        private_directory(directory)
     manual_path = folder / "manual-findings.json"
     if not manual_path.exists():
         persist(
@@ -471,7 +472,7 @@ def preflight(client, draft, validation=None):
                 if d["code"] == "near_duplicate"
             },
         )
-    manual_path.chmod(0o600)
+    private_file(manual_path)
     assessments = json.loads(manual_path.read_text())
     if assessments:
         report = prepare(packet, graph, run, jobs, active, draft, assessments)
@@ -520,7 +521,7 @@ def preflight(client, draft, validation=None):
     text = report_markdown(report, proposed)
     temp = folder / "report.md.tmp"
     temp.write_text(text, encoding="utf-8")
-    temp.chmod(0o600)
+    private_file(temp)
     temp.replace(folder / "report.md")
     print(f"Read-only preflight: {len(report['blockers'])} blockers; {report['warning_counts']}")
     print(

@@ -1,0 +1,59 @@
+{
+  "capture": "Built Linux nginx/API/worker, desktop Chromium and emulated Pixel 7. MUJ metadata-response simulation over disposable synthetic release; not actual Windows/MUJ data.",
+  "files": [
+    {
+      "file": "desktop-chromium/integrated-cross-route.png",
+      "bytes": 294757,
+      "dimensions": [
+        1232,
+        2901
+      ],
+      "sha256": "dfa6f62643f38c27948e74b051249f99d11442a34e43f6a8a9ea2a86f4501b8c"
+    },
+    {
+      "file": "desktop-chromium/integrated-first.png",
+      "bytes": 70504,
+      "dimensions": [
+        730,
+        799
+      ],
+      "sha256": "5ce03c161b203e88e89f056d2cda4dd3b0cca84b2c3104a4bca5b87fde225b57"
+    },
+    {
+      "file": "desktop-chromium/integrated-ground.png",
+      "bytes": 75664,
+      "dimensions": [
+        730,
+        799
+      ],
+      "sha256": "01c8f066a2da374cd4a220100501c729df1ba0936afa451de92ed37bfad538ad"
+    },
+    {
+      "file": "mobile-chromium/integrated-cross-route.png",
+      "bytes": 1033325,
+      "dimensions": [
+        893,
+        11689
+      ],
+      "sha256": "59397647a3fdfc33d1fbe509a1f59d4b764ec3ae579f92b193141fe20cf7111d"
+    },
+    {
+      "file": "mobile-chromium/integrated-first.png",
+      "bytes": 199806,
+      "dimensions": [
+        788,
+        2583
+      ],
+      "sha256": "7228fb04bd757c2c48aa27b1c96af7af718fa91ca6a9fef2f20977b8e170ae75"
+    },
+    {
+      "file": "mobile-chromium/integrated-ground.png",
+      "bytes": 209029,
+      "dimensions": [
+        788,
+        2583
+      ],
+      "sha256": "a2f33a704bf8df123813b63890430c7e82a7d3f529444e3f21bb09cf66decce5"
+    }
+  ]
+}

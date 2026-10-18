@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 from typing import Literal
 
@@ -6,7 +7,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file="../.env", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=os.environ.get("SCNS_ENV_FILE", "../.env"), extra="ignore"
+    )
     app_env: Literal["development", "test", "production"] = "development"
     database_url: str = "postgresql+psycopg://scns:scns_local@localhost:54329/scns"
     demo_enabled: bool = False

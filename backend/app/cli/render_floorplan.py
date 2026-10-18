@@ -1,4 +1,4 @@
-"""Decoder-only Linux child, with no DB/config imports and no ambient file/network I/O."""
+"""Decoder-only child: Linux seccomp or native Windows AppContainer; fail closed."""
 
 import base64
 import ctypes
@@ -8,7 +8,6 @@ import json
 import math
 import os
 import platform
-import resource
 import socket
 import sys
 
@@ -25,8 +24,15 @@ Image.init()
 
 
 def isolate():
+    if sys.platform == "win32":
+        from app.core.windows_sandbox import assert_isolated
+
+        assert_isolated()
+        return
     if sys.platform != "linux" or platform.machine() not in {"x86_64", "aarch64"}:
         raise RuntimeError("Isolated decoding requires Linux x86_64/aarch64.")
+    import resource
+
     for limit, value in (
         (resource.RLIMIT_AS, 1024**3),
         (resource.RLIMIT_CPU, 20),
@@ -284,7 +290,24 @@ def main():
         isolate()
         if probe:
             denied = []
-            for attempt in (lambda: open("/etc/passwd"), lambda: socket.socket()):
+            forbidden = (
+                sys.argv[sys.argv.index("--probe-file") + 1]
+                if sys.platform == "win32"
+                else "/etc/passwd"
+            )
+
+            def network():
+                if sys.platform == "win32":
+                    # Socket creation alone need not be forbidden on Windows.
+                    with socket.socket() as sock:
+                        sock.settimeout(1)
+                        sock.connect(
+                            ("127.0.0.1", int(sys.argv[sys.argv.index("--probe-port") + 1]))
+                        )
+                else:
+                    socket.socket()
+
+            for attempt in (lambda: open(forbidden), network):
                 try:
                     attempt()
                 except PermissionError:
@@ -296,6 +319,15 @@ def main():
                 "network_denied": denied[1],
                 "database_env_absent": "DATABASE_URL" not in os.environ,
             }
+            if sys.platform == "win32":
+                folder = sys.argv[sys.argv.index("--probe-write-dir") + 1]
+                try:
+                    with open(os.path.join(folder, "must-not-write.txt"), "xb"):
+                        pass
+                except PermissionError:
+                    result["filesystem_write_denied"] = True
+                else:
+                    result["filesystem_write_denied"] = False
         else:
             result = render(payload)
         print(json.dumps(result, separators=(",", ":"), allow_nan=False))

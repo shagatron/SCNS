@@ -10,7 +10,7 @@ export default defineConfig({
     { name: 'mobile-chromium', use: { ...devices['Pixel 7'], viewport: { width: 360, height: 800 } } },
   ],
   webServer: process.env.SCNS_E2E_BUILT_URL ? undefined : [
-    { command: '../backend/.venv/bin/uvicorn app.main:app --app-dir ../backend --host 127.0.0.1 --port 8001', url: 'http://127.0.0.1:8001/api/v1/health/ready', reuseExistingServer: false, timeout: 60000 },
+    { command: process.platform === 'win32' ? '"../backend/.venv/Scripts/python.exe" -m uvicorn app.main:app --app-dir ../backend --host 127.0.0.1 --port 8001' : '../backend/.venv/bin/uvicorn app.main:app --app-dir ../backend --host 127.0.0.1 --port 8001', url: 'http://127.0.0.1:8001/api/v1/health/ready', reuseExistingServer: false, timeout: 60000 },
     { command: 'npm run dev -- --host 127.0.0.1 --port 5174', url: 'http://127.0.0.1:5174', reuseExistingServer: false, timeout: 60000 },
   ],
 })

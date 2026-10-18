@@ -3,12 +3,12 @@
 No direct database access, publication or arbitrary naming capability.
 """
 
-import fcntl
 import json
 from uuid import UUID, uuid5
 
 from app.cli.indoor_demo import DemoError, persist
 from app.cli.muj_naming import apply_reviewed, preflight, supported_changes
+from app.core.portable import lock_file
 from app.services.muj_setup import CAMPUS_ID
 
 FORMAT = "scns-muj-e22-create-v1"
@@ -89,7 +89,7 @@ def run(client, owner, folder, record_write):
     path = folder / "create-e22.json"
     with (folder / "create-e22.lock").open("a") as lock:
         try:
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            lock_file(lock)
         except BlockingIOError:
             raise DemoError(
                 "Another E22 workflow is running. Wait for it; do not create another draft."

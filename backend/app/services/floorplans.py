@@ -468,6 +468,13 @@ def control(db, revision, job, command, actor, request_id):
 
 def decode(raw, options):
     """Child gets no DB/session/proxy environment, no inherited FDs; fail closed."""
+    if sys.platform == "win32":
+        from app.core.windows_sandbox import run_decoder
+
+        result = json.loads(
+            run_decoder(canonical({"bytes": base64.b64encode(raw).decode(), "options": options}))
+        )
+        return base64.b64decode(result["png"], validate=True), result["metadata"]
     with tempfile.TemporaryFile() as output:
         process = subprocess.run(
             [sys.executable, "-m", "app.cli.render_floorplan"],

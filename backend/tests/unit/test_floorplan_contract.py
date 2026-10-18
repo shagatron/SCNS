@@ -63,17 +63,25 @@ def test_isolated_supported_decode_masks_pixels_and_strips_metadata(name, page):
 
 
 def test_isolation_denies_files_network_and_inherited_credentials():
-    result = subprocess.run(
-        [sys.executable, "-m", "app.cli.render_floorplan", "--probe"],
-        env={"PATH": os.defpath},
-        capture_output=True,
-        check=True,
-    )
-    assert json.loads(result.stdout) == {
+    if sys.platform == "win32":
+        from app.core.windows_sandbox import run_decoder
+
+        output = run_decoder(b"", probe=True)
+    else:
+        output = subprocess.run(
+            [sys.executable, "-m", "app.cli.render_floorplan", "--probe"],
+            env={"PATH": os.defpath},
+            capture_output=True,
+            check=True,
+        ).stdout
+    expected = {
         "filesystem_denied": True,
         "network_denied": True,
         "database_env_absent": True,
     }
+    if sys.platform == "win32":
+        expected["filesystem_write_denied"] = True
+    assert json.loads(output) == expected
 
 
 @pytest.mark.parametrize(

@@ -1,4 +1,3 @@
-import fcntl
 import json
 from copy import deepcopy
 from uuid import uuid4
@@ -7,6 +6,7 @@ import pytest
 
 from app.cli import muj_naming_create as cli
 from app.cli.indoor_demo import DemoError, persist
+from app.core.portable import lock_file
 from tests.unit.test_muj_naming import FixtureClient
 
 OWNER = "00000000-0000-4000-8000-000000000007"
@@ -110,7 +110,7 @@ def test_invalid_or_other_owner_journal_and_live_lock_preserve_saved_state(tmp_p
     with pytest.raises(DemoError):
         cli.read_state(path, OWNER)
     with (tmp_path / "create-e22.lock").open("a") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        lock_file(lock)
         with pytest.raises(DemoError, match="Another E22"):
             cli.run(CreationClient(), OWNER, tmp_path, lambda _: None)
     assert json.loads(path.read_text()) == state

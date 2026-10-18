@@ -95,6 +95,7 @@ def main():
         env["STORAGE_ROOT"] = storage
         worker_name = env.get("SCNS_E2E_BUILT_WORKER_CONTAINER")
         worker = None
+        native_job = None
         if worker_name:
             if not worker_name.startswith("scns-publication-smoke-") or not worker_name.endswith(
                 "-worker"
@@ -102,22 +103,44 @@ def main():
                 raise RuntimeError("Built worker must be an owned smoke container")
             subprocess.run(["docker", "start", worker_name], stdout=subprocess.DEVNULL, check=True)
         else:
+            if os.name == "nt":
+                from app.core.windows_sandbox import Job
+
+                native_job = Job()
             worker = subprocess.Popen(
                 [sys.executable, "-m", "app.cli.imports", "worker"],
                 cwd=root / "backend",
                 env=env,
-                start_new_session=True,
+                **(
+                    {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+                    if os.name == "nt"
+                    else {"start_new_session": True}
+                ),
             )
+            if native_job:
+                native_job.assign(int(worker._handle))
         try:
             result = subprocess.run(
-                ["npm", "run", "test:e2e", "--", *sys.argv[1:]],
+                (
+                    [
+                        "node",
+                        str(root / "node_modules/@playwright/test/cli.js"),
+                        "test",
+                        *sys.argv[1:],
+                    ]
+                    if os.name == "nt"
+                    else ["npm", "run", "test:e2e", "--", *sys.argv[1:]]
+                ),
                 cwd=root / "frontend",
                 env=env,
                 check=False,
             )
         finally:
             if worker:
-                os.killpg(worker.pid, signal.SIGTERM)
+                if native_job:
+                    native_job.close()
+                else:
+                    os.killpg(worker.pid, signal.SIGTERM)
                 worker.wait(timeout=10)
     raise SystemExit(result.returncode)
 

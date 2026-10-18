@@ -1,6 +1,5 @@
 """Local unpublished synthetic 3C setup, using normal authenticated HTTP APIs only."""
 
-import fcntl
 import getpass
 import hashlib
 import io
@@ -25,6 +24,8 @@ from urllib.request import (
 from uuid import UUID, uuid4, uuid5
 
 from PIL import Image
+
+from app.core.portable import durable_replace, lock_file, private_mode
 
 ROOT = Path(__file__).resolve().parents[3] / "data/demo"
 LABEL = "Synthetic 3C routing demo — UNPUBLISHED"
@@ -137,16 +138,11 @@ def fingerprint(root):
 def persist(path, state):
     temp = path.with_suffix(".tmp")
     with temp.open("w", encoding="utf-8") as output:
-        os.fchmod(output.fileno(), 0o600)
+        private_mode(output)
         json.dump(state, output, indent=2)
         output.flush()
         os.fsync(output.fileno())
-    temp.replace(path)
-    directory = os.open(path.parent, os.O_DIRECTORY)
-    try:
-        os.fsync(directory)
-    finally:
-        os.close(directory)
+    durable_replace(temp, path)
 
 
 @contextmanager
@@ -155,7 +151,7 @@ def journal(directory, campus, owner, root=ROOT):
     path = directory / f"{UUID(campus)}.json"
     with path.with_suffix(".lock").open("a") as lock:
         try:
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            lock_file(lock)
         except BlockingIOError:
             raise DemoError("Another demo setup is running for this campus.") from None
         if path.exists():
@@ -696,7 +692,11 @@ def main():
         if not 1 <= choice <= len(candidates):
             raise DemoError("Invalid campus selection.")
         campus = candidates[choice - 1]["campus_id"]
-        with journal(Path("/app/storage/private/local-demo-3c"), campus, account["user_id"]) as (
+        from app.core.config import get_settings
+
+        with journal(
+            Path(get_settings().storage_root) / "private/local-demo-3c", campus, account["user_id"]
+        ) as (
             path,
             state,
         ):

@@ -24,3 +24,4 @@ storage/derived/**
 !**/.gitkeep
 
 storage/private/**
+.scns-native/

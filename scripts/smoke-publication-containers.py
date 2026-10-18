@@ -39,6 +39,11 @@ def main():
         action="store_true",
         help="Rerun affected explorer, source-visual and public-experience cases after a presentation-only change",
     )
+    selection.add_argument(
+        "--indoor-demo-only",
+        action="store_true",
+        help="Educational preview plus homepage, public navigation, indoor and admin regressions",
+    )
     args = parser.parse_args()
     private = tempfile.TemporaryDirectory(prefix="scns-owned-built-")
     token = uuid4().hex[:12]
@@ -192,7 +197,15 @@ def main():
                 "-m",
                 "tests.browser_runner",
                 *(
-                    ["muj.spec.ts"]
+                    [
+                        "educational-indoor.spec.ts",
+                        "navigation.spec.ts",
+                        "indoor-routing.spec.ts",
+                        "admin.spec.ts",
+                        "muj-homepage.spec.ts",
+                    ]
+                    if args.indoor_demo_only
+                    else ["muj.spec.ts"]
                     if args.muj_only
                     else [
                         "map-explorer.spec.ts",
@@ -203,6 +216,7 @@ def main():
                     ]
                     if args.explorer_only
                     else [
+                        "educational-indoor.spec.ts",
                         "muj-homepage.spec.ts",
                         "public-experience.spec.ts",
                         "map-explorer.spec.ts",

@@ -1290,6 +1290,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/educational/indoor-school": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Layout */
+        get: operations["layout_api_v1_educational_indoor_school_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/educational/indoor-school/routes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Directions */
+        post: operations["directions_api_v1_educational_indoor_school_routes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1799,6 +1833,92 @@ export interface components {
         DeleteFloor: {
             /** Remove Layer Ids */
             remove_layer_ids?: string[];
+        };
+        /** DemoData */
+        DemoData: {
+            /** Version */
+            version: string;
+            /** Qualification */
+            qualification: string;
+            /** Source */
+            source: string;
+            /** Floors */
+            floors: components["schemas"]["RouteFloor"][];
+            /** Rooms */
+            rooms: components["schemas"]["DemoRoom"][];
+        };
+        /** DemoRequest */
+        DemoRequest: {
+            /**
+             * Source Id
+             * Format: uuid
+             */
+            source_id: string;
+            /**
+             * Destination Id
+             * Format: uuid
+             */
+            destination_id: string;
+            /** Expected Version */
+            expected_version: string;
+        };
+        /** DemoRoom */
+        DemoRoom: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Room Code */
+            room_code: string;
+            /**
+             * Floor Id
+             * Format: uuid
+             */
+            floor_id: string;
+            /**
+             * Frame Id
+             * Format: uuid
+             */
+            frame_id: string;
+            /** Local Point */
+            local_point: {
+                [key: string]: number;
+            };
+        };
+        /** DemoRoute */
+        DemoRoute: {
+            /** Version */
+            version: string;
+            /** Qualification */
+            qualification: string;
+            /**
+             * Source Id
+             * Format: uuid
+             */
+            source_id: string;
+            /**
+             * Destination Id
+             * Format: uuid
+             */
+            destination_id: string;
+            /**
+             * Cost Units
+             * @default traversals
+             */
+            cost_units: string;
+            /** Traversal Count */
+            traversal_count: number;
+            /** Distance M */
+            distance_m?: null;
+            /** Estimated Duration S */
+            estimated_duration_s?: null;
+            /** Segments */
+            segments: components["schemas"]["RouteSegment"][];
+            /** Arrival Instruction */
+            arrival_instruction: string;
         };
         /** DepartmentFields */
         DepartmentFields: {
@@ -7681,6 +7801,59 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ClosureStatus"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    layout_api_v1_educational_indoor_school_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DemoData"];
+                };
+            };
+        };
+    };
+    directions_api_v1_educational_indoor_school_routes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DemoRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DemoRoute"];
                 };
             };
             /** @description Validation Error */

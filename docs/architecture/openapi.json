@@ -7018,6 +7018,68 @@
           }
         }
       }
+    },
+    "/api/v1/educational/indoor-school": {
+      "get": {
+        "tags": [
+          "educational preview"
+        ],
+        "summary": "Layout",
+        "operationId": "layout_api_v1_educational_indoor_school_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/educational/indoor-school/routes": {
+      "post": {
+        "tags": [
+          "educational preview"
+        ],
+        "summary": "Directions",
+        "operationId": "directions_api_v1_educational_indoor_school_routes_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoRoute"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -8261,6 +8323,176 @@
         "additionalProperties": false,
         "type": "object",
         "title": "DeleteFloor"
+      },
+      "DemoData": {
+        "properties": {
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "qualification": {
+            "type": "string",
+            "title": "Qualification"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "floors": {
+            "items": {
+              "$ref": "#/components/schemas/RouteFloor"
+            },
+            "type": "array",
+            "title": "Floors"
+          },
+          "rooms": {
+            "items": {
+              "$ref": "#/components/schemas/DemoRoom"
+            },
+            "type": "array",
+            "title": "Rooms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "version",
+          "qualification",
+          "source",
+          "floors",
+          "rooms"
+        ],
+        "title": "DemoData"
+      },
+      "DemoRequest": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Source Id"
+          },
+          "destination_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Destination Id"
+          },
+          "expected_version": {
+            "type": "string",
+            "title": "Expected Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_id",
+          "destination_id",
+          "expected_version"
+        ],
+        "title": "DemoRequest"
+      },
+      "DemoRoom": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "room_code": {
+            "type": "string",
+            "title": "Room Code"
+          },
+          "floor_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Floor Id"
+          },
+          "frame_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Frame Id"
+          },
+          "local_point": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Local Point"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "room_code",
+          "floor_id",
+          "frame_id",
+          "local_point"
+        ],
+        "title": "DemoRoom"
+      },
+      "DemoRoute": {
+        "properties": {
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "qualification": {
+            "type": "string",
+            "title": "Qualification"
+          },
+          "source_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Source Id"
+          },
+          "destination_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Destination Id"
+          },
+          "cost_units": {
+            "type": "string",
+            "title": "Cost Units",
+            "default": "traversals"
+          },
+          "traversal_count": {
+            "type": "integer",
+            "title": "Traversal Count"
+          },
+          "distance_m": {
+            "type": "null",
+            "title": "Distance M"
+          },
+          "estimated_duration_s": {
+            "type": "null",
+            "title": "Estimated Duration S"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/components/schemas/RouteSegment"
+            },
+            "type": "array",
+            "title": "Segments"
+          },
+          "arrival_instruction": {
+            "type": "string",
+            "title": "Arrival Instruction"
+          }
+        },
+        "type": "object",
+        "required": [
+          "version",
+          "qualification",
+          "source_id",
+          "destination_id",
+          "traversal_count",
+          "segments",
+          "arrival_instruction"
+        ],
+        "title": "DemoRoute"
       },
       "DepartmentFields": {
         "properties": {

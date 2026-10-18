@@ -258,3 +258,7 @@ html:has(.public-app) { scroll-behavior: smooth; scroll-padding-top: 100px; }
   .public-app .muj-brand .project-attribution { font-size: 11px; }
   .public-app .campus-opening-muj .opening-top > p { max-width: 42ch; }
 }
+
+.indoor-demo-entry { margin: 1rem 0; padding: .8rem; border: 1px solid currentColor; border-radius: .5rem; }
+.indoor-demo-entry a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 750; text-decoration: underline; }
+.indoor-demo-entry p { font-size: .8rem; line-height: 1.5; margin: .35rem 0 0; }

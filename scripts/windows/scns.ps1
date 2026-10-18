@@ -9,6 +9,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 if (-not $IsWindows -or -not [Environment]::Is64BitProcess) { throw 'Use native 64-bit Windows 11 PowerShell 7.4+. No WSL.' }
+if ([Environment]::OSVersion.Version.Build -lt 22000) { throw 'Native support requires Windows 11 x64. Other Windows editions are not validated.' }
 $ScnsRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 Set-Location -LiteralPath $ScnsRoot
 foreach ($Tool in @('uv','node','npm')) {

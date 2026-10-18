@@ -135,6 +135,46 @@ def test_windows_decoder_refuses_non_windows_and_no_linux_fallback():
             Job(decoder=True)
 
 
+@pytest.mark.skipif(
+    os.name != "nt",
+    reason="Requires actual Windows DPAPI and filesystem DACLs, not Linux emulation",
+)
+def test_actual_windows_dpapi_and_private_acl(tmp_path):
+    folder = tmp_path / "native-private"
+    native.protect(folder)
+    original = b"Synthetic roundtrip only; never an owner credential"
+    encrypted = native.dpapi(original)
+    assert original not in encrypted and native.dpapi(encrypted, decrypt=True) == original
+    with pytest.raises(native.SafeError):
+        native.dpapi(encrypted[:-8] + b"corrupt!", decrypt=True)
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Requires actual Windows AppContainer and Job Objects")
+def test_actual_windows_decoder_boundary_and_job_kill():
+    from app.core.windows_sandbox import Job, run_decoder
+
+    assert json.loads(run_decoder(b"", probe=True)) == {
+        "filesystem_denied": True,
+        "filesystem_write_denied": True,
+        "network_denied": True,
+        "database_env_absent": True,
+    }
+    job = Job()
+    process = subprocess.Popen(
+        [sys.executable, "-c", "import time;time.sleep(60)"],
+        creationflags=subprocess.CREATE_NEW_PROCESS_GROUP,
+    )
+    try:
+        job.assign(int(process._handle))
+        job.close()
+        assert process.wait(timeout=5) != 0
+    finally:
+        job.close()
+        if process.poll() is None:
+            process.terminate()
+            process.wait(timeout=5)
+
+
 def test_standalone_native_cli_fails_closed_on_linux(tmp_path):
     if os.name == "nt":
         return

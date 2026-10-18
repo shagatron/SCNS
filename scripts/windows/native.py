@@ -203,6 +203,8 @@ def file_hashes(root):
 def inventory(connection):
     """No record values/password hashes emitted: hash ALL application rows/columns."""
     with connection.cursor() as cur:
+        cur.execute("SET LOCAL TIME ZONE 'UTC'")
+        cur.execute("SET LOCAL DateStyle = 'ISO, YMD'")
         cur.execute("select current_setting('server_version_num')::int, postgis_lib_version()")
         version, postgis = cur.fetchone()
         cur.execute("select version_num from alembic_version")
@@ -257,12 +259,36 @@ def compatible(source, target_major, target_postgis):
         )
 
     def version(value):
-        return tuple(map(int, value.split(".")[:2]))
+        if not re.fullmatch(r"\d+\.\d+\.\d+", value):
+            raise SafeError("Require a stable numeric PostGIS version, not ANY/dev/beta.")
+        return tuple(map(int, value.split(".")))
 
-    if not ((3, 5) <= version(source["postgis"]) <= version(target_postgis) < (3, 7)):
+    if not ((3, 5, 0) <= version(source["postgis"]) <= version(target_postgis) < (3, 7, 0)):
         raise SafeError(
             "Require source PostGIS 3.5/3.6 and same-or-newer native 3.5/3.6; inspect available extensions before backup/restore."
         )
+
+
+def available_postgis(db):
+    if os.name == "nt":
+        addresses = db.execute("show listen_addresses").fetchone()[0]
+        if not set(address.strip() for address in addresses.split(",")) <= {
+            "localhost",
+            "127.0.0.1",
+            "::1",
+        }:
+            raise SafeError(
+                "Native PostgreSQL must listen only on loopback. Follow the native-server installation step; no firewall/LAN exception will be added."
+            )
+    rows = db.execute(
+        "select version from pg_available_extension_versions where name='postgis'"
+    ).fetchall()
+    versions = [row[0] for row in rows if re.fullmatch(r"3\.[56]\.\d+", row[0])]
+    if not versions:
+        raise SafeError(
+            "Install stable PostGIS 3.5 or 3.6 for native PG17 via Stack Builder before migration. No guessed ANY/dev extension version."
+        )
+    return max(versions, key=lambda value: tuple(map(int, value.split("."))))
 
 
 def same_data(source, target):
@@ -290,7 +316,7 @@ def docker_sql(query):
             "-c",
             'exec psql -X -qAt -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB"',
         ],
-        stdin=query.encode(),
+        stdin=("SET TIME ZONE 'UTC'; SET DateStyle='ISO, YMD';" + query).encode(),
     ).decode("utf-8")
 
 
@@ -386,19 +412,7 @@ def backup(state):
     admin = admin_connection()
     with psycopg.connect(**admin, autocommit=True) as target:
         major = int(target.execute("show server_version_num").fetchone()[0]) // 10000
-        versions = [
-            r[0]
-            for r in target.execute(
-                "select version from pg_available_extension_versions where name='postgis'"
-            )
-        ]
-        if not versions:
-            raise SafeError(
-                "Install native PG17 PostGIS via Stack Builder before backup; no writers stopped."
-            )
-        compatible(
-            source_meta, major, max(versions, key=lambda v: tuple(map(int, v.split(".")[:2])))
-        )
+        compatible(source_meta, major, available_postgis(target))
     if (
         input("Stops Docker writers; leaves original data intact. Type BACKUP SCNS: ")
         != "BACKUP SCNS"
@@ -537,16 +551,7 @@ def restore(state, bundle, folder, *, new_target=False):
     admin = admin_connection()
     with psycopg.connect(**admin, autocommit=True) as db:
         target_major = int(db.execute("show server_version_num").fetchone()[0]) // 10000
-        available = db.execute(
-            "select version from pg_available_extension_versions where name='postgis'"
-        ).fetchall()
-        if not available:
-            raise SafeError(
-                "PostGIS extension is not installed in this PG17 server. Install via Stack Builder and retry; no data restored."
-            )
-        target_postgis = max(
-            (r[0] for r in available), key=lambda v: tuple(map(int, v.split(".")[:2]))
-        )
+        target_postgis = available_postgis(db)
         compatible(report["source"], target_major, target_postgis)
         if report["source"]["revision"] != "0016_closures":
             raise SafeError(
@@ -612,6 +617,11 @@ def restore(state, bundle, folder, *, new_target=False):
                     sql.Identifier(intent["dbname"]), sql.Identifier(intent["user"])
                 )
             )
+            db.execute(
+                sql.SQL("ALTER DATABASE {} SET timezone TO 'UTC'").format(
+                    sql.Identifier(intent["dbname"])
+                )
+            )
             intent["phase"] = "database-created"
             save_secret(intent_path, intent)
             with psycopg.connect(
@@ -637,13 +647,47 @@ def restore(state, bundle, folder, *, new_target=False):
                     "--single-transaction",
                     "--no-owner",
                     "--no-acl",
-                    "--role",
-                    intent["user"],
+                    "--dbname",
+                    intent["dbname"],
                     str(bundle / "files/database.dump"),
                 ],
                 env=env,
             )
             env.pop("PGPASSWORD", None)
+            # Extension objects remain owned by the native PG administrator.
+            # Restoring as the restricted app role cannot COMMENT ON EXTENSION.
+            # Grant normal application DML explicitly, never elevate the app role.
+            with psycopg.connect(
+                **{**admin, "dbname": intent["dbname"]}, autocommit=True
+            ) as target:
+                target.execute(
+                    sql.SQL("GRANT USAGE ON SCHEMA public TO {}").format(
+                        sql.Identifier(intent["user"])
+                    )
+                )
+                for table in report["source"]["tables"]:
+                    privileges = (
+                        sql.SQL("SELECT")
+                        if table == "alembic_version"
+                        else sql.SQL("SELECT, INSERT, UPDATE, DELETE")
+                    )
+                    target.execute(
+                        sql.SQL("GRANT {} ON TABLE {} TO {}").format(
+                            privileges,
+                            sql.Identifier("public", table),
+                            sql.Identifier(intent["user"]),
+                        )
+                    )
+                target.execute(
+                    sql.SQL("GRANT SELECT ON TABLE public.spatial_ref_sys TO {}").format(
+                        sql.Identifier(intent["user"])
+                    )
+                )
+                target.execute(
+                    sql.SQL(
+                        "GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO {}"
+                    ).format(sql.Identifier(intent["user"]))
+                )
             protect(Path(intent["storage"]).parent)
             # Restore to a unique fresh path; never merge into original/local storage.
             shutil.copytree(bundle / "files/storage", intent["storage"])
@@ -834,9 +878,18 @@ def start(state, config):
 
     env = environment(config, state)
     # Deliberately verify connectivity/schema BEFORE starting any API/worker.
-    with connection(config) as db:
-        if db.execute("select version_num from alembic_version").fetchone()[0] != "0016_closures":
-            raise SafeError("Native database schema mismatch; no automatic migration/seed.")
+    try:
+        with connection(config) as db:
+            available_postgis(db)
+            if (
+                db.execute("select version_num from alembic_version").fetchone()[0]
+                != "0016_closures"
+            ):
+                raise SafeError("Native database schema mismatch; no automatic migration/seed.")
+    except psycopg.OperationalError:
+        raise SafeError(
+            "Native PostgreSQL is not ready. Check the registered PG17 Windows service and saved local port; do not start Docker as a database substitute or run a seed/reset."
+        ) from None
     decoder_check()
     for port in (8000, 5173):
         with socket.socket() as sock:
@@ -979,6 +1032,17 @@ def main():
     parser.add_argument("--new-target", action="store_true")
     args = parser.parse_args()
     state = args.state.resolve()
+    if len(state.parts) < 4 or state == ROOT or state in ROOT.parents:
+        raise SafeError(
+            "Use a dedicated native state subdirectory, never a drive/repository/user root."
+        )
+    marker = state / "native-state-v1.json"
+    if marker.exists() and read(marker).get("format") != "scns-native-state-v1":
+        raise SafeError("Existing state marker is unrecognized; no ACL/config changes.")
+    if state.exists() and not marker.exists() and any(state.iterdir()):
+        raise SafeError(
+            "Existing non-native directory selected as state. No ACL/config changes; select an empty dedicated directory."
+        )
     for runtime in (
         Path(sys.base_prefix).resolve(),
         (ROOT / "backend/.venv").resolve(),
@@ -991,6 +1055,8 @@ def main():
             "Native commands must run in Windows PowerShell. Linux can run isolated unit/integration tests, not migrate your Windows database."
         )
     protect(state)
+    if not marker.exists():
+        write(marker, {"format": "scns-native-state-v1"})
     if args.action == "stop":
         if not (state / "running.json").exists():
             print("No recorded native supervisor. No PID killed or database changed.")

@@ -97,10 +97,15 @@ def test_complete_launch_model_retains_security_and_closes_resources(native_mode
     assert len(native_model.inherited) == 3 and all(v for _, v in native_model.inherited)
     assert ("DeleteProcThreadAttributeList",) in native_model.events
     assert ("free-sid", 301) in native_model.events
-    assert records[-1] == {
+    assert {
         "event": "passed",
         "operation": "process-result",
         "stage": "process-result",
+    } in records
+    assert records[-1] == {
+        "event": "passed",
+        "operation": "decoder-resource-cleanup",
+        "stage": "decoder-resource-cleanup",
     }
     assert "must-not-print" not in json.dumps(records)
 
@@ -222,3 +227,60 @@ def test_wait_timeout_and_unexpected_status_fail_closed():
         sandbox.wait_decoder(lambda *a: 258, 1, timeout=0, overflow=threading.Event())
     with pytest.raises(sandbox.SandboxFailure, match="unexpected-result"):
         sandbox.wait_decoder(lambda *a: 7, 1, timeout=1, overflow=threading.Event())
+
+
+def test_cleanup_failure_preserves_primary_native_operation(native_model, monkeypatch):
+    cause = OSError("private path and credentials never printed")
+    cause.winerror = 6
+
+    def fail_cleanup(sid):
+        raise cause
+
+    monkeypatch.setattr(sandbox, "free_sid", fail_cleanup)
+    native_model.fail = "CreateProcessW"
+    records = []
+    with sandbox.diagnostics(records.append), pytest.raises(sandbox.SandboxFailure) as error:
+        sandbox.run_decoder(b"synthetic")
+    assert error.value.record == {
+        "stage": "process-create-suspended",
+        "operation": "CreateProcessW",
+        "windows_error": 203,
+    }
+    assert records[-1] == {
+        "event": "cleanup-failed",
+        "stage": "decoder-resource-cleanup",
+        "operation": "decoder-resource-cleanup",
+        "windows_error": 6,
+    }
+    assert "private" not in str(error.value) + json.dumps(records)
+
+
+def test_failed_collector_start_cleans_up_without_join_masking(native_model, monkeypatch):
+    def fail_start(self):
+        raise RuntimeError("private exception message")
+
+    monkeypatch.setattr(threading.Thread, "start", fail_start)
+    with pytest.raises(sandbox.SandboxFailure) as error:
+        sandbox.run_decoder(b"synthetic")
+    assert error.value.record == {"stage": "process-resume", "operation": "process-resume"}
+    assert ("ResumeThread",) not in native_model.events
+    assert ("TerminateProcess",) in native_model.events
+    assert ("free-sid", 301) in native_model.events
+
+
+def test_canary_protection_failure_is_named_and_never_launches(native_model, monkeypatch):
+    cause = OSError("private canary path")
+    cause.winerror = 203
+
+    def fail_protect(path):
+        raise cause
+
+    monkeypatch.setattr(sandbox, "protect_owner_file", fail_protect)
+    with pytest.raises(sandbox.SandboxFailure) as error:
+        sandbox.run_decoder(b"", probe=True)
+    assert error.value.record == {
+        "stage": "probe-canary-protect",
+        "operation": "probe-canary-protect",
+        "windows_error": 203,
+    }
+    assert not native_model.events

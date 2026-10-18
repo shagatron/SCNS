@@ -669,7 +669,7 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
     from contextlib import ExitStack
 
     if probe and probe_file is None:
-        with ExitStack() as resources:
+        with stage("probe-fixture-lifetime"), ExitStack() as resources:
             with stage("probe-canary-create"):
                 folder = resources.enter_context(tempfile.TemporaryDirectory(prefix="scns-denied-"))
                 canary = Path(folder) / "owner-private.txt"
@@ -687,9 +687,10 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
                 probe_port=listener.getsockname()[1],
                 timeout=timeout,
             )
-    import msvcrt
+    with stage("windows-runtime-load"):
+        import msvcrt
 
-    k = dll("kernel32")
+        k = dll("kernel32")
     sid = job = reader = attributes = None
     initialized = False
     write_fd = read_fd = None
@@ -697,6 +698,7 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
     data, done, overflow = bytearray(), threading.Event(), threading.Event()
     read_failed = threading.Event()
     thread = None
+    thread_started = False
     input_handle = w.HANDLE()
 
     def collect():
@@ -721,7 +723,7 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
             read_fd, write_fd = os.pipe()
             reader = os.fdopen(read_fd, "rb", buffering=0)
             read_fd = None
-        with ExitStack() as resources:
+        with stage("input-output-lifetime"), ExitStack() as resources:
             with stage("input-file-create"):
                 source = resources.enter_context(tempfile.TemporaryFile())
             with stage("output-handles-open"):
@@ -856,6 +858,7 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
             with stage("process-resume"):
                 thread = threading.Thread(target=collect, daemon=True)
                 thread.start()
+                thread_started = True
                 checked(
                     function(k, "ResumeThread", [w.HANDLE], w.DWORD)(process.thread) != 0xFFFFFFFF,
                     "ResumeThread",
@@ -877,23 +880,32 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
                     raise SandboxFailure("decoder-child.output")
                 return bytes(data)
     finally:
-        if job is not None:
-            job.close()
-        if process.process:
-            function(k, "TerminateProcess", [w.HANDLE, w.UINT])(process.process, 1)
-        for handle in (process.thread, process.process, input_handle.value):
-            if handle:
-                function(k, "CloseHandle", [w.HANDLE])(handle)
-        for fd in (read_fd, write_fd):
-            if fd is not None:
-                os.close(fd)
-        if thread is None:
-            if reader is not None:
-                reader.close()
-        else:
-            thread.join(timeout=2)
-        # A failed initialization does NOT produce a deletable attribute list.
-        if initialized:
-            function(k, "DeleteProcThreadAttributeList", [c.c_void_p], None)(attributes)
-        if sid is not None:
-            free_sid(sid)
+        primary = sys.exception()
+        try:
+            with stage("decoder-resource-cleanup"):
+                if job is not None:
+                    job.close()
+                if process.process:
+                    function(k, "TerminateProcess", [w.HANDLE, w.UINT])(process.process, 1)
+                for handle in (process.thread, process.process, input_handle.value):
+                    if handle:
+                        function(k, "CloseHandle", [w.HANDLE])(handle)
+                for fd in (read_fd, write_fd):
+                    if fd is not None:
+                        os.close(fd)
+                if not thread_started:
+                    if reader is not None:
+                        reader.close()
+                else:
+                    thread.join(timeout=2)
+                # A failed initialization does NOT produce a deletable attribute list.
+                if initialized:
+                    function(k, "DeleteProcThreadAttributeList", [c.c_void_p], None)(attributes)
+                if sid is not None:
+                    free_sid(sid)
+        except SandboxFailure as cleanup_error:
+            if primary is None:
+                raise
+            # Cleanup must never replace the operation/code that stopped launch.
+            if _report.get():
+                _report.get()({"event": "cleanup-failed", **cleanup_error.record})

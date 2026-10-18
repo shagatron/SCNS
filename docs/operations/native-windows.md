@@ -2,9 +2,9 @@
 
 Starting point: accepted `polish/muj-homepage` at `ee683e1a61a6584147c3e39b121a8765db5e46ba`. Owner reports homepage branding, directory and routing checks passed on Windows. This report is separate from automated Linux evidence.
 
-**Status:** native implementation and isolated Linux verification are delivered; actual Windows execution, AppContainer/DACL/DPAPI behavior and this owner's migration remain **unverified** until the owner runs the gates below. Do not retire Docker or call full native compatibility verified from Linux results. Cloud cannot access the actual Windows database/volumes. No UI, routing/API/permission/publication contract, dependency lock or schema change. No native data is created by downloading the branch or running Setup.
+**Status:** native implementation and isolated Linux verification are delivered. The owner reports the focused non-elevated DACL tests passed; actual decoder execution still fails and AppContainer/Job/DPAPI/application/migration acceptance remains **unverified**. Do not retire Docker or call full native compatibility verified from Linux results. Cloud cannot access the actual Windows database/volumes. No UI, routing/API/permission/publication contract, dependency lock or schema change. No native data is created by downloading the branch or running Setup.
 
-**Owner-reported Windows attempt at `1928d1e`:** PowerShell7.6.7, Python/dependency installation and frontend build succeeded; native PostgreSQL17.11/PostGIS3.6.2 available, listen_addresses=localhost. Setup then failed protecting the existing directory with SeSecurityPrivilege. The DACL-only correction and targeted retry below are delivered, but their actual Windows result is **not yet reported**. These preliminary successes do not establish decoder/native application or migration acceptance.
+**Owner-reported Windows attempt at `1928d1e`:** PowerShell7.6.7, Python/dependency installation and frontend build succeeded; native PostgreSQL17.11/PostGIS3.6.2 available, listen_addresses=localhost. Setup then failed protecting the existing directory with SeSecurityPrivilege. The subsequent owner retry at `8f54b70` confirms DACL protection and both focused tests passed; it then stops at the decoder gate with opaque OSError203. Use the decoder-only diagnostic below as the current next step. These preliminary successes do not establish decoder/native application or migration acceptance.
 
 ## Compatibility and security boundary
 
@@ -149,7 +149,52 @@ $ScnsInventory.storage_mounts | Format-List
 
 Setup builds frontend via npm ci and backend via frozen uv; preserves `.env`, Docker images, uploads and database. It configures decoder-only read ACLs on Python/.venv/app plus read-only private profile; this does **not** grant access to native secrets/storage/repository root. Preflight must report actual Windows isolation and PDF+PNG success. No unsupported unrestricted decoder option exists. Inventory contains actual current public release UUIDs/content/artifact checksums where present, schema, all application row hashes and source mount/config **names**, never container credential values. Each `active_releases` entry is `[campus UUID, release UUID, release content checksum, public artifact checksum or null]`; no missing artifact checksum is invented. It is preliminary while writers may run; Backup repeats after stopping writers.
 
+### Decoder-only diagnosis after profile configuration (current next step)
+
+**Owner-reported at `8f54b70`:** direct DACL protection and both focused Windows tests passed (2 passed in4.73s), using an ordinary token. `Setup -ReuseDependencies` confirmed the frozen environment unchanged; Python3.12.15, Node22.23.2 and PG tools17.11. Read-only decoder profile/runtime configuration completed, then the decoder gate stopped with OSError/Windows203. This proves neither successful AppContainer execution nor a particular root cause. The old exception omitted the failing operation; **do not interpret203 alone as proof of an environment-variable problem**.
+
+Use the new **DecoderDiagnostic**, not another full Setup retry. It directly uses the installed `.venv` interpreter, derives/inspects the existing profile (does not create/configure one), and runs the same real isolation and PNG/PDF gates. It does not install dependencies, invoke Node/npm/PG tools, rebuild frontend, read native credentials, re-protect retained directories, write native state/markers/locks/config, start services or connect to a database. Only temporary synthetic canary/input files receive owner/SYSTEM DACLs; the temporary live loopback listener tests denied access, not a listening SCNS application. No runtime/profile grants or isolation relaxation occur. Developer `.env` is excluded from controller imports; the child still receives only SystemRoot and the two fixed Python switches.
+
+In your **non-elevated PowerShell7**, run this complete block. The path is the checkout used by the preceding guide; change only that path if your checkout is elsewhere. Local Git changes/divergence stop safely; nothing is reset:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+Set-Location -LiteralPath 'C:\Users\Aaditya Shah\SCNS'
+function Invoke-ScnsDecoderStep {
+    param([Parameter(Mandatory=$true)][scriptblock]$Action)
+    & $Action
+    if ($LASTEXITCODE -ne 0) { throw "Command failed ($LASTEXITCODE). Stop and preserve existing state." }
+}
+$ScnsDirty = git status --porcelain
+if ($LASTEXITCODE -ne 0 -or $ScnsDirty) { throw 'Preserve local Git changes; nothing reset.' }
+$ScnsBranch = git branch --show-current
+if ($LASTEXITCODE -ne 0 -or $ScnsBranch -ne 'feat/native-windows') { throw 'Expected feat/native-windows. Do not overwrite another checkout.' }
+Invoke-ScnsDecoderStep { git fetch origin refs/heads/feat/native-windows:refs/remotes/origin/feat/native-windows }
+Invoke-ScnsDecoderStep { git merge-base --is-ancestor 8f54b7051ef79468dce52e11218cea406fa5847d origin/feat/native-windows }
+Invoke-ScnsDecoderStep { git pull --ff-only origin feat/native-windows }
+Invoke-ScnsDecoderStep { git rev-parse HEAD }
+Invoke-ScnsDecoderStep { pwsh -NoProfile -ExecutionPolicy RemoteSigned -File .\scripts\windows\scns.ps1 DecoderDiagnostic }
+```
+
+Expected diagnostic output: `SCNS_DECODER_DIAGNOSTIC` records with **begin/passed/size-available**, fixed stage/operation names, followed by either the existing **Actual native AppContainer/job/file/network probe and PDF+PNG decoding passed.** line or one **SCNS_DECODER_ERROR** JSON record plus nonzero exit. Share only those records and the final outcome. No transcript, environment dump, passwords, file payloads or raw tracebacks are needed. An absent `windows_error` means no trustworthy native code was supplied, not that an unrelated stale last-error should be attached. HRESULT and child exit status are separately identified numeric fields, not automatically treated as Win32 last-error.
+
+The record distinguishes profile derive/folder HRESULT, token/SDDL/SetFileSecurityW canary/input protection, pipe/tempfile/NUL/handle inheritance, DuplicateHandle, attribute size/init/security capabilities/handle list, environment block, direct interpreter command, CreateProcessW, AssignProcessToJobObject, ResumeThread, WaitForSingleObject, GetExitCodeProcess and resource cleanup. Child startup/loader refusal reports its exit status without forwarding private stderr. A failed gate never starts an unrestricted child or services. If a cleanup operation also fails, its sanitized diagnostic is separate and cannot replace the original launch failure. Retry this **same DecoderDiagnostic command only after a meaningful fix**; temporary fixtures do not create duplicate native copies or replace the existing profile. Do not proceed to Start/Backup/Restore until the actual decoder gate is resolved and the separate next operation is authorized. Passing this diagnostic alone is not full native application/migration/reboot acceptance.
+
+Optional affected regression checks use only synthetic fixtures and the installed test dependencies; no install/build/data actions. These portable/mocked checks are separate from actual decoder verification:
+
+```powershell
+Push-Location -LiteralPath .\backend
+try {
+    & .\.venv\Scripts\python.exe -m pytest -q tests/unit/test_windows_decoder_diagnostics.py tests/unit/test_native_windows.py::test_powershell_contracts_and_reuse_dependency_branch tests/unit/test_native_windows.py::test_decoder_diagnostic_dispatch_never_enters_state_or_toolchain_actions tests/unit/test_native_windows.py::test_decoder_diagnostic_linux_refusal_does_not_create_state tests/unit/test_native_windows.py::test_decoder_diagnostic_existing_runtime_flow_is_sanitized_and_data_free
+    if ($LASTEXITCODE -ne 0) { throw 'Affected synthetic checks failed; preserve state and report the test name.' }
+} finally { Pop-Location }
+```
+
+On Windows the Linux-refusal test intentionally skips. This does not rerun/reclassify the two already owner-passed DACL tests. Confirmed source corrections delivered with this diagnostic: validate insufficient-buffer sizing before allocation; stop on WAIT_FAILED instead of replacing it with exit-code inspection; clean partial SID/Job/pipe initialization, avoid deleting uninitialized attribute storage or joining a thread that never started, and preserve a primary failure through cleanup. None is asserted to be the cause or a confirmed resolution of the owner's203. Existing DACL script, AppContainer/no-network/one-process/CPU/memory/suspended-start/read-only-handle boundaries remain intact.
+
 ### Targeted retry after the SeSecurityPrivilege Setup failure
+
+**Historical retry, already owner-run at8f54b70:** direct protection and the two tests passed. Do not repeat full Setup to diagnose the subsequent203; use DecoderDiagnostic above.
 
 Use an **ordinary, non-elevated PowerShell7** terminal. Keep the existing partial native directory, marker, locks and any configuration/data. Do not delete it or enable privileges. No PostgreSQL/Python/Node reinstall is needed for this retry. Stop if the repository has local work; nothing below resets it.
 

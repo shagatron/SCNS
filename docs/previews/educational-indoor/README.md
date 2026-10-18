@@ -1,5 +1,7 @@
 # Original educational indoor demonstration — rendered evidence
 
+The primary experience is now embedded in the MUJ explorer. See the [current integrated floor/route evidence](integrated/README.md). The ten images below are preserved historical evidence of the original standalone delivery at `1a67ea7`; its homepage entry is superseded, and `/indoor-demo` remains a compatibility view.
+
 **Demonstration layout — not an actual MUJ floorplan.** These PNGs show original SCNS educational schematics, never the supplied Nalanda blueprints or a surveyed/approved MUJ plan. The MUJ-entry image uses accurately labelled **metadata-response simulation over an isolated synthetic published release**, not the owner's Windows database.
 
 Final captures come from built Linux nginx/API/worker desktop/mobile browser journeys. Routes are computed by the real educational endpoint using the existing production Dijkstra engine. All10PNG files were independently verified non-empty and decoded, with sizes/dimensions/SHA256 in [manifest.json](manifest.json). No screenshot editing/compositing. Offscreen skip links are hidden only during full-page capture to avoid capture artifacts; actual visibility/focus/skip-target behavior has separate browser assertions. Existing accepted homepage54screenshots and supplied photo/logo remain unchanged.

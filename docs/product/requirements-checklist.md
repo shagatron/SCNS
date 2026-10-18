@@ -167,7 +167,18 @@ This explicitly fictional context is linked from MUJ but is not a real MUJ/Nalan
 
 | ID | Delivered scope | Evidence / status | Limits |
 |---|---|---|---|
-| EDU-01 | Original two-floor schematics, generic rooms, prominent qualification and MUJ-only additive entry | verified: component/browser/rendered checks and10decoded built PNGs | Reference PDF not copied/traced/shipped; existing photo/logo/directory/actions retained |
+| EDU-01 | Original two-floor schematics, generic rooms, prominent qualification and MUJ-only explorer entry | verified: component/browser/rendered checks and10decoded built PNGs | Reference PDF not copied/traced/shipped; existing photo/logo/directory/actions retained |
 | EDU-02 | Existing pure Dijkstra over authored directed graph; same/cross/reverse/disconnected/same-room routes | verified:276units/33PostGIS/API;72source+14finalaffected/44built journeys | Traversal cost only; scale, distance, ETA, accessibility evidence unknown; no real outdoor links or verified step-free claim |
 | EDU-03 | Shared floor renderer/frames, stairs, floor-section buttons, zoom/pan, independent text, loading/error/empty/retry/reload/keyboard controls | verified: final14source/44built journeys;75frontend tests | Phone viewport/browser simulation, not physical device/Windows/human AT; baseline button-transition contrast limitation separately disclosed |
 | EDU-04 | Docker-only data-preserving delivery, retained/public regression, operations/presentation/screenshots | verified:44built cases/private+readiness boundaries; retained22-table/.env/storage digests match;10PNGmanifest | No activation/seed/import/migration/publication; actual Windows MUJ acceptance remains owner-run |
+
+
+### Educational explorer integration follow-up
+
+Explicitly requested adjustment from `1a67ea7`, outside numbered milestones. The extra homepage link is removed; the same MUJ explorer map section now offers Outdoor / Indoor demo. Prior EDU counts above record the original delivery; current verification is recorded separately in [the integration evidence](../testing/educational-indoor-demo.md#explorer-integration-adjustment--verification-in-progress).
+
+| ID | Requirement | Status / boundary |
+|---|---|---|
+| EDU-05 | MUJ-only accessible mode switch, same-area floor viewer/room planner/stair directions, original outdoor/published-floor functionality retained | Implemented; roving tabs/selected state, full directory preserved, place actions activate original planner, active-planner skip focus. Final source/built verification in progress. |
+| EDU-06 | Separate mode choices/results/errors and pending responses; namespaced share/reload state; hidden-map text | Implemented using mounted hidden panels and demo_* URL keys. Existing backend/API/graph/assets unchanged. No GPS request/campus reset on switching; existing expiry/restriction/release safeguards still operate. Final verification in progress. |
+| EDU-07 | Preserve original homepage/branding/public/admin/data and direct demo links, Docker-only delivery | Original route-results/grid hierarchy restored after original test exposed wrapper regression; original assertions retained. Legacy /indoor-demo remains supported. No migrations, seed, native-Windows changes, publication or real-campus edits. Windows/device acceptance pending. |

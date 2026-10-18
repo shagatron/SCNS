@@ -200,6 +200,8 @@ def main():
                     [
                         "educational-indoor.spec.ts",
                         "educational-explorer.spec.ts",
+                        "map-explorer.spec.ts",
+                        "public-experience.spec.ts",
                         "navigation.spec.ts",
                         "indoor-routing.spec.ts",
                         "admin.spec.ts",

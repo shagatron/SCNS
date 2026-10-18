@@ -121,6 +121,8 @@ Do not add LAN/firewall exemptions. A firewall prompt for the local app does not
 
 ## 3. Frozen setup, real native security gate, read-only source inventory
 
+For the source Inventory/Backup commands, start **Docker Desktop** from the Windows Start menu and wait for its engine to be running. This is needed only for the transition and possible rollback. Keep the original volumes/containers; do not recreate a database or start a replacement dataset. Native Setup/Preflight/Test and subsequent native operation do not require Docker.
+
 ```powershell
 Set-Location -LiteralPath 'C:\Users\Aaditya Shah\SCNS'
 pwsh -NoProfile -ExecutionPolicy RemoteSigned -File .\scripts\windows\scns.ps1 Setup -PgBin $ScnsPgBin

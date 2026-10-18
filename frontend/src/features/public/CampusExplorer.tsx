@@ -13,6 +13,7 @@ import MapFailureBoundary from '../maps/MapFailureBoundary'
 import OutdoorLocation, { type GPSStart } from '../location/OutdoorLocation'
 
 const FloorRouteMap = lazy(() => import('../maps/FloorRouteMap'))
+const EducationalIndoor = lazy(() => import('../educational/EducationalIndoor'))
 const OutdoorMap = lazy(() => import('../maps/OutdoorMap'))
 const formSchema = z.object({ source: z.uuid(), destination: z.uuid(), profile: z.enum(['shortest', 'step_free', 'fastest']) })
 
@@ -71,6 +72,18 @@ export default function CampusExplorer({ campus, online, qrStart, qrNotice }: { 
 
 function Planner({ campus, initial, online, release, qrStart, qrNotice }: { campus: Campus; initial: Search; online: boolean; release: Release; qrStart?: ConfirmedQR; qrNotice?: ReactNode }) {
   const [params] = useState(() => new URLSearchParams(window.location.search))
+  const hasDemo = campus.code === 'MUJ' && !campus.is_demo
+  const [explorerMode, setExplorerMode] = useState<'outdoor' | 'indoor-demo'>(() => hasDemo && params.get('explorer') === 'indoor-demo' ? 'indoor-demo' : 'outdoor')
+  const [demoOpened, setDemoOpened] = useState(explorerMode === 'indoor-demo')
+  function switchMode(next: 'outdoor' | 'indoor-demo') {
+    setExplorerMode(next)
+    if (next === 'indoor-demo') setDemoOpened(true)
+    const url = new URL(window.location.href)
+    url.searchParams.set('campus', campus.id)
+    if (next === 'indoor-demo') url.searchParams.set('explorer', next)
+    else url.searchParams.delete('explorer')
+    window.history.replaceState(null, '', url)
+  }
   const linked = !qrStart && params.get('campus') === campus.id && params.get('release') === release.id
   const qrValue = qrStart ? `qr:${qrStart.id}` : ''
   const [source, setSource] = useState(qrValue || ((linked && z.uuid().safeParse(params.get('from')).success ? params.get('from') : null) ?? initial.items.find(p => p.code === 'GATE')?.id ?? initial.items[0]?.id ?? ''))
@@ -118,15 +131,23 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice }: { camp
   if (routeUnsafe && route.data && staleRouteId !== route.data.id) setStaleRouteId(route.data.id)
   const visibleRoute = route.data && !routeUnsafe && staleRouteId !== route.data.id ? route.data : undefined
   const choices = [...new Map([...initial.items, ...(linkedPlaces.data ?? []), ...selectedPlaces].map(place => [place.id, place])).values()]
-  const updateLink = (nextView: string) => { const url = new URL(window.location.href); if (source === gpsValue) { url.search = new URLSearchParams({ campus: campus.id, view: nextView }).toString(); window.history.replaceState(null, '', url); return } url.search = new URLSearchParams({ campus: campus.id, release: release.id, from: source, to: destination, profile, mode: costMode, view: nextView, routed: '1' }).toString(); window.history.replaceState(null, '', url) }
+  // Merge only outdoor parameters. A late outdoor response must not replace the
+  // active demo mode or its namespaced selections (nor ever put GPS in a URL).
+  const writeOutdoorLink = (values: Record<string, string>) => {
+    const url = new URL(window.location.href)
+    for (const name of ['release', 'from', 'to', 'profile', 'mode', 'view', 'routed']) url.searchParams.delete(name)
+    for (const [name, value] of Object.entries({ campus: campus.id, ...values })) url.searchParams.set(name, value)
+    window.history.replaceState(null, '', url)
+  }
+  const updateLink = (nextView: string) => writeOutdoorLink(source === gpsValue ? { view: nextView } : { release: release.id, from: source, to: destination, profile, mode: costMode, view: nextView, routed: '1' })
   const showView = (next: string) => { setView(next); if (route.data) updateLink(next) }
-  function clear() { route.reset(); setFormError(''); const url = new URL(window.location.href); url.search = new URLSearchParams({ campus: campus.id }).toString(); window.history.replaceState(null, '', url) }
+  function clear() { route.reset(); setFormError(''); writeOutdoorLink({}) }
   const reloaded = useRef(false)
   useEffect(() => { if (!reloaded.current && linked && params.get('routed') === '1' && linkedPlaces.data && online && closures.fresh && !closures.isFetching && closures.data?.release_id === release.id) { reloaded.current = true; route.mutate({ campus_id: campus.id, source: { kind: 'place', place_id: source }, destination: { kind: 'place', place_id: destination }, profile, cost_mode: costMode, expected_release_id: release.id, expected_closure_overlay_version: closures.data?.closure_overlay_version }) } }, [linked, linkedPlaces.data, online, params, campus.id, source, destination, profile, costMode, release.id, route, closures.fresh, closures.isFetching, closures.data])
   function choose(place: Place) {
     if (route.isPending) return
     setSelectedPlaces(current => [...current.filter(p => p.id !== place.id), place])
-    setDestination(place.id); clear()
+    switchMode('outdoor'); setDestination(place.id); clear()
     focusPlanner('destination')
   }
   function submit(event: React.FormEvent) {
@@ -151,7 +172,7 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice }: { camp
           {place.floor_label && <p>Floor: {place.floor_label} · Room {place.room_code}</p>}
           {!place.routable && <p className="unavailable">{place.navigation_mode === 'indoor_catalog_only' ? 'Indoor catalog only · no reviewed routing capability or eligible door' : 'Entrance not mapped · routing unavailable'}</p>}
           <button disabled={route.isPending} className="text-button" onClick={() => choose(place)} aria-label={`Route to ${place.name}`}>Route here <span aria-hidden="true">↗</span></button>
-          <button disabled={route.isPending} className="text-button start-here" onClick={() => { setSelectedPlaces(current => [...current, place]); setGPS(null); setLocationEpoch(n => n + 1); setSource(place.id); clear(); focusPlanner('source') }} aria-label={`Start at ${place.name}`}>Start here</button>
+          <button disabled={route.isPending} className="text-button start-here" onClick={() => { switchMode('outdoor'); setSelectedPlaces(current => [...current, place]); setGPS(null); setLocationEpoch(n => n + 1); setSource(place.id); clear(); focusPlanner('source') }} aria-label={`Start at ${place.name}`}>Start here</button>
         </div></article>)}</div>
       {directory.data?.total === 0 && <p className="empty-state">No matching places. Try another name, alias, or category.</p>}
       {directory.data && <div className="pagination"><span aria-live="polite">{directory.data.total} public destinations{directory.data.total > 0 ? ` · showing ${offset + 1}–${Math.min(offset + 6, directory.data.total)}` : ''}</span><button disabled={offset === 0} onClick={() => setOffset(offset - 6)}>Previous</button><button disabled={offset + 6 >= directory.data.total} onClick={() => setOffset(offset + 6)}>Next</button></div>}
@@ -159,6 +180,15 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice }: { camp
     <section id="explorer" data-explorer-ready tabIndex={-1} className="editorial-section explorer-section" aria-labelledby="explorer-heading">
       <div className="explorer-heading"><div><p className="section-index">04 — THE INTERACTIVE EXPLORER</p><h2 id="explorer-heading" className="display-heading">Your way through.</h2></div><p>{campus.name}{campus.is_demo ? ' · Synthetic data only' : ' · Published campus map'}<br />Choose a known start. Check restrictions before walking.</p></div>
     {qrNotice && <div className="qr-confirmed">{qrNotice}</div>}
+    {hasDemo && <div className="explorer-mode-switch" role="tablist" aria-label="Explorer mode">
+      {(['outdoor', 'indoor-demo'] as const).map(mode => <button key={mode} type="button" role="tab" id={`${mode}-tab`} aria-selected={explorerMode === mode} aria-controls={`${mode}-panel`} tabIndex={explorerMode === mode ? 0 : -1} onClick={() => switchMode(mode)} onKeyDown={event => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
+        event.preventDefault()
+        const next = event.key === 'Home' ? 'outdoor' : event.key === 'End' ? 'indoor-demo' : mode === 'outdoor' ? 'indoor-demo' : 'outdoor'
+        switchMode(next); document.getElementById(`${next}-tab`)?.focus()
+      }}>{mode === 'outdoor' ? 'Outdoor' : 'Indoor demo'}</button>)}
+    </div>}
+    <div id="outdoor-panel" className="explorer-mode-panel" role={hasDemo ? 'tabpanel' : undefined} aria-labelledby={hasDemo ? 'outdoor-tab' : undefined} hidden={explorerMode !== 'outdoor'}>
     <div className="explorer-grid">
       <section id="planner" tabIndex={-1} className="planner-card" aria-labelledby="plan-heading">
         <div className="section-title"><span className="eyebrow">ROUTE / START → DESTINATION</span><span aria-hidden="true">↗</span></div><h2 id="plan-heading">Plan your walk</h2><p className="muted">Routes follow eligible stored paths, never straight-line shortcuts.</p>
@@ -202,7 +232,11 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice }: { camp
     <div className="route-results">
         {route.data && !visibleRoute && <p role="alert" className="notice">Previous route hidden: restrictions changed or current closure information is unavailable. Your selections are retained. Check restrictions and calculate again before walking.</p>}
         {visibleRoute && <><div role="status" className="sr-only">Route ready. {visibleRoute.distance_m == null ? 'Distance unknown.' : `${Math.round(visibleRoute.distance_m)} metres.`}</div><RouteDetails route={visibleRoute} onView={showView} /><button className="secondary-button" onClick={() => { clear(); discardGPS(); setLocationEpoch(n => n + 1); if (source === gpsValue) setSource('') }}>Clear route</button></>}
-    </div></section>
+    </div></div>
+    {hasDemo && <div id="indoor-demo-panel" className="explorer-mode-panel" role="tabpanel" aria-labelledby="indoor-demo-tab" hidden={explorerMode !== 'indoor-demo'}>
+      {demoOpened && <Suspense fallback={<p role="status">Loading indoor demonstration…</p>}><EducationalIndoor embedded /></Suspense>}
+    </div>}
+    </section>
 
 
   </>

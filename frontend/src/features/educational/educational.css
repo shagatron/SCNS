@@ -29,3 +29,13 @@
 }
 
 .indoor-demo .demo-selects label, .indoor-demo .demo-floor-field label { margin-bottom: .25rem; }
+
+/* Embedded preview uses the explorer's existing planner / map footprint. */
+.integrated-demo .demo-body { display: grid; grid-template-columns: minmax(250px, .75fr) minmax(0, 1.5fr); gap: 1.5rem; }
+.integrated-demo .demo-intro, .integrated-demo .demo-directions, .integrated-demo .demo-explanation { grid-column: 1 / -1; max-width: none; }
+.integrated-demo .demo-planner, .integrated-demo .demo-viewer { min-width: 0; margin-top: 0; }
+.integrated-demo .demo-selects { grid-template-columns: 1fr; }
+.public-app .integrated-demo .campus-map.leaflet-container { height: clamp(420px, 50svh, 600px); }
+@media (max-width: 900px) {
+  .integrated-demo .demo-body { grid-template-columns: minmax(0, 1fr); }
+}

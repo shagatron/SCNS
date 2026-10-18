@@ -61,7 +61,6 @@ export function CampusOpening({ campus, campuses, locked, onCampus, online, conn
     <div className="opening-note"><strong>A campus.<br />A clearer way through.</strong><p>Find a place, choose your starting point and follow a route through mapped paths.</p>
       <div className="campus-control"><label htmlFor="campus">Explore campus</label><select id="campus" disabled={locked || !campuses?.length} value={campus?.id ?? ''} onChange={e => onCampus(e.target.value)}>{!campuses?.length && <option value="">{campuses ? 'No published campus' : 'Loading campus…'}</option>}{campuses?.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
       {campus?.is_demo && <p className="synthetic-disclosure"><strong>Synthetic demo.</strong> Invented locations and paths. Not for real-world navigation.</p>}
-      {muj && <div className="indoor-demo-entry"><a href={`/indoor-demo?returnCampus=${encodeURIComponent(campus!.id)}`}>Indoor navigation demo ↗</a><p>Demonstration layout — not an actual MUJ floorplan.</p></div>}
       <a href="#about">About the data <span aria-hidden="true">↗</span></a>
     </div>
     <div className="opening-title"><h1 id="intro-heading">Find your<br />way across<br />campus.</h1><a className="explore-action" href="#explorer"><span className="arrow-disc" aria-hidden="true">↗</span>Explore campus</a></div>

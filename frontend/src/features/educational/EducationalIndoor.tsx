@@ -12,12 +12,15 @@ const qualification = 'Demonstration layout — not an actual MUJ floorplan.'
 const endpoint = '/educational/indoor-school'
 function initial() { return new URLSearchParams(window.location.search) }
 
-export default function EducationalIndoor() {
-  const [source, setSource] = useState(() => initial().get('from') ?? '')
-  const [destination, setDestination] = useState(() => initial().get('to') ?? '')
-  const [floorId, setFloorId] = useState(() => initial().get('floor') ?? '')
+export default function EducationalIndoor({ embedded = false }: { embedded?: boolean }) {
+  const key = (name: string) => embedded ? `demo_${name}` : name
+  const Body = embedded ? 'div' : 'main'
+  const Title = embedded ? 'h3' : 'h1'
+  const [source, setSource] = useState(() => initial().get(key('from')) ?? '')
+  const [destination, setDestination] = useState(() => initial().get(key('to')) ?? '')
+  const [floorId, setFloorId] = useState(() => initial().get(key('floor')) ?? '')
   const [showMap, setShowMap] = useState(true)
-  const [request, setRequest] = useState<{source: string; destination: string} | null>(() => initial().get('route') === '1' ? {source: initial().get('from') ?? '', destination: initial().get('to') ?? ''} : null)
+  const [request, setRequest] = useState<{source: string; destination: string} | null>(() => initial().get(key('route')) === '1' ? {source: initial().get(key('from')) ?? '', destination: initial().get(key('to')) ?? ''} : null)
   const layout = useQuery({queryKey: ['educational-indoor'], queryFn: ({signal}) => api<Demo>(endpoint, {signal}), retry: false})
   const data = layout.data
   const from = data?.rooms.find(r => r.id === source) ?? data?.rooms[0]
@@ -34,9 +37,12 @@ export default function EducationalIndoor() {
   const back = savedCampus && /^[a-f0-9-]{36}$/i.test(savedCampus) ? `/?campus=${encodeURIComponent(savedCampus)}#intro` : '/'
   function remember(start: string, end: string, floor: string, routed: boolean) {
     const params = initial()
-    params.set('from', start); params.set('to', end); params.set('floor', floor)
-    if (routed) params.set('route', '1'); else params.delete('route')
-    window.history.replaceState(null, '', '/indoor-demo?' + params.toString())
+    params.set(key('from'), start); params.set(key('to'), end); params.set(key('floor'), floor)
+    if (routed) params.set(key('route'), '1'); else params.delete(key('route'))
+    const url = new URL(window.location.href)
+    url.search = params.toString()
+    if (embedded) url.hash = 'explorer'
+    window.history.replaceState(null, '', url)
   }
   function selectFloor(id: string) { setFloorId(id); if (from && to) remember(from.id, to.id, id, !!request) }
   function changeRoom(value: string, start: boolean) {
@@ -52,11 +58,11 @@ export default function EducationalIndoor() {
     if (request?.source === from.id && request.destination === to.id) void route.refetch()
     else setRequest({source: from.id, destination: to.id})
   }
-  return <div className="public-app indoor-demo">
-    <a className="skip-link" href="#demo-planner">Skip to demonstration planner</a>
-    <header className="demo-header"><a href={back}>← Return to campus explorer</a><span>SCNS / EDUCATIONAL PREVIEW</span></header>
-    <main>
-      <section className="demo-intro" aria-labelledby="demo-heading"><p className="section-index">A SEPARATE, FICTIONAL BUILDING</p><h1 id="demo-heading">Indoor navigation demo</h1><p className="demo-qualification"><strong>{qualification}</strong></p><p>Explore an original two-floor learning building. Generic rooms, an authored corridor graph and Demo Stairs show how indoor directions work. Nothing here changes MUJ’s published campus map.</p><p>Directions only · fewest eligible traversals. No measured distance, scale or ETA. Accessibility is unknown; no verified step-free route is offered.</p></section>
+  return <div className={embedded ? "indoor-demo integrated-demo" : "public-app indoor-demo"}>
+    {!embedded && <a className="skip-link" href="#demo-planner">Skip to demonstration planner</a>}
+    {!embedded && <header className="demo-header"><a href={back}>← Return to campus explorer</a><span>SCNS / EDUCATIONAL PREVIEW</span></header>}
+    <Body className="demo-body">
+      <section className="demo-intro" aria-labelledby="demo-heading"><p className="section-index">A SEPARATE, FICTIONAL BUILDING</p><Title id="demo-heading">Indoor navigation demo</Title><p className="demo-qualification"><strong>{qualification}</strong></p><p>Explore an original two-floor learning building. Generic rooms, an authored corridor graph and Demo Stairs show how indoor directions work. Nothing here changes MUJ’s published campus map.</p><p>Directions only · fewest eligible traversals. No measured distance, scale or ETA. Accessibility is unknown; no verified step-free route is offered.</p></section>
       {layout.isPending && <p role="status">Loading demonstration rooms and floors…</p>}
       {layout.isError && <section role="alert" className="error-box"><h2>Demonstration unavailable</h2><p>{layout.error.message}</p><button onClick={() => void layout.refetch()}>Retry demonstration</button></section>}
       {data && (!data.rooms.length || !data.floors.length) && <section className="empty-state"><h2>No demonstration rooms available</h2><p>The campus explorer remains available. Reload the demonstration to try again.</p><button onClick={() => void layout.refetch()}>Reload demonstration</button></section>}
@@ -77,6 +83,6 @@ export default function EducationalIndoor() {
         </section>}
         <section className="demo-explanation"><h2>What the demonstration computes</h2><p>{data.source}</p><p>Rooms and corridor junctions are graph nodes. Each authored connection is stored in both directions; the stair edge changes floors without drawing a line between coordinate frames. Dijkstra adds one unit per traversal and chooses a least-cost path. The disconnected room deliberately has no edges.</p><p>Illustration pixels are not physical measurements. There are no live closures, outdoor links, GPS, QR starts or claimed accessibility evidence in this isolated graph. Use the unchanged campus explorer for those existing features.</p><p>Version: {data.version}. Original schematics, not copied architectural drawings. This educational preview is not an institutional plan or an approved campus release.</p></section>
       </>}
-    </main><footer><a href={back}>Return to campus explorer</a><p>{qualification}</p></footer>
+    </Body>{!embedded && <footer><a href={back}>Return to campus explorer</a><p>{qualification}</p></footer>}
   </div>
 }

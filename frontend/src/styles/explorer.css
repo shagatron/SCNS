@@ -21,3 +21,8 @@
 .public-app .outdoor-panel .kind-cafe { background: #edcdb4; color: #422e20; }
 .public-app .outdoor-panel .kind-library { background: #d8d5ed; color: #322d47; }
 .public-app .outdoor-panel .kind-water { background: #c4dfe9; color: #20343d; }
+
+.public-app .explorer-mode-switch { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0; }
+.public-app .explorer-mode-switch [aria-selected="true"] { background: #183f35; color: #fff; border-color: #183f35; }
+.public-app .explorer-mode-switch button:focus-visible { outline: 3px solid #9b4e00; outline-offset: 3px; }
+.explorer-mode-panel[hidden] { display: none !important; }

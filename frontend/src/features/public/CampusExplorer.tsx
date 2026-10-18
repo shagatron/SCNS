@@ -181,15 +181,14 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice }: { camp
       <div className="explorer-heading"><div><p className="section-index">04 — THE INTERACTIVE EXPLORER</p><h2 id="explorer-heading" className="display-heading">Your way through.</h2></div><p>{campus.name}{campus.is_demo ? ' · Synthetic data only' : ' · Published campus map'}<br />Choose a known start. Check restrictions before walking.</p></div>
     {qrNotice && <div className="qr-confirmed">{qrNotice}</div>}
     {hasDemo && <div className="explorer-mode-switch" role="tablist" aria-label="Explorer mode">
-      {(['outdoor', 'indoor-demo'] as const).map(mode => <button key={mode} type="button" role="tab" id={`${mode}-tab`} aria-selected={explorerMode === mode} aria-controls={`${mode}-panel`} tabIndex={explorerMode === mode ? 0 : -1} onClick={() => switchMode(mode)} onKeyDown={event => {
+      {(['outdoor', 'indoor-demo'] as const).map(mode => <button key={mode} type="button" role="tab" id={`${mode}-tab`} aria-selected={explorerMode === mode} aria-controls={mode === 'outdoor' ? 'outdoor-panel outdoor-route-results' : 'indoor-demo-panel'} tabIndex={explorerMode === mode ? 0 : -1} onClick={() => switchMode(mode)} onKeyDown={event => {
         if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
         event.preventDefault()
         const next = event.key === 'Home' ? 'outdoor' : event.key === 'End' ? 'indoor-demo' : mode === 'outdoor' ? 'indoor-demo' : 'outdoor'
         switchMode(next); document.getElementById(`${next}-tab`)?.focus()
       }}>{mode === 'outdoor' ? 'Outdoor' : 'Indoor demo'}</button>)}
     </div>}
-    <div id="outdoor-panel" className="explorer-mode-panel" role={hasDemo ? 'tabpanel' : undefined} aria-labelledby={hasDemo ? 'outdoor-tab' : undefined} hidden={explorerMode !== 'outdoor'}>
-    <div className="explorer-grid">
+    <div id="outdoor-panel" className="explorer-grid explorer-mode-panel" role={hasDemo ? 'tabpanel' : undefined} aria-labelledby={hasDemo ? 'outdoor-tab' : undefined} hidden={explorerMode !== 'outdoor'}>
       <section id="planner" tabIndex={-1} className="planner-card" aria-labelledby="plan-heading">
         <div className="section-title"><span className="eyebrow">ROUTE / START → DESTINATION</span><span aria-hidden="true">↗</span></div><h2 id="plan-heading">Plan your walk</h2><p className="muted">Routes follow eligible stored paths, never straight-line shortcuts.</p>
         <details className="route-controls" open><summary>Route controls <span aria-hidden="true">＋ / −</span></summary>
@@ -229,10 +228,10 @@ function Planner({ campus, initial, online, release, qrStart, qrNotice }: { camp
         <div className="map-footnote"><span>↗ Routes follow mapped paths</span><span>{`Published release ${release.version}`}</span></div>
       </div>
     </div>
-    <div className="route-results">
+    <div id="outdoor-route-results" className="route-results explorer-mode-panel" hidden={explorerMode !== 'outdoor'}>
         {route.data && !visibleRoute && <p role="alert" className="notice">Previous route hidden: restrictions changed or current closure information is unavailable. Your selections are retained. Check restrictions and calculate again before walking.</p>}
         {visibleRoute && <><div role="status" className="sr-only">Route ready. {visibleRoute.distance_m == null ? 'Distance unknown.' : `${Math.round(visibleRoute.distance_m)} metres.`}</div><RouteDetails route={visibleRoute} onView={showView} /><button className="secondary-button" onClick={() => { clear(); discardGPS(); setLocationEpoch(n => n + 1); if (source === gpsValue) setSource('') }}>Clear route</button></>}
-    </div></div>
+    </div>
     {hasDemo && <div id="indoor-demo-panel" tabIndex={-1} className="explorer-mode-panel" role="tabpanel" aria-labelledby="indoor-demo-tab" hidden={explorerMode !== 'indoor-demo'}>
       {demoOpened && <Suspense fallback={<p role="status">Loading indoor demonstration…</p>}><EducationalIndoor embedded /></Suspense>}
     </div>}

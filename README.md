@@ -8,6 +8,8 @@ The separately authorized **MUJ OSM preparation** adds a real, clearly unverifie
 
 ## What works
 
+For **native Windows 11 x64 without Docker/WSL for normal operation**, use the [complete numbered installation, separate-copy migration, startup and rollback guide](docs/operations/native-windows.md). It preserves the existing Docker database/volumes and `.env`; actual Windows security/runtime and owner-data migration remain owner-run acceptance gates, not established by Linux tests. Do not run the Linux/Make seed setup against retained Windows data. The owner's accepted homepage/directory/routing Windows checks are recorded separately from native-support evidence.
+
 - Public directory and search by name, code, category and aliases; place details and pagination.
 - Responsive phone/desktop route planner, manual starts/destinations, swap, clear, selectable map markers, fit-route control and map-free text directions.
 - Heap-based Dijkstra over **stored directed graph edges**, selecting the cheapest eligible combination of entrance anchors. PostGIS measures the complete path polylines; baseline walking ETA uses a configurable 1.4 m/s speed.

@@ -45,6 +45,8 @@ def test_receipt_replace_and_cross_process_lock(tmp_path):
         ("3.5.2", 18, "3.6.1", False),
         ("3.4.0", 17, "3.6.1", False),
         ("3.5.2", 17, "3.7.0", False),
+        ("3.5.2", 17, "3.5.1", False),
+        ("3.5.2", 17, "ANY", False),
     ],
 )
 def test_version_bounds_do_not_guess_compatibility(source, major, target, allowed):
@@ -145,6 +147,9 @@ def test_actual_windows_dpapi_and_private_acl(tmp_path):
     original = b"Synthetic roundtrip only; never an owner credential"
     encrypted = native.dpapi(original)
     assert original not in encrypted and native.dpapi(encrypted, decrypt=True) == original
+    native.save_secret(folder / "config.json", {"synthetic": original.decode()})
+    assert original not in (folder / "config.json").read_bytes()
+    assert native.load_secret(folder / "config.json") == {"synthetic": original.decode()}
     with pytest.raises(native.SafeError):
         native.dpapi(encrypted[:-8] + b"corrupt!", decrypt=True)
 
@@ -160,19 +165,44 @@ def test_actual_windows_decoder_boundary_and_job_kill():
         "database_env_absent": True,
     }
     job = Job()
-    process = subprocess.Popen(
-        [sys.executable, "-c", "import time;time.sleep(60)"],
-        creationflags=subprocess.CREATE_NEW_PROCESS_GROUP,
-    )
-    try:
-        job.assign(int(process._handle))
-        job.close()
-        assert process.wait(timeout=5) != 0
-    finally:
-        job.close()
-        if process.poll() is None:
-            process.terminate()
+    import tempfile
+
+    with tempfile.TemporaryFile() as output:
+        process = job.spawn(
+            [sys.executable, "-c", "import time;time.sleep(60)"],
+            cwd=ROOT / "backend",
+            env={
+                key: value
+                for key, value in os.environ.items()
+                if key.upper() in {"SYSTEMROOT", "PATH", "TEMP", "TMP"}
+            },
+            stdout=output,
+        )
+        try:
+            job.close()
+            assert process.wait(timeout=5) != 0
+        finally:
+            job.close()
             process.wait(timeout=5)
+            process.close()
+
+
+def test_decoder_uses_direct_base_interpreter_without_a_venv_child(tmp_path, monkeypatch):
+    from app.core.windows_sandbox import decoder_command
+
+    base = tmp_path / "Runtime with spaces and owner's quote"
+    base.mkdir()
+    executable = base / "python.exe"
+    executable.write_bytes(b"not executed, policy fixture only")
+    monkeypatch.setattr(sys, "base_prefix", str(base))
+    monkeypatch.setattr(sys, "prefix", str(tmp_path / "venv with spaces"))
+    args = decoder_command()
+    assert args[0] == str(executable) and args[1:6] == ["-I", "-B", "-X", "utf8", "-c"]
+    assert "Lib/site-packages" in args[-1].replace("\\\\", "/")
+    compile(args[-1], "<decoder-bootstrap>", "exec")
+    executable.unlink()
+    with pytest.raises(RuntimeError, match="no redirector"):
+        decoder_command()
 
 
 def test_standalone_native_cli_fails_closed_on_linux(tmp_path):
@@ -199,3 +229,87 @@ def test_powershell_and_app_paths_do_not_depend_on_fixed_installation():
     assert "C:\\Program Files\\PostgreSQL" not in script
     for forbidden in ("seed-demo", "bootstrap-admin", "alembic upgrade", "down -v", "Remove-Item"):
         assert forbidden not in script
+
+
+def test_inventory_is_read_only_and_does_not_save_container_secrets(tmp_path, monkeypatch, capsys):
+    calls = []
+
+    def command(args, **kwargs):
+        calls.append(args)
+        if args[0] == "git":
+            return b"synthetic-head"
+        if "inspect" in args:
+            return json.dumps(
+                [
+                    {
+                        "Config": {
+                            "Env": [
+                                "DATABASE_URL=synthetic-secret-never-echo",
+                                "APP_ENV=development",
+                            ]
+                        },
+                        "Mounts": [
+                            {
+                                "Type": "volume",
+                                "Name": "retained-private",
+                                "Source": "retained",
+                                "Destination": "/app/storage",
+                            }
+                        ],
+                    }
+                ]
+            ).encode()
+        return b"retained-container-id"
+
+    monkeypatch.setattr(native, "run", command)
+    monkeypatch.setattr(native, "verify_source_binding", lambda actual: None)
+    monkeypatch.setattr(
+        native,
+        "docker_inventory",
+        lambda: {
+            "tables": {},
+            "revision": "0016_closures",
+            "active_releases": [["actual-local-fixture-release-id"]],
+        },
+    )
+    native.source_inventory(tmp_path)
+    report = (tmp_path / "docker-inventory.json").read_text()
+    assert "synthetic-secret" not in report + capsys.readouterr().out
+    assert "DATABASE_URL" in report and "actual-local-fixture-release-id" in report
+    assert not any("stop" in args or "run" in args or "up" in args for args in calls)
+
+
+@pytest.mark.parametrize(
+    "override",
+    [
+        {"STORAGE_ROOT": "/unmapped/private"},
+        {"DATABASE_URL": "postgresql://owner:synthetic@other-host/scns"},
+        {"DATABASE_URL": "postgresql://owner:synthetic@db/other-data"},
+    ],
+)
+def test_source_binding_rejects_substitute_dataset_or_omitted_storage(monkeypatch, override):
+    api = {
+        "Config": {
+            "Env": [
+                f"{key}={value}"
+                for key, value in {
+                    "STORAGE_ROOT": "/app/storage",
+                    "DATABASE_URL": "postgresql://owner:synthetic@db/scns",
+                    **override,
+                }.items()
+            ]
+        },
+        "Mounts": [],
+    }
+    calls = []
+
+    def command(args, **kwargs):
+        calls.append(args)
+        if "inspect" in args:
+            return json.dumps([{"Config": {"Env": ["POSTGRES_DB=scns"]}}]).encode()
+        return b"db-id" if args[-1] == "db" else b""
+
+    monkeypatch.setattr(native, "run", command)
+    with pytest.raises(native.SafeError):
+        native.verify_source_binding(api)
+    assert not any("stop" in args or "up" in args for args in calls)

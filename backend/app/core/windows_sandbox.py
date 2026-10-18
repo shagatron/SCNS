@@ -167,6 +167,44 @@ def profile_folder():
         free_sid(sid)
 
 
+def protect_canary(path):
+    """A genuinely owner-private probe file, independent of TEMP's inherited ACL."""
+    k, a = dll("kernel32"), dll("advapi32")
+    token = w.HANDLE()
+    checked(
+        function(a, "OpenProcessToken", [w.HANDLE, w.DWORD, c.POINTER(w.HANDLE)])(
+            function(k, "GetCurrentProcess", [], w.HANDLE)(), 8, c.byref(token)
+        )
+    )
+    descriptor = c.c_void_p()
+    try:
+        size = w.DWORD()
+        info = function(
+            a, "GetTokenInformation", [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.POINTER(w.DWORD)]
+        )
+        info(token, 1, None, 0, c.byref(size))
+        buffer = c.create_string_buffer(size.value)
+        checked(info(token, 1, buffer, size, c.byref(size)))
+        sid = c.cast(buffer, c.POINTER(c.c_void_p))[0]
+        sddl = f"D:P(A;;FA;;;SY)(A;;FA;;;{sid_text(sid)})"
+        checked(
+            function(
+                a,
+                "ConvertStringSecurityDescriptorToSecurityDescriptorW",
+                [w.LPCWSTR, w.DWORD, c.POINTER(c.c_void_p), c.c_void_p],
+            )(sddl, 1, c.byref(descriptor), None)
+        )
+        checked(
+            function(a, "SetFileSecurityW", [w.LPCWSTR, w.DWORD, c.c_void_p])(
+                str(path), 0x80000004, descriptor
+            )
+        )
+    finally:
+        function(k, "CloseHandle", [w.HANDLE])(token)
+        if descriptor.value:
+            function(k, "LocalFree", [c.c_void_p], c.c_void_p)(descriptor)
+
+
 class Job:
     def __init__(self, *, decoder=False):
         self.k = dll("kernel32")
@@ -195,10 +233,177 @@ class Job:
             function(self.k, "AssignProcessToJobObject", [w.HANDLE, w.HANDLE])(self.handle, process)
         )
 
+    def spawn(self, args, *, cwd, env, stdout):
+        return spawn_owned(self, args, cwd=cwd, env=env, stdout=stdout)
+
     def close(self):
         if self.handle:
             function(self.k, "CloseHandle", [w.HANDLE])(self.handle)
             self.handle = None
+
+
+class OwnedProcess:
+    """Small process interface with a job attached atomically at creation."""
+
+    def __init__(self, handle, pid):
+        self.handle, self.pid, self.returncode = handle, pid, None
+
+    def poll(self):
+        if self.returncode is None:
+            result = function(dll("kernel32"), "WaitForSingleObject", [w.HANDLE, w.DWORD], w.DWORD)(
+                self.handle, 0
+            )
+            if result == 258:
+                return None
+            if result != 0:
+                raise RuntimeError("Cannot inspect owned native process")
+            code = w.DWORD()
+            checked(
+                function(dll("kernel32"), "GetExitCodeProcess", [w.HANDLE, c.POINTER(w.DWORD)])(
+                    self.handle, c.byref(code)
+                )
+            )
+            self.returncode = code.value
+        return self.returncode
+
+    def wait(self, timeout=None):
+        result = function(dll("kernel32"), "WaitForSingleObject", [w.HANDLE, w.DWORD], w.DWORD)(
+            self.handle, 0xFFFFFFFF if timeout is None else int(timeout * 1000)
+        )
+        if result == 258:
+            raise subprocess.TimeoutExpired("owned-native-child", timeout)
+        if result != 0:
+            raise RuntimeError("Cannot wait for owned native process")
+        return self.poll()
+
+    def send_signal(self, signum):
+        import signal
+
+        if signum != signal.CTRL_BREAK_EVENT:
+            raise ValueError("Only graceful owned-group break is supported")
+        checked(
+            function(dll("kernel32"), "GenerateConsoleCtrlEvent", [w.DWORD, w.DWORD])(1, self.pid)
+        )
+
+    def close(self):
+        if self.handle:
+            function(dll("kernel32"), "CloseHandle", [w.HANDLE])(self.handle)
+            self.handle = None
+
+
+def spawn_owned(job, args, *, cwd, env, stdout):
+    """JOB_LIST avoids a launcher spawning an unowned child before assignment."""
+    import msvcrt
+
+    k = dll("kernel32")
+    attributes = None
+    process = Process()
+    try:
+        with open(os.devnull, "rb") as source:
+            handles = (w.HANDLE * 2)(
+                msvcrt.get_osfhandle(source.fileno()), msvcrt.get_osfhandle(stdout.fileno())
+            )
+            for handle in handles:
+                os.set_handle_inheritable(handle, True)
+            size = c.c_size_t()
+            initialize = function(
+                k,
+                "InitializeProcThreadAttributeList",
+                [c.c_void_p, w.DWORD, w.DWORD, c.POINTER(c.c_size_t)],
+            )
+            initialize(None, 2, 0, c.byref(size))
+            attributes = c.create_string_buffer(size.value)
+            checked(initialize(attributes, 2, 0, c.byref(size)))
+            update = function(
+                k,
+                "UpdateProcThreadAttribute",
+                [c.c_void_p, w.DWORD, c.c_size_t, c.c_void_p, c.c_size_t, c.c_void_p, c.c_void_p],
+            )
+            jobs = (w.HANDLE * 1)(job.handle)
+            checked(update(attributes, 0, 0x2000D, jobs, c.sizeof(jobs), None, None))
+            checked(update(attributes, 0, 0x20002, handles, c.sizeof(handles), None, None))
+            startup = StartupEx()
+            startup.startup.cb = c.sizeof(startup)
+            startup.startup.flags = 0x100
+            startup.startup.stdin = handles[0]
+            startup.startup.stdout = startup.startup.stderr = handles[1]
+            startup.attributes = c.cast(attributes, c.c_void_p)
+            block = c.create_unicode_buffer(
+                "\0".join(
+                    f"{key}={value}"
+                    for key, value in sorted(env.items(), key=lambda pair: pair[0].upper())
+                )
+                + "\0\0"
+            )
+            command = c.create_unicode_buffer(subprocess.list2cmdline([str(arg) for arg in args]))
+            create = function(
+                k,
+                "CreateProcessW",
+                [
+                    w.LPCWSTR,
+                    w.LPWSTR,
+                    c.c_void_p,
+                    c.c_void_p,
+                    w.BOOL,
+                    w.DWORD,
+                    c.c_void_p,
+                    w.LPCWSTR,
+                    c.c_void_p,
+                    c.POINTER(Process),
+                ],
+            )
+            checked(
+                create(
+                    str(args[0]),
+                    command,
+                    None,
+                    None,
+                    True,
+                    0x80000 | 0x400 | 0x200,
+                    block,
+                    str(cwd),
+                    c.byref(startup),
+                    c.byref(process),
+                )
+            )
+            return OwnedProcess(process.process, process.pid)
+    finally:
+        if process.thread:
+            function(k, "CloseHandle", [w.HANDLE])(process.thread)
+        if attributes is not None:
+            function(k, "DeleteProcThreadAttributeList", [c.c_void_p], None)(attributes)
+
+
+def decoder_command(*, probe=False, probe_file=None, probe_port=None):
+    # A Windows venv redirector may CreateProcess the actual Python interpreter.
+    # Launch the base executable directly to keep the hard one-process boundary.
+    executable = Path(sys.base_prefix) / "python.exe"
+    if not executable.is_file():
+        raise RuntimeError("Base Windows interpreter missing; no redirector/unrestricted fallback")
+    paths = [str(Path(__file__).parents[2]), str(Path(sys.prefix) / "Lib/site-packages")]
+    stub = f"import sys,runpy;sys.path[:0]={paths!r};runpy.run_module('app.cli.render_floorplan',run_name='__main__')"
+    return [
+        str(executable),
+        "-I",
+        "-B",
+        "-X",
+        "utf8",
+        "-c",
+        stub,
+        *(
+            [
+                "--probe",
+                "--probe-file",
+                str(probe_file),
+                "--probe-port",
+                str(probe_port),
+                "--probe-write-dir",
+                str(profile_folder()),
+            ]
+            if probe
+            else []
+        ),
+    ]
 
 
 def assert_isolated():
@@ -247,6 +452,7 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
         ):
             canary = Path(folder) / "owner-private.txt"
             canary.write_text("Synthetic owner-readable isolation canary; no secret.")
+            protect_canary(canary)
             listener.bind(("127.0.0.1", 0))
             listener.listen(1)
             return run_decoder(
@@ -343,28 +549,8 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
             block = c.create_unicode_buffer(
                 "\0".join(f"{key}={value}" for key, value in sorted(env.items())) + "\0\0"
             )
-            command = c.create_unicode_buffer(
-                subprocess.list2cmdline(
-                    [
-                        sys.executable,
-                        "-m",
-                        "app.cli.render_floorplan",
-                        *(
-                            [
-                                "--probe",
-                                "--probe-file",
-                                str(probe_file),
-                                "--probe-port",
-                                str(probe_port),
-                                "--probe-write-dir",
-                                str(profile_folder()),
-                            ]
-                            if probe
-                            else []
-                        ),
-                    ]
-                )
-            )
+            argv = decoder_command(probe=probe, probe_file=probe_file, probe_port=probe_port)
+            command = c.create_unicode_buffer(subprocess.list2cmdline(argv))
             create = function(
                 k,
                 "CreateProcessW",
@@ -383,7 +569,7 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
             )
             checked(
                 create(
-                    sys.executable,
+                    argv[0],
                     command,
                     None,
                     None,

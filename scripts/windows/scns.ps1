@@ -1,7 +1,7 @@
 #requires -Version 7.4
 [CmdletBinding()]
 param(
-    [Parameter(Position=0,Mandatory)][ValidateSet('Preflight','Setup','Backup','Restore','Start','Stop','Verify','Test')][string]$Action,
+    [Parameter(Position=0,Mandatory)][ValidateSet('Preflight','Setup','Inventory','Backup','Restore','Start','Stop','Verify','Test')][string]$Action,
     [string]$State = (Join-Path $env:LOCALAPPDATA 'SCNS\native'),
     [string]$Bundle,
     [string]$PgBin,
@@ -14,6 +14,16 @@ $ScnsRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 Set-Location -LiteralPath $ScnsRoot
 foreach ($Tool in @('uv','node','npm')) {
     if (-not (Get-Command $Tool -ErrorAction SilentlyContinue)) { throw "Missing $Tool. Read docs/operations/native-windows.md installation steps." }
+}
+$ScnsNodeVersion = [version]((& node --version).Trim().TrimStart('v'))
+if ($LASTEXITCODE -or $ScnsNodeVersion.Major -notin @(22,24) -or ($ScnsNodeVersion.Major -eq 22 -and $ScnsNodeVersion.Minor -lt 12)) {
+    throw 'Use Node22.12+ or24 LTS. Run: winget upgrade --exact --id OpenJS.NodeJS.LTS --source winget'
+}
+if ((& node -p process.arch).Trim() -ne 'x64' -or $LASTEXITCODE) { throw 'Use native Node x64.' }
+$ScnsUvText = & uv --version
+$ScnsUvMatch = [regex]::Match($ScnsUvText, '^uv (\d+\.\d+\.\d+)')
+if ($LASTEXITCODE -or -not $ScnsUvMatch.Success -or [version]$ScnsUvMatch.Groups[1].Value -lt [version]'0.12.19') {
+    throw 'Use uv0.12.19+. Run: winget upgrade --exact --id astral-sh.uv --source winget'
 }
 if ($Action -eq 'Setup') {
     & uv python install 3.12

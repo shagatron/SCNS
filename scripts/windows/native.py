@@ -402,6 +402,83 @@ def check_bundle(bundle):
     return report
 
 
+def verify_source_binding(actual):
+    from sqlalchemy.engine import make_url
+
+    api_env = dict(value.split("=", 1) for value in actual["Config"]["Env"] if "=" in value)
+    if api_env.get("STORAGE_ROOT") != "/app/storage":
+        raise SafeError(
+            "Actual API storage root is not the supported /app/storage mount. Stop; no guessed private-data backup."
+        )
+    database_id = run([*COMPOSE, "ps", "-q", "db"]).decode().strip()
+    if not database_id:
+        raise SafeError("Existing Compose database is not running; no replacement will be created.")
+    database = json.loads(run(["docker", "inspect", database_id]))[0]
+    db_env = dict(value.split("=", 1) for value in database["Config"]["Env"] if "=" in value)
+    url = make_url(api_env.get("DATABASE_URL", ""))
+    if (
+        url.host != "db"
+        or url.port not in {None, 5432}
+        or url.database != db_env.get("POSTGRES_DB")
+    ):
+        raise SafeError(
+            "Actual API is not bound to this Compose database. Stop; do not back up a substitute dataset."
+        )
+    worker_id = run([*COMPOSE, "ps", "--all", "-q", "import-worker"]).decode().strip()
+    if worker_id:
+        worker = json.loads(run(["docker", "inspect", worker_id]))[0]
+        env = dict(value.split("=", 1) for value in worker["Config"]["Env"] if "=" in value)
+        other = make_url(env.get("DATABASE_URL", ""))
+        if (other.host, other.port or 5432, other.database) != (
+            url.host,
+            url.port or 5432,
+            url.database,
+        ) or env.get("STORAGE_ROOT") != "/app/storage":
+            raise SafeError(
+                "API/worker database or storage roots differ; stop for explicit source reconciliation."
+            )
+
+        def mounts(row):
+            return {m.get("Source") for m in row["Mounts"] if m["Destination"] == "/app/storage"}
+
+        if mounts(actual) != mounts(worker) or len(mounts(actual)) != 1:
+            raise SafeError("API/worker private storage mounts differ; no partial backup.")
+
+
+def source_inventory(state):
+    identity = run([*COMPOSE, "ps", "--all", "-q", "api"]).decode().strip()
+    if not identity:
+        raise SafeError(
+            "Existing API container missing; cannot identify retained private storage. No replacement created."
+        )
+    actual = json.loads(run(["docker", "inspect", identity]))[0]
+    verify_source_binding(actual)
+    report = {
+        "qualification": "Read-only preliminary inventory while writers may run; Backup repeats after stopping writers for the authoritative snapshot.",
+        "database": docker_inventory(),
+        "storage_mounts": [
+            {k: m.get(k) for k in ("Type", "Name", "Source", "Destination")}
+            for m in actual["Mounts"]
+            if m["Destination"] == "/app/storage"
+        ],
+        "api_setting_names": sorted(v.split("=", 1)[0] for v in actual["Config"]["Env"]),
+        "root_env_present": (ROOT / ".env").is_file(),
+        "git_head": run(["git", "rev-parse", "HEAD"]).decode().strip(),
+    }
+    write(state / "docker-inventory.json", report)
+    print(
+        json.dumps(
+            {
+                "source_database": {k: v for k, v in report["database"].items() if k != "tables"},
+                "application_tables": len(report["database"]["tables"]),
+                "report": str(state / "docker-inventory.json"),
+                "qualification": report["qualification"],
+            },
+            indent=2,
+        )
+    )
+
+
 def backup(state):
     # Compatibility is checked BEFORE stopping writers or taking a backup.
     source_meta = json.loads(
@@ -428,6 +505,7 @@ def backup(state):
             "Existing API container/storage reference missing; do not create a replacement."
         )
     actual = json.loads(run(["docker", "inspect", api_id]))[0]
+    verify_source_binding(actual)
     mounts = [m for m in actual["Mounts"] if m["Destination"] == "/app/storage"]
     if len(mounts) != 1:
         raise SafeError("Ambiguous private storage mount; inspect the actual container first.")
@@ -542,6 +620,10 @@ def restore(state, bundle, folder, *, new_target=False):
     if new_target and intent_path.exists():
         # Preserve the previous reservation/partial copy. Never drop or reuse it.
         shutil.copyfile(intent_path, state / f"previous-restore-{uuid4()}.dpapi.json")
+        if (state / "config.dpapi.json").exists():
+            shutil.copyfile(
+                state / "config.dpapi.json", state / f"previous-config-{uuid4()}.dpapi.json"
+            )
     intent = load_secret(intent_path) if intent_path.exists() and not new_target else None
     bundle_hash = hashlib.sha256((bundle / "manifest.json").read_bytes()).hexdigest()
     if intent and (intent["bundle"] != str(bundle) or intent["manifest_sha256"] != bundle_hash):
@@ -556,6 +638,16 @@ def restore(state, bundle, folder, *, new_target=False):
         if report["source"]["revision"] != "0016_closures":
             raise SafeError(
                 "Backup schema is not the accepted 0016_closures revision. No migration/upgrade will run automatically."
+            )
+        if (
+            not intent
+            and not new_target
+            and db.execute(
+                "select 1 from pg_database where datname ~ '^scns_native_[0-9a-f]{12}$' limit 1"
+            ).fetchone()
+        ):
+            raise SafeError(
+                "Existing native copies found but no matching durable intent in this State. Stop and recover the original State; only explicit -NewTarget may authorize a separate additional copy. No automatic duplicate creation."
             )
         if not intent:
             token = uuid4().hex[:12]
@@ -609,7 +701,12 @@ def restore(state, bundle, folder, *, new_target=False):
                 )
             db.execute(
                 sql.SQL("CREATE ROLE {} LOGIN PASSWORD {}").format(
-                    sql.Identifier(intent["user"]), sql.Literal(intent["password"])
+                    sql.Identifier(intent["user"]),
+                    sql.Literal(
+                        db.pgconn.encrypt_password(
+                            intent["password"].encode(), intent["user"].encode(), b"scram-sha-256"
+                        ).decode()
+                    ),
                 )
             )
             db.execute(
@@ -946,16 +1043,35 @@ def start(state, config):
             # Timestamped protected log; never command/environment/password dumps.
             log = (state / f"{name}-{time.time_ns()}.log").open("ab", buffering=0)
             logs.append(log)
-            process = subprocess.Popen(
+            process = job.spawn(
                 args,
                 cwd=ROOT / ("frontend" if name == "frontend" else "backend"),
-                env=env,
+                env=(
+                    env
+                    if name != "frontend"
+                    else {
+                        **{
+                            key: value
+                            for key, value in os.environ.items()
+                            if key.upper()
+                            in {
+                                "SYSTEMROOT",
+                                "WINDIR",
+                                "PATH",
+                                "PATHEXT",
+                                "COMSPEC",
+                                "TEMP",
+                                "TMP",
+                                "USERPROFILE",
+                                "APPDATA",
+                                "LOCALAPPDATA",
+                            }
+                        },
+                        "API_PROXY_TARGET": "http://127.0.0.1:8000",
+                    }
+                ),
                 stdout=log,
-                stderr=log,
-                creationflags=subprocess.CREATE_NEW_PROCESS_GROUP,
-                close_fds=True,
             )
-            job.assign(int(process._handle))
             processes.append(process)
             if name == "api":
                 ready("http://127.0.0.1:8000/api/v1/health/ready", process)
@@ -995,6 +1111,7 @@ def start(state, config):
         job.close()
         for process in processes:
             process.wait(timeout=10)
+            process.close()
         for log in logs:
             log.close()
         (state / "running.json").unlink(missing_ok=True)
@@ -1024,7 +1141,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "action",
-        choices=["setup", "preflight", "backup", "restore", "start", "stop", "verify", "test"],
+        choices=[
+            "setup",
+            "preflight",
+            "inventory",
+            "backup",
+            "restore",
+            "start",
+            "stop",
+            "verify",
+            "test",
+        ],
     )
     parser.add_argument("--state", type=Path, required=True)
     parser.add_argument("--bundle", type=Path)
@@ -1079,6 +1206,8 @@ def main():
             )
         elif args.action == "backup":
             backup(state)
+        elif args.action == "inventory":
+            source_inventory(state)
         elif args.action == "restore":
             bundle = args.bundle or Path(read(state / "last-backup.json")["bundle"])
             restore(state, bundle.resolve(), folder, new_target=args.new_target)
@@ -1101,6 +1230,8 @@ def isolated_tests(state):
     """Own only newly created nonce-named DBs; no fallback developer/test URL."""
     from sqlalchemy.engine import URL
 
+    from app.core.windows_sandbox import Job
+
     if (
         input("Create fresh disposable verification databases only? Type TEST ISOLATED: ")
         != "TEST ISOLATED"
@@ -1112,6 +1243,7 @@ def isolated_tests(state):
     directory = state / "tests" / token
     protect(directory)
     created = []
+    job = Job()
     try:
         with psycopg.connect(**admin, autocommit=True) as db:
             for name in names:
@@ -1165,7 +1297,18 @@ def isolated_tests(state):
         ]
         for index, command in enumerate(commands, 1):
             with (directory / f"check-{index}.log").open("wb") as log:
-                run(command, cwd=ROOT / "backend", env=env, stdout=log)
+                child = job.spawn(
+                    command,
+                    cwd=ROOT / "backend",
+                    env=env,
+                    stdout=log,
+                )
+                result = child.wait()
+                child.close()
+                if result:
+                    raise SafeError(
+                        f"Isolated native check {index} failed; inspect protected check-{index}.log. Retained databases not used."
+                    )
         write(
             directory / "passed.json",
             {
@@ -1176,6 +1319,7 @@ def isolated_tests(state):
         )
         print(f"Isolated native checks passed. Protected logs: {directory}")
     finally:
+        job.close()
         with psycopg.connect(**admin, autocommit=True) as db:
             for name in created:
                 if not name.startswith(f"scns_native_{token}") or not name.endswith("_test"):
@@ -1194,7 +1338,7 @@ if __name__ == "__main__":
     except Exception as error:
         # DB drivers may include DSNs/query literals. Never dump exception details.
         print(
-            f"Native action stopped ({type(error).__name__}); credentials/raw exception withheld. Preserve files and consult recovery steps.",
+            f"Native action stopped ({type(error).__name__}, Windows error {getattr(error, 'winerror', None)}); credentials/raw exception withheld. Preserve files and consult recovery steps.",
             file=sys.stderr,
         )
         sys.exit(1)

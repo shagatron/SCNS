@@ -1,5 +1,6 @@
 """Real logical restore/reconciliation on owned DBs; not Windows/DPAPI proof on Linux."""
 
+import copy
 import importlib.util
 import os
 import subprocess
@@ -106,8 +107,18 @@ def test_actual_restore_recovery_and_no_original_writes(tmp_path, monkeypatch, i
     monkeypatch.setattr(native, "run", runner)
     monkeypatch.setattr(native, "protect", lambda p: p.mkdir(parents=True, exist_ok=True))
     monkeypatch.setattr(native, "admin_connection", lambda: admin.copy())
-    monkeypatch.setattr(native, "save_secret", lambda p, v: native.write(p, v))
-    monkeypatch.setattr(native, "load_secret", native.read)
+    secret_store = {}
+
+    def fake_save(path, value):
+        # Synthetic credentials remain in memory; never fake DPAPI with plaintext.
+        secret_store[path] = copy.deepcopy(value)
+        native.write(path, {"synthetic_mock_dpapi": True})
+
+    def fake_load(path):
+        return copy.deepcopy(secret_store[path]) if path in secret_store else native.read(path)
+
+    monkeypatch.setattr(native, "save_secret", fake_save)
+    monkeypatch.setattr(native, "load_secret", fake_load)
     monkeypatch.setattr("builtins.input", lambda _: "RESTORE SCNS")
     try:
         with psycopg.connect(**admin, autocommit=True) as db:
@@ -209,7 +220,7 @@ def test_actual_restore_recovery_and_no_original_writes(tmp_path, monkeypatch, i
 
             monkeypatch.setattr(native.shutil, "copytree", interrupted_copy)
         with pytest.raises(native.SafeError, match="Synthetic interruption"):
-            native.restore(state, bundle, folder)
+            native.restore(state, bundle, folder, new_target=True)
         first = remember()
         assert len(restores) == 1
         monkeypatch.setattr(native, "save_secret", original_save)
@@ -229,6 +240,13 @@ def test_actual_restore_recovery_and_no_original_writes(tmp_path, monkeypatch, i
         assert len(restores) == (2 if interruption == "partial-storage" else 1)
         config = native.load_secret(state / "config.dpapi.json")
         native.verify_copy(config, report)
+        intent_path = state / "restore-intent.dpapi.json"
+        saved_intent = native.load_secret(intent_path)
+        intent_path.unlink()  # simulate a missing local reservation, not a DB change
+        with pytest.raises(native.SafeError, match="no matching durable intent"):
+            native.restore(state, bundle, folder)
+        assert len(restores) == (2 if interruption == "partial-storage" else 1)
+        original_save(intent_path, saved_intent)
         assert config["settings"]["IMPORT_BYTE_LIMIT"] == "4096"
         with psycopg.connect(**{**admin, "dbname": source}) as db:
             native.same_data(snapshot, native.inventory(db))

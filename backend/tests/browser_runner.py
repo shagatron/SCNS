@@ -107,18 +107,20 @@ def main():
                 from app.core.windows_sandbox import Job
 
                 native_job = Job()
-            worker = subprocess.Popen(
-                [sys.executable, "-m", "app.cli.imports", "worker"],
-                cwd=root / "backend",
-                env=env,
-                **(
-                    {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
-                    if os.name == "nt"
-                    else {"start_new_session": True}
-                ),
-            )
             if native_job:
-                native_job.assign(int(worker._handle))
+                worker = native_job.spawn(
+                    [sys.executable, "-m", "app.cli.imports", "worker"],
+                    cwd=root / "backend",
+                    env=env,
+                    stdout=sys.stdout,
+                )
+            else:
+                worker = subprocess.Popen(
+                    [sys.executable, "-m", "app.cli.imports", "worker"],
+                    cwd=root / "backend",
+                    env=env,
+                    start_new_session=True,
+                )
         try:
             result = subprocess.run(
                 (
@@ -142,6 +144,8 @@ def main():
                 else:
                     os.killpg(worker.pid, signal.SIGTERM)
                 worker.wait(timeout=10)
+                if native_job:
+                    worker.close()
     raise SystemExit(result.returncode)
 
 

@@ -86,3 +86,20 @@ def test_topology_has_no_outdoor_links_approvals_scale_or_accessibility_evidence
     assert all(n["floor"] in {"ground", "first"} for n in nodes.values())
     assert not any("isolated" in (a, b) for a, b, _ in links)
     assert all((b, a, k) in links for a, b, k in links)
+
+
+def test_routes_follow_graph_changes_rather_than_saved_highlighted_results(monkeypatch):
+    from app.core.errors import DomainError
+    from app.services import educational_indoor
+
+    nodes, links = topology()
+    removed = {("ground-west", "ground-middle"), ("ground-middle", "ground-west")}
+    monkeypatch.setattr(
+        educational_indoor,
+        "topology",
+        lambda: (nodes, [(a, b, kind) for a, b, kind in links if (a, b) not in removed]),
+    )
+    with pytest.raises(DomainError) as failure:
+        route(request("a", "library"))
+    assert failure.value.code == "demo_no_route"
+    assert route(request("a", "b")).traversal_count == 2

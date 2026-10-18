@@ -32,6 +32,7 @@ from psycopg import sql
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "backend"))
 from app.core.portable import durable_replace, lock_file  # noqa: E402
+from app.core.windows_sandbox import SandboxFailure  # noqa: E402
 
 
 class SafeError(Exception):
@@ -963,14 +964,18 @@ def setup_decoder():
 def decoder_check():
     import io
 
-    from PIL import Image
-    from pypdf import PdfWriter
+    from app.core.windows_sandbox import run_decoder, stage
 
-    from app.core.windows_sandbox import run_decoder
-    from app.services.floorplans import decode
+    with stage("import-pillow"):
+        from PIL import Image
+    with stage("import-pypdf"):
+        from pypdf import PdfWriter
+    with stage("import-floorplan-service"):
+        from app.services.floorplans import decode
 
     # Fail if actual file/network/token/job isolation cannot be established.
-    result = json.loads(run_decoder(b"", probe=True))
+    with stage("gate-isolation-probe"):
+        result = json.loads(run_decoder(b"", probe=True))
     if result != {
         "filesystem_denied": True,
         "network_denied": True,
@@ -987,12 +992,41 @@ def decoder_check():
     writer.add_blank_page(width=72, height=72)
     writer.write(pdf)
     for raw, name in [(image.getvalue(), "probe.png"), (pdf.getvalue(), "probe.pdf")]:
-        png, metadata = decode(raw, {"filename": name, "page": 1, "redactions": []})
-        with Image.open(io.BytesIO(png)) as rendered:
-            rendered.load()
-            if rendered.format != "PNG" or not metadata["width_px"]:
-                raise SafeError("Actual native PDF/image processing failed.")
+        with stage("gate-png" if name == "probe.png" else "gate-pdf"):
+            png, metadata = decode(raw, {"filename": name, "page": 1, "redactions": []})
+            with Image.open(io.BytesIO(png)) as rendered:
+                rendered.load()
+                if rendered.format != "PNG" or not metadata["width_px"]:
+                    raise SafeError("Actual native PDF/image processing failed.")
     print("Actual native AppContainer/job/file/network probe and PDF+PNG decoding passed.")
+
+
+def decoder_diagnostic(state):
+    """Existing runtime only: no ACL configuration, native state writes or DB access."""
+    if os.name != "nt":
+        raise SafeError("DecoderDiagnostic requires actual non-elevated native Windows.")
+    from app.core.windows_sandbox import diagnostics, profile_folder, stage
+
+    # Ignore developer .env; imports must not select any retained runtime database.
+    os.environ.update(
+        SCNS_ENV_FILE=str(state / "unused-do-not-create.env"),
+        DATABASE_URL="postgresql+psycopg://native_helper@127.0.0.1:1/native_helper_no_runtime_database",
+        STORAGE_ROOT=str(state / "helper-scratch"),
+    )
+    print(
+        "Decoder-only diagnostic: existing profile/runtime; no installation, ACL grants or database actions.",
+        flush=True,
+    )
+    with diagnostics(
+        lambda record: print(
+            "SCNS_DECODER_DIAGNOSTIC " + json.dumps(record, sort_keys=True), flush=True
+        )
+    ):
+        # Derive/inspect only. Missing setup stops; do not create a replacement profile.
+        with stage("existing-profile-directory"):
+            profile_folder()
+        with stage("decoder-gates"):
+            decoder_check()
 
 
 def versions(folder):
@@ -1200,6 +1234,7 @@ def main():
             "stop",
             "verify",
             "test",
+            "decoderdiagnostic",
         ],
     )
     parser.add_argument("--state", type=Path, required=True)
@@ -1207,6 +1242,10 @@ def main():
     parser.add_argument("--pg-bin", type=Path)
     parser.add_argument("--new-target", action="store_true")
     args = parser.parse_args()
+    if args.action == "decoderdiagnostic":
+        # Intentionally before state protection/marker/lock/toolchain/DB handling.
+        decoder_diagnostic(args.state)
+        return
     state = args.state.resolve()
     if len(state.parts) < 4 or state.is_relative_to(ROOT) or state in ROOT.parents:
         raise SafeError(
@@ -1401,7 +1440,7 @@ def isolated_tests(state):
 if __name__ == "__main__":
     try:
         main()
-    except (SafeError, KeyboardInterrupt) as error:
+    except (SafeError, SandboxFailure, KeyboardInterrupt) as error:
         print(
             str(error) or "Interrupted; preserve intent/backups and both copies.", file=sys.stderr
         )

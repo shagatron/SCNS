@@ -7,18 +7,72 @@ on ANY setup error. Windows acceptance must exercise the actual OS, not mocks.
 """
 
 import ctypes as c
+import json
 import os
+import re
 import socket
 import subprocess
 import sys
 import tempfile
 import threading
 import time
+from contextlib import contextmanager
+from contextvars import ContextVar
 from ctypes import wintypes as w
 from pathlib import Path
 
 PROFILE = "SCNS.Decoder.v1"
 LIMIT = 24 * 1024**2
+_stage = ContextVar("decoder_stage", default="windows-security")
+_report = ContextVar("decoder_report", default=None)
+
+
+class SandboxFailure(RuntimeError):
+    """Only source-defined operation names and numeric codes cross this boundary."""
+
+    def __init__(self, operation, *, windows_error=None, hresult=None, exit_code=None):
+        if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_.-]{0,95}", operation):
+            operation = "invalid-operation"
+        self.record = {"stage": _stage.get(), "operation": operation}
+        for name, code in (
+            ("windows_error", windows_error),
+            ("hresult", hresult),
+            ("exit_code", exit_code),
+        ):
+            if type(code) is int and 0 <= code <= 0xFFFFFFFF:
+                self.record[name] = code
+        super().__init__("SCNS_DECODER_ERROR " + json.dumps(self.record, sort_keys=True))
+
+
+def report(event, operation):
+    sink = _report.get()
+    if sink:
+        sink({"event": event, "stage": _stage.get(), "operation": operation})
+
+
+@contextmanager
+def stage(name):
+    token = _stage.set(name)
+    try:
+        report("begin", name)
+        yield
+        report("passed", name)
+    except SandboxFailure:
+        raise
+    except Exception as error:
+        # Never infer a Win32 error from errno, stale GetLastError, or raw text.
+        raise SandboxFailure(name, windows_error=getattr(error, "winerror", None)) from None
+    finally:
+        _stage.reset(token)
+
+
+@contextmanager
+def diagnostics(sink):
+    token = _report.set(sink)
+    try:
+        yield
+    finally:
+        _report.reset(token)
 
 
 def dll(name):
@@ -33,10 +87,32 @@ def function(lib, name, args, result=w.BOOL):
     return fn
 
 
-def checked(value):
+def checked(value, operation):
     if not value:
-        raise c.WinError(c.get_last_error())
+        # Capture immediately, before logging/cleanup can replace the native code.
+        code = c.get_last_error()
+        raise SandboxFailure(operation, windows_error=code)
+    report("passed", operation)
     return value
+
+
+def sized(value, size, operation):
+    """The documented size-query failure must be ERROR_INSUFFICIENT_BUFFER."""
+    code = c.get_last_error()
+    if value or code != 122 or not size.value:
+        raise SandboxFailure(operation, windows_error=code if not value else None)
+    report("size-available", operation)
+
+
+def hresult(status, operation):
+    if status:
+        code = status & 0xFFFFFFFF
+        raise SandboxFailure(
+            operation,
+            hresult=code,
+            windows_error=(code & 0xFFFF) if code >> 16 == 0x8007 else None,
+        )
+    report("passed", operation)
 
 
 class Basic(c.Structure):
@@ -107,6 +183,16 @@ class Capabilities(c.Structure):
 def profile_sid():
     env = dll("userenv")
     sid = c.c_void_p()
+    # Diagnostic runs must inspect the existing setup, never create/configure it.
+    if _report.get() is not None:
+        derive = function(
+            env,
+            "DeriveAppContainerSidFromAppContainerName",
+            [w.LPCWSTR, c.POINTER(c.c_void_p)],
+            c.c_long,
+        )
+        hresult(derive(PROFILE, c.byref(sid)), "DeriveAppContainerSidFromAppContainerName")
+        return sid
     create = function(
         env,
         "CreateAppContainerProfile",
@@ -119,17 +205,15 @@ def profile_sid():
     if status != 0:
         # Derive only if profile already exists. Do not mask arbitrary creation failures.
         if status & 0xFFFFFFFF != 0x800700B7:
-            raise RuntimeError(
-                f"AppContainer profile creation refused (HRESULT {status & 0xFFFFFFFF:08x})"
-            )
+            hresult(status, "CreateAppContainerProfile")
         derive = function(
             env,
             "DeriveAppContainerSidFromAppContainerName",
             [w.LPCWSTR, c.POINTER(c.c_void_p)],
             c.c_long,
         )
-        if derive(PROFILE, c.byref(sid)):
-            raise RuntimeError("Cannot derive decoder AppContainer SID")
+        hresult(derive(PROFILE, c.byref(sid)), "DeriveAppContainerSidFromAppContainerName")
+    report("passed", "CreateAppContainerProfile")
     return sid
 
 
@@ -138,7 +222,8 @@ def sid_text(sid):
     checked(
         function(dll("advapi32"), "ConvertSidToStringSidW", [c.c_void_p, c.POINTER(w.LPWSTR)])(
             sid, c.byref(text)
-        )
+        ),
+        "ConvertSidToStringSidW",
     )
     try:
         return text.value
@@ -157,8 +242,7 @@ def profile_folder():
         status = function(
             dll("userenv"), "GetAppContainerFolderPath", [w.LPCWSTR, c.POINTER(w.LPWSTR)], c.c_long
         )(sid_text(sid), c.byref(path))
-        if status:
-            raise RuntimeError("Cannot find decoder profile directory")
+        hresult(status, "GetAppContainerFolderPath")
         try:
             return Path(path.value)
         finally:
@@ -173,16 +257,17 @@ def current_user_sid():
     checked(
         function(a, "OpenProcessToken", [w.HANDLE, w.DWORD, c.POINTER(w.HANDLE)])(
             function(k, "GetCurrentProcess", [], w.HANDLE)(), 8, c.byref(token)
-        )
+        ),
+        "OpenProcessToken",
     )
     try:
         size = w.DWORD()
         info = function(
             a, "GetTokenInformation", [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.POINTER(w.DWORD)]
         )
-        info(token, 1, None, 0, c.byref(size))
+        sized(info(token, 1, None, 0, c.byref(size)), size, "GetTokenInformation.size")
         buffer = c.create_string_buffer(size.value)
-        checked(info(token, 1, buffer, size, c.byref(size)))
+        checked(info(token, 1, buffer, size, c.byref(size)), "GetTokenInformation")
         return sid_text(c.cast(buffer, c.POINTER(c.c_void_p))[0])
     finally:
         function(k, "CloseHandle", [w.HANDLE])(token)
@@ -207,7 +292,7 @@ def owner_private(path):
         w.DWORD,
     )(str(path), 1, 5, c.byref(owner), None, c.byref(dacl), None, c.byref(descriptor))
     if status:
-        raise c.WinError(status)
+        raise SandboxFailure("GetNamedSecurityInfoW", windows_error=status)
     try:
         user = current_user_sid()
         if not dacl.value or sid_text(owner) not in {user, "S-1-5-18"}:
@@ -220,7 +305,8 @@ def owner_private(path):
         checked(
             function(a, "GetAclInformation", [c.c_void_p, c.c_void_p, w.DWORD, c.c_int])(
                 dacl, c.byref(info), c.sizeof(info), 2
-            )
+            ),
+            "GetAclInformation",
         )
         found = set()
         for index in range(info.count):
@@ -228,7 +314,8 @@ def owner_private(path):
             checked(
                 function(a, "GetAce", [c.c_void_p, w.DWORD, c.POINTER(c.c_void_p)])(
                     dacl, index, c.byref(ace)
-                )
+                ),
+                "GetAce",
             )
             if c.cast(ace, c.POINTER(c.c_ubyte))[0] != 0:
                 return False
@@ -249,7 +336,8 @@ def protect_owner_file(path, *, directory=False):
     checked(
         function(a, "OpenProcessToken", [w.HANDLE, w.DWORD, c.POINTER(w.HANDLE)])(
             function(k, "GetCurrentProcess", [], w.HANDLE)(), 8, c.byref(token)
-        )
+        ),
+        "OpenProcessToken",
     )
     descriptor = c.c_void_p()
     try:
@@ -257,9 +345,9 @@ def protect_owner_file(path, *, directory=False):
         info = function(
             a, "GetTokenInformation", [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.POINTER(w.DWORD)]
         )
-        info(token, 1, None, 0, c.byref(size))
+        sized(info(token, 1, None, 0, c.byref(size)), size, "GetTokenInformation.size")
         buffer = c.create_string_buffer(size.value)
-        checked(info(token, 1, buffer, size, c.byref(size)))
+        checked(info(token, 1, buffer, size, c.byref(size)), "GetTokenInformation")
         sid = c.cast(buffer, c.POINTER(c.c_void_p))[0]
         inheritance = "OICI" if directory else ""
         sddl = f"D:P(A;{inheritance};FA;;;SY)(A;{inheritance};FA;;;{sid_text(sid)})"
@@ -268,12 +356,14 @@ def protect_owner_file(path, *, directory=False):
                 a,
                 "ConvertStringSecurityDescriptorToSecurityDescriptorW",
                 [w.LPCWSTR, w.DWORD, c.POINTER(c.c_void_p), c.c_void_p],
-            )(sddl, 1, c.byref(descriptor), None)
+            )(sddl, 1, c.byref(descriptor), None),
+            "ConvertStringSecurityDescriptorToSecurityDescriptorW",
         )
         checked(
             function(a, "SetFileSecurityW", [w.LPCWSTR, w.DWORD, c.c_void_p])(
                 str(path), 0x80000004, descriptor
-            )
+            ),
+            "SetFileSecurityW",
         )
     finally:
         function(k, "CloseHandle", [w.HANDLE])(token)
@@ -285,7 +375,8 @@ class Job:
     def __init__(self, *, decoder=False):
         self.k = dll("kernel32")
         self.handle = checked(
-            function(self.k, "CreateJobObjectW", [c.c_void_p, w.LPCWSTR], w.HANDLE)(None, None)
+            function(self.k, "CreateJobObjectW", [c.c_void_p, w.LPCWSTR], w.HANDLE)(None, None),
+            "CreateJobObjectW",
         )
         limits = Extended()
         limits.basic.flags = 0x2000  # KILL_ON_JOB_CLOSE; children cannot escape.
@@ -298,7 +389,8 @@ class Job:
             checked(
                 function(
                     self.k, "SetInformationJobObject", [w.HANDLE, c.c_int, c.c_void_p, w.DWORD]
-                )(self.handle, 9, c.byref(limits), c.sizeof(limits))
+                )(self.handle, 9, c.byref(limits), c.sizeof(limits)),
+                "SetInformationJobObject",
             )
         except BaseException:
             self.close()
@@ -306,7 +398,10 @@ class Job:
 
     def assign(self, process):
         checked(
-            function(self.k, "AssignProcessToJobObject", [w.HANDLE, w.HANDLE])(self.handle, process)
+            function(self.k, "AssignProcessToJobObject", [w.HANDLE, w.HANDLE])(
+                self.handle, process
+            ),
+            "AssignProcessToJobObject",
         )
 
     def spawn(self, args, *, cwd, env, stdout):
@@ -337,7 +432,8 @@ class OwnedProcess:
             checked(
                 function(dll("kernel32"), "GetExitCodeProcess", [w.HANDLE, c.POINTER(w.DWORD)])(
                     self.handle, c.byref(code)
-                )
+                ),
+                "GetExitCodeProcess",
             )
             self.returncode = code.value
         return self.returncode
@@ -358,7 +454,8 @@ class OwnedProcess:
         if signum != signal.CTRL_BREAK_EVENT:
             raise ValueError("Only graceful owned-group break is supported")
         checked(
-            function(dll("kernel32"), "GenerateConsoleCtrlEvent", [w.DWORD, w.DWORD])(1, self.pid)
+            function(dll("kernel32"), "GenerateConsoleCtrlEvent", [w.DWORD, w.DWORD])(1, self.pid),
+            "GenerateConsoleCtrlEvent",
         )
 
     def close(self):
@@ -373,6 +470,7 @@ def spawn_owned(job, args, *, cwd, env, stdout):
 
     k = dll("kernel32")
     attributes = None
+    initialized = False
     process = Process()
     try:
         with open(os.devnull, "rb") as source:
@@ -387,17 +485,30 @@ def spawn_owned(job, args, *, cwd, env, stdout):
                 "InitializeProcThreadAttributeList",
                 [c.c_void_p, w.DWORD, w.DWORD, c.POINTER(c.c_size_t)],
             )
-            initialize(None, 2, 0, c.byref(size))
+            sized(
+                initialize(None, 2, 0, c.byref(size)),
+                size,
+                "InitializeProcThreadAttributeList.size",
+            )
             attributes = c.create_string_buffer(size.value)
-            checked(initialize(attributes, 2, 0, c.byref(size)))
+            checked(
+                initialize(attributes, 2, 0, c.byref(size)), "InitializeProcThreadAttributeList"
+            )
+            initialized = True
             update = function(
                 k,
                 "UpdateProcThreadAttribute",
                 [c.c_void_p, w.DWORD, c.c_size_t, c.c_void_p, c.c_size_t, c.c_void_p, c.c_void_p],
             )
             jobs = (w.HANDLE * 1)(job.handle)
-            checked(update(attributes, 0, 0x2000D, jobs, c.sizeof(jobs), None, None))
-            checked(update(attributes, 0, 0x20002, handles, c.sizeof(handles), None, None))
+            checked(
+                update(attributes, 0, 0x2000D, jobs, c.sizeof(jobs), None, None),
+                "UpdateProcThreadAttribute",
+            )
+            checked(
+                update(attributes, 0, 0x20002, handles, c.sizeof(handles), None, None),
+                "UpdateProcThreadAttribute",
+            )
             startup = StartupEx()
             startup.startup.cb = c.sizeof(startup)
             startup.startup.flags = 0x100
@@ -440,13 +551,14 @@ def spawn_owned(job, args, *, cwd, env, stdout):
                     str(cwd),
                     c.byref(startup),
                     c.byref(process),
-                )
+                ),
+                "CreateProcessW",
             )
             return OwnedProcess(process.process, process.pid)
     finally:
         if process.thread:
             function(k, "CloseHandle", [w.HANDLE])(process.thread)
-        if attributes is not None:
+        if initialized:
             function(k, "DeleteProcThreadAttributeList", [c.c_void_p], None)(attributes)
 
 
@@ -489,7 +601,8 @@ def assert_isolated():
     checked(
         function(a, "OpenProcessToken", [w.HANDLE, w.DWORD, c.POINTER(w.HANDLE)])(
             current, 8, c.byref(token)
-        )
+        ),
+        "OpenProcessToken",
     )
     try:
         value, used = w.DWORD(), w.DWORD()
@@ -498,13 +611,15 @@ def assert_isolated():
                 a,
                 "GetTokenInformation",
                 [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.POINTER(w.DWORD)],
-            )(token, 29, c.byref(value), 4, c.byref(used))
+            )(token, 29, c.byref(value), 4, c.byref(used)),
+            "GetTokenInformation",
         )
         limits = Extended()
         checked(
             function(
                 k, "QueryInformationJobObject", [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.c_void_p]
-            )(None, 9, c.byref(limits), c.sizeof(limits), None)
+            )(None, 9, c.byref(limits), c.sizeof(limits), None),
+            "QueryInformationJobObject",
         )
         if (
             not value.value
@@ -519,18 +634,52 @@ def assert_isolated():
         function(k, "CloseHandle", [w.HANDLE])(token)
 
 
+def decoder_environment():
+    """Explicit allowlist; never copy PATH/TEMP, DB, session, proxy or config values."""
+    with stage("environment-block"):
+        root = os.environ.get("SystemRoot")
+        if not root or "\0" in root:
+            raise SandboxFailure("SystemRoot.required")
+        env = {"SystemRoot": root, "PYTHONDONTWRITEBYTECODE": "1", "PYTHONUTF8": "1"}
+        return c.create_unicode_buffer(
+            "\0".join(
+                f"{key}={value}" for key, value in sorted(env.items(), key=lambda p: p[0].upper())
+            )
+            + "\0\0"
+        )
+
+
+def wait_decoder(wait, process, *, timeout, overflow):
+    deadline = time.monotonic() + timeout
+    while True:
+        result = wait(process, 20)
+        if result == 0xFFFFFFFF:
+            # WAIT_FAILED must not be hidden by GetExitCodeProcess/cleanup.
+            raise SandboxFailure("WaitForSingleObject", windows_error=c.get_last_error())
+        if result == 0:
+            return
+        if result != 258:
+            raise SandboxFailure("WaitForSingleObject.unexpected-result")
+        if time.monotonic() > deadline or overflow.is_set():
+            raise SandboxFailure("process.wall-or-output-budget")
+
+
 def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeout=30):
     """Create suspended, assign job BEFORE execution, inherit ONLY three handles."""
+    from contextlib import ExitStack
+
     if probe and probe_file is None:
-        with (
-            tempfile.TemporaryDirectory(prefix="scns-denied-") as folder,
-            socket.socket() as listener,
-        ):
-            canary = Path(folder) / "owner-private.txt"
-            canary.write_text("Synthetic owner-readable isolation canary; no secret.")
-            protect_owner_file(canary)
-            listener.bind(("127.0.0.1", 0))
-            listener.listen(1)
+        with ExitStack() as resources:
+            with stage("probe-canary-create"):
+                folder = resources.enter_context(tempfile.TemporaryDirectory(prefix="scns-denied-"))
+                canary = Path(folder) / "owner-private.txt"
+                canary.write_text("Synthetic owner-readable isolation canary; no secret.")
+            with stage("probe-canary-protect"):
+                protect_owner_file(canary)
+            with stage("probe-loopback-listener"):
+                listener = resources.enter_context(socket.socket())
+                listener.bind(("127.0.0.1", 0))
+                listener.listen(1)
             return run_decoder(
                 payload,
                 probe=True,
@@ -541,13 +690,12 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
     import msvcrt
 
     k = dll("kernel32")
-    sid = profile_sid()
-    job = Job(decoder=True)
+    sid = job = reader = attributes = None
+    initialized = False
+    write_fd = read_fd = None
     process = Process()
-    attributes = None
-    read_fd, write_fd = os.pipe()
-    reader = os.fdopen(read_fd, "rb", buffering=0)
     data, done, overflow = bytearray(), threading.Event(), threading.Event()
+    read_failed = threading.Event()
     thread = None
     input_handle = w.HANDLE()
 
@@ -558,140 +706,194 @@ def run_decoder(payload, *, probe=False, probe_file=None, probe_port=None, timeo
                 if len(data) > LIMIT:
                     overflow.set()
                     return
+        except OSError:
+            read_failed.set()  # No raw exception from the collector thread.
         finally:
             reader.close()
             done.set()
 
     try:
-        with (
-            tempfile.TemporaryFile() as source,
-            # Pipe output is bounded in RAM; untrusted code gets no writable file.
-            os.fdopen(write_fd, "wb", buffering=0) as output,
-            open(os.devnull, "wb") as error,
-        ):
-            source.write(payload)
-            source.seek(0)
-            protect_owner_file(Path(source.name))
-            current = function(k, "GetCurrentProcess", [], w.HANDLE)()
-            checked(
-                function(
+        with stage("profile-lookup"):
+            sid = profile_sid()
+        with stage("job-create-limits"):
+            job = Job(decoder=True)
+        with stage("output-pipe-create"):
+            read_fd, write_fd = os.pipe()
+            reader = os.fdopen(read_fd, "rb", buffering=0)
+            read_fd = None
+        with ExitStack() as resources:
+            with stage("input-file-create"):
+                source = resources.enter_context(tempfile.TemporaryFile())
+            with stage("output-handles-open"):
+                output = os.fdopen(write_fd, "wb", buffering=0)
+                write_fd = None
+                resources.enter_context(output)
+                error = resources.enter_context(open(os.devnull, "wb"))
+            with stage("input-file-write"):
+                source.write(payload)
+                source.seek(0)
+            with stage("input-file-protect"):
+                protect_owner_file(Path(source.name))
+            with stage("input-handle-duplicate"):
+                current = function(k, "GetCurrentProcess", [], w.HANDLE)()
+                checked(
+                    function(
+                        k,
+                        "DuplicateHandle",
+                        [
+                            w.HANDLE,
+                            w.HANDLE,
+                            w.HANDLE,
+                            c.POINTER(w.HANDLE),
+                            w.DWORD,
+                            w.BOOL,
+                            w.DWORD,
+                        ],
+                    )(
+                        current,
+                        msvcrt.get_osfhandle(source.fileno()),
+                        current,
+                        c.byref(input_handle),
+                        0x80000000,
+                        True,
+                        0,
+                    ),
+                    "DuplicateHandle.read-only-input",
+                )
+            with stage("handle-inheritance"):
+                handles = (w.HANDLE * 3)(
+                    input_handle.value,
+                    msvcrt.get_osfhandle(output.fileno()),
+                    msvcrt.get_osfhandle(error.fileno()),
+                )
+                for handle in handles:
+                    os.set_handle_inheritable(handle, True)
+            with stage("attributes-initialize"):
+                size = c.c_size_t()
+                initialize = function(
                     k,
-                    "DuplicateHandle",
-                    [w.HANDLE, w.HANDLE, w.HANDLE, c.POINTER(w.HANDLE), w.DWORD, w.BOOL, w.DWORD],
-                )(
-                    current,
-                    msvcrt.get_osfhandle(source.fileno()),
-                    current,
-                    c.byref(input_handle),
-                    0x80000000,
-                    True,
-                    0,
+                    "InitializeProcThreadAttributeList",
+                    [c.c_void_p, w.DWORD, w.DWORD, c.POINTER(c.c_size_t)],
                 )
-            )
-            handles = (w.HANDLE * 3)(
-                input_handle.value,
-                msvcrt.get_osfhandle(output.fileno()),
-                msvcrt.get_osfhandle(error.fileno()),
-            )
-            for handle in handles:
-                os.set_handle_inheritable(handle, True)
-            size = c.c_size_t()
-            initialize = function(
-                k,
-                "InitializeProcThreadAttributeList",
-                [c.c_void_p, w.DWORD, w.DWORD, c.POINTER(c.c_size_t)],
-            )
-            initialize(None, 2, 0, c.byref(size))
-            attributes = c.create_string_buffer(size.value)
-            checked(initialize(attributes, 2, 0, c.byref(size)))
-            update = function(
-                k,
-                "UpdateProcThreadAttribute",
-                [c.c_void_p, w.DWORD, c.c_size_t, c.c_void_p, c.c_size_t, c.c_void_p, c.c_void_p],
-            )
-            caps = Capabilities(sid, None, 0, 0)
-            checked(update(attributes, 0, 0x20009, c.byref(caps), c.sizeof(caps), None, None))
-            checked(update(attributes, 0, 0x20002, handles, c.sizeof(handles), None, None))
-            startup = StartupEx()
-            startup.startup.cb = c.sizeof(startup)
-            startup.startup.flags = 0x100
-            startup.startup.stdin, startup.startup.stdout, startup.startup.stderr = handles
-            startup.attributes = c.cast(attributes, c.c_void_p)
-            # Minimal loader environment. No DB/session/proxy/native config secrets.
-            env = {
-                "SystemRoot": os.environ["SystemRoot"],
-                "PYTHONDONTWRITEBYTECODE": "1",
-                "PYTHONUTF8": "1",
-            }
-            block = c.create_unicode_buffer(
-                "\0".join(f"{key}={value}" for key, value in sorted(env.items())) + "\0\0"
-            )
-            argv = decoder_command(probe=probe, probe_file=probe_file, probe_port=probe_port)
-            command = c.create_unicode_buffer(subprocess.list2cmdline(argv))
-            create = function(
-                k,
-                "CreateProcessW",
-                [
-                    w.LPCWSTR,
-                    w.LPWSTR,
-                    c.c_void_p,
-                    c.c_void_p,
-                    w.BOOL,
-                    w.DWORD,
-                    c.c_void_p,
-                    w.LPCWSTR,
-                    c.c_void_p,
-                    c.POINTER(Process),
-                ],
-            )
-            checked(
-                create(
-                    argv[0],
-                    command,
-                    None,
-                    None,
-                    True,
-                    0x80000 | 0x400 | 0x4 | 0x08000000,
-                    block,
-                    str(Path(__file__).parents[2]),
-                    c.byref(startup),
-                    c.byref(process),
+                sized(
+                    initialize(None, 2, 0, c.byref(size)),
+                    size,
+                    "InitializeProcThreadAttributeList.size",
                 )
-            )
-            output.close()
-            job.assign(process.process)
-            thread = threading.Thread(target=collect, daemon=True)
-            thread.start()
-            checked(function(k, "ResumeThread", [w.HANDLE], w.DWORD)(process.thread) != 0xFFFFFFFF)
-            wait = function(k, "WaitForSingleObject", [w.HANDLE, w.DWORD], w.DWORD)
-            deadline = time.monotonic() + timeout
-            while wait(process.process, 20) == 258:
-                if time.monotonic() > deadline or overflow.is_set():
-                    raise TimeoutError("Decoder exceeded wall/output budget")
-            code = w.DWORD()
-            checked(
-                function(k, "GetExitCodeProcess", [w.HANDLE, c.POINTER(w.DWORD)])(
-                    process.process, c.byref(code)
+                attributes = c.create_string_buffer(size.value)
+                checked(
+                    initialize(attributes, 2, 0, c.byref(size)), "InitializeProcThreadAttributeList"
                 )
-            )
-            if not done.wait(2) or code.value or len(data) > LIMIT:
-                raise ValueError(
-                    f"Native isolated decoder refused input (exit {code.value:#x}); check runtime ACLs and AppContainer support, never bypass isolation"
+                initialized = True
+                update = function(
+                    k,
+                    "UpdateProcThreadAttribute",
+                    [
+                        c.c_void_p,
+                        w.DWORD,
+                        c.c_size_t,
+                        c.c_void_p,
+                        c.c_size_t,
+                        c.c_void_p,
+                        c.c_void_p,
+                    ],
                 )
-            return bytes(data)
+            with stage("attributes-security-capabilities"):
+                caps = Capabilities(sid, None, 0, 0)
+                checked(
+                    update(attributes, 0, 0x20009, c.byref(caps), c.sizeof(caps), None, None),
+                    "UpdateProcThreadAttribute.security-capabilities",
+                )
+            with stage("attributes-handle-list"):
+                checked(
+                    update(attributes, 0, 0x20002, handles, c.sizeof(handles), None, None),
+                    "UpdateProcThreadAttribute.handle-list",
+                )
+                startup = StartupEx()
+                startup.startup.cb = c.sizeof(startup)
+                startup.startup.flags = 0x100
+                startup.startup.stdin, startup.startup.stdout, startup.startup.stderr = handles
+                startup.attributes = c.cast(attributes, c.c_void_p)
+            block = decoder_environment()
+            with stage("decoder-command"):
+                argv = decoder_command(probe=probe, probe_file=probe_file, probe_port=probe_port)
+                command = c.create_unicode_buffer(subprocess.list2cmdline(argv))
+            with stage("process-create-suspended"):
+                create = function(
+                    k,
+                    "CreateProcessW",
+                    [
+                        w.LPCWSTR,
+                        w.LPWSTR,
+                        c.c_void_p,
+                        c.c_void_p,
+                        w.BOOL,
+                        w.DWORD,
+                        c.c_void_p,
+                        w.LPCWSTR,
+                        c.c_void_p,
+                        c.POINTER(Process),
+                    ],
+                )
+                checked(
+                    create(
+                        argv[0],
+                        command,
+                        None,
+                        None,
+                        True,
+                        0x80000 | 0x400 | 0x4 | 0x08000000,
+                        block,
+                        str(Path(__file__).parents[2]),
+                        c.byref(startup),
+                        c.byref(process),
+                    ),
+                    "CreateProcessW",
+                )
+            with stage("job-assign-before-resume"):
+                output.close()
+                job.assign(process.process)
+            with stage("process-resume"):
+                thread = threading.Thread(target=collect, daemon=True)
+                thread.start()
+                checked(
+                    function(k, "ResumeThread", [w.HANDLE], w.DWORD)(process.thread) != 0xFFFFFFFF,
+                    "ResumeThread",
+                )
+            with stage("process-wait"):
+                wait = function(k, "WaitForSingleObject", [w.HANDLE, w.DWORD], w.DWORD)
+                wait_decoder(wait, process.process, timeout=timeout, overflow=overflow)
+            with stage("process-result"):
+                code = w.DWORD()
+                checked(
+                    function(k, "GetExitCodeProcess", [w.HANDLE, c.POINTER(w.DWORD)])(
+                        process.process, c.byref(code)
+                    ),
+                    "GetExitCodeProcess",
+                )
+                if code.value:
+                    raise SandboxFailure("decoder-child.exit", exit_code=code.value)
+                if not done.wait(2) or read_failed.is_set() or len(data) > LIMIT:
+                    raise SandboxFailure("decoder-child.output")
+                return bytes(data)
     finally:
-        job.close()
+        if job is not None:
+            job.close()
         if process.process:
             function(k, "TerminateProcess", [w.HANDLE, w.UINT])(process.process, 1)
-        for handle in (process.thread, process.process):
+        for handle in (process.thread, process.process, input_handle.value):
             if handle:
                 function(k, "CloseHandle", [w.HANDLE])(handle)
-        if input_handle.value:
-            function(k, "CloseHandle", [w.HANDLE])(input_handle)
+        for fd in (read_fd, write_fd):
+            if fd is not None:
+                os.close(fd)
         if thread is None:
-            reader.close()
+            if reader is not None:
+                reader.close()
         else:
             thread.join(timeout=2)
-        if attributes is not None:
+        # A failed initialization does NOT produce a deletable attribute list.
+        if initialized:
             function(k, "DeleteProcThreadAttributeList", [c.c_void_p], None)(attributes)
-        free_sid(sid)
+        if sid is not None:
+            free_sid(sid)

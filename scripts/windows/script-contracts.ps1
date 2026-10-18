@@ -11,6 +11,11 @@ function Read-ScnsAst([string]$Name) {
 $Protect = Read-ScnsAst 'protect.ps1'
 $Scns = Read-ScnsAst 'scns.ps1'
 $null = Read-ScnsAst 'acl.test.ps1'
+$DecoderBody = $Scns.Find({ param($Node) $Node -is [System.Management.Automation.Language.IfStatementAst] -and $Node.Clauses[0].Item1.Extent.Text -eq '$Action -eq ''DecoderDiagnostic''' }, $true).Clauses[0].Item2
+if (-not $DecoderBody -or $DecoderBody.Extent.StartOffset -gt $Scns.Find({ param($Node) $Node -is [System.Management.Automation.Language.ForEachStatementAst] }, $true).Extent.StartOffset) { throw 'Decoder diagnostic must precede dependency/tool checks.' }
+if ($DecoderBody.Extent.Text -notmatch 'backend/.venv/Scripts/python.exe' -or $DecoderBody.Extent.Text -notmatch 'decoderdiagnostic --state') { throw 'Diagnostic must use installed interpreter and dedicated action.' }
+$DecoderCommands = $DecoderBody.FindAll({ param($Node) $Node -is [System.Management.Automation.Language.CommandAst] }, $true)
+if (@($DecoderCommands | Where-Object { $_.GetCommandName() -in @('uv','npm','node','icacls','protect','Setup','Start-Process') }).Count) { throw 'Diagnostic must not install/build/grant/reconfigure or need PG tools.' }
 # Prevent the provider-wide/ownership/auditing path from returning.
 $Calls = $Protect.FindAll({ param($Node) $Node -is [System.Management.Automation.Language.CommandAst] }, $true)
 if (@($Calls | Where-Object { $_.GetCommandName() -in @('Set-Acl','Get-Acl') }).Count) { throw 'ACL provider calls are forbidden.' }

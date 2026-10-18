@@ -1,7 +1,7 @@
 #requires -Version 7.4
 [CmdletBinding()]
 param(
-    [Parameter(Position=0,Mandatory)][ValidateSet('Preflight','Setup','Inventory','Backup','Restore','Start','Stop','Verify','Test')][string]$Action,
+    [Parameter(Position=0,Mandatory)][ValidateSet('Preflight','Setup','Inventory','Backup','Restore','Start','Stop','Verify','Test','DecoderDiagnostic')][string]$Action,
     [string]$State = (Join-Path $env:LOCALAPPDATA 'SCNS\native'),
     [string]$Bundle,
     [string]$PgBin,
@@ -14,6 +14,14 @@ if (-not $IsWindows -or -not [Environment]::Is64BitProcess) { throw 'Use native 
 if ([Environment]::OSVersion.Version.Build -lt 22000) { throw 'Native support requires Windows 11 x64. Other Windows editions are not validated.' }
 $ScnsRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 Set-Location -LiteralPath $ScnsRoot
+if ($Action -eq 'DecoderDiagnostic') {
+    # Direct installed interpreter: no uv sync, Node/npm, frontend build or PG tools.
+    $ScnsPython = Join-Path $ScnsRoot 'backend/.venv/Scripts/python.exe'
+    if (-not (Test-Path -LiteralPath $ScnsPython -PathType Leaf)) { throw 'Existing Python environment missing; diagnostic does not install dependencies.' }
+    & $ScnsPython (Join-Path $PSScriptRoot 'native.py') decoderdiagnostic --state $State
+    if ($LASTEXITCODE) { throw 'Decoder-only diagnostic stopped. Use the SCNS_DECODER_ERROR operation/code above; do not rerun Setup or weaken isolation.' }
+    return
+}
 foreach ($Tool in @('uv','node','npm')) {
     if (-not (Get-Command $Tool -ErrorAction SilentlyContinue)) { throw "Missing $Tool. Read docs/operations/native-windows.md installation steps." }
 }

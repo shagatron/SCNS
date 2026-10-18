@@ -332,6 +332,81 @@ def test_standalone_native_cli_fails_closed_on_linux(tmp_path):
     assert not list(tmp_path.iterdir())
 
 
+def test_decoder_diagnostic_dispatch_never_enters_state_or_toolchain_actions(tmp_path, monkeypatch):
+    state = tmp_path / "partial-native-state"
+    state.mkdir()
+    retained = state / "owner-journal.json"
+    retained.write_text('{"preserve":"exactly"}')
+    calls = []
+    monkeypatch.setattr(native, "decoder_diagnostic", lambda path: calls.append(path))
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("DecoderDiagnostic must not protect/setup/lock/discover PG or touch data")
+
+    for name in ("protect", "exclusive", "setup_decoder", "tools", "versions", "write"):
+        monkeypatch.setattr(native, name, forbidden)
+    monkeypatch.setattr(sys, "argv", ["native.py", "decoderdiagnostic", "--state", str(state)])
+    native.main()
+    assert calls == [state]
+    assert list(state.iterdir()) == [retained]
+    assert retained.read_text() == '{"preserve":"exactly"}'
+
+
+def test_decoder_diagnostic_linux_refusal_does_not_create_state(tmp_path):
+    if os.name == "nt":
+        pytest.skip("Linux-only refusal boundary")
+    state = tmp_path / "never-created"
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "scripts/windows/native.py"),
+            "decoderdiagnostic",
+            "--state",
+            str(state),
+        ],
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 1
+    assert b"non-elevated native Windows" in result.stderr
+    assert not state.exists()
+
+
+def test_decoder_diagnostic_existing_runtime_flow_is_sanitized_and_data_free(
+    tmp_path, monkeypatch, capsys
+):
+    from types import SimpleNamespace
+
+    from app.core import windows_sandbox as sandbox
+
+    monkeypatch.setattr(native, "os", SimpleNamespace(name="nt", environ=os.environ))
+    calls = []
+    monkeypatch.setattr(sandbox, "profile_folder", lambda: calls.append("existing-profile"))
+
+    def fail_gate():
+        calls.append("actual-gates")
+        sandbox.checked(False, "CreateProcessW")
+
+    monkeypatch.setattr(sandbox.c, "get_last_error", lambda: 203, raising=False)
+    monkeypatch.setattr(native, "decoder_check", fail_gate)
+    monkeypatch.setenv("SCNS_ENV_FILE", "private-original-config")
+    # Restore the three explicit controller overrides after this in-process model.
+    for key in ("DATABASE_URL", "STORAGE_ROOT"):
+        monkeypatch.setenv(key, "private-original-value")
+    state = tmp_path / "partial-native-state"
+    with pytest.raises(sandbox.SandboxFailure) as error:
+        native.decoder_diagnostic(state)
+    assert calls == ["existing-profile", "actual-gates"]
+    assert error.value.record == {
+        "stage": "decoder-gates",
+        "operation": "CreateProcessW",
+        "windows_error": 203,
+    }
+    assert not state.exists()
+    assert "private-original" not in capsys.readouterr().out + str(error.value)
+    assert os.environ["SCNS_ENV_FILE"] == str(state / "unused-do-not-create.env")
+
+
 def test_powershell_and_app_paths_do_not_depend_on_fixed_installation():
     script = (ROOT / "scripts/windows/scns.ps1").read_text()
     assert "--frozen" in script and "npm ci" in script and "LOCALAPPDATA" in script

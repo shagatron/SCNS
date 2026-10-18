@@ -11,6 +11,7 @@ from app.api.v1.admin import router as admin_router
 from app.api.v1.closures import public_router as closures_public_router
 from app.api.v1.closures import router as closures_router
 from app.api.v1.connections import router as connections_router
+from app.api.v1.educational import router as educational_router
 from app.api.v1.floorplans import router as floorplans_router
 from app.api.v1.graph import router as graph_router
 from app.api.v1.imports import router as imports_router
@@ -133,3 +134,5 @@ app.include_router(qr_public_router)
 
 app.include_router(closures_router)
 app.include_router(closures_public_router)
+
+app.include_router(educational_router)

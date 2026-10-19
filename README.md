@@ -1,138 +1,126 @@
-# Smart Campus Navigation
+# Smart Campus Navigation (SCNS)
 
-A working outdoor and indoor navigation demo built with React, TypeScript, Vite, Tailwind, TanStack Query, Leaflet, FastAPI, SQLAlchemy, Alembic, PostgreSQL and PostGIS. Milestones 0, 1, admin/import/graph/review slices 2A–2C and indoor floorplan foundations 3A, visual same-floor tracing 3B and indoor/mixed routing 3C, plus Milestone4 QR (4A) and closure/lift-outage (4B) and opt-in outdoor location (4C) slices, of the [master specification](docs/product/master-spec.md) are implemented. See the [requirements checklist](docs/product/requirements-checklist.md) and [verification report](docs/testing/verification.md) for scope and evidence.
+A **DSA academic project** demonstrating computed outdoor and indoor navigation, built with React/TypeScript and FastAPI/PostGIS. The public application includes a campus directory, route planner, dark outdoor maps, published indoor floor views and an original two-floor educational demo. Administration supports authenticated campus-scoped drafts, imports, graph editing, review/publication/rollback, QR markers and live restrictions.
 
-**Demo Campus is wholly synthetic.** Its coordinates near (0°, 0°), buildings, paths, access conditions and accessibility evidence are invented. It is not the owner's campus and must not be used for real navigation. Public navigation requires no account, paid services, API keys or external map tiles. Administrator accounts are explicitly provisioned; there is no public deployment.
+This is a student project, **not an official university service or a field-verified navigation system**. Docker is the supported submission runtime; the abandoned native-Windows experiment remains on its separate branch and is not included in `main`.
 
-The separately authorized **MUJ OSM preparation** adds a real, clearly unverified campus through an unpublished staged draft, never through seeding. Use the [data-preserving Windows setup/import and viewing workflow](docs/operations/muj-osm.md) and read [source, coverage, counts, ODbL attribution and review prerequisites](docs/data/muj-osm.md). Demo Campus and its published navigation remain unchanged.
+## What is in Git, and what is not
 
-## What works
+Git contains application code, migrations, frozen dependency locks, original/attributed assets, synthetic fixtures, OSM source preparation and verification documentation. **The owner's retained Windows database, accounts, private uploads, drafts and published MUJ/E22 release are separate Docker data. Cloning this repository does not reproduce them.** Never reset/reseed an existing installation or replay imports merely to update code.
 
-- Public directory and search by name, code, category and aliases; place details and pagination.
-- Responsive phone/desktop route planner, manual starts/destinations, swap, clear, selectable map markers, fit-route control and map-free text directions.
-- Heap-based Dijkstra over **stored directed graph edges**, selecting the cheapest eligible combination of entrance anchors. PostGIS measures the complete path polylines; baseline walking ETA uses a configurable 1.4 m/s speed.
-- Honest handling of one-way paths, closed/restricted edges, isolated destinations, unmapped entrances, same-place arrival and unknown step-free accessibility. The step-free example tests synthetic eligibility only.
-- Database-backed draft/release separation, frozen rows protected by triggers, atomic active-release selection, release IDs on responses and stale-release errors.
-- Campus-scoped admin login, one-time bootstrap, dashboard, private draft catalog CRUD, optimistic concurrency and append-only audit at `/admin`. See [admin setup and workflow](docs/operations/admin.md).
-- Private staged CSV/JSON/GeoJSON imports with field mapping, row diagnostics, change previews, stable IDs, explicit upsert, idempotent retries and atomic audited draft application.
-- Visual outdoor draft graph editing and exact-content independent validation/review/publication/rollback.
-- Same-floor and cross-floor public routes with floor switching, release-pinned reload, conservative step-free and fastest-supported estimates; unknown distance/ETA stay explicit. See [indoor routing and Windows updates](docs/operations/indoor-routing.md).
-- QR inventory, installation verification, revocation/reassignment, printable SVG/PNG/PDF signs and explicit confirmed outdoor/indoor starts. See [QR workflow and Windows update](docs/operations/qr-markers.md).
-- Draft floors, private isolated PDF/PNG/JPEG page processing, masks, responsive local preview and evidence-bound calibration with independently approved sanitized immutable display assets. Reviewed floor capabilities, explicit stairs/lifts/ramps/entrances and mixed indoor/outdoor routes are available; see [3A workflow and Windows updates](docs/operations/floorplans.md).
+| Context | What it demonstrates | Qualification |
+|---|---|---|
+| Demo Campus | Stored graph, public directory/search, metric routes and synthetic accessibility cases | Entirely invented data, not a real campus |
+| MUJ outdoor preview | Limited OpenStreetMap-based routes and published data workflows | Owner reports local publication/acceptance; incomplete, not institutional or physical-survey approval |
+| MUJ **Indoor demo** tab | Original fictional two-floor schematics and computed traversal-count routes | **Demonstration layout — not an actual MUJ floorplan.** No real-campus connection, scale, metres, ETA or accessibility evidence |
 
-The supplied repository contained no C code. `legacy/c-prototype/` records that fact and is reserved for the original prototype if supplied.
+MUJ's photo/logo remain campus-aware; the complete directory, planner, published-floor controls, QR/GPS confirmation and restrictions are retained. **Outdoor** selects the ordinary published-campus explorer, including its existing published indoor journeys. **Indoor demo** selects a separate educational graph in the same map area. Mode choices/results stay separate; legacy `/indoor-demo` links remain supported. No demo activation, account or campus publication is required for that educational content.
 
-For an existing installation, the [one-command unpublished synthetic 3C setup](docs/operations/synthetic-3c-demo.md) prepares a separate demo draft using the real worker and your existing owner/reviewer accounts, preserving existing mapping and the public release.
+## Actual DSA implementation
 
-## Local development
+[`dijkstra.py`](backend/app/routing/dijkstra.py) constructs a **directed adjacency list** (`defaultdict(list)`) from eligible arcs. Python `heapq` supplies the min-heap; dictionaries store best ranks and predecessor arcs, and sets identify starts/targets and duplicate IDs. Strictly better labels are relaxed and pushed as new heap entries; stale entries are skipped by comparing the popped rank to the current best rank. Predecessors reconstruct ordered nodes/edges. Multi-source/multi-target routing supports entrance choices and deterministic tie-breaking. No custom heap or unimplemented pathfinding algorithm is claimed.
 
-Prerequisites: Docker Engine/Desktop with Compose v2, Python 3.12 or 3.13, `uv` (tested 0.12.19), Node 24 (minimum 22.12), npm, Make, Bash. Dependency versions are locked in `backend/uv.lock` and the **root** npm workspace `package-lock.json`.
+[`mixed.py`](backend/app/routing/mixed.py) filters and weights published outdoor/indoor/entrance/connector arcs before calling the same engine:
 
-From the repository root:
+- **Metric / shortest:** minimize eligible stored physical length. Outdoor OSM lengths may be **estimated**, not field measured. Unknown lengths are not guessed.
+- **Directions only:** minimize **eligible traversals**, one unit per graph arc; not shortest distance or fastest time. It can return a longer physical route with fewer arcs.
+- **Fastest:** minimize supported baseline traversal seconds, excluding connections without required time estimates. Walking estimates use configured speed (default1.4m/s); lift movement/wait estimates require the relevant reviewed data. This is not live travel-time prediction; fastest is unavailable with Directions only.
+- **Step-free:** retain strict verified-access eligibility, exclude stairs/unknown access, then minimize the selected cost. Direction, permissions/static access, published capabilities and the current closure overlay still apply.
 
-```bash
-make setup                # frozen Python dependencies, npm ci, preserve/create local .env
-make demo                 # start PostGIS, apply migrations, explicitly seed Demo Campus
-make dev                  # API + frontend + private import worker; Ctrl-C stops all
-```
+With V represented vertices and E eligible arcs, the **core** uses O((V+E)log(V+E)) time including deterministic sorting/lazy heap entries, and O(V+E) auxiliary space; O((V+E)log V) is a common equivalent shorthand for simple graphs. This is not an end-to-end API/database benchmark. [DSA explanation and bounds](docs/submission/dsa.md) cover adapter overhead, including current entrance-priority preparation. Stack-based DFS-style reachability is used in graph diagnostics; BFS is an equal-weight comparison, not the implemented public route engine. Unit tests compare random weighted graphs against an independent Floyd–Warshall reference.
 
-On your own machine open `http://localhost:5173`. The API runs on port 8000, interactive API docs are at `http://localhost:8000/docs`, readiness is `/api/v1/health/ready`, and PostGIS is on localhost:54329. These are local addresses, not a published site. In a cloud workspace use its supported browser/port access tooling. No onboarding preview is created.
+## Stack and architecture
 
-Alternatively use three terminals: `make api`, `make web` and `make worker`. Stop Compose `api`, `frontend` and `import-worker` before source development so only workers sharing the same private storage serve a database. To stop PostGIS without deleting its data: `docker compose stop db`. The named volume survives restarts; no reset/drop is performed by normal setup.
+| Layer | Implementation |
+|---|---|
+| Public/admin UI | React, TypeScript, Vite, Tailwind/CSS, TanStack Query, Leaflet |
+| API and services | Python3.12, FastAPI, Pydantic, SQLAlchemy, Alembic |
+| Stored data | PostgreSQL17/PostGIS; directed outdoor paths, indoor frames, immutable published projections, private drafts/audits |
+| Local runtime | Docker Compose; nginx frontend, API, private import/floorplan worker and database |
 
-The commands can also be run explicitly:
+The UI requests the current published release; the API validates context/restrictions and builds eligible graph arcs, computes Dijkstra, then returns geometry and text directions. Draft changes remain private until the normal exact-content review/publication workflow. Original uploads stay private; approved display assets are served through controlled endpoints. The educational API is a separate no-database computation over authored demo data. See [architecture](docs/architecture/design.md), [contracts](docs/architecture/openapi.json) and [requirements/checklist](docs/product/requirements-checklist.md).
 
-```bash
-docker compose up -d --wait db
-cd backend
-uv sync --frozen
-uv run --frozen alembic upgrade head
-DEMO_ENABLED=true uv run --frozen python -m app.cli.dataset seed-demo ../data/demo/campus.json
-uv run --frozen uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
-# In another terminal from repository root:
-npm ci
-npm run dev --workspace frontend -- --host 127.0.0.1
-```
+## Run with Docker
 
-## Full stack in Compose
+**Prerequisites:** Git, Docker Engine/Desktop with Compose v2 (Linux containers), a modern browser and sufficient disk space/network for frozen image/dependency builds. Host Python, Node and native PostgreSQL are **not required** for Docker. Default ports are loopback-only5173(frontend),8000(API) and54329(database). Do not run a second stack on those ports. No paid services, map keys or external tiles are required by default.
 
-This serves the built frontend through nginx and proxies `/api` to FastAPI. Migrations and seeding are explicit one-off steps, never per-worker startup side effects.
+### Existing checkout / retained owner data
+
+Use the complete copy-paste [Windows PowerShell main update/start block](docs/operations/academic-submission.md#existing-windows-checkout-safe-main-update-and-start) for `C:\Users\Aaditya Shah\SCNS`. It checks clean Git state, fast-forwards `main`, starts/checks the **existing database before API readiness**, builds/starts API, worker and frontend, and opens the app. It preserves `.env`, accounts, private storage, volumes, drafts, releases and the temporary phone override. Laptop startup deliberately excludes that override; no LAN access is enabled.
+
+For an already-updated checkout on Bash/Linux, equivalent retained-data startup is:
 
 ```bash
-docker compose up -d --wait db
-docker compose build api frontend
-docker compose run --rm --no-deps api alembic upgrade head
-docker compose run --rm --no-deps api python -m app.cli.dataset seed-demo ../data/demo/campus.json
-docker compose up -d --wait api frontend import-worker
+# From repository root, using the existing default Compose project/data.
+docker compose -f compose.yaml up -d --wait --no-deps --no-build db
+docker compose -f compose.yaml exec -T db pg_isready -U scns -d scns
+docker compose -f compose.yaml build api frontend
+docker compose -f compose.yaml up -d --wait --no-deps --no-build --force-recreate api
+docker compose -f compose.yaml up -d --no-deps --no-build import-worker
+docker compose -f compose.yaml up -d --wait --no-deps --no-build --force-recreate frontend
+docker compose -f compose.yaml ps db api import-worker frontend
+curl --fail http://localhost:5173/api/v1/health/ready
 ```
 
-Stop host `make dev` processes first because Compose uses the same ports. Compose binds ports to loopback and uses **local development credentials only**. Production mode intentionally refuses startup until the deployment milestone is completed. The API and bounded import worker share a private named storage volume; originals are outside nginx and never published.
+Open **http://localhost:5173**. API docs: http://localhost:8000/docs. If the API returns database-related503s, start/check the existing database first; API-only `--no-deps` startup cannot start a stopped database. Repeat startup does not require migration, seed, bootstrap or import commands. To stop without deleting data: `docker compose -f compose.yaml stop frontend import-worker api db`.
 
-## Test and build
+### Fresh clone with genuinely new, empty data
+
+A fresh clone starts with **no owner's MUJ database or private files**. The fresh-install instructions below deliberately use a separate project name. Run them only on a new installation with standard ports free. If that project's volumes already exist, stop and use existing-install startup with the same project name; never rerun initialization as an update.
 
 ```bash
-make check                # Ruff lint/format, TypeScript, ESLint
-make build                # frontend production build + Python compilation
-make test-unit            # Python algorithms/data/coordinates + Vitest components
-make test-integration     # provision scns_test, migrate it, run real PostGIS/API tests
-make test-migrations      # reset dedicated scns_migration_test; rehearse fresh/upgrade migrations
-
-# One-time standard browser installation:
-cd frontend && npx playwright install --with-deps chromium && cd ..
-make test-e2e             # reset scns_e2e_test; isolated API/web/worker and private storage
-
-# This cloud workspace already has Chromium; use this instead of downloading:
-PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium make test-e2e
-
-make generate-api         # regenerate OpenAPI, JSON schema, checked-in TypeScript contracts
-make containers           # build both runnable container images
+set -e
+git clone https://github.com/shagatron/SCNS.git
+cd SCNS
+ScnsFreshVolumes=$(docker volume ls --filter label=com.docker.compose.project=scns-academic-fresh --format '{{.Name}}')
+if [ -n "$ScnsFreshVolumes" ]; then
+  echo 'Existing fresh-project volumes found. Stop; use retained-data startup with that project name.'
+  exit 1
+fi
+# Only for a genuinely NEW project: explicit first-time schema/demo initialization.
+docker compose -p scns-academic-fresh -f compose.yaml build api frontend
+docker compose -p scns-academic-fresh -f compose.yaml up -d --wait db
+docker compose -p scns-academic-fresh -f compose.yaml exec -T db pg_isready -U scns -d scns
+docker compose -p scns-academic-fresh -f compose.yaml run --rm --no-deps api alembic upgrade head
+docker compose -p scns-academic-fresh -f compose.yaml run --rm --no-deps api python -m app.cli.dataset seed-demo ../data/demo/campus.json
+docker compose -p scns-academic-fresh -f compose.yaml up -d --wait api frontend import-worker
 ```
 
-Browser tests run desktop Chromium and a 360px mobile viewport. Integration tests require `TEST_DATABASE_URL` with a database name ending in `_test`; each test uses rolled-back transactions. They never reset development data. If using your own database server, provision a separate empty `_test` database with PostGIS extension permissions and override the URL. Browser tests reset a dedicated database named `scns_e2e_test`, generate ephemeral administrator credentials and run separate API/web servers on ports 8001/5174. They never reuse developer services. Admin browser traces, video and screenshots are disabled to avoid retaining authentication data. See [the test isolation details](docs/operations/admin.md#repeatable-verification).
+These first-time commands are documented for an empty install; **they are not part of the retained-data update or this submission audit**. They create only synthetic Demo Campus, not MUJ. Public Demo Campus works without admin provisioning. `/indoor-demo` provides the compatibility educational view when MUJ is absent; do not create a fake MUJ campus to manufacture its integrated entry. Optional admin provisioning requires the separate secure [one-time admin workflow](docs/operations/admin.md), not a hardcoded/default password. Keep this project's name for subsequent startup and stopping; volumes survive `stop`.
 
-The cloud environment has read-only home caches. Make directs uv/npm caches to `/tmp`. For direct commands set `UV_CACHE_DIR=/tmp/scns-uv-cache` and `npm_config_cache=/tmp/scns-npm-cache` if needed. For container builds **in this cloud workspace**, use `python scripts/cloud-build.py` in place of `docker compose build api frontend`: it resolves the already-configured proxy for the isolated build and mounts existing CA trust temporarily. No credential values are printed or copied into images, and TLS/lockfile verification stays enabled. On a normal local Docker installation, the standard Compose build command works without this helper.
+## Presentation inputs and evidence
 
-## Data and configuration
+| Context / inputs | Expected result | Evidence status |
+|---|---|---|
+| Demo Campus, Main Gate → Library, shortest + metric |256.88m/3stored edges, approximately257m/4min | Automated source/API/built evidence; earlier owner Windows baseline also recorded |
+| MUJ, University Entrance → Mapped entrance10828149259(E05), shortest + metric |513.10m/13edges, displayed≈513m | Source-OSM fixture calculation and owner-reported Windows acceptance |
+| Same MUJ pair, Directions only / Fewest eligible traversals |799.32m/9edges, displayed≈799m; not distance minimization | Fixture calculation and owner-reported Windows acceptance |
+| MUJ, Hostel Entrance → GHS Entrance; → Faculty Block Entrance, metric |23.62m/3edges;163.28m/6edges | Fixture calculation and owner-reported Windows acceptance |
+| Indoor demo, Classroom A → Demo Library |3authored traversals, Ground floor | Automated real demo API/browser evidence |
+| Indoor demo, A → Classroom C; reverse C → A |9traversals each, explicit stair ascent/descent and matching floor sections | Automated source/built evidence |
+| Indoor demo, A → A; A → Demo Disconnected Room |0traversals without a physical metric claim; explicit no-route for disconnected room | Automated source/built evidence |
 
-Read [data/README.md](data/README.md), the [data dictionary](docs/data/dictionary.md) and [architecture](docs/architecture/design.md). `.env.example` documents active settings. `VITE_*` settings are intentionally public; never put secrets there. A permitted basemap URL **and attribution** may be supplied to Vite; default blank values make no tile requests. Basemaps are not preloaded or cached for offline use.
+Use the exact **Demo Classroom** option names in the UI. All educational distances/ETA remain unknown. Switch floors with **View demonstration floor** or **Show First floor** in directions; hide the map and follow independent text; reload to recover the route/floor. The MUJ integrated mode is available only when that published campus exists in the local database. [Presentation-day checklist](docs/submission/presentation.md) includes QR/GPS/closure prerequisites, fallback and provenance. Unsupported real MUJ Library/cross-campus/verified-step-free routes must remain unavailable.
+
+Owner-reported results used separate application accounts operated by the owner; **not independent human, institutional, physical-route or accessibility verification**. GPS is explicit opt-in, accuracy/freshness/path checked and landmark-confirmed; it is not continuous tracking and cannot infer an indoor floor/room. QR requires confirmation and valid installation/revocation state. Closure freshness and fail-closed checks remain active; an estimated end never proves reopening.
+
+## Checks, operations and limitations
 
 ```bash
-make validate-dataset
-make validate-dataset DATASET=/absolute/path/to/outdoor-bundle.json
-# Create a revised synthetic release after editing a COPY of the fixture:
-make seed-demo DATASET=/absolute/path/to/modified-demo.json
+npm run check --workspace frontend
+npm test --workspace frontend
+npm run build --workspace frontend
+UV_CACHE_DIR=/tmp/scns-uv-cache uv run --directory backend --frozen pytest -q tests/unit
 ```
 
-Validation performs no database writes. The demo seed command only accepts `DEMO_ENABLED=true`, `is_demo=true`, code `DEMO`, and name `Demo Campus`. The first identical seed is a no-op; an edited bundle creates a new immutable revision/release and atomically advances the public pointer. Existing releases remain frozen. Repeating an old bundle does not roll back the current release. This is a **local synthetic fixture importer**. Use the private staged imports and independent review workflow for authorized data; do not reseed an existing installation during routine updates.
+Host checks require the locked developer dependencies (`uv sync --frozen` in backend; root `npm ci`), Python3.12or3.13 and Node22.12+(container uses24). See [contributing](CONTRIBUTING.md) for optional source development, [latest verification](docs/testing/verification.md), [integration evidence](docs/testing/educational-indoor-demo.md#explorer-integration-adjustment--final-evidence) and [submission audit](docs/submission/audit.md). Database/browser fixture runners modify **only their explicitly owned disposable test resources**; never point them at the owner's database. No new deployment or performance certification is claimed.
 
-## Next milestone and limitations
+Useful guides: [admin](docs/operations/admin.md), [imports](docs/operations/imports.md), [graph editor](docs/operations/graph-editor.md), [publication/rollback](docs/operations/publication.md), [indoor routing](docs/operations/indoor-routing.md), [QR](docs/operations/qr-markers.md), [GPS](docs/operations/geolocation.md), [closures](docs/operations/closures.md), [MUJ source/ODbL attribution](docs/data/muj-osm.md), [MUJ publication evidence](docs/operations/muj-publication-preparation.md), [educational viewer](docs/operations/educational-indoor-demo.md), [screenshots](docs/previews/educational-indoor/integrated/README.md).
 
-Milestone **2A** delivers campus-scoped admin authentication, catalog CRUD, audit and optimistic concurrency. The [one-time `bootstrap-admin` command](docs/operations/admin.md) is working. Milestones **2B1/2B2** deliver staged CSV/JSON/GeoJSON imports, the outdoor draft graph editor, graph diagnostics and draft route tests. **2C** delivers exact-version independent review, publication/rollback and approved asset projection. **3A** delivers private floorplan processing, draft floors and calibration; **3B** delivers canonical indoor destinations/explicit doors and the same-floor visual graph editor; **3C** delivers explicit connectors, entrances and indoor/mixed routing. Milestone4A adds QR lifecycle/signs/confirmed starts; Milestone4B adds live restrictions; outdoor location4C is delivered; saved/offline packs remain planned later slices. Real-data `import-dataset`, `export-release`, and backup/restore commands will be delivered with their relevant milestones.
+MUJ outdoor coverage is incomplete; OSM topology is not a field survey. Unidentified entrances remain unresolved; unknown measurements/accessibility are not filled in. The educational schematics are original and unscaled, not MUJ or copied Nalanda blueprints. Physical-device GPS, physical routes, human assistive-technology certification and the latest Windows indoor-demo update remain unverified here. Phone whole-floor labels need zoom; the previously documented brief route-button transition contrast gap remains. Reports4D/offline packs4E and deployment are outside this submission. Supplied C prototype status is recorded under [legacy/c-prototype](legacy/c-prototype/README.md).
 
-Indoor floorplan foundations are delivered in 3A; same-floor room/corridor tracing is delivered in 3B; connectors and indoor navigation are delivered3C; QR is slice4A; live closures and lift outages are slice4B. Optional outdoor location4C is delivered with explicit landmark confirmation; reports4D and saved-route offline/PWA4E remain planned. [Exact Chrome simulation and Windows update](docs/operations/geolocation.md) preserve manual/QR starts and the public polish. [Closures/Windows update/manual checks](docs/operations/closures.md) document the separate operational overlay and conservative scheduled window; estimated ends never reopen paths. Recurring opening hours and time-dependent queues remain unsupported. No real campus accessibility, physical path accuracy, load benchmark, screen-reader certification or deployment is claimed. Official maps and ownership/licensing decisions remain external inputs. No code license has been chosen on the owner's behalf; see [CONTRIBUTING.md](CONTRIBUTING.md).
+Preserve [OpenStreetMap attribution/ODbL](https://www.openstreetmap.org/copyright), bundled Inter's OFL notice and existing asset/source disclosures. No owner-approved code license has been supplied; no license grant or institutional endorsement is invented ([licensing guidance](CONTRIBUTING.md)).
 
-## Staged draft imports (2B1)
+## Final report and slides
 
-See [the import setup and workflow guide](docs/operations/imports.md) and [executable import-v1 templates](data/templates/import-v1/README.md). `make dev` now starts the private DB-backed import worker with API/frontend; Compose requires `docker compose up -d --wait api frontend import-worker`. Imports never publish and public navigation stays on the existing release.
-
-## Outdoor draft graph editor (2B2)
-
-See [graph update/startup instructions, editing controls, recovery and concurrency](docs/operations/graph-editor.md). Node, paired directed-edge and entrance edits remain private drafts. Width/slope/steps/surface are unknown until provided; geometry changes never automatically certify accessibility. Per-tab recovery autosaves local input, while saving to the server is explicit. Graph validation and Dijkstra test routes do not publish.
-
-Milestone 2C adds exact-version validation/review, independent approval, immutable public artifacts, atomic publication and audited rollback. [Workflow and Windows Docker Desktop update commands](docs/operations/publication.md) preserve existing installation data; no deployment is authorized. Source/projection templates: [publication-v1](data/templates/publication-v1/README.md).
-
-## Indoor floorplan foundations (3A)
-
-[Data-retaining Windows PowerShell/Docker Desktop update and complete admin workflow](docs/operations/floorplans.md), [reference pixels/calibration/release contract](docs/data/floorplans.md), and [executable floorplan-v1 templates](data/templates/floorplan-v1/README.md). The existing import worker also processes floorplans. Originals stay in protected DB storage; only exact independently approved sanitized display PNGs are release assets. All 3A floors are explicitly display-only, including calibrated ones; no indoor route or physical survey claim.
-
-## Indoor visual editor (3B)
-
-[Data-preserving Windows update and complete synthetic manual walkthrough](docs/operations/indoor-editor.md), [typed local coordinate/catalog/topology/review contract](docs/data/indoor-editor.md), [API schema/example](data/templates/indoor-v1/README.md), and [invented 600×400 room/door/corridor fixture](data/demo/indoor/synthetic-ground.json). Independently approved sanitized plans/calibration precede metric tracing; explicit directions-only mode preserves unknown scale. Draft saves require exact selected plan and global revision version. The 3B slice leaves rooms catalog-only; the 3C capabilities below enable eligible reviewed floor/connector routes. Public navigation continues using the immutable published release.
-
-Milestone **3C**: [data contract](docs/data/indoor-routing.md), [data-preserving Windows update and manual fixtures](docs/operations/indoor-routing.md). The earlier 3A/3B milestone descriptions above describe those delivered slices; enabled reviewed 3C floors now add explicit routing capability. Current 3C verification is recorded separately in progress/testing evidence.
-
-## Public experience redesign
-
-The public UI now has an original SCNS editorial introduction, truthful published overview, numbered graph explanation, real directory tiles and a directly accessible explorer at `/#explorer`. Floating active navigation/native scrolling, reduced-motion-safe reveals, self-hosted OFL Inter typography, large outdoor/floor maps, collapsible controls and independent text directions share a matching QR/error/loading language. Existing routing, approvals, privacy, restrictions and admin behavior are preserved. This is a public redesign, not completion of4D–4F.
-
-[Complete data-preserving Windows update/startup and visual/functional checklist](docs/operations/public-experience.md) · [Design choices](docs/design/public-experience.md) · [Actual PNG visual evidence](docs/previews/public-redesign/README.md) · [Verification](docs/testing/verification.md).
+The **approved final academic report and final presentation were not supplied** in this task. They are not substituted with an old draft, the school reference PDF, data reports or screenshots. See [submission document status](docs/submission/README.md); attach the approved report and PPT/PDF before claiming those documents are delivered.

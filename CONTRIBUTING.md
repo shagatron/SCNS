@@ -2,7 +2,7 @@
 
 Read `docs/product/master-spec.md`, the requirements checklist and architecture decisions before changing behavior. Keep work within the current authorized milestone. Use a focused branch/PR and include the problem, implemented behavior and actual checks run. In cloud tasks use the existing isolated checkout unless a worktree is explicitly requested.
 
-Run `make setup demo`, then `make check build test-unit test-integration` and the relevant Playwright journeys before submitting changes. Run `make generate-api` after contract changes and commit generated contracts together. Pin changed dependencies with their lockfiles. Test schema migrations against an isolated PostGIS database; do not patch production tables by hand.
+For a new disposable source-development installation only, run `make setup demo`, then `make check build test-unit test-integration` and the relevant Playwright journeys before submitting changes. Run `make generate-api` after contract changes and commit generated contracts together. Existing retained-data installations must use the [database-first Docker update](docs/operations/academic-submission.md); do not run `make demo`, reseed or bootstrap during an update. Pin changed dependencies with their lockfiles. Test schema migrations against an isolated PostGIS database; do not patch production tables by hand.
 
 Use synthetic fixtures for code tests. Do not commit institutional source plans, secrets, personal records or claimed accessibility measurements without authorized evidence. All real data must eventually pass a draft import/review/publication process.
 

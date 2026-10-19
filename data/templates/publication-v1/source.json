@@ -1,0 +1,22 @@
+{
+  "title": "Synthetic outdoor overlay example",
+  "rights": "synthetic",
+  "provenance": "Invented example for Demo Campus software tests only; no physical survey.",
+  "attribution": "Original synthetic campus illustration; not real navigation",
+  "display_overlay": true,
+  "original": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {"type": "Point", "coordinates": [0.001, 0.001]},
+        "properties": {"label": "Synthetic display marker", "public": true, "internal_note": "Original-only metadata is removed from the derivative"}
+      },
+      {
+        "type": "Feature",
+        "geometry": {"type": "Point", "coordinates": [0.005, 0.005]},
+        "properties": {"label": "Private original detail", "public": false}
+      }
+    ]
+  }
+}

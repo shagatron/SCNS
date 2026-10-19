@@ -1,0 +1,86 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "rights": {
+      "enum": [
+        "synthetic",
+        "authorized",
+        "restricted"
+      ],
+      "title": "Rights",
+      "type": "string"
+    },
+    "provenance": {
+      "maxLength": 4000,
+      "minLength": 10,
+      "title": "Provenance",
+      "type": "string"
+    },
+    "attribution": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Attribution",
+      "type": "string"
+    },
+    "original": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Original"
+    },
+    "original_text": {
+      "anyOf": [
+        {
+          "maxLength": 5242880,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Original Text"
+    },
+    "original_filename": {
+      "anyOf": [
+        {
+          "maxLength": 160,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_. -]+$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Original Filename"
+    },
+    "display_overlay": {
+      "default": false,
+      "title": "Display Overlay",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "title",
+    "rights",
+    "provenance",
+    "attribution"
+  ],
+  "title": "SourceInput",
+  "type": "object"
+}

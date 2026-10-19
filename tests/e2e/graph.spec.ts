@@ -1,0 +1,157 @@
+import { expect, test, type Page } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
+
+test.use({ trace: 'off', screenshot: 'off', video: 'off' })
+const pageErrors = new WeakMap<Page, string[]>()
+test.beforeEach(({ page }) => { pageErrors.set(page, []); page.on('pageerror', error => pageErrors.get(page)?.push(error.message)) })
+test.afterEach(({ page }) => { expect(pageErrors.get(page)).toEqual([]) })
+async function setup(page: Page, role = 'owner') {
+  const password = process.env.SCNS_E2E_PASSWORD
+  if (!password) throw new Error('Use the isolated browser runner.')
+  await page.goto('/admin'); await page.getByLabel('Username', {exact:true}).fill(`browser-${role}`); await page.getByLabel('Password',{exact:true}).fill(password)
+  await page.getByRole('button',{name:'Sign in',exact:true}).click(); await expect(page.getByRole('heading',{name:'Admin dashboard'})).toBeVisible()
+  if(role==='owner'||role==='editor'){
+    const response=page.waitForResponse(r=>r.url().endsWith('/drafts')&&r.request().method()==='POST')
+    await page.getByRole('button',{name:'Create draft from published release'}).click();const draft=await(await response).json()
+    await expect(page.getByRole('combobox',{name:'Selected draft',exact:true})).toHaveValue(draft.id)
+  }
+  await page.getByRole('button',{name:'Outdoor graph',exact:true}).click()
+  await expect(page.getByRole('heading',{name:'Outdoor draft graph editor'})).toBeVisible()
+  await expect(page.getByLabel('Visual outdoor draft graph')).toBeVisible()
+}
+async function save(page: Page) {
+  const posted = page.waitForResponse(r => r.url().endsWith('/graph') && r.request().method() === 'POST')
+  await page.getByRole('button',{name:'Save graph to draft',exact:true}).click()
+  const response = await posted; expect(response.status(), await response.text()).toBe(200)
+  await expect(page.getByLabel('Outdoor graph editor').getByRole('status').first()).toContainText('Draft saved')
+}
+async function selectNode(page: Page,label: string){
+  await page.getByLabel('Filter graph features').fill(label)
+  await page.getByLabel('Graph feature lists').getByRole('button').filter({hasText:label}).first().click()
+  await expect(page.getByLabel('Node label',{exact:true})).toHaveValue(label)
+}
+
+test('visual node editing, movement, undo, recovery, validation and public release isolation',async({page})=>{
+  await setup(page,'editor')
+  const campus=(await(await page.request.get('/api/v1/campuses')).json())[0]
+  const before=await(await page.request.get(`/api/v1/campuses/${campus.id}/release`)).json()
+  await page.getByRole('button',{name:'Add graph node',exact:true}).click()
+  await page.getByLabel('Node label',{exact:true}).fill('Synthetic graph browser node')
+  await page.getByLabel('Node longitude',{exact:true}).fill('0.0027');await page.getByLabel('Node latitude',{exact:true}).fill('0.0027')
+  await page.getByRole('button',{name:'Apply node coordinates'}).click()
+  await page.getByRole('button',{name:'Undo graph action'}).click();await page.getByRole('button',{name:'Redo graph action'}).click()
+  await selectNode(page,'Synthetic graph browser node')
+  await expect(page.getByLabel('Node longitude')).toHaveValue('0.0027')
+  await page.getByLabel('Node longitude').fill('unfinished coordinate input')
+  await expect(page.getByLabel('Outdoor graph editor').getByRole('status').first()).toContainText('Recovery autosaved')
+  page.once('dialog',dialog=>dialog.accept());await page.reload()
+  await page.getByRole('button',{name:'Outdoor graph',exact:true}).click()
+  await expect(page.getByLabel('Node longitude')).toHaveValue('unfinished coordinate input')
+  await expect(page.getByLabel('Outdoor graph editor').getByRole('status').first()).toContainText('Recovered previous input')
+  await page.getByRole('button',{name:'Apply node coordinates'}).click();await expect(page.getByRole('alert')).toContainText('finite WGS84')
+  await page.getByRole('button',{name:'Reset unapplied coordinate input'}).click();await save(page)
+  await page.getByRole('button',{name:'Validate saved graph'}).click()
+  await expect(page.getByLabel('Graph quality').getByRole('status').first()).toContainText('0 errors')
+  await page.getByRole('combobox',{name:'Draft route start'}).selectOption({label:'Main Gate'})
+  await page.getByRole('combobox',{name:'Draft route destination'}).selectOption({label:'Library'})
+  await page.getByRole('button',{name:'Compute draft test route'}).click();await expect(page.getByLabel('Graph quality')).toContainText('256.88m · 3 stored edges')
+  await expect(page.getByLabel('Graph quality')).toContainText('Synthetic campus; invented data')
+  expect(await(await page.request.get(`/api/v1/campuses/${campus.id}/release`)).json()).toEqual(before)
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true)
+  expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([])
+})
+
+test('paired stored polylines, split and entrance edits, deletion preview and rollback',async({page})=>{
+  await setup(page)
+  await page.getByRole('button',{name:'Add graph node',exact:true}).click();await page.getByLabel('Node label').fill('Synthetic path start')
+  await page.getByLabel('Node longitude').fill('0.0025');await page.getByLabel('Node latitude').fill('0.0025');await page.getByRole('button',{name:'Apply node coordinates'}).click()
+  await page.getByRole('button',{name:'Add graph node',exact:true}).click();await page.getByLabel('Node label').fill('Synthetic path end')
+  await page.getByLabel('Node longitude').fill('0.003');await page.getByLabel('Node latitude').fill('0.0025');await page.getByRole('button',{name:'Apply node coordinates'}).click()
+  await selectNode(page,'Synthetic path start');await page.getByRole('button',{name:'Add path edge',exact:true}).click()
+  const to=await page.getByLabel('Path to node').locator('option').filter({hasText:'Synthetic path end'}).getAttribute('value');if(!to)throw new Error('Missing node')
+  await page.getByLabel('Path to node').selectOption(to)
+  await page.getByRole('textbox',{name:'Polyline coordinates [longitude, latitude]',exact:true}).fill('[[0.0025,0.0025],[0.0027,0.0028],[0.003,0.0025]]')
+  await page.getByRole('button',{name:'Apply polyline coordinates'}).click()
+  await page.getByLabel('Path width in metres', {exact:false}).fill('1.8')
+  await page.getByLabel('Path slope percent', {exact:false}).fill('3.4')
+  await page.getByLabel('Path step count', {exact:false}).fill('0')
+  await page.getByLabel('Path surface', {exact:false}).fill('Synthetic concrete')
+  await expect(page.getByRole('combobox',{name:'Path accessibility',exact:true})).toHaveValue('unknown')
+  await save(page)
+  await page.getByLabel('Filter graph features').fill('Synthetic path start')
+  await page.getByLabel('Graph feature lists').getByRole('button').filter({hasText:'Synthetic path start → Synthetic path end'}).click()
+  await expect(page.getByLabel('Path width in metres', {exact:false})).toHaveValue('1.8')
+  await page.getByRole('button',{name:'Split path at selected vertex'}).click();await save(page)
+  await selectNode(page,'Synthetic path start');await page.getByRole('button',{name:'Connect place entrance',exact:true}).click()
+  await page.getByRole('combobox',{name:'Entrance place',exact:true}).selectOption({label:'Library'})
+  await page.getByLabel('Entrance source and last verification notes').fill('Synthetic browser anchor; no physical verification')
+  await save(page)
+  await selectNode(page,'Synthetic path start');await page.getByRole('button',{name:'Preview graph deletion'}).click()
+  await expect(page.getByRole('alert')).toContainText('2 directed edges and 1 entrance anchors')
+  await page.getByRole('button',{name:'Confirm local graph deletion'}).click();await page.getByRole('button',{name:'Undo graph action'}).click()
+  await selectNode(page,'Synthetic path start')
+  await page.getByLabel('Node longitude').fill('1');await page.getByRole('button',{name:'Apply node coordinates'}).click()
+  await page.getByRole('button',{name:'Save graph to draft'}).click();await expect(page.getByRole('alert')).toContainText('boundary')
+  await expect(page.getByLabel('Node longitude')).toHaveValue('1') // rejected input is preserved
+  await page.getByRole('button',{name:'Undo graph action'}).click();await selectNode(page,'Synthetic path start')
+  await expect(page.getByLabel('Node longitude')).toHaveValue('0.0025')
+})
+
+test('stale graph edit keeps input and requires explicit same-record reconciliation',async({page})=>{
+  await setup(page)
+  const draft=await page.getByRole('combobox',{name:'Selected draft',exact:true}).inputValue()
+  const session=await(await page.request.get('/api/v1/admin/session')).json();const campus=session.grants[0].campus_id
+  const path=`/api/v1/admin/campuses/${campus}/drafts/${draft}/graph`
+  const graph=await(await page.request.get(path)).json();const id=Object.keys(graph.nodes)[0];const label=graph.nodes[id].label
+  await selectNode(page,label);await page.getByLabel('Node label').fill('My retained edit')
+  const response=await page.request.post(path,{headers:{Origin:'http://127.0.0.1:5174','X-CSRF-Token':session.csrf_token,'If-Match':`"${graph.revision_version}"`},data:{changes:[{entity:'nodes',id,data:{...graph.nodes[id],label:'Other editor value'}}]}})
+  expect(response.status()).toBe(200)
+  await page.getByRole('button',{name:'Save graph to draft'}).click()
+  const comparison=page.getByLabel('Graph reconciliation');await expect(comparison).toContainText('My retained edit');await expect(comparison).toContainText('Other editor value')
+  await expect(comparison.getByRole('button',{name:'Use reconciled draft'})).toBeDisabled()
+  await page.getByLabel(`Conflict resolution ${id}`).selectOption('mine');await comparison.getByRole('button',{name:'Use reconciled draft'}).click();await save(page)
+  expect((await(await page.request.get(path)).json()).nodes[id].label).toBe('My retained edit')
+  await page.getByRole('button',{name:'Sign out',exact:true}).click();expect(await page.evaluate(()=>Object.keys(sessionStorage).filter(k=>k.startsWith('scns-graph-recovery:')))).toEqual([])
+})
+
+test('reviewers can inspect graph but cannot edit; operations have no graph tab',async({page})=>{
+  await setup(page,'reviewer_publisher')
+  await expect(page.getByRole('button',{name:'Add graph node'})).toBeDisabled()
+  await expect(page.getByRole('button',{name:'Save graph to draft'})).toBeDisabled()
+  await expect(page.getByText('Read-only graph access.',{exact:false})).toBeVisible()
+  await page.getByRole('button',{name:'Sign out',exact:true}).click()
+  await page.getByLabel('Username',{exact:true}).fill('browser-operations');await page.getByLabel('Password',{exact:true}).fill(process.env.SCNS_E2E_PASSWORD!)
+  await page.getByRole('button',{name:'Sign in',exact:true}).click();await expect(page.getByRole('heading',{name:'Operations access'})).toBeVisible()
+  await expect(page.getByRole('button',{name:'Outdoor graph',exact:true})).toHaveCount(0)
+})
+
+test('map pointer tools create and move nodes, draw and reposition polyline vertices',async({page})=>{
+  await setup(page,'editor')
+  await page.getByRole('combobox',{name:'Map tool'}).selectOption('add')
+  const map=page.getByLabel('Visual outdoor draft graph').locator('.graph-map')
+  await map.scrollIntoViewIfNeeded()
+  async function clickCampus(x: number, y: number) {
+    const bounds = await map.boundingBox(), campus = await map.locator('.leaflet-overlay-pane path').first().boundingBox()
+    if (!bounds || !campus) throw new Error('Missing rendered campus boundary')
+    await map.click({ position: { x: campus.x - bounds.x + campus.width * x, y: campus.y - bounds.y + campus.height * y } })
+  }
+  await clickCampus(.72,.26)
+  await expect(page.getByLabel('Node label')).toHaveValue('New unverified node')
+  await page.getByLabel('Node label').fill('Synthetic map-created node')
+  const before=await page.getByLabel('Node longitude').inputValue()
+  await page.getByRole('combobox',{name:'Map tool'}).selectOption('move')
+  await clickCampus(.67,.30)
+  await expect(page.getByLabel('Node longitude')).not.toHaveValue(before)
+  await page.getByRole('button',{name:'Add path edge',exact:true}).click()
+  await page.getByRole('combobox',{name:'Map tool'}).selectOption('draw')
+  await clickCampus(.60,.20)
+  const coords=page.getByRole('textbox',{name:'Polyline coordinates [longitude, latitude]',exact:true})
+  expect(JSON.parse(await coords.inputValue())).toHaveLength(3)
+  const drawn=await coords.inputValue()
+  await page.getByRole('combobox',{name:'Map tool'}).selectOption('vertex')
+  await page.getByRole('combobox',{name:'Selected path vertex',exact:true}).selectOption('1')
+  // A canvas click must be outside the vertex's hit radius on a 360px viewport.
+  await clickCampus(.55,.10)
+  await expect(coords).not.toHaveValue(drawn)
+  await save(page)
+})

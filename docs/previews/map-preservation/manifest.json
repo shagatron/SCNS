@@ -1,0 +1,264 @@
+{
+  "baseline": "a30810d5b73ffd2d757f2c05de1ed2a59f2e39aa",
+  "original_redesign": "6baeaadb95b92f52ce09bdcadeab42e1ee182151",
+  "corrected_application_checkpoint": "55a5a61",
+  "captured_on": "2026-10-17",
+  "scope": "Read-only public observations against owned synthetic fixtures. Not Windows, actual MUJ/E22 release, real GPS, physical or accessibility evidence.",
+  "pixel_comparisons": [
+    {
+      "project": "desktop-chromium",
+      "image": "intro.png",
+      "pixel_identical": true
+    },
+    {
+      "project": "desktop-chromium",
+      "image": "directory.png",
+      "pixel_identical": true
+    },
+    {
+      "project": "desktop-chromium",
+      "image": "planner.png",
+      "pixel_identical": true
+    },
+    {
+      "project": "mobile-chromium",
+      "image": "intro.png",
+      "pixel_identical": true
+    },
+    {
+      "project": "mobile-chromium",
+      "image": "directory.png",
+      "pixel_identical": true
+    },
+    {
+      "project": "mobile-chromium",
+      "image": "planner.png",
+      "pixel_identical": true
+    }
+  ],
+  "images": [
+    {
+      "file": "baseline/desktop-chromium/intro.png",
+      "width_px": 1392,
+      "height_px": 912,
+      "bytes": 89162,
+      "sha256": "a2a380b9c38745442138b1be7e5d69482ea50f728d26ea3595e1135105665a1c"
+    },
+    {
+      "file": "baseline/desktop-chromium/directory.png",
+      "width_px": 1392,
+      "height_px": 1629,
+      "bytes": 108521,
+      "sha256": "a8eaec2d339b970a1bdb8d9ee6e5bf97810d616bdf7be8352ae2de2fe65fdf4f"
+    },
+    {
+      "file": "baseline/desktop-chromium/planner.png",
+      "width_px": 321,
+      "height_px": 1148,
+      "bytes": 51022,
+      "sha256": "c4c44372fb3b80572192d6e63ac325f2a3e7abaa4400b693e64b37722be72f4d"
+    },
+    {
+      "file": "baseline/desktop-chromium/route.png",
+      "width_px": 1392,
+      "height_px": 2397,
+      "bytes": 191508,
+      "sha256": "03bb4995fd1f615eff7ad58317bec82f46792c0830fb767b7373879d81795e3e"
+    },
+    {
+      "file": "baseline/desktop-chromium/no-route.png",
+      "width_px": 1392,
+      "height_px": 1598,
+      "bytes": 152425,
+      "sha256": "81ef1372c7762519df2c2f1d4571e8a9962c15efbcaefa77b509f4560a61964f"
+    },
+    {
+      "file": "baseline/desktop-chromium/search-error.png",
+      "width_px": 1392,
+      "height_px": 677,
+      "bytes": 40262,
+      "sha256": "12194db6eaf07d44725a2bd9c41e3169e68bab8330859dd3f64392e040bc6662"
+    },
+    {
+      "file": "baseline/mobile-chromium/intro.png",
+      "width_px": 971,
+      "height_px": 2376,
+      "bytes": 158855,
+      "sha256": "d57c056fb5643cea285ea10b910cd833ac3f4b49338257339e0bb36b5b97aa52"
+    },
+    {
+      "file": "baseline/mobile-chromium/directory.png",
+      "width_px": 971,
+      "height_px": 9035,
+      "bytes": 328236,
+      "sha256": "87a3fae472fc41c76772c350efc61524ac0b3393559011cce0d06acbf37d50af"
+    },
+    {
+      "file": "baseline/mobile-chromium/planner.png",
+      "width_px": 866,
+      "height_px": 2993,
+      "bytes": 180664,
+      "sha256": "a69b978a302bafed637015985a29cf2f0e6b04abdbd7ac4fc4e1f455831bb512"
+    },
+    {
+      "file": "baseline/mobile-chromium/route.png",
+      "width_px": 971,
+      "height_px": 8054,
+      "bytes": 514610,
+      "sha256": "e7c230eb353eb58e2e5e46f707923827112dad40d4ea0a7112ce5e07fd185b04"
+    },
+    {
+      "file": "baseline/mobile-chromium/no-route.png",
+      "width_px": 971,
+      "height_px": 6208,
+      "bytes": 449158,
+      "sha256": "2adb5e6c83f51bc9122a9926732e177bc41dbe889120753b19b90aaf4872baaa"
+    },
+    {
+      "file": "baseline/mobile-chromium/search-error.png",
+      "width_px": 971,
+      "height_px": 1667,
+      "bytes": 88442,
+      "sha256": "889dba6a4cb25f8eec7d0176519629cac042bed8664c01a58c87d4354e9ea2f5"
+    },
+    {
+      "file": "corrected/desktop-chromium/intro.png",
+      "width_px": 1392,
+      "height_px": 912,
+      "bytes": 89162,
+      "sha256": "a2a380b9c38745442138b1be7e5d69482ea50f728d26ea3595e1135105665a1c"
+    },
+    {
+      "file": "corrected/desktop-chromium/directory.png",
+      "width_px": 1392,
+      "height_px": 1629,
+      "bytes": 108521,
+      "sha256": "a8eaec2d339b970a1bdb8d9ee6e5bf97810d616bdf7be8352ae2de2fe65fdf4f"
+    },
+    {
+      "file": "corrected/desktop-chromium/planner.png",
+      "width_px": 321,
+      "height_px": 1148,
+      "bytes": 51022,
+      "sha256": "c4c44372fb3b80572192d6e63ac325f2a3e7abaa4400b693e64b37722be72f4d"
+    },
+    {
+      "file": "corrected/desktop-chromium/route.png",
+      "width_px": 1392,
+      "height_px": 2397,
+      "bytes": 194999,
+      "sha256": "2cdcb2ab0c9bbfe5e1c3b1b231418d6e15bfb2d762207c0270ce56bb60438e08"
+    },
+    {
+      "file": "corrected/desktop-chromium/no-route.png",
+      "width_px": 1392,
+      "height_px": 1645,
+      "bytes": 159741,
+      "sha256": "8a07b47cf6d1cde6bbad67f30f11ebc36e6e9526dea4314a2f64c85eac8d3cfe"
+    },
+    {
+      "file": "corrected/desktop-chromium/search-error.png",
+      "width_px": 1392,
+      "height_px": 677,
+      "bytes": 40262,
+      "sha256": "12194db6eaf07d44725a2bd9c41e3169e68bab8330859dd3f64392e040bc6662"
+    },
+    {
+      "file": "corrected/mobile-chromium/intro.png",
+      "width_px": 971,
+      "height_px": 2376,
+      "bytes": 158855,
+      "sha256": "d57c056fb5643cea285ea10b910cd833ac3f4b49338257339e0bb36b5b97aa52"
+    },
+    {
+      "file": "corrected/mobile-chromium/directory.png",
+      "width_px": 971,
+      "height_px": 9035,
+      "bytes": 328236,
+      "sha256": "87a3fae472fc41c76772c350efc61524ac0b3393559011cce0d06acbf37d50af"
+    },
+    {
+      "file": "corrected/mobile-chromium/planner.png",
+      "width_px": 866,
+      "height_px": 2993,
+      "bytes": 180664,
+      "sha256": "a69b978a302bafed637015985a29cf2f0e6b04abdbd7ac4fc4e1f455831bb512"
+    },
+    {
+      "file": "corrected/mobile-chromium/route.png",
+      "width_px": 971,
+      "height_px": 8054,
+      "bytes": 529202,
+      "sha256": "de6ee68f7eccafaf9366275e9aa5cb53909669bd65d3e957abe5733e893b8dda"
+    },
+    {
+      "file": "corrected/mobile-chromium/no-route.png",
+      "width_px": 971,
+      "height_px": 6224,
+      "bytes": 470186,
+      "sha256": "2207373d2224d55f666e8b57d476ada53c017700874d0175f07d8e6459608f1b"
+    },
+    {
+      "file": "corrected/mobile-chromium/search-error.png",
+      "width_px": 971,
+      "height_px": 1667,
+      "bytes": 88442,
+      "sha256": "889dba6a4cb25f8eec7d0176519629cac042bed8664c01a58c87d4354e9ea2f5"
+    },
+    {
+      "file": "redesign-original/desktop-chromium/directory.png",
+      "width_px": 1392,
+      "height_px": 461,
+      "bytes": 31561,
+      "sha256": "3a9a9d74948cf51b27b567686b0aba4b99ce6ed8b9c2d9167483f0d4378599a1"
+    },
+    {
+      "file": "redesign-original/mobile-chromium/directory.png",
+      "width_px": 971,
+      "height_px": 853,
+      "bytes": 57323,
+      "sha256": "b5ef3d9b36ee3ee8e8ec3dfdfd439bdb62c1798e5e7b26757a29891834d8dd81"
+    },
+    {
+      "file": "built/320-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 260,
+      "height_px": 598,
+      "bytes": 37021,
+      "sha256": "ef21a291a29a81cb6f3b7f61639955100c058eacafa30eff1ad979ad684b4a97"
+    },
+    {
+      "file": "built/360-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 300,
+      "height_px": 557,
+      "bytes": 38599,
+      "sha256": "38d776d0f9d878b492e87eb48fa867337cb5e11a905cf02d3df5bd1c72865167"
+    },
+    {
+      "file": "built/390-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 330,
+      "height_px": 527,
+      "bytes": 40427,
+      "sha256": "13985b04cf033e4dd7ab37d7e3b0977efd3c387fafc06dd571d1acc12c859496"
+    },
+    {
+      "file": "built/768-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 342,
+      "height_px": 647,
+      "bytes": 37486,
+      "sha256": "2e494572d3c30526e362f82d97ac4ea1298ea635b6091413b83411c3b12a3ddc"
+    },
+    {
+      "file": "built/1440-map.png",
+      "capture": "built nginx/API/worker regression",
+      "width_px": 914,
+      "height_px": 599,
+      "bytes": 60639,
+      "sha256": "e11aeae9a54f5e32f7a76c212413b275e657962bd492a0682fd1caa2cfad5aa8"
+    }
+  ],
+  "built_frontend_sha256": "0a65ea22f1ef4e7519d9dd5ef37e5185d09fd48487a5cd5d158839d7e9449610"
+}

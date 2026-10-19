@@ -1,0 +1,13 @@
+{
+  "converter": "muj-osm-v2-covered-source-segments",
+  "files": {
+    "batch-001.json": "f047d5411194debd2bfe1558163d04be4e831f6947798bd08505dc658ed060d4",
+    "batch-002.json": "048d290afa4acb17ff5d82ef94cd0eddeb2082d168d200c9fa1bb312a2ebd7fc",
+    "batch-003.json": "6b8b9ae6c805e1bf440926c8436b646e1cb2e0556cbf558e817f1fbd5225a554",
+    "campus.json": "053f2ad75bbf07f6dab3dbb0f987b27e50c723e48ccc45092b4595e518ae443d",
+    "coverage.geojson": "9018da3f00a768625c9f4cfe68f2c5781833c3fb541b779b8e4e951c6c834b70",
+    "options.json": "c6c9ff4340ec3f86480a53de024ee650795392dabe62e3771afc93acd1d164fa",
+    "report.json": "7ba8a7cb7f4b53b7b964d4384c4c3ef9f957d98b8c7a2563490cf88faeb380bf"
+  },
+  "source_sha256": "d4b902b01fe944acb3161026679dabbab4898d6952bee22d7019f15fd15748de"
+}

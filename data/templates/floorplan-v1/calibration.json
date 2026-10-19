@@ -1,0 +1,9 @@
+{
+  "method": "uniform_scale",
+  "primary": {"start": {"x": 100, "y": 100}, "end": {"x": 300, "y": 100}, "distance_m": 10},
+  "checks": [{"start": {"x": 100, "y": 100}, "end": {"x": 100, "y": 300}, "distance_m": 10}],
+  "measured_on": "2026-10-01",
+  "evidence": "Invented software fixture: independent 200px horizontal and vertical lines represent 10m. No campus survey.",
+  "uncertainty_m": 0.05,
+  "plan_quality": "uniform"
+}

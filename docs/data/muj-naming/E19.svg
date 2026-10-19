@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" role="img"><title>E19 · Mapped entrance 11664524167</title>
+<defs><clipPath id="map"><rect x="20" y="65" width="960" height="660"/></clipPath></defs>
+<rect width="1000" height="800" fill="#faf9f4"/>
+<text x="24" y="28" font-family="sans-serif" font-size="20" font-weight="bold">E19 · Mapped entrance 11664524167</text>
+<text x="24" y="51" font-family="sans-serif" font-size="12">Source context only · orange: identify · purple: proposed · green: already named · no access/floor inference</text>
+<g clip-path="url(#map)">
+<polyline points="906.01,1151.64 939.06,1228.31 1079.98,1413.58 723.85,1691.75 784.61,1843.63 426.53,1989.40 360.97,1833.66 189.73,1851.55 23.89,1870.03 -44.52,1865.85 -78.40,1839.11 -93.24,1793.29 -110.38,1664.62 -107.12,1544.92 -138.39,1464.19 -521.27,1620.93 -526.67,1609.75 -577.64,1490.98 -650.68,1307.25 -699.10,1188.94 -843.81,774.11 -858.05,733.35 -156.55,445.01 181.18,313.27 521.29,179.47 888.39,35.03 1045.56,437.36 1145.42,694.98 1198.23,823.26 964.39,921.55 925.06,1066.78 873.79,1083.34" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="549.65,1205.63 527.99,1157.29 480.35,1043.24 452.64,976.61 439.94,946.02 414.37,882.98 342.99,704.76 236.60,443.61 204.56,365.74 181.18,313.27 -164.97,-597.78" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="1012.99,449.66 906.13,182.26 873.44,93.89 541.58,229.01 204.56,365.74" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="326.26,411.22 337.59,406.77 404.34,378.84 429.26,369.53 454.71,358.82 470.14,353.44 497.49,342.93 552.56,320.78 567.39,315.07 574.04,312.54 627.26,291.86 637.34,287.87 696.80,264.66 741.36,248.10 803.66,223.63 809.18,239.19 839.32,316.53 855.28,355.16 863.47,376.84 867.09,386.22 880.38,421.40 927.55,404.31 932.71,416.81 953.18,474.13 984.98,552.00 995.31,578.87 997.09,583.53 1000.11,591.37 959.53,607.33 980.53,662.26 983.62,670.18 1004.21,722.91 1010.62,739.47 1013.35,747.45 989.49,756.89 949.26,772.92 927.49,782.09 915.27,786.48 908.03,789.08 901.14,791.80 860.09,807.96 835.05,818.34 805.91,829.97 794.28,834.30 783.96,838.35 774.53,842.08 727.65,861.30 698.22,874.13 670.93,886.10 622.10,906.45 587.15,921.01 579.61,903.26 555.58,847.33 529.71,780.70 521.64,759.95 501.83,711.14 497.49,700.37 475.96,648.36 453.53,593.43 397.99,586.78 383.04,550.28 355.98,483.98 337.17,437.89 329.28,419.14 326.26,411.22" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="-83.09,448.20 80.26,381.50 185.69,343.79 409.98,918.49 365.95,940.10 304.36,963.64 196.14,1008.19 133.89,1032.27 132.89,997.29 -83.09,448.20" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="-13.31,850.79 342.99,704.76 419.83,670.97" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="419.83,670.97 429.26,667.12 443.56,661.26" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="443.56,661.26 475.96,648.36 542.17,621.30 561.75,613.92" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="696.80,264.66 773.46,456.24 781.11,474.27" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="454.71,358.82 544.19,570.09 561.75,613.92 584.48,669.24 670.93,886.10" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="773.46,456.24 725.81,476.66 711.81,507.85 746.88,599.49 783.78,614.78 830.77,598.16" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="741.36,248.10 777.67,339.80 818.79,443.74 845.61,511.51 895.21,634.07 919.00,695.98 949.26,772.92" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="741.36,248.10 712.40,175.41 846.38,122.15 875.16,195.56 858.78,202.28 842.29,208.67 823.89,215.91 803.66,223.63 741.36,248.10" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="712.40,175.41 667.55,192.84 696.80,264.66 741.36,248.10 712.40,175.41" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="606.55,215.32 547.69,237.99 575.99,308.41 625.30,290.39 635.39,286.40 606.55,215.32" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="326.26,411.22 309.82,417.14 236.60,443.61" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="424.16,726.04 448.37,783.69 513.34,757.76 493.52,708.94 489.19,698.17 424.16,726.04" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="577.24,682.48 585.43,703.03 573.38,708.28 564.78,687.93 577.24,682.48" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="529.59,562.18 517.19,533.19 502.83,539.24 514.23,568.23 529.59,562.18" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="337.17,437.89 355.98,483.98 383.04,550.28 397.99,586.78 453.53,593.43 483.49,581.00 509.48,565.97 446.53,395.53 415.67,407.50 337.17,437.89" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="397.99,586.78 429.26,667.12" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="453.53,593.43 483.49,581.00 514.23,568.23 542.17,621.30" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="577.24,682.48 542.17,621.30" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="544.19,570.09 570.65,560.05 582.10,588.65 625.42,569.76" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="584.48,669.24 606.31,660.60 596.76,634.53 643.93,617.11" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="675.56,521.15 711.81,507.85" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="715.67,615.38 746.88,599.49" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="282.29,346.45 376.45,309.21 404.34,378.84 309.82,417.14 282.29,346.45" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="521.29,179.47 541.58,229.01 546.27,241.58" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="376.45,309.21 442.43,282.88 470.14,353.44 454.71,358.82 429.26,369.53 404.34,378.84 376.45,309.21" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="442.43,282.88 524.19,250.23 552.56,320.78 497.49,342.93 470.14,353.44 442.43,282.88" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="551.90,274.37 541.99,249.30 531.20,253.69 541.34,278.56 551.90,274.37" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="551.90,274.37 567.39,315.07" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="546.27,241.58 574.04,312.54" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="526.75,416.21 497.49,342.93 567.39,315.07 595.10,388.81 526.75,416.21" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="567.39,315.07 627.26,291.86 654.61,365.01 595.10,388.81 567.39,315.07" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="627.26,291.86 637.34,287.87 696.80,264.66 723.44,337.41 654.61,365.01 627.26,291.86" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="423.92,381.96 452.58,370.53 458.27,384.82 429.62,396.00 423.92,381.96" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="423.92,381.96 407.78,388.22 329.28,419.14" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="407.78,388.22 415.67,407.50" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="407.78,388.22 404.34,378.84" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="355.98,483.98 376.10,475.40 402.44,542.83 383.04,550.28 355.98,483.98" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="802.12,229.01 744.27,250.29 780.16,336.34 835.46,315.40 802.12,229.01" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="839.32,316.53 777.67,339.80 821.93,442.35 880.38,421.40 839.32,316.53" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="608.51,216.78 667.55,192.84 696.80,264.66 637.34,287.87 608.51,216.78" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="-415.60,-427.27 -178.38,-508.14 111.17,249.16 -136.61,334.08 -415.60,-427.27" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<text x="599.6" y="259.0" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">010</text>
+<text x="542.7" y="375.8" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">008</text>
+<text x="602.3" y="335.2" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">Project Lab</text>
+<text x="643.7" y="235.8" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">Bio Science Lab</text>
+<circle cx="415.7" cy="407.5" r="3" fill="#ae520e"/>
+<path d="M415.7,407.5 L438.7,387.5" stroke="#ae520e"/>
+<rect x="422.7" y="377.5" width="32" height="20" rx="4" fill="#ae520e"/>
+<text x="438.7" y="391.5" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E19</text>
+<circle cx="514.2" cy="568.2" r="3" fill="#ae520e"/>
+<path d="M514.2,568.2 L537.2,591.2" stroke="#ae520e"/>
+<rect x="521.2" y="581.2" width="32" height="20" rx="4" fill="#ae520e"/>
+<text x="537.2" y="595.2" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E15</text>
+<circle cx="483.5" cy="581.0" r="3" fill="#ae520e"/>
+<path d="M483.5,581.0 L460.5,561.0" stroke="#ae520e"/>
+<rect x="444.5" y="551.0" width="32" height="20" rx="4" fill="#ae520e"/>
+<text x="460.5" y="565.0" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E16</text>
+<circle cx="551.9" cy="274.4" r="3" fill="#ae520e"/>
+<path d="M551.9,274.4 L574.9,254.4" stroke="#ae520e"/>
+<rect x="558.9" y="244.4" width="32" height="20" rx="4" fill="#ae520e"/>
+<text x="574.9" y="258.4" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E17</text>
+<circle cx="577.2" cy="682.5" r="3" fill="#ae520e"/>
+<path d="M577.2,682.5 L554.2,662.5" stroke="#ae520e"/>
+<rect x="538.2" y="652.5" width="32" height="20" rx="4" fill="#ae520e"/>
+<text x="554.2" y="666.5" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E14</text>
+<circle cx="423.9" cy="382.0" r="3" fill="#ae520e"/>
+<path d="M423.9,382.0 L400.9,405.0" stroke="#ae520e"/>
+<rect x="384.9" y="395.0" width="32" height="20" rx="4" fill="#ae520e"/>
+<text x="400.9" y="409.0" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E18</text>
+</g>
+<text x="24" y="755" font-family="sans-serif" font-size="12">© OpenStreetMap contributors · https://www.openstreetmap.org/copyright · ODbL 1.0</text>
+<text x="24" y="777" font-family="sans-serif" font-size="12">WGS84 longitude/latitude · source tags may be incomplete · paths include excluded/indoor source context</text>
+</svg>

@@ -1,0 +1,87 @@
+.admin-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px max(4vw, 18px); border-bottom: 1px solid #dce3d8; background: #fffefa; flex-wrap: wrap; }
+.admin-header a { display: inline-flex; min-height: 44px; align-items: center; text-decoration: underline; }
+.admin-shell { max-width: 1200px; padding-bottom: 56px; }
+.admin-shell small { display: block; margin-top: 6px; font-weight: 400; line-height: 1.5; }
+.admin-intro { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; }
+.admin-intro > label { min-width: 260px; flex: 1; max-width: 400px; }
+.admin-card { border: 1px solid #dce3d8; background: #fffefa; border-radius: 14px; padding: 24px; margin-bottom: 20px; }
+.admin-login { max-width: 480px; margin: 24px auto; }
+.admin-login label { margin: 18px 0; }
+.admin-notice { background: #f0ecd9; border: 1px solid #e2dbc1; border-radius: 10px; padding: 18px; margin: 18px 0; }
+.admin-notice p { margin: 8px 0; }
+.admin-tabs, .admin-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 16px 0; }
+.admin-tabs button[aria-pressed=true] { background: #1b4d3e; color: white; }
+.admin-actions label { min-width: 200px; flex: 1; }
+.admin-id, .admin-shell pre { overflow-wrap: anywhere; word-break: break-word; }
+.admin-shell pre { white-space: pre-wrap; font: 12px/1.6 ui-monospace, monospace; background: #edf0e7; border-radius: 8px; padding: 14px; max-height: 360px; overflow: auto; }
+.admin-records { list-style: none; padding: 0; margin: 18px 0; }
+.admin-records > li { display: flex; justify-content: space-between; align-items: start; gap: 18px; border-top: 1px solid #dce3d8; padding: 18px 0; }
+.admin-records > li > div:first-child { min-width: 0; flex: 1; }
+.admin-records p { margin-bottom: 6px; }
+.admin-editor { margin-top: 22px; }
+.admin-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; margin: 18px 0; }
+.admin-wide { grid-column: 1 / -1; }
+.admin-shell textarea { display: block; width: 100%; border: 1px solid #c8d1c8; padding: 12px; border-radius: 9px; background: white; color: #213b34; font: inherit; font-weight: 400; resize: vertical; }
+.admin-success { background: #e7eee5; padding: 14px; border-radius: 9px; }
+@media(max-width: 600px) { .admin-card { padding: 18px; }.admin-records > li { display: block; }.admin-form-grid { grid-template-columns: 1fr; }.admin-actions > button { flex: 1; }.admin-intro > label { min-width: 0; max-width: none; flex-basis: 100%; }.admin-header strong { order: -1; flex-basis: 100%; } }
+
+.import-mapping { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; margin-bottom: .75rem; }
+.import-mapping label { flex: 1 1 9rem; min-width: 0; }
+.import-history, .import-rows { padding-left: 1.25rem; }
+.import-history li, .import-rows li { padding: .75rem 0; border-bottom: 1px solid #d5dfd8; }
+.import-history small { display: block; overflow-wrap: anywhere; }
+.import-detail { margin: 1.5rem 0; padding: 1rem; border: 1px solid #c9d6cf; border-radius: .75rem; }
+.import-detail pre { max-width: 100%; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .8rem; }
+.import-detail details { margin: .75rem 0; }
+.import-detail summary { cursor: pointer; font-weight: 600; }
+.import-counts { padding: .75rem; background: #eef5f0; }
+.admin-shell fieldset { border: 1px solid #c9d6cf; border-radius: .5rem; margin: 1rem 0; min-width: 0; }
+.admin-shell input[type=file] { max-width: 100%; }
+
+.graph-workspace { min-width: 0; }
+.graph-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr); gap: 1rem; align-items: start; }
+.graph-map-panel { min-width: 0; }
+.graph-map { height: 560px; width: 100%; background: #eef3eb; isolation: isolate; z-index: 0; }
+.graph-inspector { display: flex; flex-direction: column; gap: .7rem; min-width: 0; }
+.graph-inspector button { align-self: flex-start; }
+.graph-inspector label { display: grid; gap: .25rem; }
+.graph-checkbox { display: flex !important; align-items: center; gap: .5rem; }
+.graph-checkbox input { width: auto; }
+.graph-lists { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.graph-lists ul { max-height: 260px; overflow: auto; padding: 0; list-style: none; }
+.graph-lists button { text-align: left; width: 100%; margin-bottom: .25rem; overflow-wrap: anywhere; }
+.graph-conflicts { border: 2px solid #936b17; border-radius: .5rem; padding: 1rem; margin: 1rem 0; }
+.graph-conflicts pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 300px; overflow: auto; }
+.graph-diagnostics { max-height: 400px; overflow: auto; padding-left: 1.4rem; }
+.graph-diagnostics li { margin-bottom: .8rem; overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  .graph-layout, .graph-lists { grid-template-columns: minmax(0, 1fr); }
+  .graph-map { height: 350px; }
+  .graph-inspector { padding-top: 1rem; }
+}
+.publication-workspace > details { margin: 1rem 0; }
+.publication-workspace details details { margin: .75rem 0; }
+.publication-workspace summary { cursor: pointer; font-weight: 600; overflow-wrap: anywhere; }
+.publication-workspace label { margin: .75rem 0; }
+.publication-workspace article, .publication-workspace p { overflow-wrap: anywhere; }
+
+.floorplan-workspace { min-width: 0; }
+.floorplan-workspace p, .floorplan-workspace a { overflow-wrap: anywhere; }
+.floorplan-workspace label { margin: .5rem 0; }
+.floorplan-preview { min-width: 0; margin: 1rem 0; }
+.floorplan-map { height: 420px; width: 100%; background: #e7ecea; isolation: isolate; z-index: 0; }
+.floorplan-mask { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; align-items: end; margin: .75rem 0; }
+.floorplan-mask button { grid-column: 1 / -1; justify-self: start; }
+.floorplan-jobs { list-style: none; padding: 0; }
+.floorplan-jobs li { padding: .5rem 0; overflow-wrap: anywhere; }
+.floorplan-jobs small { display: block; }
+.floorplan-workspace pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 300px; overflow: auto; }
+@media (max-width: 760px) { .floorplan-map { height: 320px; } .floorplan-mask { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.indoor-lists { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 760px) { .indoor-lists { grid-template-columns: minmax(0, 1fr); } }
+
+.connections-workspace { min-width: 0; }
+.connections-workspace label { display: grid; gap: .25rem; margin: .75rem 0; }
+.connections-workspace p, .connections-workspace code, .connections-workspace button { overflow-wrap: anywhere; }
+.connections-workspace pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 300px; overflow: auto; }

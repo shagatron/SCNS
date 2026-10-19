@@ -1,0 +1,42 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "actual_position": {
+      "maxLength": 2000,
+      "minLength": 10,
+      "title": "Actual Position",
+      "type": "string"
+    },
+    "installer": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Installer",
+      "type": "string"
+    },
+    "installed_on": {
+      "format": "date",
+      "title": "Installed On",
+      "type": "string"
+    },
+    "verified_on": {
+      "format": "date",
+      "title": "Verified On",
+      "type": "string"
+    },
+    "evidence": {
+      "maxLength": 2000,
+      "minLength": 10,
+      "title": "Evidence",
+      "type": "string"
+    }
+  },
+  "required": [
+    "actual_position",
+    "installer",
+    "installed_on",
+    "verified_on",
+    "evidence"
+  ],
+  "title": "Installation",
+  "type": "object"
+}

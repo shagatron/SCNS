@@ -1,0 +1,11 @@
+# Executable floorplan v1 templates — M3A
+
+Generated `floor.schema.json`, `upload.schema.json`, `calibration.schema.json` match the actual Pydantic API (`make generate-api`). The JSON examples below validate against them, but illustrative UUIDs must be replaced with the existing same-campus draft building/floor IDs. Use a fresh upload idempotency key for a different source/options; retain the key only for an exact retry. There is no indoor CSV/bundle importer in 3A; root `floors.csv` / `calibration_measurements.csv` remain preparation templates, not uploads accepted by the outdoor import screen.
+
+- `floor.json`: synthetic basement, ordering -1, explicitly unknown elevation. API `POST /floors`; omit optional `id` to get a generated stable UUID. PUT uses the existing floor ID and same building; code/label/order/visibility/elevation are editable.
+- `upload.json`: metadata for binary upload to `/floorplan-jobs`, URI-encode its compact JSON into `X-Floorplan-Metadata` and send the PDF/PNG/JPEG bytes as `application/octet-stream`. Include the existing admin CSRF, Origin and draft `If-Match` headers; never put credentials in this template. Page is 1-based, masks are normalized reference pixels.
+- `calibration.json`: `POST /floors/{floor}/calibration`, two invented independent 200px/10m lines at scale 0.05m/px. Date/evidence/uncertainty are synthetic test assertions; supply real authorized measured evidence for a real campus. Do not mark measurements surveyed merely because software accepted them.
+
+Examples match `../../demo/floorplans/`: a 600×400 PNG/JPEG and two-page PDF at reference 150DPI. The invented red sensitive-region fixture is x480,y320,width100,height60; mask it and inspect the sanitized PNG before independent approval. JPEG/PDF rasterization can change pixels slightly; the reference convention/known geometry remains explicit. Originals include invented private metadata and are not public plan assets.
+
+[Workflow, limits, private worker/recovery and data-retaining Windows updates](../../../docs/operations/floorplans.md); [coordinate/release contract](../../../docs/data/floorplans.md). No real MUJ drawing/rights/room topology/indoor route is supplied or claimed.

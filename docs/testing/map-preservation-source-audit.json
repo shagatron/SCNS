@@ -1,0 +1,59 @@
+{
+  "baseline": "a30810d5b73ffd2d757f2c05de1ed2a59f2e39aa",
+  "checks": [
+    {
+      "path": "frontend/src/app/App.tsx",
+      "baseline_equal": true,
+      "sha256": "c88ec920859294df7ff13a675b72c7d061b4dbf10028224332d18924ff7c7fac"
+    },
+    {
+      "path": "frontend/src/features/public/focusPlanner.ts",
+      "baseline_equal": true,
+      "sha256": "653f1b6b1a23d6ed594021fb73dae2f2b4619df496f3dc30ad4445e29a8db56d"
+    },
+    {
+      "path": "frontend/src/features/maps/FloorRouteMap.tsx",
+      "baseline_equal": true,
+      "sha256": "e35e63430952b5641b2402e011f901ec0219190edea2b30719e892bb43f9409c"
+    },
+    {
+      "path": "frontend/src/features/public/PublicExperience.tsx",
+      "baseline_equal": true,
+      "sha256": "f437353f85ed55ced105ac1ca4c30074f406473aba08232865681716d7803d72"
+    },
+    {
+      "path": "frontend/src/features/routing/RouteDetails.tsx",
+      "baseline_equal": true,
+      "sha256": "3a8b64e45dbce42c45460acbcfa9e5f10f02796833d029450309ac0393b0d40d"
+    },
+    {
+      "path": "frontend/src/styles/public.css",
+      "baseline_equal": true,
+      "sha256": "8206844a3765fc24911210b3d1ef1c4781c550ee0cb1565f3b772ac452810693"
+    },
+    {
+      "path": "frontend/src/features/location/OutdoorLocation.tsx",
+      "baseline_equal": true,
+      "sha256": "1e5a860cc49aff3106b67c93c2ee4e7fdf0e031f9f2c637eddf5c0077097258c"
+    },
+    {
+      "path": "frontend/src/features/closures/useClosures.ts",
+      "baseline_equal": true,
+      "sha256": "b2f832de9bc44621416da0c4e5a0c558805e047bc3c26e5baed742f401eae631"
+    },
+    {
+      "path": "frontend/src/features/public/CampusExplorer.tsx",
+      "state_handlers_release_queries_baseline_equal": true,
+      "sha256": "8f2bc4a82ddbf9ca0afaaa531940a514e034bcb3d9132eb73e13c3dbc1035428"
+    }
+  ],
+  "outdoor_fit_resize_baseline_equal": true,
+  "corrected_application_checkpoint": "55a5a61",
+  "render_changes": [
+    "outdoor-panel CSS and category/vector/route decoration",
+    "unchanged route pending/error and linked-place feedback beside planner",
+    "map-only lazy-render exception boundary"
+  ],
+  "all_new_css_scoped_to_outdoor_panel": true,
+  "backend_data_admin_contracts_dependencies_compose_unchanged": true
+}

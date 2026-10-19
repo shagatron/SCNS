@@ -1,0 +1,71 @@
+{
+  "provenance": "Owner-supplied in muj images.zip. Authorship, licensing and institutional authorization were not supplied. Branding does not approve map data or imply university endorsement.",
+  "originals": {
+    "muj.jpg": {
+      "sha256": "c3cc161a863c142999bddba63a6b8d67f4d2d722246ebe9b3645764a4e72e8b1",
+      "dimensions": [
+        736,
+        414
+      ],
+      "mode": "RGB",
+      "bytes": 55141
+    },
+    "muj_logo.png": {
+      "sha256": "8697ba8912441f855e233fd6e20ba327c1eedf208db8dd1207c7ddff10059a0c",
+      "dimensions": [
+        250,
+        289
+      ],
+      "mode": "RGBA",
+      "bytes": 94703,
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    }
+  },
+  "derivatives": {
+    "campus-736.webp": {
+      "dimensions": [
+        736,
+        414
+      ],
+      "bytes": 45504,
+      "sha256": "ca89486b51891873f100d9ba028d9615f16c3ba9a6fa407e80f73fca48dad8eb",
+      "source_crop": [
+        0,
+        0,
+        736,
+        414
+      ]
+    },
+    "campus-480.webp": {
+      "dimensions": [
+        480,
+        270
+      ],
+      "bytes": 21564,
+      "sha256": "efb804a294478d538f48dc6690d4405565581aee667cccfc1a54e2b5a01dd041",
+      "source_crop": [
+        0,
+        0,
+        736,
+        414
+      ]
+    },
+    "campus-mobile.webp": {
+      "dimensions": [
+        296,
+        414
+      ],
+      "bytes": 18512,
+      "sha256": "68f18bed3f919337256661375737bacd73fc394e7d7c30e27da8d306b7f97b5f",
+      "source_crop": [
+        220,
+        0,
+        516,
+        414
+      ]
+    }
+  }
+}

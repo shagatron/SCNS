@@ -1,0 +1,2 @@
+external_id,campus_code,frame_id,from_node_id,to_node_id,physical_path_id,kind,geometry,evidence,distance_status
+synthetic-edge,DEMO,synthetic-wgs84,synthetic-node-a,synthetic-node-b,synthetic-path,walkway,"{""type"": ""LineString"", ""coordinates"": [[0.0005, 0.001], [0.0007, 0.0009], [0.001, 0.001]]}",Synthetic test coordinates; no field verification,estimated

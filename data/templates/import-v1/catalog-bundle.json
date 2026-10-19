@@ -1,0 +1,164 @@
+{
+  "schema_version": "import-v1",
+  "units": "WGS84_degrees_and_metres",
+  "campus_code": "DEMO",
+  "timezone": "Asia/Kolkata",
+  "records": [
+    {
+      "entity": "frames",
+      "external_id": "synthetic-wgs84",
+      "data": {
+        "code": "IMPORT_WGS84",
+        "kind": "outdoor"
+      }
+    },
+    {
+      "entity": "buildings",
+      "external_id": "synthetic-building",
+      "data": {
+        "code": "IMP_B",
+        "name": "Synthetic imported building",
+        "footprint": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.001,
+                0.001
+              ],
+              [
+                0.0012,
+                0.001
+              ],
+              [
+                0.0012,
+                0.0012
+              ],
+              [
+                0.001,
+                0.0012
+              ],
+              [
+                0.001,
+                0.001
+              ]
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "entity": "places",
+      "external_id": "synthetic-place",
+      "data": {
+        "code": "IMP_P",
+        "name": "Synthetic imported destination",
+        "kind": "help",
+        "building_id": "synthetic-building",
+        "point": {
+          "type": "Point",
+          "coordinates": [
+            0.001,
+            0.001
+          ]
+        }
+      }
+    },
+    {
+      "entity": "nodes",
+      "external_id": "synthetic-node-a",
+      "data": {
+        "frame_id": "synthetic-wgs84",
+        "label": "Synthetic import start",
+        "point": {
+          "type": "Point",
+          "coordinates": [
+            0.0005,
+            0.001
+          ]
+        }
+      }
+    },
+    {
+      "entity": "nodes",
+      "external_id": "synthetic-node-b",
+      "data": {
+        "frame_id": "synthetic-wgs84",
+        "label": "Synthetic import door",
+        "point": {
+          "type": "Point",
+          "coordinates": [
+            0.001,
+            0.001
+          ]
+        }
+      }
+    },
+    {
+      "entity": "edges",
+      "external_id": "synthetic-edge",
+      "data": {
+        "frame_id": "synthetic-wgs84",
+        "from_node_id": "synthetic-node-a",
+        "to_node_id": "synthetic-node-b",
+        "physical_path_id": "synthetic-path",
+        "kind": "walkway",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0005,
+              0.001
+            ],
+            [
+              0.0007,
+              0.0009
+            ],
+            [
+              0.001,
+              0.001
+            ]
+          ]
+        },
+        "evidence": "Synthetic test coordinates; no field verification",
+        "distance_status": "estimated"
+      }
+    },
+    {
+      "entity": "departments",
+      "external_id": "synthetic-department",
+      "data": {
+        "code": "IMP_D",
+        "name": "Synthetic imported department"
+      }
+    },
+    {
+      "entity": "department_places",
+      "external_id": "synthetic-link",
+      "data": {
+        "department_id": "synthetic-department",
+        "place_id": "synthetic-place"
+      }
+    },
+    {
+      "entity": "aliases",
+      "external_id": "synthetic-alias",
+      "data": {
+        "place_id": "synthetic-place",
+        "value": "Synthetic import help desk",
+        "language": "en"
+      }
+    },
+    {
+      "entity": "anchors",
+      "external_id": "synthetic-anchor",
+      "data": {
+        "place_id": "synthetic-place",
+        "node_id": "synthetic-node-b",
+        "accessibility_status": "unknown",
+        "accessibility_evidence": "No accessibility survey; synthetic testing only",
+        "is_open": true
+      }
+    }
+  ]
+}

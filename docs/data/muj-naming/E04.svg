@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" role="img"><title>E04 · Hostel Entrance</title>
+<defs><clipPath id="map"><rect x="20" y="65" width="960" height="660"/></clipPath></defs>
+<rect width="1000" height="800" fill="#faf9f4"/>
+<text x="24" y="28" font-family="sans-serif" font-size="20" font-weight="bold">E04 · Hostel Entrance</text>
+<text x="24" y="51" font-family="sans-serif" font-size="12">Source context only · orange: identify · purple: proposed · green: already named · no access/floor inference</text>
+<g clip-path="url(#map)">
+<polyline points="1465.73,2338.73 1398.21,2160.31 1014.49,1359.25 815.54,952.60 574.28,446.07 252.45,-197.92 82.21,-556.09 -35.57,-829.13 -126.76,-1111.23 -177.02,-1306.67 -213.27,-1473.25 -215.53,-1492.94 -287.21,-2113.25 -332.83,-2491.10 -364.88,-2795.27 -417.45,-3233.64 -478.27,-3763.11 -477.08,-3903.89 -451.68,-4028.58 -222.59,-4961.58 -55.56,-5718.75 -16.04,-5897.96 -4.24,-6109.10 -39.84,-6271.23 -113.12,-6420.12 -382.79,-6821.18 -477.02,-6936.29 -609.28,-7015.90 -769.19,-7050.94 -1138.01,-7075.21 -1532.83,-7094.70 -1949.60,-7124.69 -2586.33,-7171.64 -2752.52,-7160.40 -2964.35,-7105.94 -3150.37,-7092.90 -3312.05,-7104.01 -3860.13,-7140.25 -4269.37,-7175.30 -4924.84,-7260.48 -5045.29,-7305.77 -5298.83,-7343.41 -5478.14,-7378.85 -5755.77,-7405.25 -6063.66,-7434.58 -6803.34,-7504.94 -7932.90,-7612.40 -8626.94,-7661.28 -8827.85,-7686.95 -9110.70,-7718.93 -9405.48,-7714.74 -9613.21,-7732.30 -9664.95,-7765.68 -9746.12,-7821.28 -9781.13,-7920.63 -9803.50,-7996.97 -9815.67,-8205.98" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="-53.54,312.87 26.86,529.26 131.11,490.49 145.23,528.40 272.56,481.05 241.23,396.79 208.78,408.83 166.95,296.31 264.91,259.94 238.98,190.18 218.92,197.63 191.21,123.15 199.11,120.22 123.99,-81.87 -99.47,1.18 -72.71,73.07 83.82,14.88 107.73,79.32 134.49,69.41 174.24,176.35 127.43,193.77 89.93,92.89 52.84,106.65 39.73,71.41 -109.79,127.00 -85.23,192.97 16.00,155.40 38.72,216.58 -46.78,248.37 -26.55,302.83 -53.54,312.87" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="348.39,251.16 313.03,180.27 277.61,117.03" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="543.13,113.57 700.49,43.21" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="496.43,13.62 543.13,113.57" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="-776.54,1013.05 -768.24,1038.72 -750.50,1058.20 -728.24,1059.20 -518.49,976.08 -196.01,860.70 42.76,775.71 237.79,697.97 458.64,609.79 443.98,570.09 423.93,524.61 412.42,528.93 202.67,607.73 38.13,670.44 6.68,681.55 -197.19,759.95 -233.63,773.85 -454.89,857.90 -546.80,893.08 -761.65,974.88 -767.82,983.99 -774.59,993.96 -776.54,1013.05 -961.37,979.67 -1091.08,612.79 -977.27,575.81 -962.97,571.02 -947.07,573.02 -932.71,581.00 -923.99,588.91 -808.58,937.51 -797.43,964.50 -789.48,974.88 -767.82,983.99" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="2257.21,-112.40 2290.26,-35.72 2431.18,149.55 2075.05,427.72 2135.81,579.60 1777.72,725.37 1712.15,569.63 1540.91,587.52 1375.07,606.00 1306.66,601.81 1272.78,575.08 1257.94,529.26 1240.79,400.58 1244.06,280.88 1212.79,200.15 829.90,356.89 824.50,345.72 773.53,226.95 700.49,43.21 652.07,-75.09 507.35,-489.92 493.11,-530.68 1194.63,-819.03 1532.37,-950.76 1872.48,-1084.56 2239.58,-1229.00 2396.76,-826.67 2496.62,-569.05 2549.43,-440.77 2315.59,-342.49 2276.25,-197.25 2224.99,-180.69" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="454.01,391.67 308.64,86.04 195.66,-139.20 88.21,-385.05 -5.72,-584.02 -97.99,-803.60 -179.93,-1059.02 -208.59,-1091.68 -266.74,-1431.49 -273.50,-1487.28 -277.06,-1516.61 -351.05,-1964.56 -378.11,-2153.95" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="580.81,645.44 885.55,1270.87 1063.80,1635.36 1283.87,2073.99 1315.32,2143.95" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="873.03,185.72 808.72,211.66 773.53,226.95" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="329.82,261.27 348.39,251.16" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="841.82,295.85 824.50,345.72 656.10,415.15" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polygon points="504.86,6.17 562.06,120.89 575.88,148.62 548.89,162.11 478.10,20.60 504.86,6.17" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polygon points="283.18,77.59 368.33,253.82 333.26,269.31 329.82,261.27 250.49,94.68 283.18,77.59" fill="#dedbd2" stroke="#aaa69b" stroke-width="1"/>
+<polyline points="-585.84,451.32 -350.46,361.95 -311.41,347.18 -199.57,304.69 -222.89,243.31 -210.96,238.86 -136.38,210.53 -119.64,254.75 -70.75,386.95 38.13,670.44" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="423.93,524.61 424.88,501.66 422.44,494.02 386.31,419.67 313.33,269.51 247.23,133.52 133.18,-101.76 105.47,-184.15" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="-136.38,210.53 -166.10,135.45 -138.99,124.68 76.87,39.16 102.80,104.66 118.53,98.41 141.91,157.46 147.96,172.82 247.23,133.52" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="-119.64,254.75 141.91,157.46" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="717.75,572.82 885.73,918.22 986.96,1112.20 1071.27,1308.38 1343.92,1909.87 1459.68,2223.42 1469.65,2232.99 1477.60,2229.40 1741.76,1767.43 1930.39,1383.12 2116.58,997.16 2269.37,651.82 2446.78,283.34 2516.86,154.47 2609.12,-73.89 2695.87,-303.92 2850.26,-703.38 2956.06,-950.83 3022.10,-1082.77 3032.48,-1103.58 3154.24,-1330.41 3299.55,-1595.21" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="202.67,607.73 237.79,697.97" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="415.68,407.50 454.01,391.67" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="574.28,446.07 656.10,415.15" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="574.28,446.07 442.91,495.75" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="442.91,495.75 424.88,501.66" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="458.64,609.79 695.15,1065.72 799.99,1267.88" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="313.33,269.51 329.82,261.27" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="415.68,407.50 386.31,419.67" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<polyline points="277.61,117.03 496.43,13.62" fill="none" stroke="#8b9ba0" stroke-width="2"/>
+<text x="88.6" y="215.7" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">B1 Block</text>
+<text x="529.1" y="77.4" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">Subway</text>
+<text x="308.0" y="172.4" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">Subway</text>
+<text x="307.1" y="257.1" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">Subway Road</text>
+<text x="220.2" y="652.9" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#454943">Main Road</text>
+<circle cx="543.1" cy="113.6" r="3" fill="#167163"/>
+<path d="M543.1,113.6 L566.1,93.6" stroke="#167163"/>
+<rect x="550.1" y="83.6" width="32" height="20" rx="4" fill="#167163"/>
+<text x="566.1" y="97.6" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E01</text>
+<circle cx="656.1" cy="415.1" r="3" fill="#167163"/>
+<path d="M656.1,415.1 L679.1,438.1" stroke="#167163"/>
+<rect x="663.1" y="428.1" width="32" height="20" rx="4" fill="#167163"/>
+<text x="679.1" y="442.1" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E03</text>
+<circle cx="415.7" cy="407.5" r="3" fill="#167163"/>
+<path d="M415.7,407.5 L392.7,387.5" stroke="#167163"/>
+<rect x="376.7" y="377.5" width="32" height="20" rx="4" fill="#167163"/>
+<text x="392.7" y="391.5" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E04</text>
+<circle cx="442.9" cy="495.7" r="3" fill="#167163"/>
+<path d="M442.9,495.7 L419.9,518.7" stroke="#167163"/>
+<rect x="403.9" y="508.7" width="32" height="20" rx="4" fill="#167163"/>
+<text x="419.9" y="522.7" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white">E06</text>
+</g>
+<text x="24" y="755" font-family="sans-serif" font-size="12">© OpenStreetMap contributors · https://www.openstreetmap.org/copyright · ODbL 1.0</text>
+<text x="24" y="777" font-family="sans-serif" font-size="12">WGS84 longitude/latitude · source tags may be incomplete · paths include excluded/indoor source context</text>
+</svg>

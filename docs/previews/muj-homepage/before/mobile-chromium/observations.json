@@ -1,0 +1,104 @@
+{
+  "structure": {
+    "sections": [
+      "intro",
+      "overview",
+      "how",
+      "directory",
+      "explorer",
+      "about"
+    ],
+    "directory": "03 — YOUR NEXT STOPPlaces worthfinding.Browse the published directory. Choose a place to begin or a destination to reach.Search destinationsCategoryAll placesBuildingLibraryCafeWaterWashroomEntranceGardenHelpRoomOfficeLaboratoryFacilityIndoor_destinationAACA↗buildingAcademic HouseAcademic HousePlace detailsInvented destination in Demo Campus. Not a real campus location.Also known as: academic block, classroomsCode: ACA · Accessibility: unknown until surveyed.Route here ↗Start hereCCAFE↗cafeCourtyard CaféStudent HubPlace detailsInvented destination in Demo Campus. Not a real campus location.Also known as: coffee, food, cafeCode: CAFE · Accessibility: unknown until surveyed.Route here ↗Start hereDWATER↗waterDrinking WaterOutdoor destinationPlace detailsInvented destination in Demo Campus. Not a real campus location.Also known as: refill, fountainCode: WATER · Accessibility: unknown until surveyed.Route here ↗Start hereEEAST↗entranceEast ExitOutdoor destinationPlace detailsInvented destination in Demo Campus. Not a real campus location.Also known as: one way exitCode: EAST · Accessibility: unknown until surveyed.Route here ↗Start hereFHELP↗helpFuture Help DeskOutdoor destinationPlace detailsSynthetic directory entry; entrance not mapped yet.Also known as: unmapped entranceCode: HELP · Accessibility: unknown until surveyed.Entrance not mapped · routing unavailableRoute here ↗Start hereGWC↗washroomGarden WashroomsStudent HubPlace detailsInvented destination in Demo Campus. Not a real campus location.Also known as: toilet, restroomCode: WC · Accessibility: unknown until surveyed.Route here ↗Start here10 public destinations · showing 1–6PreviousNext",
+    "searchParent": "directory",
+    "directoryCards": 6,
+    "plannerParent": "explorer-grid",
+    "source": "Main Gate",
+    "profile": "shortest",
+    "policy": "metric",
+    "controlsOpen": true,
+    "mapFocusOrder": [
+      {
+        "tag": "DIV",
+        "role": null,
+        "label": "Map"
+      },
+      {
+        "tag": "A",
+        "role": "button",
+        "label": "Zoom in"
+      },
+      {
+        "tag": "A",
+        "role": "button",
+        "label": "Zoom out"
+      },
+      {
+        "tag": "A",
+        "role": null,
+        "label": " Leaflet"
+      },
+      {
+        "tag": "BUTTON",
+        "role": null,
+        "label": "Fit campus"
+      }
+    ],
+    "navigation": [
+      [
+        "scns↗",
+        "#intro"
+      ],
+      [
+        "Home",
+        "#intro"
+      ],
+      [
+        "Campus",
+        "#overview"
+      ],
+      [
+        "How it works",
+        "#how"
+      ],
+      [
+        "Places",
+        "#directory"
+      ],
+      [
+        "Explore ↗",
+        "#explorer"
+      ]
+    ]
+  },
+  "placesNavigation": {
+    "hash": "#directory",
+    "focus": "directory",
+    "directoryTop": 100.1875,
+    "searchTop": 399.5
+  },
+  "search": {
+    "directory": "03 — YOUR NEXT STOPPlaces worthfinding.Browse the published directory. Choose a place to begin or a destination to reach.Search destinationsCategoryAll placesBuildingLibraryCafeWaterWashroomEntranceGardenHelpRoomOfficeLaboratoryFacilityIndoor_destinationLLIB↗libraryLibraryLibraryPlace detailsInvented destination in Demo Campus. Not a real campus location.Also known as: reading room, booksCode: LIB · Accessibility: unknown until surveyed.Route here ↗Start here1 public destinations · showing 1–1PreviousNext",
+    "focused": "directory",
+    "headings": [
+      "Library"
+    ]
+  },
+  "startAction": "0e37a41c-bdcf-55c9-8f1f-e839d18a5e85",
+  "routeActionStillVisibleAfterStart": true,
+  "route": {
+    "metrics": "257 metres4 min · estimated",
+    "directions": "Follow the path to Courtyard.118 mShow outdoor sectionFollow the path to West.94 mShow outdoor sectionFollow the path to Library.46 mShow outdoor sectionArrive at Library.",
+    "resultParent": "explorer"
+  },
+  "hiddenMap": "YOUR WALK\nYour route is ready\n257\nmetres\n4\nmin · estimated\nFollow the path to Courtyard.\n118 m\nShow outdoor section\nFollow the path to West.\n94 m\nShow outdoor section\nFollow the path to Library.\n46 m\nShow outdoor section\nArrive at Library.\nRoute assumptions & data",
+  "noRoute": {
+    "message": [
+      "Route unavailableNo permitted walking route connects these locations. Try a different mapped start or destination."
+    ],
+    "errorParent": "planner"
+  },
+  "searchError": {
+    "parent": "directory",
+    "focused": "search"
+  }
+}

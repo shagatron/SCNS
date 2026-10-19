@@ -1,0 +1,41 @@
+.public-app.indoor-demo { background: var(--paper); color: var(--ink); }
+.indoor-demo .demo-header { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: 1rem max(4vw, 1rem); border-bottom: 1px solid #d8d5cb; }
+.indoor-demo .demo-header a { display: flex; align-items: center; min-height: 44px; text-decoration: underline; }
+.indoor-demo .demo-header span { align-self: center; font-size: .75rem; letter-spacing: .1em; }
+.indoor-demo main { max-width: 1200px; padding: 2.5rem max(4vw, 1rem); }
+.indoor-demo .demo-intro { max-width: 850px; }
+.indoor-demo .demo-qualification { border-left: 4px solid #a65b20; padding: .7rem 1rem; background: #fff2d9; color: #3a2a1a; font-weight: 650; }
+.indoor-demo .demo-planner, .indoor-demo .demo-viewer, .indoor-demo .demo-directions, .indoor-demo .demo-explanation { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #ccc9be; }
+.indoor-demo .demo-selects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.indoor-demo legend { margin-bottom: .6rem; font-size: .85rem; }
+.indoor-demo label { margin-bottom: 1rem; font-size: .95rem; }
+.indoor-demo select { margin-top: .5rem; max-width: 100%; font-size: 1rem; }
+.indoor-demo .demo-calculate { margin: .3rem 0 1rem; background: #183f35; color: #fff; }
+.indoor-demo .demo-calculate:hover:not(:disabled) { background: #285a4c; }
+.indoor-demo .demo-floor-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.indoor-demo .demo-floor-controls .demo-floor-field { flex: 1 1 240px; max-width: 500px; }
+.indoor-demo .map-panel { margin: 0; }
+.public-app.indoor-demo .campus-map.leaflet-container { height: clamp(330px, 65vh, 620px); }
+.indoor-demo .demo-directions ol { margin: 1rem 0; padding-left: 1.6rem; }
+.indoor-demo .demo-directions li { padding: .8rem .3rem; border-bottom: 1px solid #ddd9cd; }
+.indoor-demo .demo-directions li p { margin-bottom: .6rem; }
+.indoor-demo .demo-directions li div { display: flex; flex-wrap: wrap; gap: .6rem; }
+.indoor-demo .error-box { scroll-margin: 1rem; }
+.indoor-demo :focus-visible { outline: 3px solid #9b4e00; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .indoor-demo .demo-selects { grid-template-columns: 1fr; gap: 0; }
+  .indoor-demo .demo-floor-controls button, .indoor-demo .demo-calculate { width: 100%; }
+  .indoor-demo main { padding-top: 1.5rem; }
+}
+
+.indoor-demo .demo-selects label, .indoor-demo .demo-floor-field label { margin-bottom: .25rem; }
+
+/* Embedded preview uses the explorer's existing planner / map footprint. */
+.integrated-demo .demo-body { display: grid; grid-template-columns: minmax(250px, .75fr) minmax(0, 1.5fr); gap: 1.5rem; }
+.integrated-demo .demo-intro, .integrated-demo .demo-directions, .integrated-demo .demo-explanation { grid-column: 1 / -1; max-width: none; }
+.integrated-demo .demo-planner, .integrated-demo .demo-viewer { min-width: 0; margin-top: 0; }
+.integrated-demo .demo-selects { grid-template-columns: 1fr; }
+.public-app .integrated-demo .campus-map.leaflet-container { height: clamp(420px, 50svh, 600px); }
+@media (max-width: 900px) {
+  .integrated-demo .demo-body { grid-template-columns: minmax(0, 1fr); }
+}

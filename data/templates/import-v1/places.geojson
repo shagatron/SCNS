@@ -1,0 +1,22 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "external_id": "synthetic-geo-place",
+        "campus_code": "DEMO",
+        "code": "GEO_P",
+        "name": "Synthetic GeoJSON candidate",
+        "kind": "help"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.001,
+          0.001
+        ]
+      }
+    }
+  ]
+}

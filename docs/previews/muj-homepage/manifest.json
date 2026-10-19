@@ -1,0 +1,438 @@
+{
+  "baseline": "4fbc61663add1a31df0cda66e065e73a542f6fed",
+  "qualification": "Unedited Chromium PNGs. Original before files retained. After uses built nginx/API synthetic fixtures; matched MUJ uses archived parent frontend and simulated MUJ metadata over the same isolated synthetic API, not actual Windows or a real MUJ release. Image-failure/short viewport is simulated, not a physical keyboard/device.",
+  "files": {
+    "after/desktop-chromium/directory.png": {
+      "bytes": 110350,
+      "sha256": "7ee3f8335ad8c9b073e29ed9d4aeb4641ecc8696460dbdf6c2d711dfbea750a2",
+      "dimensions": [
+        1392,
+        1629
+      ]
+    },
+    "after/desktop-chromium/intro.png": {
+      "bytes": 92699,
+      "sha256": "47858d27bab804a34cb171865380a6791092a2630bcee0eb289e8ad269a22df7",
+      "dimensions": [
+        1392,
+        912
+      ]
+    },
+    "after/desktop-chromium/no-route.png": {
+      "bytes": 160489,
+      "sha256": "89c53dfe7dab4996b1bc5a4242ca20d31e687256fdfb41757530cdbc9df67f76",
+      "dimensions": [
+        1392,
+        1645
+      ]
+    },
+    "after/desktop-chromium/planner.png": {
+      "bytes": 51050,
+      "sha256": "be12546991ae1dcd3b00215f5170c12ceb09f88518f78516086b0c54c76bdb83",
+      "dimensions": [
+        321,
+        1148
+      ]
+    },
+    "after/desktop-chromium/route.png": {
+      "bytes": 196306,
+      "sha256": "b89bed931845d123471188d1b6ed2f2566f77d2bd908654d28ccb6bd7d9d5dd6",
+      "dimensions": [
+        1392,
+        2397
+      ]
+    },
+    "after/desktop-chromium/search-error.png": {
+      "bytes": 40819,
+      "sha256": "6bcac94cfcd99ec0b8453fe65be310aee5cd92c7e83fcd82ee79e9b0fee4000f",
+      "dimensions": [
+        1392,
+        677
+      ]
+    },
+    "after/mobile-chromium/directory.png": {
+      "bytes": 333761,
+      "sha256": "57fc0d9ebb724ac71895a8d749825516f1f4ddfad59989678579c4994befc35a",
+      "dimensions": [
+        971,
+        9035
+      ]
+    },
+    "after/mobile-chromium/intro.png": {
+      "bytes": 162673,
+      "sha256": "45d6d25d364761ba5a44562f2f9caf2f9e1108bea3634fbb8b8e401a1204dfdb",
+      "dimensions": [
+        971,
+        2376
+      ]
+    },
+    "after/mobile-chromium/no-route.png": {
+      "bytes": 472368,
+      "sha256": "f97cfc047a22ed6b70491431ceb998f092548469b1c50c54b8b3bf70fb8c7eaa",
+      "dimensions": [
+        971,
+        6224
+      ]
+    },
+    "after/mobile-chromium/planner.png": {
+      "bytes": 180753,
+      "sha256": "2a2bf6c0b5966fd034817a7477683e086ffc5d0d6f9effd1264abbfa0248ba62",
+      "dimensions": [
+        866,
+        2993
+      ]
+    },
+    "after/mobile-chromium/route.png": {
+      "bytes": 533576,
+      "sha256": "3e4d00d53a6afdc32d83c98c9001e628daa1b17637107f0f462b0aea075a401e",
+      "dimensions": [
+        971,
+        8054
+      ]
+    },
+    "after/mobile-chromium/search-error.png": {
+      "bytes": 89926,
+      "sha256": "b92deca8dc027b8c1683c60e9929707747cd0c9053f26f9d0fb98139c2c5c40e",
+      "dimensions": [
+        971,
+        1667
+      ]
+    },
+    "before/desktop-chromium/directory.png": {
+      "bytes": 108521,
+      "sha256": "a8eaec2d339b970a1bdb8d9ee6e5bf97810d616bdf7be8352ae2de2fe65fdf4f",
+      "dimensions": [
+        1392,
+        1629
+      ]
+    },
+    "before/desktop-chromium/intro.png": {
+      "bytes": 89162,
+      "sha256": "a2a380b9c38745442138b1be7e5d69482ea50f728d26ea3595e1135105665a1c",
+      "dimensions": [
+        1392,
+        912
+      ]
+    },
+    "before/desktop-chromium/no-route.png": {
+      "bytes": 159741,
+      "sha256": "8a07b47cf6d1cde6bbad67f30f11ebc36e6e9526dea4314a2f64c85eac8d3cfe",
+      "dimensions": [
+        1392,
+        1645
+      ]
+    },
+    "before/desktop-chromium/planner.png": {
+      "bytes": 51022,
+      "sha256": "c4c44372fb3b80572192d6e63ac325f2a3e7abaa4400b693e64b37722be72f4d",
+      "dimensions": [
+        321,
+        1148
+      ]
+    },
+    "before/desktop-chromium/route.png": {
+      "bytes": 194999,
+      "sha256": "2cdcb2ab0c9bbfe5e1c3b1b231418d6e15bfb2d762207c0270ce56bb60438e08",
+      "dimensions": [
+        1392,
+        2397
+      ]
+    },
+    "before/desktop-chromium/search-error.png": {
+      "bytes": 40262,
+      "sha256": "12194db6eaf07d44725a2bd9c41e3169e68bab8330859dd3f64392e040bc6662",
+      "dimensions": [
+        1392,
+        677
+      ]
+    },
+    "before/mobile-chromium/directory.png": {
+      "bytes": 328236,
+      "sha256": "87a3fae472fc41c76772c350efc61524ac0b3393559011cce0d06acbf37d50af",
+      "dimensions": [
+        971,
+        9035
+      ]
+    },
+    "before/mobile-chromium/intro.png": {
+      "bytes": 158855,
+      "sha256": "d57c056fb5643cea285ea10b910cd833ac3f4b49338257339e0bb36b5b97aa52",
+      "dimensions": [
+        971,
+        2376
+      ]
+    },
+    "before/mobile-chromium/no-route.png": {
+      "bytes": 470186,
+      "sha256": "2207373d2224d55f666e8b57d476ada53c017700874d0175f07d8e6459608f1b",
+      "dimensions": [
+        971,
+        6224
+      ]
+    },
+    "before/mobile-chromium/planner.png": {
+      "bytes": 180664,
+      "sha256": "a69b978a302bafed637015985a29cf2f0e6b04abdbd7ac4fc4e1f455831bb512",
+      "dimensions": [
+        866,
+        2993
+      ]
+    },
+    "before/mobile-chromium/route.png": {
+      "bytes": 529518,
+      "sha256": "6064956cde8040883f74d560dcf1660a2be7745b0aff6f981cfa98e508eaf974",
+      "dimensions": [
+        971,
+        8054
+      ]
+    },
+    "before/mobile-chromium/search-error.png": {
+      "bytes": 88442,
+      "sha256": "889dba6a4cb25f8eec7d0176519629cac042bed8664c01a58c87d4354e9ea2f5",
+      "dimensions": [
+        971,
+        1667
+      ]
+    },
+    "inspection/desktop-chromium/admin-login.png": {
+      "bytes": 22052,
+      "sha256": "4cf0cd03bd35d91df2583efecfeb40a448590a65ad8bc23cd51e5fbd3f391380",
+      "dimensions": [
+        360,
+        500
+      ]
+    },
+    "inspection/desktop-chromium/asset-failure-360.png": {
+      "bytes": 69989,
+      "sha256": "6d7334e8a34786f14529b98dafa996b66e749714a685a33863ee514f79b2e36d",
+      "dimensions": [
+        340,
+        984
+      ]
+    },
+    "inspection/desktop-chromium/muj-1440.png": {
+      "bytes": 902239,
+      "sha256": "e536b35e01531fa51a98e6e6e53934b01a7ea2397f8ddde1f0731f147f85584d",
+      "dimensions": [
+        1392,
+        912
+      ]
+    },
+    "inspection/desktop-chromium/muj-320.png": {
+      "bytes": 213698,
+      "sha256": "1c5839bcf340f8aa16917b0e2dc22e6f9b605434730186a029e0175aea6bb07e",
+      "dimensions": [
+        300,
+        1081
+      ]
+    },
+    "inspection/desktop-chromium/muj-360.png": {
+      "bytes": 219589,
+      "sha256": "ec01129175d397828921b36b32d5cdad3c199ead2369faff1f06d512344ec89f",
+      "dimensions": [
+        340,
+        984
+      ]
+    },
+    "inspection/desktop-chromium/muj-390.png": {
+      "bytes": 242419,
+      "sha256": "9c197c07b7e27795f23eab9696d8c0b63818a30112009c21bc4402bd1d85d5a7",
+      "dimensions": [
+        370,
+        984
+      ]
+    },
+    "inspection/desktop-chromium/muj-768.png": {
+      "bytes": 485772,
+      "sha256": "6a463bdcda1c3903b74d2d35b1d11dfb29716832b80f269580c33747d88c8790",
+      "dimensions": [
+        720,
+        912
+      ]
+    },
+    "inspection/mobile-chromium/admin-login.png": {
+      "bytes": 74117,
+      "sha256": "eb238566f978e27ff0e9f7c7e2b4ff56d2da57776d1d48090d2950343d528285",
+      "dimensions": [
+        945,
+        1313
+      ]
+    },
+    "inspection/mobile-chromium/asset-failure-360.png": {
+      "bytes": 244619,
+      "sha256": "6508cec79d2e52840a87ca8ef2cb597388137d7172ca5fc593e01fa0a8ac1720",
+      "dimensions": [
+        893,
+        2583
+      ]
+    },
+    "inspection/mobile-chromium/muj-390.png": {
+      "bytes": 1090850,
+      "sha256": "5bdcf0cd7af7c3153321883d5c0bfb558e1060f36e7ab39db95de6d4f5580314",
+      "dimensions": [
+        971,
+        2583
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-after-directory.png": {
+      "bytes": 110350,
+      "sha256": "7ee3f8335ad8c9b073e29ed9d4aeb4641ecc8696460dbdf6c2d711dfbea750a2",
+      "dimensions": [
+        1392,
+        1629
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-after-intro.png": {
+      "bytes": 902239,
+      "sha256": "e536b35e01531fa51a98e6e6e53934b01a7ea2397f8ddde1f0731f147f85584d",
+      "dimensions": [
+        1392,
+        912
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-after-no-route.png": {
+      "bytes": 171882,
+      "sha256": "405187712a4047d0fe8204583703fd0c76559124d0cc0924db9fe584210d0b12",
+      "dimensions": [
+        1392,
+        1645
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-after-planner.png": {
+      "bytes": 51050,
+      "sha256": "be12546991ae1dcd3b00215f5170c12ceb09f88518f78516086b0c54c76bdb83",
+      "dimensions": [
+        321,
+        1148
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-after-search-error.png": {
+      "bytes": 41233,
+      "sha256": "e94479f266119d2bb262190531d2669865519c64f15bdc00dafe43b0242cdc1e",
+      "dimensions": [
+        1392,
+        677
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-before-directory.png": {
+      "bytes": 108521,
+      "sha256": "a8eaec2d339b970a1bdb8d9ee6e5bf97810d616bdf7be8352ae2de2fe65fdf4f",
+      "dimensions": [
+        1392,
+        1629
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-before-intro.png": {
+      "bytes": 90409,
+      "sha256": "88cc9db221194bd47a1f3ddf8c08020f443dbe5b615bedda083c6e5df5c77371",
+      "dimensions": [
+        1392,
+        912
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-before-no-route.png": {
+      "bytes": 170771,
+      "sha256": "0bb96acf1ed276fc5f92862534eaeb087e9afb59621aa9afda4a4e2a4f2c8607",
+      "dimensions": [
+        1392,
+        1645
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-before-planner.png": {
+      "bytes": 51022,
+      "sha256": "c4c44372fb3b80572192d6e63ac325f2a3e7abaa4400b693e64b37722be72f4d",
+      "dimensions": [
+        321,
+        1148
+      ]
+    },
+    "matched-muj/desktop-chromium/muj-before-search-error.png": {
+      "bytes": 40656,
+      "sha256": "8a34ae3c7802744342bce56bad509f549d3e5aa3a539c0cd0cad2628744e7f41",
+      "dimensions": [
+        1392,
+        677
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-after-directory.png": {
+      "bytes": 333616,
+      "sha256": "b1deaa0bb54d31b74680a8987c99458bf76477e1293ffc30f37bcf6084aef3b0",
+      "dimensions": [
+        971,
+        9035
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-after-intro.png": {
+      "bytes": 1090850,
+      "sha256": "5bdcf0cd7af7c3153321883d5c0bfb558e1060f36e7ab39db95de6d4f5580314",
+      "dimensions": [
+        971,
+        2583
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-after-no-route.png": {
+      "bytes": 514661,
+      "sha256": "46654e4d19b4c9e0079db2568df4dae5d81f52856d68637be8ab4bdfc3bfbe15",
+      "dimensions": [
+        971,
+        6521
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-after-planner.png": {
+      "bytes": 180662,
+      "sha256": "349e3987cbd565146ef5f58e2a92de0b7329f4d5eb23e15be07b7f67ec08d5b8",
+      "dimensions": [
+        866,
+        2993
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-after-search-error.png": {
+      "bytes": 91881,
+      "sha256": "4f88fcad0e9c6658dc4b9f40e67f69653c1534a6952d5c075ff7fff5cbfefc1e",
+      "dimensions": [
+        971,
+        1667
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-before-directory.png": {
+      "bytes": 348917,
+      "sha256": "34b97c31cb095c6aa3e1a41b02bab207788bf087dfff6d7a5eef2bfcb0709c77",
+      "dimensions": [
+        1018,
+        9466
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-before-intro.png": {
+      "bytes": 171454,
+      "sha256": "ec1d0270167dc8aff434f31fa4151507f75cfd0c9b9958c478311d6dccb57b85",
+      "dimensions": [
+        1018,
+        2481
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-before-no-route.png": {
+      "bytes": 535832,
+      "sha256": "137d7f672fd000fa9949a76575d547bf42715499d46567c5428e84bba5e6d52d",
+      "dimensions": [
+        1018,
+        6834
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-before-planner.png": {
+      "bytes": 189394,
+      "sha256": "2783a46d4aa1a09ebc0c7adc582c0b8b2c53a6144edb69f6bcd6f3043b556f70",
+      "dimensions": [
+        908,
+        3135
+      ]
+    },
+    "matched-muj/mobile-chromium/muj-before-search-error.png": {
+      "bytes": 93310,
+      "sha256": "b3584d9b31d4a9ee2090e6399ae90cd7b19c9270e2d50d72737ae25f7ef21497",
+      "dimensions": [
+        1018,
+        1746
+      ]
+    }
+  }
+}

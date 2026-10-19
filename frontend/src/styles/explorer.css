@@ -1,0 +1,28 @@
+/* Outdoor map presentation only. All surrounding components use baseline public.css. */
+.public-app .outdoor-panel {
+  --ink: #eff3ef; --muted: #b7c9bd;
+  background: #252e29; color: #eff3ef; border-color: #4d6054; border-radius: 16px;
+}
+.public-app .outdoor-panel .map-caption { color: #e7f0e9; background: #26362c; }
+.public-app .outdoor-panel .map-caption .status-dot { background: #9bf3ce; }
+.public-app .outdoor-panel .campus-map.leaflet-container { background: #252c28; }
+.public-app .outdoor-panel .leaflet-control-zoom a { background: #202a24; color: #eff7f0; border-color: #66776a; }
+.public-app .outdoor-panel .leaflet-control-attribution { background: #18221cec; color: #d8e5dc; }
+.public-app .outdoor-panel .leaflet-control-attribution a { color: #bbf6d4; }
+.public-app .outdoor-panel .leaflet-tooltip { color: #eff7f0; background: #24372c; border-color: #73947f; width: max-content; max-width: 200px; white-space: normal; }
+.public-app .outdoor-panel .map-fit { color: #eff3ef; background: #272e2a; border-color: #627068; border-radius: 10px; }
+.public-app .outdoor-panel .map-fit:hover { background: #3b4d43; border-color: #9bf3ce; }
+.public-app .outdoor-panel :focus-visible { outline: 3px solid #b9ffe0; outline-offset: 3px; }
+.public-app .outdoor-panel .map-legend { color: #d7e5db; }
+.public-app .outdoor-panel .map-source { color: #b7c9bd; }
+.public-app .outdoor-panel .notice { color: #e2ebe5; background: #25362d; border-color: #9bf3ce; }
+.public-app .outdoor-panel .scns-pin { background: #d3e9db; color: #233b2b; border: 2px solid #17251b; border-radius: 50%; box-shadow: 0 2px 8px #0006; display: grid; place-items: center; }
+.public-app .outdoor-panel .scns-pin svg { width: 20px; height: 20px; }
+.public-app .outdoor-panel .kind-cafe { background: #edcdb4; color: #422e20; }
+.public-app .outdoor-panel .kind-library { background: #d8d5ed; color: #322d47; }
+.public-app .outdoor-panel .kind-water { background: #c4dfe9; color: #20343d; }
+
+.public-app .explorer-mode-switch { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0; }
+.public-app .explorer-mode-switch [aria-selected="true"] { background: #183f35; color: #fff; border-color: #183f35; }
+.public-app .explorer-mode-switch button:focus-visible { outline: 3px solid #9b4e00; outline-offset: 3px; }
+.explorer-mode-panel[hidden] { display: none !important; }

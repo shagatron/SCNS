@@ -1,0 +1,66 @@
+{
+  "runtime": "Built Linux nginx/API/worker; real educational API and production Dijkstra",
+  "muj_entry": "Metadata-response simulation over isolated synthetic release; not owner Windows/MUJ data",
+  "images": {
+    "desktop-chromium/computed-cross-floor.png": {
+      "width": 1280,
+      "height": 3088,
+      "bytes": 296708,
+      "sha256": "7af54182a8251012405914da467f1077bbe6cc412d3b17a3e7a1a10cbf502b34"
+    },
+    "desktop-chromium/first-cross-floor.png": {
+      "width": 1098,
+      "height": 805,
+      "bytes": 77559,
+      "sha256": "e1c7cc8be86fdd6dd208cdd4aa3aa4f7d449614650e8099dfd886c57da9b0429"
+    },
+    "desktop-chromium/ground-cross-floor.png": {
+      "width": 1098,
+      "height": 805,
+      "bytes": 81678,
+      "sha256": "ef7f3d3b0fc535c151dce6d84f692ea2b4a43699bdc60f2214b8c1e321035fe3"
+    },
+    "desktop-chromium/ground-same-floor.png": {
+      "width": 1098,
+      "height": 805,
+      "bytes": 82614,
+      "sha256": "0f3170479f0941c3c2fa8e50122c149c2b778bb0f1689b4dcd19ff9c03486977"
+    },
+    "desktop-chromium/muj-entry-simulated.png": {
+      "width": 1232,
+      "height": 881,
+      "bytes": 765240,
+      "sha256": "57b6f242800d9082c1fbe45900def94392fa24d8ba7a6878d88f3e4eb3dfa2f4"
+    },
+    "mobile-chromium/computed-cross-floor.png": {
+      "width": 945,
+      "height": 11519,
+      "bytes": 1013448,
+      "sha256": "e09787ebd7b650085dffb220b6053d6b3c43b6fdf0aabe2ddcd224fd12849776"
+    },
+    "mobile-chromium/first-cross-floor.png": {
+      "width": 809,
+      "height": 2846,
+      "bytes": 203559,
+      "sha256": "6d6f5e06d3ff7c28cf9d9cb19d64bb8a3da99c6e3efdb69de5166450bafbc932"
+    },
+    "mobile-chromium/ground-cross-floor.png": {
+      "width": 809,
+      "height": 2846,
+      "bytes": 213080,
+      "sha256": "24a2010f221ed0c72f094597a600194cf8513105624d2436ac3f02d138054f36"
+    },
+    "mobile-chromium/ground-same-floor.png": {
+      "width": 809,
+      "height": 2846,
+      "bytes": 211812,
+      "sha256": "9b5aee35152521825b149d1e633d02b543272855fac7006359e864e568f452aa"
+    },
+    "mobile-chromium/muj-entry-simulated.png": {
+      "width": 893,
+      "height": 2880,
+      "bytes": 920226,
+      "sha256": "d0abbe6a1e4641bc4329b21e9733d0eea3a50e32862861f1b15ae7378b5e4ff3"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "latitude": {
+      "maximum": 90,
+      "minimum": -90,
+      "title": "Latitude",
+      "type": "number"
+    },
+    "longitude": {
+      "maximum": 180,
+      "minimum": -180,
+      "title": "Longitude",
+      "type": "number"
+    },
+    "accuracy_m": {
+      "exclusiveMinimum": 0,
+      "title": "Accuracy M",
+      "type": "number"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "latitude",
+    "longitude",
+    "accuracy_m",
+    "observed_at"
+  ],
+  "title": "GPSObservation",
+  "type": "object"
+}

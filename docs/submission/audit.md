@@ -1,6 +1,6 @@
 # Academic submission audit — 19 October 2026
 
-This bounded task prepares the accepted Docker application for main/repository assessment. No routing/UI/runtime redesign, native-Windows work, dependency upgrade, schema/data modification, import/reseed/bootstrap or campus publication is authorized/performed. The user explicitly authorized one normal history-preserving main integration while retaining all feature branches. This audit is supporting evidence, not the missing final report/PPT.
+This bounded task prepares the accepted Docker application for main/repository assessment. No routing/UI/runtime redesign, native-Windows work, dependency upgrade, schema/data modification, import/reseed/bootstrap or campus publication is authorized/performed. The user explicitly authorized one normal history-preserving main integration while retaining all feature branches. This audit is supporting evidence, distinct from the approved final report/PPT. The report and editable PPTX were supplied after the initial audit; see the attachment receipt below.
 
 ## Initial branch and source audit
 
@@ -35,7 +35,7 @@ Baseline657tracked paths checked against dependency/build/cache/log/private-uplo
 
 High-confidence private-key/GitHub-token/AWS-access-ID patterns scanned **1779historical blobs across all fetched refs**, with zero matches; no values were printed and no history rewritten. This is a bounded pattern/path/manual audit, not exhaustive proof that arbitrary secrets can never exist. Runtime owner passwords remain private; no credentials were requested/copied. No secret-remediation path was identified.
 
-No approved final report(PDF/DOCX) or final presentation(PPTX/approvedPDF) was accessible. The only attached PDF found is the school reference, not a submission report. No substitute/older document or invented final-document link is added. See [exact remaining document requirements](README.md). No submission tag is created.
+At the initial audit, no approved final report(PDF/DOCX) or final presentation(PPTX/approvedPDF) was accessible. The only attached PDF found is the school reference, not a submission report. No substitute/older document or invented final-document link is added. See [exact remaining document requirements](README.md). No submission tag is created.
 
 ## Verification and integration receipt
 
@@ -60,4 +60,11 @@ Read-only final22-table counts/content digests, .envpresence(absent in cloud), p
 
 This receipt/checklist update is a subsequent **documentation-only main commit**; the final pushed main SHA is reported in the handoff, rather than mislabelling the application merge SHA as the final receipt HEAD. Working tree was clean at the verified application push and will be rechecked after this receipt push. Existing local work was clean initially, so no unrelated changes were stashed/discarded. The GitHub settings REST call remains Forbidden, while remote symbolic HEAD confirms main as the default; no default change is needed.
 
-Remaining: owner must supply the approved final report and final presentation; newest Windows update/presentation/device checks remain owner-run. Existing incomplete OSM, unknown indoor metrics/accessibility, unsupported routes, transient button-transition contrast and phone-label zoom limits remain disclosed, not repaired/relabelled by packaging. [Exact main update/start](../operations/academic-submission.md) and [presentation inputs](presentation.md).
+At the original main merge the report/presentation were outstanding; that requirement is now resolved by the approved attachment receipt below. Newest Windows update/presentation/device checks remain owner-run. Existing incomplete OSM, unknown indoor metrics/accessibility, unsupported routes, transient button-transition contrast and phone-label zoom limits remain disclosed, not repaired/relabelled by packaging. [Exact main update/start](../operations/academic-submission.md) and [presentation inputs](presentation.md).
+
+
+### Approved final documents supplied — 19 October 2026
+
+Owner-approved [report PDF](files/SCNS_Overleaf_Report.pdf) and [editable presentation PPTX](files/SCNS_DSA_Presentation.pptx) now replace the initial missing-document status. The initial audit's absence statements above record that earlier state, not current availability. Report22pages opened and every page rendered; PPTX14slides opened with python-pptx, package CRC/all XML validated, slide text and embedded pictures decoded. Original supplied bytes retained under stable filenames, SHA256 in [verification manifest](files/verification.json). Report cover visually inspected; native PowerPoint UI/layout was not run.
+
+Editable Overleaf/LaTeX source and presentation PDF were not supplied. The report PDF is not the Overleaf source, and editable PPTX is not an approved PDF export. No conversion/substitution, application/config/database action, feature-branch change or tag is part of this documentation-only attachment update. Root/submission READMEs and current SUB-05 status updated; earlier dated progress remains historical. Repository-wide relative-link validation also corrected two pre-existing documentation targets (4A review-body relative path and superseded E22 anchor).

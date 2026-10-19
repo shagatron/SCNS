@@ -1,0 +1,27 @@
+{
+  "report": {
+    "supplied_filename": "SCNS_Overleaf_Report (2).pdf",
+    "repository_filename": "SCNS_Overleaf_Report.pdf",
+    "pages": 22,
+    "bytes": 1102863,
+    "sha256": "020abaf31371e2c0b0d35a7c1bfd9ec1f50f57afeceb9df3c3b1bba0cc1a239c"
+  },
+  "presentation": {
+    "supplied_filename": "SCNS_DSA_Presentation (1).pptx",
+    "repository_filename": "SCNS_DSA_Presentation.pptx",
+    "slides": 14,
+    "bytes": 882597,
+    "sha256": "e0ef76a4579c4a71e76d84b655f90e2358fad3fe69e87dd513a0970c94edc5a6"
+  },
+  "overleaf_source": "Not supplied; report PDF is not editable LaTeX source.",
+  "presentation_pdf": "Not supplied; no generated export substituted for an approved presentation PDF.",
+  "verification": "PDF opened and all pages rendered using PyMuPDF; PPTX opened with python-pptx, ZIP CRC/XML checked and embedded pictures decoded. Native Microsoft PowerPoint UI not run.",
+  "repository_link_check": {
+    "markdown_files": 96,
+    "repository_relative_links": 595,
+    "heading_fragments_checked": 44,
+    "external_links_not_network_checked": 52,
+    "application_route_links": 0,
+    "errors": []
+  }
+}

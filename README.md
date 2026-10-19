@@ -123,4 +123,13 @@ Preserve [OpenStreetMap attribution/ODbL](https://www.openstreetmap.org/copyrigh
 
 ## Final report and slides
 
-The **approved final academic report and final presentation were not supplied** in this task. They are not substituted with an old draft, the school reference PDF, data reports or screenshots. See [submission document status](docs/submission/README.md); attach the approved report and PPT/PDF before claiming those documents are delivered.
+The owner-approved final documents are committed unchanged:
+
+| Document | File / status |
+|---|---|
+| Final academic report, compiled PDF | [SCNS Overleaf report —22pages](docs/submission/files/SCNS_Overleaf_Report.pdf) |
+| Editable final presentation | [SCNS DSA presentation —14slides(PPTX)](docs/submission/files/SCNS_DSA_Presentation.pptx) |
+| Editable Overleaf/LaTeX source | Not supplied; the report PDF is the compiled output, not the source project. |
+| Presentation PDF | Not supplied; the editable PPTX is not a PDF export. |
+
+[Submission document details and verification](docs/submission/README.md). These approved documents are distinct from the school reference drawings and supporting walkthroughs. No missing source/export is substituted or linked as if present.

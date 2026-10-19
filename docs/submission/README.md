@@ -1,12 +1,16 @@
-# Academic submission documents
+# Approved academic submission documents
 
-The accepted working application and committed evidence are the submission codebase. The owner-approved **final report** and **final presentation** were not attached or present in the inspected checkout/attachments for this task.
+The owner supplied and approved the following final documents on19October2026. Both are committed under `files/` with their original bytes unchanged; filename download counters were removed for stable repository links.
 
-Still needed from the owner:
+| Document | Repository file | Verified content |
+|---|---|---|
+| Final academic report, compiled PDF | [SCNS Overleaf report](files/SCNS_Overleaf_Report.pdf) |22pages; opened and every page rendered successfully using PyMuPDF. No password required. |
+| Editable final presentation | [SCNS DSA presentation(PPTX)](files/SCNS_DSA_Presentation.pptx) |14slides; opened using python-pptx, all package CRC/XML parts checked, slide text read and embedded pictures decoded. |
+| Editable Overleaf/LaTeX source | Not supplied | The compiled report PDF is not the editable `.tex`/`.bib`/assets project. No source-project link is invented. |
+| Presentation PDF | Not supplied | The PPTX is editable PowerPoint, not an approved PDF export. No export was generated/substituted for an owner-supplied presentation PDF. |
 
-1. The approved final academic project report (PDF, or approved DOCX).
-2. The approved final presentation/slides (PPTX, or the approved presentation PDF).
+[File sizes, original supplied filenames, SHA256 and verification method](files/verification.json). Microsoft PowerPoint's native UI was not run; parser/package/image checks do not claim native font/layout rendering. The rendered report cover was visually inspected. No native PowerPoint rendering is claimed. Approved document contents are preserved, not rewritten as part of this documentation task.
 
-No filename/version/title was supplied, so no approved document link is invented. Do not substitute `data/muj/report.json`, screenshots, an older draft, or `07-school-part-1.pdf` (the separate floorplan organization reference). Add only the actual approved versions here and link those real files from the root README after review. No submission tag is created before final acceptance.
+The report and presentation above replace the earlier missing-document status. They are not the school reference PDF, a data report, screenshots or an older draft. Editable Overleaf source and a presentation PDF remain separate optional artifacts requiring their own supplied/approved files; their absence does not invalidate the supplied final report PDF/editable PPTX. No submission tag is created by this attachment update.
 
-Available now: [DSA explanation](dsa.md), [presentation-day walkthrough](presentation.md), [submission audit](audit.md), [safe Windows update/start](../operations/academic-submission.md), [rendered floors/routes](../previews/educational-indoor/integrated/README.md). These supporting documents are not represented as the missing final report/PPT.
+Supporting project documentation: [DSA/source explanation](dsa.md), [presentation-day walkthrough](presentation.md), [submission audit](audit.md), [safe Windows main update/start](../operations/academic-submission.md), [rendered application floors/routes](../previews/educational-indoor/integrated/README.md). These support the working application and are distinct from the approved final documents.
